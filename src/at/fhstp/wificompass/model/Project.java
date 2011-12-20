@@ -12,6 +12,7 @@ import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlSerializer;
 
 import at.fhstp.wificompass.interfaces.XMLSerializable;
+import at.fhstp.wificompass.model.xml.XMLSettings;
 
 public class Project implements XMLSerializable {
 	protected String name;
@@ -21,6 +22,7 @@ public class Project implements XMLSerializable {
 	protected String path;
 
 	protected Vector<ProjectLocation> locations;
+	
 	
 	protected static final String XMLTAG="project",XMLNAME="name",XMLPATH="path",XMLLOCATIONS="locations",XMLDESCRIPTION="description";
 
@@ -65,18 +67,19 @@ public class Project implements XMLSerializable {
 
 	@Override
 	public void serialize(XmlSerializer serializer) throws RuntimeException, IOException  {
-		serializer.startTag(null, XMLTAG);
+		serializer.setPrefix(XMLSettings.XMLSHORTNS, XMLSettings.XMLNS);
+		serializer.startTag(XMLSettings.XMLNS, XMLTAG);
 		
-		serializer.startTag(null, XMLNAME).text(name).endTag(null, XMLNAME);
-		serializer.startTag(null, XMLDESCRIPTION).text(description).endTag(null, XMLDESCRIPTION);
-		serializer.startTag(null, XMLPATH).text(path).endTag(null, XMLPATH);
+		serializer.startTag(XMLSettings.XMLNS, XMLNAME).text(name).endTag(XMLSettings.XMLNS, XMLNAME);
+		serializer.startTag(XMLSettings.XMLNS, XMLDESCRIPTION).text(description).endTag(XMLSettings.XMLNS, XMLDESCRIPTION);
+		serializer.startTag(XMLSettings.XMLNS, XMLPATH).text(path).endTag(XMLSettings.XMLNS, XMLPATH);
 		
-		serializer.startTag(null, XMLLOCATIONS);
+		serializer.startTag(XMLSettings.XMLNS, XMLLOCATIONS);
 		
 		
-		serializer.endTag(null, XMLLOCATIONS);
+		serializer.endTag(XMLSettings.XMLNS, XMLLOCATIONS);
 		
-		serializer.endTag(null, XMLTAG);
+		serializer.endTag(XMLSettings.XMLNS, XMLTAG);
 	}
 
 	@Override
