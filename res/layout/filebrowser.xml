@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" android:padding="10dp">
+
+    <TextView
+        android:id="@+id/dirPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/filebrowser_dir" android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/filebrowser_button_layout"
+        android:layout_width="fill_parent" 
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filebrowser_save"
+            android:layout_weight="1">
+        </Button>
+
+        <Button
+            android:id="@+id/filebrowser_new_dir_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filebrowser_new_dir"
+            android:layout_weight="1">
+        </Button>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/fileList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/dirPath"
+        android:layout_above="@id/filebrowser_button_layout">
+    </ListView>
+
+</RelativeLayout>

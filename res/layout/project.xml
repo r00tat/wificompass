@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/project_scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/project_title" 
+            />
+
+        <EditText
+            android:id="@+id/project_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginBottom="20dp"
+            android:focusable="true" android:focusableInTouchMode="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/project_path" android:layout_marginBottom="10dp"/>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/project_path_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/folder" android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:id="@+id/project_path_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/project_path_default" />
+        </TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/project_description" android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/project_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine" android:layout_marginBottom="30dp">
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/project_new_location_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/project_new_location_button" />
+
+        <LinearLayout
+            android:id="@+id/project_locations_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

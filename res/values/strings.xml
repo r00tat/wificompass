@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, APLocalizationActivity!</string>
+    <string name="app_name">WiFI Compass</string>
+    <string name="sample_scan_start_button_text">Start WiFi Scan</string>
+    <string name="sample_scan_stop_button_text">stop WiFi scan</string>
+    <string name="sample_scan_scanning_text">scanning...</string>
+    <string name="sample_scan_start_scan_failed">starting the scan failed!</string>
+    <string name="sample_scan_enableing_wifi">Wifi is currently disabled, trying to enable it.</string>
+    <string name="sample_scan_enableing_wifi_failed">could not enable WiFi!</string>
+    <string name="about">About</string>
+    <string name="quit">Quit</string>
+    <string name="test1">Test 1</string>
+    <string name="test2">Test 2</string>
+    <string name="project">Project</string>
+    <string name="wifi_scan">WiFi Scan</string>
+    <string name="newProjectText">create new Project</string>
+    <string name="loadProject">load project</string>
+    <string name="mainInfoText">Welcome to WiFi Scanner! \nPlease create a new project or load an existing project</string>
+    <string name="aboutText">About this app...</string>
+    <string name="untitled">untitled</string>
+    <string name="filebrowser_parent_dir">Parent Directory</string>
+   <string name="filebrowser_dir">Directory</string>
+   <string name="filebrowser_error_save">Couldn\'t save the file!</string>
+   <string name="filebrowser_save">Save Here</string>
+   <string name="filebrowser_saved">Saved!</string>
+   <string name="filebrowser_dialog_filename_title">Enter Filename!</string>
+   <string name="filebrowser_dialog_filename_message">Enter the filename for the File to save!</string>
+   <string name="filebrowser_dialog_directory_title">Create directory!</string>
+   <string name="filebrowser_dialog_directory_message">Enter the name for the direcotry to save!</string>
+   <string name="file_ending">alp</string>
+   <string name="project_title">project title</string>
+   <string name="project_path">project path</string>
+   <string name="project_description">project description</string>
+   <string name="project_path_button">open</string>
+   <string name="project_path_default">.</string>
+   <string name="filebrowser_label">filebrowser</string>
+   <string name="filebrowser_new_dir">new directory</string>
+   <string name="filebrowser_dircreate_failed">could not create directory!</string>
+   <string name="project_new_location_button">create new location</string>
+   <string name="sample_scan_text_start">To start a WiFi scan press the start button!\nThis are the last scan results:</string>
+   <string name="sample_scan_stopped">\nWiFI scan stopped</string>
+   <string name="enableingWiFiSucceed">WiFI successfully enabled</string>
+   <string-array name="wifi_states">
+       <item >Wifi is beeing disabled</item>
+       <item >Wifi disabled</item>
+       <item >Wifi is beeing enabled</item>
+       <item >Wifi is enabled</item>
+       <item >Wifi State is unknown</item>
+   </string-array>
+   <string name="sample_scan_wifi_capabilities">capabilitities</string>
+   <string name="sample_scan_wifi_ssid">SSID</string>
+   <string name="sample_scan_wifi_bssid">BSSID</string>
+   <string name="sample_scan_wifi_rssi">RSSI</string>
+   <string name="sample_scan_wifi_frequency">frequency</string>
+   <string name="sample_scan_scan_finished">\nWifi scan finished!</string>
+   <string name="sample_scan_wifi_state">Wifi state: </string>
+   <string name="sample_scan_supplicant_state">Wifi supplicant state: </string>
+</resources>
