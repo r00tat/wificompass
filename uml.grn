@@ -1,0 +1,46 @@
+<uml>
+   <greenVersion="30500"/>
+   <type>
+      <name="=aploc/src<at.fhstp.aploc.userlocation{LocationServiceImpl.java[LocationServiceImpl"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="41"/>
+      <y="415"/>
+   </type>
+   <type>
+      <name="=aploc/src<at.fhstp.aploc.userlocation{LocationProvider.java[LocationProvider"/>
+      <height="244"/>
+      <width="300"/>
+      <x="386"/>
+      <y="40"/>
+   </type>
+   <type>
+      <name="=aploc/src<at.fhstp.aploc.userlocation{LocationService.java[LocationService"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="62"/>
+      <y="122"/>
+   </type>
+   <type>
+      <name="=aploc/src<at.fhstp.aploc.userlocation{Location.java[Location"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="405"/>
+      <y="329"/>
+   </type>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.realization.RealizationPart"/>
+      <sourceType="=aploc/src<at.fhstp.aploc.userlocation{LocationServiceImpl.java[LocationServiceImpl"/>
+      <targetType="=aploc/src<at.fhstp.aploc.userlocation{LocationService.java[LocationService"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.composition.CompositionPart"/>
+      <sourceType="=aploc/src<at.fhstp.aploc.userlocation{LocationServiceImpl.java[LocationServiceImpl"/>
+      <targetType="=aploc/src<at.fhstp.aploc.userlocation{Location.java[Location"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
+</uml>
+
