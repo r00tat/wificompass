@@ -63,7 +63,7 @@ public class SampleScanActivity extends Activity implements OnClickListener {
 		WifiManager wm = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		int state = wm.getWifiState();
 
-		((TextView) findViewById(R.id.sample_scan_text)).append("\n" + getResources().getStringArray(R.array.wifi_states)[state]);
+		((TextView) findViewById(R.id.sample_scan_text)).append("\n"+getString(R.string.sample_scan_supplicant_state)+": " + getResources().getStringArray(R.array.wifi_states)[state]);
 
 		updateResults();
 	}
@@ -101,6 +101,11 @@ public class SampleScanActivity extends Activity implements OnClickListener {
 			}
 
 			if (wm.isWifiEnabled()) {
+				WifiInfo winfo = wm.getConnectionInfo();
+				if (winfo != null) {
+					((TextView) findViewById(R.id.sample_scan_text)).append("\n" + winfo.getSupplicantState().toString());
+				}
+				
 				log.debug( "WiFi is enabled");
 
 				IntentFilter i = new IntentFilter();
@@ -167,10 +172,7 @@ public class SampleScanActivity extends Activity implements OnClickListener {
 			running = false;
 		}
 
-		WifiInfo winfo = wm.getConnectionInfo();
-		if (winfo != null) {
-			((TextView) findViewById(R.id.sample_scan_text)).append("\n" + winfo.getSupplicantState().toString());
-		}
+		
 
 	}
 

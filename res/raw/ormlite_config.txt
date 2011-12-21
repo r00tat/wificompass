@@ -1,0 +1,20 @@
+#
+# generated on 2011/12/21 04:21:10
+#
+# --table-start--
+dataClass=at.fhstp.wificompass.model.Project
+tableName=projects
+# --table-fields-start--
+# --field-start--
+fieldName=name
+id=true
+# --field-end--
+# --field-start--
+fieldName=description
+# --field-end--
+# --field-start--
+fieldName=path
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################

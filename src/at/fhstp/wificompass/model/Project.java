@@ -11,14 +11,22 @@ import java.util.Vector;
 import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlSerializer;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import at.fhstp.wificompass.interfaces.XMLSerializable;
 import at.fhstp.wificompass.model.xml.XMLSettings;
 
+@DatabaseTable(tableName = "projects")
 public class Project implements XMLSerializable {
+	
+	@DatabaseField(id = true)
 	protected String name;
 
+	@DatabaseField
 	protected String description;
 	
+	@DatabaseField
 	protected String path;
 
 	protected Vector<ProjectLocation> locations;
