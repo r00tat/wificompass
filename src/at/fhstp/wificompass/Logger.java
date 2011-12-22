@@ -75,7 +75,7 @@ public class Logger {
 	 * constructor with class, uses the class name as android log tag.
 	 * @param className class to use for android log tag
 	 */
-	public Logger(Class<Object> className) {
+	public Logger(Class<?> className) {
 		tag = className.getName();
 	}
 

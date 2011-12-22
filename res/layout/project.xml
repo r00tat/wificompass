@@ -2,26 +2,29 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/project_scrollview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:padding="10dp">
+    android:layout_height="match_parent"
+    android:padding="10dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/project_title" 
-            />
+            android:text="@string/project_title" />
 
         <EditText
             android:id="@+id/project_title"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginBottom="20dp"
-            android:focusable="true" android:focusableInTouchMode="true"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
 
+        <!--
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,17 +46,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/project_path_default" />
         </TableRow>
+        -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/project_description" android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:text="@string/project_description" />
 
         <EditText
             android:id="@+id/project_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine" android:layout_marginBottom="30dp">
+            android:layout_marginBottom="30dp"
+            android:inputType="textMultiLine" >
 
             <requestFocus />
         </EditText>
@@ -71,6 +77,19 @@
             android:orientation="vertical" >
         </LinearLayout>
 
+        <Button
+            android:id="@+id/project_save"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/project_save_button" />
+        
+        <Button
+            android:id="@+id/project_delete"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/project_delete_button" />
     </LinearLayout>
 
 </ScrollView>

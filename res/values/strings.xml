@@ -57,4 +57,11 @@
    <string name="sample_scan_scan_finished">\nWifi scan finished!</string>
    <string name="sample_scan_wifi_state">Wifi state: </string>
    <string name="sample_scan_supplicant_state">Wifi supplicant state: </string>
+   <string name="project_not_found">Project could not be found!</string>
+   <string name="project_save_button">save project</string>
+   <string name="project_delete_button">delete project</string>
+   <string name="database_failure">There was an problem with the database!</string>
+   <string name="database_create_failed">failed to create the database! This application can\'t run without a SQLite dabatase!</string>
+   <string name="project_saved">project saved!</string>
+   <string name="project_save_failed">project could not be saved!</string>
 </resources>
