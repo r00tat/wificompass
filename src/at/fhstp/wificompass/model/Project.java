@@ -23,10 +23,10 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "projects")
 public class Project implements XMLSerializable {
 
-	// @DatabaseField(generatedId = true)
-	// protected int id;
+	@DatabaseField(generatedId = true)
+	protected int id;
 
-	@DatabaseField(id = true)
+	@DatabaseField
 	protected String name;
 
 	@DatabaseField
@@ -100,8 +100,8 @@ public class Project implements XMLSerializable {
 
 	}
 
-//	public int getId() {
-//		return id;
-//	}
+	public int getId() {
+		return id;
+	}
 
 }

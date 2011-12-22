@@ -22,7 +22,7 @@
         <activity
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:name="at.fhstp.wificompass.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="fullSensor" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
@@ -33,17 +33,17 @@
         <activity
             android:configChanges="orientation"
             android:label="@string/project"
-            android:name="at.fhstp.wificompass.activities.ProjectActivity" >
+            android:name=".activities.ProjectActivity" >
         </activity>
         <activity
             android:configChanges="orientation"
             android:label="@string/wifi_scan"
-            android:name="at.fhstp.wificompass.activities.SampleScanActivity" >
+            android:name=".activities.SampleScanActivity" >
         </activity>
         <activity
             android:configChanges="orientation"
             android:label="@string/about"
-            android:name="at.fhstp.wificompass.activities.AboutActivity"
+            android:name=".activities.AboutActivity"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
@@ -51,6 +51,7 @@
             android:label="@string/filebrowser_label"
             android:name="at.woelfel.philip.filebrowser.FileBrowser" >
         </activity>
+        <activity android:name=".activities.ProjectListActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation" android:label="@string/project_list"></activity>
     </application>
 
 </manifest>

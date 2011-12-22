@@ -60,9 +60,21 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:inputType="textMultiLine" >
-
-            <requestFocus />
         </EditText>
+
+        <Button
+            android:id="@+id/project_save"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/project_save_button" />
+
+        <Button
+            android:id="@+id/project_delete"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/project_delete_button" />
 
         <Button
             android:id="@+id/project_new_location_button"
@@ -76,20 +88,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
         </LinearLayout>
-
-        <Button
-            android:id="@+id/project_save"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/project_save_button" />
-        
-        <Button
-            android:id="@+id/project_delete"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/project_delete_button" />
     </LinearLayout>
 
 </ScrollView>

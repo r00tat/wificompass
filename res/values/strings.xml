@@ -64,4 +64,7 @@
    <string name="database_create_failed">failed to create the database! This application can\'t run without a SQLite dabatase!</string>
    <string name="project_saved">project saved!</string>
    <string name="project_save_failed">project could not be saved!</string>
+   <string name="project_list">project list</string>
+   <string name="project_delete_failed">could not delete project!</string>
+   <string name="project_delete_success">project successfully deleted!</string>
 </resources>

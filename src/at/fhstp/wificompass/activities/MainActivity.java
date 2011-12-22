@@ -23,6 +23,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected static final String logTag = "APLocActivity";
 	
 	protected static final Logger log=new Logger(logTag);
+	
+	protected static final int REQ_PROJECT_LIST=3;
 
 	
 
@@ -38,7 +40,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void init() {
 		log.debug( "init");
 
-		ApplicationContext.setContext(getApplicationContext());
+		ApplicationContext.setContext(this);
 
 		setContentView(R.layout.main);
 
@@ -73,9 +75,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.load_project_button:
 			log.debug( "load project");
-			Intent lpi = new Intent(this, ProjectActivity.class);
-			lpi.putExtra(ProjectActivity.START_MODE, ProjectActivity.START_LOAD);
-			startActivity(lpi);
+			Intent lpi = new Intent(this, ProjectListActivity.class);
+			
+			startActivityForResult(lpi, REQ_PROJECT_LIST);
 			
 			break;
 		case R.id.sample_scan_button:
@@ -132,6 +134,24 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		log.debug("setting context");
+		ApplicationContext.setContext(this);
+	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		ApplicationContext.setContext(this);
+
+		if (resultCode == Activity.RESULT_OK&&requestCode==REQ_PROJECT_LIST) {
+			int project=data.getExtras().getInt(ProjectListActivity.PROJ_KEY);
+			Intent projectIntent=new Intent(this,ProjectActivity.class);
+			projectIntent.putExtra(ProjectActivity.PROJ_KEY, project);
+			projectIntent.putExtra(ProjectActivity.START_MODE, ProjectActivity.REQ_LOAD);
+			startActivity(projectIntent);
+		}
+	}
 
 }
