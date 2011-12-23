@@ -181,6 +181,16 @@ public class Logger {
 		Log.wtf(tag, formatMessage(msg), tr);
 	}
 
+	
+	/**
+	 * create an assert logging message
+	 * @param logIfTrue write the log message if true
+	 * @param msg log message
+	 */
+	public void azzert(boolean logIfTrue,String msg){
+		if(logIfTrue)
+			Log.wtf(tag, msg);
+	}
 
 
 	/**

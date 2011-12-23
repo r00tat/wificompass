@@ -67,4 +67,5 @@
    <string name="project_list">project list</string>
    <string name="project_delete_failed">could not delete project!</string>
    <string name="project_delete_success">project successfully deleted!</string>
+   <string name="project_location">project location</string>
 </resources>

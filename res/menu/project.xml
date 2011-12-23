@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/project_save_option" android:title="@string/project_save_button"></item>
+    <item android:id="@+id/project_delete_option" android:title="@string/project_delete_button"></item>
+    <item android:id="@+id/project_new_location_option" android:title="@string/project_new_location_button"></item>
+
+    
+
+</menu>

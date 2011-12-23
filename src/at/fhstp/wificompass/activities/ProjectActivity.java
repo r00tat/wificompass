@@ -10,9 +10,11 @@ import java.sql.SQLException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import at.fhstp.wificompass.ApplicationContext;
@@ -85,9 +87,9 @@ public class ProjectActivity extends Activity implements OnClickListener {
 		}
 
 		// ((Button) findViewById(R.id.project_path_button)).setOnClickListener(this);
-		((Button) findViewById(R.id.project_save)).setOnClickListener(this);
-		((Button) findViewById(R.id.project_delete)).setOnClickListener(this);
-		((Button) findViewById(R.id.project_new_location_button)).setOnClickListener(this);
+//		((Button) findViewById(R.id.project_save)).setOnClickListener(this);
+//		((Button) findViewById(R.id.project_delete)).setOnClickListener(this);
+//		((Button) findViewById(R.id.project_new_location_button)).setOnClickListener(this);
 
 		// ((EditText) findViewById(R.id.project_title)).requestFocus();
 
@@ -124,38 +126,19 @@ public class ProjectActivity extends Activity implements OnClickListener {
 		// fbi.putExtra(FileBrowser.EXTRA_MODE, FileBrowser.MODE_SAVE);
 		// startActivityForResult(fbi, REQ_LOAD);
 		// break;
-		case R.id.project_save:
-			log.debug("saving project");
-			project.setName(((EditText) findViewById(R.id.project_title)).getText().toString());
-			project.setDescription(((EditText) findViewById(R.id.project_description)).getText().toString());
-			try {
-
-				dao.createOrUpdate(project);
-				Toast.makeText(this, R.string.project_saved, Toast.LENGTH_SHORT).show();
-			} catch (SQLException e) {
-				log.error("could not save project", e);
-				Toast.makeText(this, R.string.project_save_failed, Toast.LENGTH_LONG).show();
-			}
-			break;
-			
-		case R.id.project_delete:
-			log.debug("Delete project");
-			
-			try {
-				dao.delete(project);
-				Toast.makeText(this, R.string.project_delete_success, Toast.LENGTH_LONG).show();
-				finish();
-			} catch (SQLException e) {
-				log.error("could not delete project", e);
-				Toast.makeText(this, R.string.project_delete_failed, Toast.LENGTH_LONG).show();
-			}
-			
-			break;
-			
-		case R.id.project_new_location_button:
-			log.debug("new project button");
-			
-			break;
+//		case R.id.project_save:
+//			this.saveProject();
+//			break;
+//			
+//		case R.id.project_delete:
+//			this.deleteProject();
+//			
+//			break;
+//			
+//		case R.id.project_new_location_button:
+//			this.addNewLocation();
+//			
+//			break;
 			
 		default:
 			log.wtf("clicked but not catched??" + v.getId());
@@ -185,5 +168,86 @@ public class ProjectActivity extends Activity implements OnClickListener {
 		super.onResume();
 		log.debug("setting context");
 		ApplicationContext.setContext(this);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.project, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.project_save_option:
+			this.saveProject();
+
+			return false;
+		case R.id.project_delete_option:
+			this.deleteProject();
+
+			return true;
+			
+		case R.id.project_new_location_option:
+			
+			this.addNewLocation();
+			
+			return false;
+			
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+
+	}
+	
+	protected void deleteProject(){
+		log.debug("Delete project");
+		
+		try {
+			dao.delete(project);
+			Toast.makeText(this, R.string.project_delete_success, Toast.LENGTH_LONG).show();
+			finish();
+		} catch (SQLException e) {
+			log.error("could not delete project", e);
+			Toast.makeText(this, R.string.project_delete_failed, Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	protected void saveProject(){
+		log.debug("saving project");
+		project.setName(((EditText) findViewById(R.id.project_title)).getText().toString());
+		project.setDescription(((EditText) findViewById(R.id.project_description)).getText().toString());
+		
+		if(project.getName().isEmpty()){
+			log.debug("empty project name, so no save required");
+		}else {
+		try {
+
+			dao.createOrUpdate(project);
+			Toast.makeText(this, R.string.project_saved, Toast.LENGTH_SHORT).show();
+		} catch (SQLException e) {
+			log.error("could not save project", e);
+			Toast.makeText(this, R.string.project_save_failed, Toast.LENGTH_LONG).show();
+		}
+		}
+	}
+	
+	protected void addNewLocation(){
+		saveProject();
+		log.debug("adding a new location");
+		Intent i=new Intent(this,ProjectLocationActivity.class);
+		i.putExtra(ProjectLocationActivity.START_MODE, ProjectLocationActivity.START_NEW);
+		i.putExtra(ProjectLocationActivity.PROJ_KEY, project.getId());
+		startActivity(i);
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onPause()
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		saveProject();
 	}
 }

@@ -24,9 +24,12 @@ public class ProjectListAdapter extends BaseAdapter {
 	
 	protected List<Project> projects;
 	
+	protected DatabaseHelper databaseHelper = null;
+	
 	public ProjectListAdapter(Context context) throws SQLException{
 		this.context=context;
-		Dao<Project,String> projectDao=OpenHelperManager.getHelper(context, DatabaseHelper.class).getDao(Project.class);
+		databaseHelper=OpenHelperManager.getHelper(context, DatabaseHelper.class);
+		Dao<Project,String> projectDao=databaseHelper.getDao(Project.class);
 		projects=projectDao.queryForAll();
 		
 		
@@ -59,6 +62,15 @@ public class ProjectListAdapter extends BaseAdapter {
 		layout.addView(tv);
 		
 		return layout;
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		if (databaseHelper != null) {
+			OpenHelperManager.releaseHelper();
+			databaseHelper = null;
+		}
+		super.finalize();
 	}
 
 }

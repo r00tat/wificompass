@@ -52,6 +52,7 @@
             android:name="at.woelfel.philip.filebrowser.FileBrowser" >
         </activity>
         <activity android:name=".activities.ProjectListActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation" android:label="@string/project_list"></activity>
+        <activity android:label="@string/project_location" android:name=".activities.ProjectLocationActivity" android:configChanges="orientation"></activity>
     </application>
 
 </manifest>
