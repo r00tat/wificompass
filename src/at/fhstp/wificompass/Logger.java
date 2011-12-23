@@ -76,7 +76,7 @@ public class Logger {
 	 * @param className class to use for android log tag
 	 */
 	public Logger(Class<?> className) {
-		tag = className.getName();
+		tag = className.getSimpleName();
 	}
 
 	/**

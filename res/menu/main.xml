@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/main_new_project_option" android:title="@string/newProjectText"></item>
+    <item android:id="@+id/main_wifi_scan" android:title="@string/main_wifi_scan"></item>
     <item android:id="@+id/aboutOption" android:title="@string/about" android:icon="@android:drawable/ic_menu_info_details"></item>
     <item android:id="@+id/quitOption" android:title="@string/quit" android:icon="@android:drawable/ic_menu_close_clear_cancel"></item>
 </menu>

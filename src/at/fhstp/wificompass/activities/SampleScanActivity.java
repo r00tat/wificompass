@@ -207,6 +207,7 @@ public class SampleScanActivity extends Activity implements OnClickListener {
 			table.removeViewAt(1);
 		}
 		List<ScanResult> results = wm.getScanResults();
+		if(results != null) 
 		for (Iterator<ScanResult> it = results.iterator(); it.hasNext();) {
 			ScanResult sr = it.next();
 			TableRow tr = new TableRow(this);

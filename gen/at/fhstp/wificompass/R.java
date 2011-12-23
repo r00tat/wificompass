@@ -23,40 +23,46 @@ public final class R {
         public static final int icon=0x7f020002;
     }
     public static final class id {
-        public static final int aboutButton=0x7f090008;
         public static final int aboutOption=0x7f090016;
         public static final int dirPath=0x7f090000;
         public static final int fileList=0x7f090004;
         public static final int filebrowser_button_layout=0x7f090001;
         public static final int filebrowser_new_dir_button=0x7f090003;
-        public static final int load_project_button=0x7f090006;
-        public static final int new_project_button=0x7f090005;
-        public static final int project_delete=0x7f09000f;
+        public static final int main_new_project_option=0x7f090014;
+        public static final int main_project_list=0x7f090007;
+        public static final int main_scroll_view=0x7f090005;
+        public static final int main_wifi_scan=0x7f090015;
+        public static final int new_project_button=0x7f090006;
+        public static final int project_delete_option=0x7f090019;
         public static final int project_description=0x7f09000b;
-        public static final int project_locations_layout=0x7f09000d;
-        public static final int project_new_location_button=0x7f09000c;
-        public static final int project_save=0x7f09000e;
+        public static final int project_list_view=0x7f09000d;
+        public static final int project_locations_layout=0x7f09000c;
+        public static final int project_new_location_option=0x7f09001a;
+        public static final int project_save_option=0x7f090018;
         public static final int project_scrollview=0x7f090009;
         public static final int project_title=0x7f09000a;
         public static final int quitOption=0x7f090017;
-        public static final int sample_scan_button=0x7f090007;
-        public static final int sample_scan_result_scroll=0x7f090011;
-        public static final int sample_scan_result_scroll_horizontal=0x7f090012;
-        public static final int sample_scan_result_table=0x7f090013;
-        public static final int sample_scan_result_table_row_title=0x7f090014;
-        public static final int sample_scan_result_table_row_title_ssid=0x7f090015;
-        public static final int sample_scan_text=0x7f090010;
+        public static final int sample_scan_button=0x7f090008;
+        public static final int sample_scan_result_scroll=0x7f09000f;
+        public static final int sample_scan_result_scroll_horizontal=0x7f090010;
+        public static final int sample_scan_result_table=0x7f090011;
+        public static final int sample_scan_result_table_row_title=0x7f090012;
+        public static final int sample_scan_result_table_row_title_ssid=0x7f090013;
+        public static final int sample_scan_text=0x7f09000e;
         public static final int saveButton=0x7f090002;
     }
     public static final class layout {
         public static final int about=0x7f030000;
         public static final int filebrowser=0x7f030001;
-        public static final int main=0x7f030002;
-        public static final int project=0x7f030003;
-        public static final int sample_scan=0x7f030004;
+        public static final int location=0x7f030002;
+        public static final int main=0x7f030003;
+        public static final int project=0x7f030004;
+        public static final int project_list=0x7f030005;
+        public static final int sample_scan=0x7f030006;
     }
     public static final class menu {
         public static final int main=0x7f080000;
+        public static final int project=0x7f080001;
     }
     public static final class raw {
         public static final int ormlite_config=0x7f040000;
@@ -84,10 +90,15 @@ public final class R {
         public static final int hello=0x7f060000;
         public static final int loadProject=0x7f06000f;
         public static final int mainInfoText=0x7f060010;
+        public static final int main_wifi_scan=0x7f06003c;
         public static final int newProjectText=0x7f06000e;
         public static final int project=0x7f06000c;
         public static final int project_delete_button=0x7f060033;
+        public static final int project_delete_failed=0x7f060039;
+        public static final int project_delete_success=0x7f06003a;
         public static final int project_description=0x7f06001f;
+        public static final int project_list=0x7f060038;
+        public static final int project_location=0x7f06003b;
         public static final int project_new_location_button=0x7f060025;
         public static final int project_not_found=0x7f060031;
         public static final int project_path=0x7f06001e;

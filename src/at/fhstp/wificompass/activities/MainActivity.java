@@ -1,5 +1,7 @@
 package at.fhstp.wificompass.activities;
 
+import java.sql.SQLException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,12 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
+import at.fhstp.wificompass.model.DatabaseHelper;
+import at.fhstp.wificompass.model.ProjectListAdapter;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity implements OnClickListener, OnItemClickListener {
 
 	protected boolean running;
 
@@ -25,6 +32,12 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected static final Logger log=new Logger(logTag);
 	
 	protected static final int REQ_PROJECT_LIST=3;
+	
+	protected DatabaseHelper databaseHelper = null;
+
+	
+	protected ProjectListAdapter adapter;
+	
 
 	
 
@@ -56,12 +69,23 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		running = false;
 		((Button) findViewById(R.id.new_project_button)).setOnClickListener(this);
-		((Button) findViewById(R.id.load_project_button)).setOnClickListener(this);
+//		((Button) findViewById(R.id.load_project_button)).setOnClickListener(this);
 		((Button) findViewById(R.id.sample_scan_button)).setOnClickListener(this);
-		Button about_button = ((Button) findViewById(R.id.aboutButton));
-		if (about_button != null) {
-			about_button.setOnClickListener(this);
+//		Button about_button = ((Button) findViewById(R.id.aboutButton));
+//		if (about_button != null) {
+//			about_button.setOnClickListener(this);
+//		}
+		
+		ListView project_list=((ListView)findViewById(R.id.main_project_list));
+		try {
+			adapter=new ProjectListAdapter(this);
+			project_list.setAdapter(adapter);
+			project_list.setOnItemClickListener(this);
+			
+		} catch (SQLException e) {
+			log.error("could not load project list", e);
 		}
+		
 	}
 
 	@Override
@@ -73,23 +97,23 @@ public class MainActivity extends Activity implements OnClickListener {
 			npi.putExtra(ProjectActivity.START_MODE, ProjectActivity.START_NEW);
 			startActivity(npi);
 			break;
-		case R.id.load_project_button:
-			log.debug( "load project");
-			Intent lpi = new Intent(this, ProjectListActivity.class);
-			
-			startActivityForResult(lpi, REQ_PROJECT_LIST);
-			
-			break;
+//		case R.id.load_project_button:
+//			log.debug( "load project");
+//			Intent lpi = new Intent(this, ProjectListActivity.class);
+//			
+//			startActivityForResult(lpi, REQ_PROJECT_LIST);
+//			
+//			break;
 		case R.id.sample_scan_button:
 			log.debug( "starting sample scan activity");
 			Intent i = new Intent(this, SampleScanActivity.class);
 			startActivity(i);
 			break;
-		case R.id.aboutButton:
-			log.debug( "show About");
-			Intent aboutIntent = new Intent(this, AboutActivity.class);
-			startActivity(aboutIntent);
-			break;
+//		case R.id.aboutButton:
+//			log.debug( "show About");
+//			Intent aboutIntent = new Intent(this, AboutActivity.class);
+//			startActivity(aboutIntent);
+//			break;
 		default:
 			log.warn("could not identify sender = " + v.getId());
 			break;
@@ -128,6 +152,19 @@ public class MainActivity extends Activity implements OnClickListener {
 			finish();
 
 			return true;
+			
+		case R.id.new_project_button:
+			log.debug( "new project");
+			Intent npi = new Intent(this, ProjectActivity.class);
+			npi.putExtra(ProjectActivity.START_MODE, ProjectActivity.START_NEW);
+			startActivity(npi);
+			return false;
+			
+		case R.id.main_wifi_scan:
+			log.debug( "starting sample scan activity");
+			Intent scanIntent = new Intent(this, SampleScanActivity.class);
+			startActivity(scanIntent);
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -139,6 +176,20 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onResume();
 		log.debug("setting context");
 		ApplicationContext.setContext(this);
+		
+		
+		log.debug("refreshing project list");
+		// TODO is there a better way?
+		ListView project_list=((ListView)findViewById(R.id.main_project_list));
+		try {
+			adapter=new ProjectListAdapter(this);
+			project_list.setAdapter(adapter);
+			project_list.setOnItemClickListener(this);
+			
+		} catch (SQLException e) {
+			log.error("could not load project list", e);
+		}
+		
 	}
 	
 	@Override
@@ -152,6 +203,15 @@ public class MainActivity extends Activity implements OnClickListener {
 			projectIntent.putExtra(ProjectActivity.START_MODE, ProjectActivity.REQ_LOAD);
 			startActivity(projectIntent);
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Intent projectIntent=new Intent(this,ProjectActivity.class);
+		projectIntent.putExtra(ProjectActivity.PROJ_KEY, (int)id);
+		projectIntent.putExtra(ProjectActivity.START_MODE, ProjectActivity.REQ_LOAD);
+		startActivity(projectIntent);
+		
 	}
 
 }
