@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/globalBackground">
+
+    <TextView
+        android:id="@+id/sensors_accelerometer_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sensors_accelerometer_label" android:textColor="@color/globalForeground"/>
+
+    <TextView
+        android:id="@+id/sensors_accelerometer_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sensors_accelerometer_text" android:textColor="@color/globalForeground"/>
+
+    <TextView
+        android:id="@+id/sensors_gyroscope_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sensors_gyroscope_label" android:textColor="@color/globalForeground"/>
+
+    <TextView
+        android:id="@+id/sensors_gyroscope_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sensors_gyroscope_text" android:textColor="@color/globalForeground"/>
+
+</LinearLayout>

@@ -35,8 +35,8 @@ public class ProjectListActivity extends Activity implements OnItemClickListener
 		ApplicationContext.setContext(this);
 		
 		ListView listView=((ListView)findViewById(R.id.project_list_view));
-		log.azzert(listView==null, "list view is null??!?!?");
-		log.azzert(this==null, "This could never be null!?!?!?!");
+//		log.azzert(listView==null, "list view is null??!?!?");
+//		log.azzert(this==null, "This could never be null!?!?!?!");
 		try {
 			adapter=new ProjectListAdapter(this);
 			listView.setAdapter(adapter);

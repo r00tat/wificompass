@@ -5,12 +5,14 @@
  */
 package at.fhstp.wificompass.model;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.interfaces.XMLSerializable;
@@ -42,6 +44,7 @@ public class ProjectLocation implements XMLSerializable {
 	
 	protected Bitmap imageBitmap;
 	
+	protected static final int quality=100;
 	
 	@DatabaseField(foreign = true,foreignAutoRefresh = true)
 	protected Project project;
@@ -54,6 +57,11 @@ public class ProjectLocation implements XMLSerializable {
 
 	public ProjectLocation(String title) {
 		this.title = title;
+	}
+	
+	public ProjectLocation(String title,Project project){
+		this.title= title;
+		this.project=project;
 	}
 
 	@Override
@@ -86,19 +94,38 @@ public class ProjectLocation implements XMLSerializable {
 	}
 
 	public Bitmap getBackgroundBitmap() {
+		if(backgroundBitmap==null&&background!=null){
+			backgroundBitmap=BitmapFactory.decodeByteArray(background, 0, background.length);
+		}
 		return backgroundBitmap;
 	}
 
-	public void setBackgroundBitmap(Bitmap backgroundBitmap) {
-		this.backgroundBitmap = backgroundBitmap;
+	public boolean setBackgroundBitmap(Bitmap backgroundBitmap) {
+		
+		ByteArrayOutputStream baos=new ByteArrayOutputStream();
+		if(backgroundBitmap.compress(Bitmap.CompressFormat.PNG, quality, baos)){
+			background=baos.toByteArray();
+			this.backgroundBitmap = backgroundBitmap;
+			return true;
+		}
+		return false;
 	}
 
 	public Bitmap getImageBitmap() {
+		if(imageBitmap==null&&image!=null){
+			imageBitmap=BitmapFactory.decodeByteArray(image, 0, image.length);
+		}
 		return imageBitmap;
 	}
 
-	public void setImageBitmap(Bitmap imageBitmap) {
-		this.imageBitmap = imageBitmap;
+	public boolean setImageBitmap(Bitmap imageBitmap) {
+		ByteArrayOutputStream baos=new ByteArrayOutputStream();
+		if(imageBitmap.compress(Bitmap.CompressFormat.PNG, quality, baos)){
+			image=baos.toByteArray();
+			this.imageBitmap = imageBitmap;
+			return true;
+		}
+		return false;
 	}
 
 	public Project getProject() {

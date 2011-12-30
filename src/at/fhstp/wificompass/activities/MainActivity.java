@@ -27,7 +27,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 
 	protected boolean running;
 
-	protected static final String logTag = "APLocActivity";
+	protected static final String logTag = "MainActivity";
 	
 	protected static final Logger log=new Logger(logTag);
 	
@@ -46,6 +46,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		log.debug( "MainActivity onCreate");
+		Logger.i("TEST!");
 
 		init();
 	}
@@ -164,6 +165,24 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			log.debug( "starting sample scan activity");
 			Intent scanIntent = new Intent(this, SampleScanActivity.class);
 			startActivity(scanIntent);
+			
+			return false;
+			
+		case R.id.main_sensors_option:
+			log.debug("starting sensors test activity");
+			Intent sensorsIntent=new Intent(this,SensorsActivity.class);
+			startActivity(sensorsIntent);
+			
+			return false;
+			
+			
+		case R.id.main_export_option:
+			log.debug("starting export db activity");
+			Intent exportIntent=new Intent(this,ExportDBActivity.class);
+			startActivity(exportIntent);
+			
+			
+			return false;
 			
 		default:
 			return super.onOptionsItemSelected(item);

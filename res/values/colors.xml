@@ -2,6 +2,8 @@
 <resources>
     <color name="mainBackground">#000</color>
     <color name="mainForeground">#fff</color>
+    <color name="globalBackground">#000</color>
+    <color name="globalForeground">#ffcccccc</color>
 
     
 </resources>

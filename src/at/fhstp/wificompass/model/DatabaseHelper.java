@@ -22,7 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	protected static final Logger log = new Logger(DatabaseHelper.class);
 
 	// name of the database file for your application -- change to something appropriate for your app
-	private static final String DATABASE_NAME = "wificompass.db";
+	public static final String DATABASE_NAME = "wificompass.db";
 
 	// any time you make changes to your database objects, you may have to increase the database version
 	private static final int DATABASE_VERSION = 5;

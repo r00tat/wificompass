@@ -116,7 +116,7 @@ public class FileBrowser extends Activity implements OnItemClickListener, OnClic
 			}
 		}
 		else {
-//			loadFile(f);
+			loadFile(f);
 		}
 
 	}

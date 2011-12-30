@@ -27,14 +27,21 @@ import android.util.Log;
  * <li><b>f</b>: file name</li>
  * <li><b>m</b>: method</li>
  * <li><b>l</b>: line number</li>
- * <li><b>M</b>: log message, sent to debug/warn etc. </li>
+ * <li><b>M</b>: log message, sent to debug/warn etc.</li>
  * </ul>
  * </p>
  * <p>
  * The default format string is "<i>%C.%m:%l: %M</i>". A debug message would look like this: <br/>
- * <i><pre>12-12 13:10:41.420: D/APLocActivity(31028): at.fhstp.aploc.activities.MainActivity.init[53]: display: 1280x800 orientation:0</pre></i>
+ * <i>
+ * 
+ * <pre>
+ * 12-12 13:10:41.420: D/APLocActivity(31028): at.fhstp.aploc.activities.MainActivity.init[53]: display: 1280x800 orientation:0
+ * </pre>
+ * 
+ * </i>
  * 
  * </p>
+ * 
  * @author Paul Woelfel (paul@woelfel.at)
  * @see java.text.SimpleDateFormat, android.util.Log
  */
@@ -47,6 +54,7 @@ public class Logger {
 
 	/**
 	 * date format to format dates
+	 * 
 	 * @see java.text.SimpleDateFormat
 	 */
 	protected static String dateFormat = "yyyy.MM.dd HH:mm:ss.S";
@@ -56,117 +64,308 @@ public class Logger {
 	 */
 	protected String tag;
 
+	protected boolean[] enabled;
+
 	/**
 	 * default constructor, sets tag to <i>"Logger"</i>
 	 */
 	public Logger() {
 		tag = "Logger";
+		setLoggingEnabled();
+	}
+
+	protected void setLoggingEnabled() {
+		enabled = new boolean[7];
+		enabled[Log.VERBOSE] = Log.isLoggable(tag, Log.VERBOSE);
+		enabled[Log.DEBUG] = Log.isLoggable(tag, Log.DEBUG);
+		enabled[Log.INFO] = Log.isLoggable(tag, Log.INFO);
+		enabled[Log.WARN] = Log.isLoggable(tag, Log.WARN);
+		enabled[Log.ERROR] = Log.isLoggable(tag, Log.ERROR);
+
 	}
 
 	/**
 	 * constructor with log Tag
-	 * @param logTag tag to use in android log messages
+	 * 
+	 * @param logTag
+	 *            tag to use in android log messages
 	 */
 	public Logger(String logTag) {
 		tag = logTag;
+		setLoggingEnabled();
 	}
 
 	/**
 	 * constructor with class, uses the class name as android log tag.
-	 * @param className class to use for android log tag
+	 * 
+	 * @param className
+	 *            class to use for android log tag
 	 */
 	public Logger(Class<?> className) {
 		tag = className.getSimpleName();
 	}
 
+	protected static String getShortName() {
+		String cn = Thread.currentThread().getStackTrace()[4].getClassName();
+		return cn.contains(".") ? cn.substring(cn.lastIndexOf(".") + 1) : cn;
+	}
+
 	/**
 	 * debug log message
-	 * @param msg log message
+	 * 
+	 * @param msg
+	 *            log message
+	 */
+	public static void d(String msg) {
+		String sn = getShortName();
+		//if (Log.isLoggable(sn, Log.DEBUG))
+			Log.d(sn, formatMessage(msg));
+	}
+
+	/**
+	 * debug log message
+	 * 
+	 * @param msg
+	 *            log message
 	 */
 	public void debug(String msg) {
-		Log.d(tag, formatMessage(msg));
+		//if (enabled[Log.DEBUG])
+			Log.d(tag, formatMessage(msg));
 	}
 
 	/**
 	 * debug log message
-	 * @param msg log message
-	 * @param tr Throwable to log
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
 	 */
 	public void debug(String msg, Throwable tr) {
-		Log.d(tag, formatMessage(msg), tr);
+		//if (enabled[Log.DEBUG])
+			Log.d(tag, formatMessage(msg), tr);
+	}
+
+	/**
+	 * debug log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
+	 */
+	public static void d(String msg, Throwable tr) {
+		String sn = getShortName();
+		//if (Log.isLoggable(sn, Log.DEBUG))
+
+			Log.d(sn, formatMessage(msg), tr);
 	}
 
 	/**
 	 * verbose log message
-	 * @param msg log message
+	 * 
+	 * @param msg
+	 *            log message
 	 */
 	public void verbose(String msg) {
-		Log.v(tag, formatMessage(msg));
+		//if (enabled[Log.VERBOSE])
+			Log.v(tag, formatMessage(msg));
 	}
 
 	/**
 	 * verbose log message
-	 * @param msg log message
-	 * @param tr Throwable to log
+	 * 
+	 * @param msg
+	 *            log message
+	 */
+	public static void v(String msg) {
+		String sn = getShortName();
+		//if (Log.isLoggable(sn, Log.DEBUG))
+			Log.v(sn, formatMessage(msg));
+	}
+
+	/**
+	 * verbose log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
 	 */
 	public void verbose(String msg, Throwable tr) {
-		Log.v(tag, formatMessage(msg), tr);
+		//if (enabled[Log.VERBOSE])
+			Log.v(tag, formatMessage(msg), tr);
 	}
-	
+
+	/**
+	 * verbose log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
+	 */
+	public static void v(String msg, Throwable tr) {
+		String sn = getShortName();
+		//if (Log.isLoggable(sn, Log.DEBUG))
+			Log.v(sn, formatMessage(msg), tr);
+	}
+
 	/**
 	 * info log message
-	 * @param msg log message
+	 * 
+	 * @param msg
+	 *            log message
 	 */
 	public void info(String msg) {
-		Log.i(tag, formatMessage(msg));
+		//if (enabled[Log.INFO])
+			Log.i(tag, formatMessage(msg));
 	}
 
 	/**
 	 * info log message
-	 * @param msg log message
-	 * @param tr Throwable to log
+	 * 
+	 * @param msg
+	 *            log message
+	 */
+	public static void i(String msg) {
+		String sn = getShortName();
+		//if (Log.isLoggable(sn, Log.DEBUG))
+			Log.i(sn, formatMessage(msg));
+	}
+
+	/**
+	 * info log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
 	 */
 	public void info(String msg, Throwable tr) {
-		Log.i(tag, formatMessage(msg), tr);
+		//if (enabled[Log.INFO])
+			Log.i(tag, formatMessage(msg), tr);
+	}
+
+	/**
+	 * info log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
+	 */
+	public static void i(String msg, Throwable tr) {
+		String sn = getShortName();
+		//if (Log.isLoggable(sn, Log.DEBUG))
+			Log.i(sn, formatMessage(msg), tr);
 	}
 
 	/**
 	 * warn log message
-	 * @param msg log message
+	 * 
+	 * @param msg
+	 *            log message
 	 */
 	public void warn(String msg) {
-		Log.w(tag, formatMessage(msg));
+		//if (enabled[Log.WARN])
+			Log.w(tag, formatMessage(msg));
 	}
 
 	/**
 	 * warn log message
-	 * @param msg log message
-	 * @param tr Throwable to log
+	 * 
+	 * @param msg
+	 *            log message
+	 */
+	public static void w(String msg) {
+		String sn = getShortName();
+		//if (Log.isLoggable(sn, Log.DEBUG))
+			Log.w(sn, formatMessage(msg));
+	}
+
+	/**
+	 * warn log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
 	 */
 	public void warn(String msg, Throwable tr) {
-		Log.w(tag, formatMessage(msg), tr);
+		//if (enabled[Log.WARN])
+			Log.w(tag, formatMessage(msg), tr);
+	}
+
+	/**
+	 * warn log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
+	 */
+	public static void w(String msg, Throwable tr) {
+		String sn = getShortName();
+		//if (Log.isLoggable(sn, Log.DEBUG))
+			Log.w(sn, formatMessage(msg), tr);
 	}
 
 	/**
 	 * error log message
-	 * @param msg log message
+	 * 
+	 * @param msg
+	 *            log message
 	 */
 	public void error(String msg) {
-		Log.e(tag, formatMessage(msg));
+		//if (enabled[Log.ERROR])
+			Log.e(tag, formatMessage(msg));
 	}
 
 	/**
 	 * error log message
-	 * @param msg log message
-	 * @param tr Throwable to log
+	 * 
+	 * @param msg
+	 *            log message
+	 */
+	public static void e(String msg) {
+		String sn = getShortName();
+		//if (Log.isLoggable(sn, Log.DEBUG))
+			Log.e(sn, formatMessage(msg));
+	}
+
+	/**
+	 * error log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
 	 */
 	public void error(String msg, Throwable tr) {
-		Log.e(tag, formatMessage(msg), tr);
+		//if (enabled[Log.ERROR])
+			Log.e(tag, formatMessage(msg), tr);
+	}
+
+	/**
+	 * error log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
+	 */
+	public static void e(String msg, Throwable tr) {
+		String sn = getShortName();
+		// if (Log.isLoggable(sn, Log.DEBUG))
+			Log.e(sn, formatMessage(msg), tr);
 	}
 
 	/**
 	 * wtf log message
-	 * @param msg log message
+	 * 
+	 * @param msg
+	 *            log message
 	 */
 	public void wtf(String msg) {
 		Log.wtf(tag, formatMessage(msg));
@@ -174,34 +373,61 @@ public class Logger {
 
 	/**
 	 * wtf log message
-	 * @param msg log message
-	 * @param tr Throwable to log
+	 * 
+	 * @param msg
+	 *            log message
+	 */
+	public static void f(String msg) {
+		Log.wtf(getShortName(), formatMessage(msg));
+	}
+
+	/**
+	 * wtf log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
 	 */
 	public void wtf(String msg, Throwable tr) {
 		Log.wtf(tag, formatMessage(msg), tr);
 	}
 
-	
+	/**
+	 * wtf log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
+	 */
+	public static void f(String msg, Throwable tr) {
+		Log.wtf(getShortName(), formatMessage(msg), tr);
+	}
+
 	/**
 	 * create an assert logging message
-	 * @param logIfTrue write the log message if true
-	 * @param msg log message
+	 * 
+	 * @param logIfTrue
+	 *            write the log message if true
+	 * @param msg
+	 *            log message
 	 */
-	public void azzert(boolean logIfTrue,String msg){
-		if(logIfTrue)
+	public void azzert(boolean logIfTrue, String msg) {
+		if (logIfTrue)
 			Log.wtf(tag, msg);
 	}
 
-
 	/**
 	 * format a message according to logFormat and dateFormat
-	 * @param msg the log message
+	 * 
+	 * @param msg
+	 *            the log message
 	 * @return formated string
 	 */
 	protected static String formatMessage(String msg) {
 		StringBuffer log = new StringBuffer();
 
-		
 		StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
 
 		for (int i = 0; i < logFormat.length(); i++) {
@@ -227,7 +453,7 @@ public class Logger {
 				case 'c':
 					// short class name
 					String cn = caller.getClassName();
-					log.append(cn.contains(".") ? cn.substring(caller.getClassName().lastIndexOf(".") + 1) : cn);
+					log.append(cn.contains(".") ? cn.substring(cn.lastIndexOf(".") + 1) : cn);
 					break;
 
 				case 'f':
@@ -249,21 +475,21 @@ public class Logger {
 					// log message
 					log.append(msg);
 					break;
-					
+
 				case '%':
 					// % sign
 					log.append("%");
 					break;
-					
+
 				case 'n':
 					// new line
 					log.append("\n");
 					break;
-					
+
 				default:
-					log.append("%"+logFormat.charAt(i + 1));
+					log.append("%" + logFormat.charAt(i + 1));
 					break;
-						
+
 				}
 
 				// skip next character
@@ -280,6 +506,7 @@ public class Logger {
 
 	/**
 	 * get the log format
+	 * 
 	 * @return logFormat
 	 */
 	public static String getLogFormat() {
@@ -288,7 +515,9 @@ public class Logger {
 
 	/**
 	 * set the log format
-	 * @param logFormat new log format
+	 * 
+	 * @param logFormat
+	 *            new log format
 	 */
 	public static void setLogFormat(String logFormat) {
 		Logger.logFormat = logFormat;
@@ -296,6 +525,7 @@ public class Logger {
 
 	/**
 	 * get the current date format
+	 * 
 	 * @return date format
 	 */
 	public static String getDateFormat() {
@@ -304,7 +534,9 @@ public class Logger {
 
 	/**
 	 * set the date format
-	 * @param dateFormat new date format
+	 * 
+	 * @param dateFormat
+	 *            new date format
 	 */
 	public static void setDateFormat(String dateFormat) {
 		Logger.dateFormat = dateFormat;

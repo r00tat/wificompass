@@ -29,7 +29,7 @@
    <string name="filebrowser_dialog_filename_message">Enter the filename for the File to save!</string>
    <string name="filebrowser_dialog_directory_title">Create directory!</string>
    <string name="filebrowser_dialog_directory_message">Enter the name for the direcotry to save!</string>
-   <string name="file_ending">alp</string>
+   <string name="file_ending">wcdb</string>
    <string name="project_title">project title</string>
    <string name="project_path">project path</string>
    <string name="project_description">project description</string>
@@ -69,4 +69,21 @@
    <string name="project_delete_success">project successfully deleted!</string>
    <string name="project_location">project location</string>
    <string name="main_wifi_scan">Wifi Scan</string>
+   <string name="sensors_label">sensors test</string>
+   <string name="sensors_test_label">Sensors Test</string>
+   <string name="sensors_accelerometer_label">Accelerometer</string>
+   <string name="sensors_accelerometer_text">no data</string>
+   <string name="sensors_gyroscope_label">Gyroscope</string>
+   <string name="sensors_gyroscope_text">no data</string>
+   <string name="sensors_accelerometer_format">x: %1$f\ny: %2$f\nz: %3$f</string>
+   <string name="sensors_gyroscope_format">x: %1$f\ny: %2$f\nz: %3$f</string>
+   <string name="export_db_info_text">To export the current Project database to the sd card press the button</string>
+   <string name="export_db_button_text">export projects to SD card</string>
+   <string name="export_db_message_text">nothing to do...</string>
+   <string name="export_db_save_start_message">Saving database backup under %1$s.\ncopying...</string>
+   <string name="app_package">at.fhstp.wificompass</string>
+   <string name="export_db_save_finished_message"> done!</string>
+   <string name="export_db_save_failed_message">backup failed! %1$s</string>
+   <string name="export_db_label">export DB</string>
+   <string name="main_export_db_label">backup</string>
 </resources>
