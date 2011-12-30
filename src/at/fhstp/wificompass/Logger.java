@@ -105,10 +105,6 @@ public class Logger {
 		tag = className.getSimpleName();
 	}
 
-	protected static String getShortName() {
-		String cn = Thread.currentThread().getStackTrace()[4].getClassName();
-		return cn.contains(".") ? cn.substring(cn.lastIndexOf(".") + 1) : cn;
-	}
 
 	/**
 	 * debug log message
@@ -117,9 +113,8 @@ public class Logger {
 	 *            log message
 	 */
 	public static void d(String msg) {
-		String sn = getShortName();
-		//if (Log.isLoggable(sn, Log.DEBUG))
-			Log.d(sn, formatMessage(msg));
+
+		logMessage(Log.DEBUG, null, msg, null);
 	}
 
 	/**
@@ -129,8 +124,7 @@ public class Logger {
 	 *            log message
 	 */
 	public void debug(String msg) {
-		//if (enabled[Log.DEBUG])
-			Log.d(tag, formatMessage(msg));
+		logMessage(Log.DEBUG, tag, msg, null);
 	}
 
 	/**
@@ -142,8 +136,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public void debug(String msg, Throwable tr) {
-		//if (enabled[Log.DEBUG])
-			Log.d(tag, formatMessage(msg), tr);
+		logMessage(Log.DEBUG, tag, msg, tr);
 	}
 
 	/**
@@ -155,10 +148,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public static void d(String msg, Throwable tr) {
-		String sn = getShortName();
-		//if (Log.isLoggable(sn, Log.DEBUG))
-
-			Log.d(sn, formatMessage(msg), tr);
+		logMessage(Log.DEBUG, null, msg, tr);
 	}
 
 	/**
@@ -168,8 +158,7 @@ public class Logger {
 	 *            log message
 	 */
 	public void verbose(String msg) {
-		//if (enabled[Log.VERBOSE])
-			Log.v(tag, formatMessage(msg));
+		logMessage(Log.VERBOSE, tag, msg, null);
 	}
 
 	/**
@@ -179,9 +168,7 @@ public class Logger {
 	 *            log message
 	 */
 	public static void v(String msg) {
-		String sn = getShortName();
-		//if (Log.isLoggable(sn, Log.DEBUG))
-			Log.v(sn, formatMessage(msg));
+		logMessage(Log.VERBOSE, null, msg, null);
 	}
 
 	/**
@@ -193,8 +180,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public void verbose(String msg, Throwable tr) {
-		//if (enabled[Log.VERBOSE])
-			Log.v(tag, formatMessage(msg), tr);
+		logMessage(Log.VERBOSE, tag, msg, tr);
 	}
 
 	/**
@@ -206,9 +192,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public static void v(String msg, Throwable tr) {
-		String sn = getShortName();
-		//if (Log.isLoggable(sn, Log.DEBUG))
-			Log.v(sn, formatMessage(msg), tr);
+		logMessage(Log.VERBOSE, null, msg, tr);
 	}
 
 	/**
@@ -218,8 +202,7 @@ public class Logger {
 	 *            log message
 	 */
 	public void info(String msg) {
-		//if (enabled[Log.INFO])
-			Log.i(tag, formatMessage(msg));
+		logMessage(Log.INFO, tag, msg, null);
 	}
 
 	/**
@@ -229,9 +212,7 @@ public class Logger {
 	 *            log message
 	 */
 	public static void i(String msg) {
-		String sn = getShortName();
-		//if (Log.isLoggable(sn, Log.DEBUG))
-			Log.i(sn, formatMessage(msg));
+		logMessage(Log.INFO, null, msg, null);
 	}
 
 	/**
@@ -243,8 +224,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public void info(String msg, Throwable tr) {
-		//if (enabled[Log.INFO])
-			Log.i(tag, formatMessage(msg), tr);
+		logMessage(Log.INFO, tag, msg, tr);
 	}
 
 	/**
@@ -256,9 +236,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public static void i(String msg, Throwable tr) {
-		String sn = getShortName();
-		//if (Log.isLoggable(sn, Log.DEBUG))
-			Log.i(sn, formatMessage(msg), tr);
+		logMessage(Log.INFO, null, msg, tr);
 	}
 
 	/**
@@ -268,8 +246,7 @@ public class Logger {
 	 *            log message
 	 */
 	public void warn(String msg) {
-		//if (enabled[Log.WARN])
-			Log.w(tag, formatMessage(msg));
+		logMessage(Log.WARN, tag, msg, null);
 	}
 
 	/**
@@ -279,9 +256,7 @@ public class Logger {
 	 *            log message
 	 */
 	public static void w(String msg) {
-		String sn = getShortName();
-		//if (Log.isLoggable(sn, Log.DEBUG))
-			Log.w(sn, formatMessage(msg));
+		logMessage(Log.WARN, null, msg, null);
 	}
 
 	/**
@@ -293,8 +268,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public void warn(String msg, Throwable tr) {
-		//if (enabled[Log.WARN])
-			Log.w(tag, formatMessage(msg), tr);
+		logMessage(Log.WARN, tag, msg, tr);
 	}
 
 	/**
@@ -306,9 +280,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public static void w(String msg, Throwable tr) {
-		String sn = getShortName();
-		//if (Log.isLoggable(sn, Log.DEBUG))
-			Log.w(sn, formatMessage(msg), tr);
+		logMessage(Log.WARN, null, msg, tr);
 	}
 
 	/**
@@ -318,8 +290,7 @@ public class Logger {
 	 *            log message
 	 */
 	public void error(String msg) {
-		//if (enabled[Log.ERROR])
-			Log.e(tag, formatMessage(msg));
+		logMessage(Log.ERROR, tag, msg, null);
 	}
 
 	/**
@@ -329,9 +300,7 @@ public class Logger {
 	 *            log message
 	 */
 	public static void e(String msg) {
-		String sn = getShortName();
-		//if (Log.isLoggable(sn, Log.DEBUG))
-			Log.e(sn, formatMessage(msg));
+		logMessage(Log.ERROR, null, msg, null);
 	}
 
 	/**
@@ -343,8 +312,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public void error(String msg, Throwable tr) {
-		//if (enabled[Log.ERROR])
-			Log.e(tag, formatMessage(msg), tr);
+		logMessage(Log.ERROR, tag, msg, tr);
 	}
 
 	/**
@@ -356,9 +324,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public static void e(String msg, Throwable tr) {
-		String sn = getShortName();
-		// if (Log.isLoggable(sn, Log.DEBUG))
-			Log.e(sn, formatMessage(msg), tr);
+		logMessage(Log.ERROR, null, msg, tr);
 	}
 
 	/**
@@ -368,7 +334,7 @@ public class Logger {
 	 *            log message
 	 */
 	public void wtf(String msg) {
-		Log.wtf(tag, formatMessage(msg));
+		logMessage(Log.ASSERT, tag, msg, null);
 	}
 
 	/**
@@ -378,7 +344,7 @@ public class Logger {
 	 *            log message
 	 */
 	public static void f(String msg) {
-		Log.wtf(getShortName(), formatMessage(msg));
+		logMessage(Log.ASSERT, null, msg, null);
 	}
 
 	/**
@@ -390,7 +356,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public void wtf(String msg, Throwable tr) {
-		Log.wtf(tag, formatMessage(msg), tr);
+		logMessage(Log.ASSERT, tag, msg, tr);
 	}
 
 	/**
@@ -402,7 +368,7 @@ public class Logger {
 	 *            Throwable to log
 	 */
 	public static void f(String msg, Throwable tr) {
-		Log.wtf(getShortName(), formatMessage(msg), tr);
+		logMessage(Log.ASSERT, null, msg, tr);
 	}
 
 	/**
@@ -415,20 +381,29 @@ public class Logger {
 	 */
 	public void azzert(boolean logIfTrue, String msg) {
 		if (logIfTrue)
-			Log.wtf(tag, msg);
+			logMessage(Log.ASSERT, tag, msg, null);
 	}
 
 	/**
-	 * format a message according to logFormat and dateFormat
+	 * format a message according to logFormat and dateFormat and log it
 	 * 
+	 * @param level
+	 *            log level to use
+	 * @param tag
+	 *            tag, if existent
 	 * @param msg
 	 *            the log message
-	 * @return formated string
+	 * @param exception
+	 *            exception, if existent
 	 */
-	protected static String formatMessage(String msg) {
+	protected static void logMessage(int level, String tag, String msg, Throwable exception) {
 		StringBuffer log = new StringBuffer();
 
 		StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+		
+		if (tag == null) {
+			tag = caller.getClass().getSimpleName();
+		}
 
 		for (int i = 0; i < logFormat.length(); i++) {
 
@@ -442,7 +417,7 @@ public class Logger {
 
 				case 'p':
 					// package
-					log.append(caller.getClassName().replaceAll("\\..*$", ""));
+					log.append(caller.getClass().getPackage().toString());
 					break;
 
 				case 'C':
@@ -452,8 +427,8 @@ public class Logger {
 
 				case 'c':
 					// short class name
-					String cn = caller.getClassName();
-					log.append(cn.contains(".") ? cn.substring(cn.lastIndexOf(".") + 1) : cn);
+
+					log.append(caller.getClass().getSimpleName());
 					break;
 
 				case 'f':
@@ -501,7 +476,51 @@ public class Logger {
 
 		}
 
-		return log.toString();
+		if (exception == null) {
+			switch (level) {
+			case Log.VERBOSE:
+				Log.v(tag, log.toString());
+				break;
+			case Log.DEBUG:
+				Log.d(tag, log.toString());
+				break;
+			case Log.INFO:
+				Log.i(tag, log.toString());
+				break;
+			case Log.WARN:
+				Log.w(tag, log.toString());
+				break;
+			case Log.ERROR:
+				Log.e(tag, log.toString());
+				break;
+			case Log.ASSERT:
+				Log.wtf(tag, log.toString());
+				break;
+			}
+		} else {
+			switch (level) {
+			case Log.VERBOSE:
+				Log.v(tag, log.toString(), exception);
+				break;
+			case Log.DEBUG:
+				Log.d(tag, log.toString(), exception);
+				break;
+			case Log.INFO:
+				Log.i(tag, log.toString(), exception);
+				break;
+			case Log.WARN:
+				Log.w(tag, log.toString(), exception);
+				break;
+			case Log.ERROR:
+				Log.e(tag, log.toString(), exception);
+				break;
+			case Log.ASSERT:
+				Log.wtf(tag, log.toString(), exception);
+				break;
+			}
+		}
+
+		// return log.toString();
 	}
 
 	/**
