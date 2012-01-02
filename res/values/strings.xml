@@ -86,4 +86,6 @@
    <string name="export_db_save_failed_message">backup failed! %1$s</string>
    <string name="export_db_label">export DB</string>
    <string name="main_export_db_label">backup</string>
+   <string name="sensors_scan_label">start/stop reading sensor data</string>
+   <string name="sensors_graphview_title">Sensor Data</string>
 </resources>
