@@ -21,6 +21,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
@@ -36,7 +39,7 @@ import com.jjoe64.graphview.GraphView.GraphViewSeries;
 import com.jjoe64.graphview.GraphView.LegendAlign;
 import com.jjoe64.graphview.LineGraphView;
 
-public class SensorsActivity extends Activity implements SensorEventListener, OnClickListener {
+public class SensorsActivity extends Activity implements SensorEventListener, OnClickListener, OnSeekBarChangeListener {
 
 	protected static final Logger log = new Logger(SensorsActivity.class);
 
@@ -44,11 +47,11 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 	protected Sensor accelerometer, gyroscope;
 
-	protected float[] gravity;
-
-	protected float[] linear_acceleration;
-
-	protected float[] rotation;
+//	protected float[] gravity;
+//
+//	protected float[] linear_acceleration;
+//
+//	protected float[] rotation;
 
 	protected final float alpha = 0.8f;
 
@@ -66,14 +69,15 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 	protected static final int[] COLORS = { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.WHITE };
 
-	protected static final long UPDATE_INTERVAL = 5000L;
+	protected int updateInterval = 5000,valueLimit=500;
 	
 	protected static final float LEGEND_WITH=200f;
+	
 
 	public SensorsActivity() throws SQLException {
-		gravity = new float[3];
-		linear_acceleration = new float[3];
-		rotation = new float[3];
+//		gravity = new float[3];
+//		linear_acceleration = new float[3];
+//		rotation = new float[3];
 		log.debug("creating dao");
 		databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
 		try {
@@ -93,19 +97,40 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		log.debug("created sensors activity");
-		setContentView(R.layout.sensors);
 
-		// log.debug("registering sensor listener");
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 		gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-		// sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
+		initUI();
+
+	}
+	
+	protected void initUI(){
+		setContentView(R.layout.sensors);
 
 		ToggleButton toggle = ((ToggleButton) findViewById(R.id.sensors_scan_toggle));
 		toggle.setOnClickListener(this);
+		toggle.setChecked(scanning);
+		
+		SeekBar updateSeekbar=((SeekBar)findViewById(R.id.sensors_update_seekbar));
+		updateSeekbar.setMax(60);
+		updateSeekbar.setKeyProgressIncrement(100);
+		updateSeekbar.setOnSeekBarChangeListener(this);
+		updateSeekbar.setProgress(updateInterval/1000);
+		
+		
+		SeekBar valueSeekbar=((SeekBar)findViewById(R.id.sensors_valuecount_seekbar));
+		valueSeekbar.setMax(2000);
+		valueSeekbar.setKeyProgressIncrement(100);
+		valueSeekbar.setOnSeekBarChangeListener(this);
+		valueSeekbar.setProgress(valueLimit);
+		
+		
+		((TextView)findViewById(R.id.sensors_update_label)).setText(getString(R.string.sensors_update_label,updateInterval/1000));
+		((TextView)findViewById(R.id.sensors_valuecount_label)).setText(getString(R.string.sensors_valuecount_label,valueLimit));
 
 		updateGraph();
-
 	}
 
 	protected void updateGraph() {
@@ -123,14 +148,14 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 			int length = 0;
 
 			List<SensorData> types = sensorDataDao.queryBuilder().selectColumns(FIELD_TYPE, FIELD_NAME).distinct().query();
-
-			Iterator<SensorData> typeIt = types.iterator();
+			
+						Iterator<SensorData> typeIt = types.iterator();
 			for (int j = 0; typeIt.hasNext(); j++) {
 
 				SensorData type = typeIt.next();
 
-				List<SensorData> data = sensorDataDao.queryBuilder().orderBy(FIELD_TIMESTAMP, false).limit(500L).where()
-						.eq(FIELD_TYPE, type.getSensorType()).and().gt(FIELD_TIMESTAMP, startTime).query();
+				List<SensorData> data = sensorDataDao.queryBuilder().orderBy(FIELD_TIMESTAMP, false).limit((long)valueLimit).where()
+						.eq(FIELD_TYPE, type.getSensorType()).query();
 
 				if (data.size() > length)
 					length = data.size();
@@ -139,7 +164,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 				Iterator<SensorData> it = data.iterator();
 				for (int i = 0; it.hasNext(); i++) {
 					SensorData element = it.next();
-					graphData[i] = new GraphViewData(i, element.getValue0() + element.getValue1() + element.getValue2() + element.getValue3());
+					graphData[i]=new GraphViewData(i, element.getNormalizedValue());
 				}
 
 				graphView.addSeries(new GraphViewSeries(type.getSensorName(), COLORS[j % COLORS.length], graphData));
@@ -167,6 +192,8 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 			log.error("could not create graph", e);
 		}
 	}
+	
+
 
 	/*
 	 * (non-Javadoc)
@@ -230,53 +257,10 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 			log.debug("set start time to " + startTime);
 		}
 
-		SensorData sd = new SensorData();
-		sd.setSensorName(event.sensor.getName());
-		sd.setSensorType(event.sensor.getType());
-		sd.setTimestamp(event.timestamp);
-		sd.setAccuracy(event.accuracy);
-
-		if (event.values.length >= 1)
-			sd.setValue0(event.values[0]);
-		if (event.values.length >= 2)
-			sd.setValue1(event.values[1]);
-		if (event.values.length >= 3)
-			sd.setValue2(event.values[2]);
-		if (event.values.length >= 4)
-			sd.setValue3(event.values[3]);
-
+		SensorData sd = new SensorData(event);
 		// don't write to db yet, let the if type do something with the object
-
-		if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
-			log.debug("accelerometer sensor changed! " + sd.toString());
-
-			// gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
-			// gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
-			// gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
-			//
-			// linear_acceleration[0] = event.values[0] - gravity[0];
-			// linear_acceleration[1] = event.values[1] - gravity[1];
-			// linear_acceleration[2] = event.values[2] - gravity[2];
-
-			linear_acceleration[0] = event.values[0];
-			linear_acceleration[1] = event.values[1];
-			linear_acceleration[2] = event.values[2];
-
-			// ((TextView) findViewById(R.id.sensors_accelerometer_text)).setText(getString(R.string.sensors_accelerometer_format,
-			// linear_acceleration[0], linear_acceleration[1], linear_acceleration[2]));
-
-		} else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-			log.debug("gyroscope sensor changed " + sd.toString());
-			rotation[0] = event.values[0];
-			rotation[1] = event.values[1];
-			rotation[2] = event.values[2];
-
-			// ((TextView) findViewById(R.id.sensors_gyroscope_text)).setText(getString(R.string.sensors_gyroscope_format, rotation[0], rotation[1],
-			// rotation[2]));
-
-		} else {
-			log.debug("sensor unkown");
-		}
+		
+		log.debug("Sensor "+event.sensor.getName()+" changed");
 
 		try {
 			sensorDataDao.createIfNotExists(sd);
@@ -284,7 +268,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 			log.error("could not save sensor data to database", e);
 		}
 
-		if (new Date().getTime() > lastUpdate + UPDATE_INTERVAL) {
+		if (new Date().getTime() > lastUpdate + updateInterval) {
 			updateGraph();
 		}
 
@@ -298,6 +282,8 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+		
+		initUI();
 	}
 
 	@Override
@@ -320,6 +306,31 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 				startScan();
 			break;
 		}
+	}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//		log.debug("seekbar "+seekBar.getId()+" changed to "+progress);
+		switch(seekBar.getId()){
+		case R.id.sensors_update_seekbar: 
+			updateInterval=progress*1000;
+			if(updateInterval<1000) updateInterval=1000;
+			((TextView)findViewById(R.id.sensors_update_label)).setText(getString(R.string.sensors_update_label,updateInterval/1000));
+			break;
+		case R.id.sensors_valuecount_seekbar:
+			valueLimit=progress;
+			if(valueLimit<10) valueLimit=10;
+			((TextView)findViewById(R.id.sensors_valuecount_label)).setText(getString(R.string.sensors_valuecount_label,valueLimit));
+			break;
+		}
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
 	}
 
 }

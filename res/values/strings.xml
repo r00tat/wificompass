@@ -86,11 +86,13 @@
    <string name="export_db_save_failed_message">backup failed! %1$s</string>
    <string name="export_db_label">export DB</string>
    <string name="main_export_db_label">backup &amp; restore</string>
-   <string name="sensors_scan_label">start/stop reading sensor data</string>
+   <string name="sensors_scan_label">read sensor data</string>
    <string name="sensors_graphview_title">Sensor Data</string>
    <string name="export_db_import_button_text">import database</string>
    <string name="export_db_drop_button_text">drop database</string>
    <string name="not_implemented">function currently not implemented!</string>
    <string name="export_db_drop_failed">could not drop and recreate the database: %1$s</string>
    <string name="export_db_drop_finished">database droped and recreated!</string>
+   <string name="sensors_update_label">update interval: %1$ds</string>
+   <string name="sensors_valuecount_label">values displayed: %1$d</string>
 </resources>

@@ -5,6 +5,8 @@
  */
 package at.fhstp.wificompass.model;
 
+import android.hardware.SensorEvent;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -26,6 +28,9 @@ public class SensorData {
 	@DatabaseField
 	protected long timestamp;
 	
+	@DatabaseField
+	protected int length;
+	
 	// not more than 4 values are expected
 	@DatabaseField
 	protected float value0,value1,value2,value3;
@@ -39,7 +44,26 @@ public class SensorData {
 		
 	}
 
+	public SensorData(SensorEvent event){
+		sensorName=event.sensor.getName();
+		sensorType=(event.sensor.getType());
+		timestamp=(event.timestamp);
+		accuracy=(event.accuracy);
 
+		if (event.values.length >= 1)
+			value0=(event.values[0]);
+		if (event.values.length >= 2)
+			value1=(event.values[1]);
+		if (event.values.length >= 3)
+			value2=(event.values[2]);
+		if (event.values.length >= 4)
+			value3=(event.values[3]);
+		
+		normalizedValue=(value0<0?value0*-1:value0)+(value1<0?value1*-1:value1)+(value2<0?value2*-1:value2)+(value3<0?value3*-1:value3);
+		length=event.values.length;
+		
+		
+	}
 
 	/**
 	 * @return the sensorName
@@ -218,6 +242,24 @@ public class SensorData {
 	@Override
 	public String toString() {
 		return sensorName+" ("+sensorType+") "+timestamp+": "+value0+" "+value1+" "+value2+" "+value3+" "+accuracy+" "+normalizedValue;
+	}
+
+
+
+	/**
+	 * @return the length
+	 */
+	public int getLength() {
+		return length;
+	}
+
+
+
+	/**
+	 * @param length the length to set
+	 */
+	public void setLength(int length) {
+		this.length = length;
 	}
 	
 	
