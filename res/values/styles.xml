@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="background">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:textColor">@color/globalForeground</item>
+        <item name="android:background">@color/globalBackground</item>
+    </style>
+    <style name="textview" parent="@style/background"></style>
+
+    
+</resources>

@@ -77,7 +77,7 @@
    <string name="sensors_gyroscope_text">no data</string>
    <string name="sensors_accelerometer_format">x: %1$f\ny: %2$f\nz: %3$f</string>
    <string name="sensors_gyroscope_format">x: %1$f\ny: %2$f\nz: %3$f</string>
-   <string name="export_db_info_text">To export the current Project database to the sd card press the button</string>
+   <string name="export_db_info_text">You can export the database, import or drop the database by pressing the button.</string>
    <string name="export_db_button_text">export projects to SD card</string>
    <string name="export_db_message_text">nothing to do...</string>
    <string name="export_db_save_start_message">Saving database backup under %1$s.\ncopying...</string>
@@ -85,7 +85,12 @@
    <string name="export_db_save_finished_message"> done!</string>
    <string name="export_db_save_failed_message">backup failed! %1$s</string>
    <string name="export_db_label">export DB</string>
-   <string name="main_export_db_label">backup</string>
+   <string name="main_export_db_label">backup &amp; restore</string>
    <string name="sensors_scan_label">start/stop reading sensor data</string>
    <string name="sensors_graphview_title">Sensor Data</string>
+   <string name="export_db_import_button_text">import database</string>
+   <string name="export_db_drop_button_text">drop database</string>
+   <string name="not_implemented">function currently not implemented!</string>
+   <string name="export_db_drop_failed">could not drop and recreate the database: %1$s</string>
+   <string name="export_db_drop_finished">database droped and recreated!</string>
 </resources>

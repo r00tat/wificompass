@@ -43,7 +43,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 	protected SensorManager sensorManager;
 
 	protected Sensor accelerometer, gyroscope;
-	
+
 	protected float[] gravity;
 
 	protected float[] linear_acceleration;
@@ -58,18 +58,17 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 	protected boolean scanning = false;
 
-	protected GraphView graphView =null;
-	
-	protected long startTime=0L,lastUpdate=0L;
-	
-	protected static final String FIELD_TYPE="sensorType",FIELD_NAME="sensorName",FIELD_TIMESTAMP="timestamp";
-	
-	protected static final int[] COLORS={Color.RED,Color.BLUE,Color.GREEN,Color.YELLOW,Color.CYAN,Color.MAGENTA,Color.WHITE};
-	
-	protected static final long UPDATE_INTERVAL=5000L;
-	
-	
+	protected GraphView graphView = null;
 
+	protected long startTime = 0L, lastUpdate = 0L;
+
+	protected static final String FIELD_TYPE = "sensorType", FIELD_NAME = "sensorName", FIELD_TIMESTAMP = "timestamp";
+
+	protected static final int[] COLORS = { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.WHITE };
+
+	protected static final long UPDATE_INTERVAL = 5000L;
+	
+	protected static final float LEGEND_WITH=200f;
 
 	public SensorsActivity() throws SQLException {
 		gravity = new float[3];
@@ -104,64 +103,68 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 		ToggleButton toggle = ((ToggleButton) findViewById(R.id.sensors_scan_toggle));
 		toggle.setOnClickListener(this);
-		
-				updateGraph();
-		
+
+		updateGraph();
+
 	}
-	
-	protected void updateGraph(){
-		lastUpdate=new Date().getTime();
+
+	protected void updateGraph() {
+		lastUpdate = new Date().getTime();
 		log.debug("updateing graph");
-		
+
 		try {
-			
-			if(graphView!=null){
+
+			if (graphView != null) {
 				((LinearLayout) findViewById(R.id.sensors_layout)).removeView(graphView);
 			}
 
 			graphView = new LineGraphView(this, getString(R.string.sensors_graphview_title));
-			
-			graphView.setScrollable(true);  
-			// optional - activate scaling / zooming  
-			graphView.setScalable(true);  
-			
-			// optional - legend  
-			graphView.setShowLegend(true);  
-			graphView.setLegendAlign(LegendAlign.BOTTOM); 
 
-			int length=0;
-			
-			List<SensorData> types = sensorDataDao.queryBuilder().selectColumns(FIELD_TYPE,FIELD_NAME).distinct().query();
-			
+			int length = 0;
+
+			List<SensorData> types = sensorDataDao.queryBuilder().selectColumns(FIELD_TYPE, FIELD_NAME).distinct().query();
+
 			Iterator<SensorData> typeIt = types.iterator();
-			for (int j=0; typeIt.hasNext();j++) {
-				
-				SensorData type=typeIt.next();
+			for (int j = 0; typeIt.hasNext(); j++) {
 
-				List<SensorData> data = sensorDataDao.queryBuilder().orderBy(FIELD_TIMESTAMP, false).limit(500L).where().eq(FIELD_TYPE, type.getSensorType()).and().gt(FIELD_TIMESTAMP, startTime).query();
-				
-				if(data.size()>length)
-					length=data.size();
+				SensorData type = typeIt.next();
+
+				List<SensorData> data = sensorDataDao.queryBuilder().orderBy(FIELD_TIMESTAMP, false).limit(500L).where()
+						.eq(FIELD_TYPE, type.getSensorType()).and().gt(FIELD_TIMESTAMP, startTime).query();
+
+				if (data.size() > length)
+					length = data.size();
 
 				GraphViewData[] graphData = new GraphViewData[data.size()];
 				Iterator<SensorData> it = data.iterator();
 				for (int i = 0; it.hasNext(); i++) {
 					SensorData element = it.next();
-					graphData[i] = new GraphViewData(i, element.getValue0() + element.getValue1() + element.getValue2()
-							+ element.getValue3());
+					graphData[i] = new GraphViewData(i, element.getValue0() + element.getValue1() + element.getValue2() + element.getValue3());
 				}
 
-				
-				graphView.addSeries(new GraphViewSeries(type.getSensorName(),COLORS[j%COLORS.length],graphData));
+				graphView.addSeries(new GraphViewSeries(type.getSensorName(), COLORS[j % COLORS.length], graphData));
 
 			}
-			
-			graphView.setViewPort(0, length);
 
+			if (length > 0 && types.size() > 0) {
+				graphView.setViewPort(0, length);
+				graphView.setScrollable(true);
+				// optional - activate scaling / zooming
+				graphView.setScalable(true);
+
+				// optional - legend
+				graphView.setShowLegend(true);
+				graphView.setLegendAlign(LegendAlign.BOTTOM);
+				graphView.setLegendWidth(LEGEND_WITH);
+				
+				((LinearLayout) findViewById(R.id.sensors_layout)).addView(graphView);
+			}else {
+				graphView=null;
+			}
 			
-			((LinearLayout) findViewById(R.id.sensors_layout)).addView(graphView);
+			
 		} catch (Throwable e) {
-			log.error("could not create graph",e);
+			log.error("could not create graph", e);
 		}
 	}
 
@@ -180,22 +183,20 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 		sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 		sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
 		scanning = true;
-		
-		
 
-		 ToggleButton toggle=((ToggleButton)findViewById(R.id.sensors_scan_toggle));
-		 toggle.setChecked(true);
+		ToggleButton toggle = ((ToggleButton) findViewById(R.id.sensors_scan_toggle));
+		toggle.setChecked(true);
 	}
 
 	protected void stopScan() {
 		log.debug("unregistering sensor listener");
 		sensorManager.unregisterListener(this);
 		scanning = false;
-		
+
 		updateGraph();
 
-		 ToggleButton toggle=((ToggleButton)findViewById(R.id.sensors_scan_toggle));
-		 toggle.setChecked(false);
+		ToggleButton toggle = ((ToggleButton) findViewById(R.id.sensors_scan_toggle));
+		toggle.setChecked(false);
 	}
 
 	/*
@@ -214,7 +215,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 		super.onResume();
 		log.debug("setting context");
 		ApplicationContext.setContext(this);
-//		startScan();
+		// startScan();
 
 	}
 
@@ -224,13 +225,11 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		if(startTime==0){
-			startTime=event.timestamp;
-			log.debug("set start time to "+startTime);
+		if (startTime == 0) {
+			startTime = event.timestamp;
+			log.debug("set start time to " + startTime);
 		}
-		
-			
-		
+
 		SensorData sd = new SensorData();
 		sd.setSensorName(event.sensor.getName());
 		sd.setSensorType(event.sensor.getType());
@@ -249,7 +248,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 		// don't write to db yet, let the if type do something with the object
 
 		if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
-			log.debug("accelerometer sensor changed! "+sd.toString());
+			log.debug("accelerometer sensor changed! " + sd.toString());
 
 			// gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
 			// gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
@@ -263,17 +262,17 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 			linear_acceleration[1] = event.values[1];
 			linear_acceleration[2] = event.values[2];
 
-//			((TextView) findViewById(R.id.sensors_accelerometer_text)).setText(getString(R.string.sensors_accelerometer_format,
-//					linear_acceleration[0], linear_acceleration[1], linear_acceleration[2]));
+			// ((TextView) findViewById(R.id.sensors_accelerometer_text)).setText(getString(R.string.sensors_accelerometer_format,
+			// linear_acceleration[0], linear_acceleration[1], linear_acceleration[2]));
 
 		} else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-			log.debug("gyroscope sensor changed "+sd.toString());
+			log.debug("gyroscope sensor changed " + sd.toString());
 			rotation[0] = event.values[0];
 			rotation[1] = event.values[1];
 			rotation[2] = event.values[2];
 
-//			((TextView) findViewById(R.id.sensors_gyroscope_text)).setText(getString(R.string.sensors_gyroscope_format, rotation[0], rotation[1],
-//					rotation[2]));
+			// ((TextView) findViewById(R.id.sensors_gyroscope_text)).setText(getString(R.string.sensors_gyroscope_format, rotation[0], rotation[1],
+			// rotation[2]));
 
 		} else {
 			log.debug("sensor unkown");
@@ -284,11 +283,11 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 		} catch (SQLException e) {
 			log.error("could not save sensor data to database", e);
 		}
-		
-		if(new Date().getTime()>lastUpdate+UPDATE_INTERVAL){
+
+		if (new Date().getTime() > lastUpdate + UPDATE_INTERVAL) {
 			updateGraph();
 		}
-		
+
 	}
 
 	/*

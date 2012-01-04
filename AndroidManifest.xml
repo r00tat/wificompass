@@ -56,7 +56,7 @@
         <activity android:name=".activities.ProjectListActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="orientation" android:label="@string/project_list"></activity>
         <activity android:label="@string/project_location" android:name=".activities.ProjectLocationActivity" android:configChanges="orientation"></activity>
         <activity android:label="@string/sensors_label" android:name=".activities.SensorsActivity" android:configChanges="orientation"></activity>
-        <activity android:label="@string/export_db_label" android:name=".activities.ExportDBActivity" android:configChanges="orientation"></activity>
+        <activity android:label="@string/export_db_label" android:name=".activities.DBActivity" android:configChanges="orientation"></activity>
     </application>
 
 </manifest>

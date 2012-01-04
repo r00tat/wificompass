@@ -61,15 +61,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		if (oldVersion < newVersion) {
 			try {
 
-				for (int i = 0; i < ormClasses.length; i++) {
-					log.debug("droping table :"+ormClasses[i]);
-					TableUtils.dropTable(this.getConnectionSource(), ormClasses[i], true);
-				}
-				
-				for (int i = 0; i < ormClasses.length; i++) {
-					log.debug("creating table :"+ormClasses[i]);
-					TableUtils.createTable(this.getConnectionSource(), ormClasses[i]);
-				}
+				recreateDatabase();
 				
 			} catch (SQLException e) {
 				log.error("could not update table structure!", e);
@@ -77,5 +69,25 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			}
 		}
 	}
+	
+	
+	public void recreateDatabase() throws SQLException{
+		dropTables();
+		createTables();
+	}
 
+	
+	protected void dropTables() throws SQLException{
+		for (int i = 0; i < ormClasses.length; i++) {
+			log.debug("droping table :"+ormClasses[i]);
+			TableUtils.dropTable(this.getConnectionSource(), ormClasses[i], true);
+		}
+	}
+	
+	protected void createTables() throws SQLException{
+		for (int i = 0; i < ormClasses.length; i++) {
+			log.debug("creating table :"+ormClasses[i]);
+			TableUtils.createTable(this.getConnectionSource(), ormClasses[i]);
+		}
+	}
 }

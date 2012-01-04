@@ -178,7 +178,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			
 		case R.id.main_export_option:
 			log.debug("starting export db activity");
-			Intent exportIntent=new Intent(this,ExportDBActivity.class);
+			Intent exportIntent=new Intent(this,DBActivity.class);
 			startActivity(exportIntent);
 			
 			

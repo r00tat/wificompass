@@ -10,6 +10,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.sql.SQLException;
+
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,11 +28,14 @@ import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.DatabaseHelper;
 import at.woelfel.philip.filebrowser.FileBrowser;
 
-public class ExportDBActivity extends Activity implements OnClickListener {
+public class DBActivity extends Activity implements OnClickListener {
 
 	protected static final Logger log = new Logger(SensorsActivity.class);
 
 	protected static final int FILEBROWSER_REQUEST = 12345;
+	
+	protected DatabaseHelper databaseHelper = null;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +43,12 @@ public class ExportDBActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		log.debug("created sensors activity");
 		setContentView(R.layout.export_db);
+		
+		databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
 
 		((Button) findViewById(R.id.export_db_button)).setOnClickListener(this);
+		((Button) findViewById(R.id.export_db_drop_button)).setOnClickListener(this);
+		((Button) findViewById(R.id.export_db_import_button)).setOnClickListener(this);
 	}
 
 	@Override
@@ -56,9 +66,32 @@ public class ExportDBActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		Intent i = new Intent(this, FileBrowser.class);
-		i.putExtra(FileBrowser.EXTRA_MODE, FileBrowser.MODE_SAVE);
-		startActivityForResult(i, FILEBROWSER_REQUEST);
+		TextView tv = ((TextView) findViewById(R.id.export_db_message));
+
+		switch (v.getId()) {
+		case R.id.export_db_button:
+			Intent i = new Intent(this, FileBrowser.class);
+			i.putExtra(FileBrowser.EXTRA_MODE, FileBrowser.MODE_SAVE);
+			startActivityForResult(i, FILEBROWSER_REQUEST);
+			break;
+		
+		case R.id.export_db_import_button:
+			//TODO import data
+			tv.setText(R.string.not_implemented);
+			break;
+			
+		case R.id.export_db_drop_button:
+			
+			try {
+				databaseHelper.recreateDatabase();
+				tv.setText(R.string.export_db_drop_finished);
+			} catch (SQLException e) {
+				log.error("could not recreate database", e);
+				tv.setText(getString(R.string.export_db_drop_failed,e.getMessage()));
+			}
+			
+			break;
+		}
 	}
 
 	/*
@@ -78,6 +111,11 @@ public class ExportDBActivity extends Activity implements OnClickListener {
 			File dbFile = new File(Environment.getDataDirectory() + "/data/" + getString(R.string.app_package) + "/databases/"
 					+ DatabaseHelper.DATABASE_NAME);
 			File backup = new File(path);
+
+			if (backup.exists() && backup.isFile()) {
+				// TODO: show dialog to overerwrite or not
+			}
+
 			FileChannel inChannel = null, outChannel = null;
 			try {
 				backup.createNewFile();
@@ -108,6 +146,15 @@ public class ExportDBActivity extends Activity implements OnClickListener {
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
 		}
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		if (databaseHelper != null) {
+			OpenHelperManager.releaseHelper();
+			databaseHelper = null;
+		}
+		super.finalize();
 	}
 
 }
