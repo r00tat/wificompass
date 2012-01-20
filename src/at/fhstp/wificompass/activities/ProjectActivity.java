@@ -40,7 +40,7 @@ public class ProjectActivity extends Activity implements OnClickListener {
 
 	protected static Logger log = new Logger(ProjectActivity.class);
 
-	protected Dao<Project, String> dao;
+	protected Dao<Project, Integer> dao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

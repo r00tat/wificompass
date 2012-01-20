@@ -29,7 +29,7 @@ public class ProjectListAdapter extends BaseAdapter {
 	public ProjectListAdapter(Context context) throws SQLException{
 		this.context=context;
 		databaseHelper=OpenHelperManager.getHelper(context, DatabaseHelper.class);
-		Dao<Project,String> projectDao=databaseHelper.getDao(Project.class);
+		Dao<Project,Integer> projectDao=databaseHelper.getDao(Project.class);
 		projects=projectDao.queryForAll();
 		
 		

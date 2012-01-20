@@ -7,13 +7,15 @@ package at.fhstp.wificompass.userlocation;
 
 import java.util.List;
 
+import at.fhstp.wificompass.model.Location;
+
 public interface LocationService {
 
 	/**
 	 * return current location
 	 * 
 	 * @return current location
-	 * @see at.fhstp.wificompass.userlocation.Location
+	 * @see at.fhstp.wificompass.model.Location
 	 */
 	Location getLocation();
 

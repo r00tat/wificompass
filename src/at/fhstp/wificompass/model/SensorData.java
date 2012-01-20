@@ -38,7 +38,8 @@ public class SensorData {
 	@DatabaseField
 	protected float normalizedValue;
 	
-	
+	public static final String FIELD_TYPE = "sensorType", FIELD_NAME = "sensorName", FIELD_TIMESTAMP = "timestamp";
+
 	
 	public SensorData(){
 		

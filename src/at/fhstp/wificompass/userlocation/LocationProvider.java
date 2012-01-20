@@ -5,6 +5,8 @@
  */
 package at.fhstp.wificompass.userlocation;
 
+import at.fhstp.wificompass.model.Location;
+
 
 /**
  * @author Paul Woelfel

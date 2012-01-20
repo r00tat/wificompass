@@ -57,7 +57,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 	protected DatabaseHelper databaseHelper = null;
 
-	protected Dao<SensorData, String> sensorDataDao;
+	protected Dao<SensorData, Integer> sensorDataDao;
 
 	protected boolean scanning = false;
 
@@ -65,8 +65,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 	protected long startTime = 0L, lastUpdate = 0L;
 
-	protected static final String FIELD_TYPE = "sensorType", FIELD_NAME = "sensorName", FIELD_TIMESTAMP = "timestamp";
-
+	
 	protected static final int[] COLORS = { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.WHITE };
 
 	protected int updateInterval = 5000,valueLimit=500;
@@ -147,15 +146,15 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 			int length = 0;
 
-			List<SensorData> types = sensorDataDao.queryBuilder().selectColumns(FIELD_TYPE, FIELD_NAME).distinct().query();
+			List<SensorData> types = sensorDataDao.queryBuilder().selectColumns(SensorData.FIELD_TYPE, SensorData.FIELD_NAME).distinct().query();
 			
 						Iterator<SensorData> typeIt = types.iterator();
 			for (int j = 0; typeIt.hasNext(); j++) {
 
 				SensorData type = typeIt.next();
 
-				List<SensorData> data = sensorDataDao.queryBuilder().orderBy(FIELD_TIMESTAMP, false).limit((long)valueLimit).where()
-						.eq(FIELD_TYPE, type.getSensorType()).query();
+				List<SensorData> data = sensorDataDao.queryBuilder().orderBy(SensorData.FIELD_TIMESTAMP, false).limit((long)valueLimit).where()
+						.eq(SensorData.FIELD_TYPE, type.getSensorType()).query();
 
 				if (data.size() > length)
 					length = data.size();

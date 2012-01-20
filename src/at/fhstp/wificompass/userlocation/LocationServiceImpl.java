@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Vector;
 
 import android.util.Log;
+import at.fhstp.wificompass.model.Location;
 
 /**
  * @author Paul Woelfel
