@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="lib/ormlite-android-4.31.jar" sourcepath="lib/ormlite-android-4.31-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/wificompass/lib/ormlite-android-4.31-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/ormlite-core-4.31.jar" sourcepath="lib/ormlite-core-4.31-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/wificompass/lib/ormlite-core-4.31-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/GraphView-2.0.jar"/>
-	<classpathentry kind="lib" path="lib/ormlite-android-4.31.jar"/>
-	<classpathentry kind="lib" path="lib/ormlite-core-4.31.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
