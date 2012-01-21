@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -99,6 +100,8 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 		} catch (SQLException e) {
 			Logger.e("could not load project list", e);
 		}
+		
+		((Button) findViewById(R.id.project_addsite_button)).setOnClickListener(this);
 
 		// ((Button) findViewById(R.id.project_path_button)).setOnClickListener(this);
 		// ((Button) findViewById(R.id.project_save)).setOnClickListener(this);
@@ -135,6 +138,14 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 	public void onClick(View v) {
 		log.debug("clicked.");
 		switch (v.getId()) {
+		case R.id.project_addsite_button:
+			try {
+				addNewLocation();
+			} catch (SQLException e) {
+				Logger.e("could not create new site", e);
+				Toast.makeText(this, R.string.project_site_create_failed, Toast.LENGTH_LONG).show();
+			}
+			break;
 		// case R.id.project_path_button:
 		// Intent fbi = new Intent(this, FileBrowser.class);
 		// fbi.putExtra(FileBrowser.EXTRA_MODE, FileBrowser.MODE_SAVE);

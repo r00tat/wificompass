@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_scroll_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    style="@style/background">
 
-    <LinearLayout
+    <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/mainBackground"
@@ -37,11 +32,14 @@
             android:layout_marginTop="10dp"
             android:text="@string/newProjectText" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_project_text" android:layout_margin="5dp"/>
+
         <ListView
             android:id="@+id/main_project_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent" android:padding="5dp">
         </ListView>
     </LinearLayout>
-
-</ScrollView>

@@ -56,9 +56,11 @@ public class ProjectListAdapter extends BaseAdapter {
 		LinearLayout layout = new LinearLayout(context);
 		layout.setOrientation(LinearLayout.HORIZONTAL);
 		//layout.setGravity(Gravity.CENTER);
+		layout.setPadding(3,3,3,3);
 
 		TextView tv = new TextView(context);
 		tv.setText(((Project)getItem(position)).getName());
+		
 		
 		layout.addView(tv);
 		

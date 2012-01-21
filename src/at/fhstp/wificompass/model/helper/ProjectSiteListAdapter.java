@@ -11,6 +11,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import at.fhstp.wificompass.model.Project;
 import at.fhstp.wificompass.model.ProjectSite;
@@ -62,9 +63,16 @@ public class ProjectSiteListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		LinearLayout layout = new LinearLayout(context);
+		layout.setOrientation(LinearLayout.HORIZONTAL);
+		//layout.setGravity(Gravity.CENTER);
+		layout.setPadding(3,3,3,3);
+
 		TextView tv = new TextView(context);
 		tv.setText(sites[position].getTitle());
-		return tv;
+		layout.addView(tv);
+		
+		return layout;
 	}
 
 }
