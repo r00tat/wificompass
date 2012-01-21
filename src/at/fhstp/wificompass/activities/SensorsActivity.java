@@ -28,8 +28,8 @@ import android.widget.ToggleButton;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
-import at.fhstp.wificompass.model.DatabaseHelper;
 import at.fhstp.wificompass.model.SensorData;
+import at.fhstp.wificompass.model.helper.DatabaseHelper;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;

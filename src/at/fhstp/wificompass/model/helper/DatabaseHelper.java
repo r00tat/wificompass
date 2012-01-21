@@ -3,7 +3,7 @@
  * Author: Paul Woelfel
  * Email: frig@frig.at
  */
-package at.fhstp.wificompass.model;
+package at.fhstp.wificompass.model.helper;
 
 import java.sql.SQLException;
 
@@ -12,6 +12,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
+import at.fhstp.wificompass.model.BssidResult;
+import at.fhstp.wificompass.model.Project;
+import at.fhstp.wificompass.model.ProjectSite;
+import at.fhstp.wificompass.model.SensorData;
+import at.fhstp.wificompass.model.WifiScanResult;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -25,11 +30,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public static final String DATABASE_NAME = "wificompass.db";
 
 	// any time you make changes to your database objects, you may have to increase the database version
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 9;
 
 	protected Context context;
 
-	protected static final Class<?>[] ormClasses = { Project.class, ProjectLocation.class, WifiScanResult.class, BssidResult.class, SensorData.class };
+	protected static final Class<?>[] ormClasses = { Project.class, ProjectSite.class, WifiScanResult.class, BssidResult.class, SensorData.class };
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

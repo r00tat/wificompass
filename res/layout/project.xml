@@ -82,12 +82,13 @@
 <!--             android:layout_height="wrap_content" -->
 <!--             android:text="@string/project_new_location_button" /> -->
 
-        <LinearLayout
-            android:id="@+id/project_locations_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-        </LinearLayout>
+        <ListView
+            android:id="@+id/project_sites_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+      
     </LinearLayout>
 
 </ScrollView>

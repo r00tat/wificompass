@@ -18,7 +18,7 @@ import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.Project;
-import at.fhstp.wificompass.model.ProjectListAdapter;
+import at.fhstp.wificompass.model.helper.ProjectListAdapter;
 
 public class ProjectListActivity extends Activity implements OnItemClickListener {
 	

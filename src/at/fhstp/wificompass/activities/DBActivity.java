@@ -25,7 +25,7 @@ import android.widget.TextView;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
-import at.fhstp.wificompass.model.DatabaseHelper;
+import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.woelfel.philip.filebrowser.FileBrowser;
 
 public class DBActivity extends Activity implements OnClickListener {

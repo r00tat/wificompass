@@ -13,8 +13,6 @@ import org.xmlpull.v1.XmlSerializer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import at.fhstp.wificompass.ApplicationContext;
-import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.interfaces.XMLSerializable;
 import at.fhstp.wificompass.model.xml.XMLSettings;
 
@@ -22,8 +20,10 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "locations")
-public class ProjectLocation implements XMLSerializable {
+@DatabaseTable(tableName = ProjectSite.TABLE_NAME)
+public class ProjectSite implements XMLSerializable {
+	
+	public static final String TABLE_NAME="sites";
 
 	@DatabaseField(generatedId = true)
 	protected int id;
@@ -50,20 +50,32 @@ public class ProjectLocation implements XMLSerializable {
 	protected Project project;
 
 	protected static final String XMLTAG = "location", XMLTITLE = "title";
+	
+	protected static final String UNTITLED="untitled";
+	
+	public static String FIELD_PROJECT_FK=Project.TABLE_NAME+"_"+Project.FIELD_ID;
 
-	public ProjectLocation() {
-		this(ApplicationContext.getContext().getString(R.string.untitled));
+	public ProjectSite() {
+		this(null,null);
 	}
 
-	public ProjectLocation(String title) {
-		this.title = title;
+	public ProjectSite(String title) {
+		this(null,title);
 	}
 	
-	public ProjectLocation(String title,Project project){
+	public ProjectSite(Project project){
+		this(project,null);
+	}
+	
+	public ProjectSite(Project project,String title){
 		this.title= title;
 		this.project=project;
+		if(this.title==null){
+			this.title=UNTITLED;
+		}
 	}
-
+	
+	
 	@Override
 	public void serialize(XmlSerializer serializer) throws RuntimeException, IOException {
 		serializer.startTag(XMLSettings.XMLNS, XMLTAG);

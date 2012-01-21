@@ -11,11 +11,12 @@ import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 
-public class ProjectLocationActivity extends Activity {
+public class ProjectSiteActivity extends Activity {
 	
-	protected Logger log=new Logger(ProjectLocationActivity.class);
+	protected Logger log=new Logger(ProjectSiteActivity.class);
 	
-	public static final String PROJ_KEY="PROJECT",START_MODE="START_MODE";
+	public static final String SITE_KEY="SITE",START_MODE="START_MODE",PROJECT_KEY="PROJECT";
+	
 	public static final int START_NEW=1,START_LOAD=2;
 	
 

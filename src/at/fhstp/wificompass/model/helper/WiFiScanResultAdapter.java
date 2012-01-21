@@ -3,7 +3,7 @@
  * Author: Paul Woelfel
  * Email: frig@frig.at
  */
-package at.fhstp.wificompass.model;
+package at.fhstp.wificompass.model.helper;
 
 import java.util.List;
 import java.util.Vector;

@@ -20,8 +20,8 @@ import android.widget.ListView;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
-import at.fhstp.wificompass.model.DatabaseHelper;
-import at.fhstp.wificompass.model.ProjectListAdapter;
+import at.fhstp.wificompass.model.helper.DatabaseHelper;
+import at.fhstp.wificompass.model.helper.ProjectListAdapter;
 
 public class MainActivity extends Activity implements OnClickListener, OnItemClickListener {
 
@@ -154,7 +154,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 
 			return true;
 			
-		case R.id.new_project_button:
+		case R.id.main_new_project_option:
 			log.debug( "new project");
 			Intent npi = new Intent(this, ProjectActivity.class);
 			npi.putExtra(ProjectActivity.START_MODE, ProjectActivity.START_NEW);
@@ -185,6 +185,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			return false;
 			
 		default:
+			log.debug("could not identify sender: "+item.getItemId());
 			return super.onOptionsItemSelected(item);
 		}
 

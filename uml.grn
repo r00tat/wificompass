@@ -22,20 +22,6 @@
       <y="26"/>
    </type>
    <type>
-      <name="=wificompass/src<at.fhstp.wificompass.model{ProjectLocation.java[ProjectLocation"/>
-      <height="-1"/>
-      <width="-1"/>
-      <x="294"/>
-      <y="54"/>
-   </type>
-   <relationship>
-      <class="edu.buffalo.cse.green.relationship.association.AssociationPart"/>
-      <sourceType="=wificompass/src<at.fhstp.wificompass.model{ProjectLocation.java[ProjectLocation"/>
-      <targetType="=wificompass/src<at.fhstp.wificompass.model{Project.java[Project"/>
-      <bendpoints>
-      </bendpoints>
-   </relationship>
-   <type>
       <name="=wificompass/src<at.fhstp.wificompass.model{SensorData.java[SensorData"/>
       <height="-1"/>
       <width="-1"/>
@@ -53,13 +39,6 @@
       <class="edu.buffalo.cse.green.relationship.association.AssociationPart"/>
       <sourceType="=wificompass/src<at.fhstp.wificompass.model{WifiScanResult.java[WifiScanResult"/>
       <targetType="=wificompass/src<at.fhstp.wificompass.model{Location.java[Location"/>
-      <bendpoints>
-      </bendpoints>
-   </relationship>
-   <relationship>
-      <class="edu.buffalo.cse.green.relationship.association.AssociationPart"/>
-      <sourceType="=wificompass/src<at.fhstp.wificompass.model{WifiScanResult.java[WifiScanResult"/>
-      <targetType="=wificompass/src<at.fhstp.wificompass.model{ProjectLocation.java[ProjectLocation"/>
       <bendpoints>
       </bendpoints>
    </relationship>

@@ -27,14 +27,14 @@ public class WifiScanResult {
 	protected Location location;
 	
 	@DatabaseField(foreign=true,foreignAutoRefresh=true)
-	protected ProjectLocation projectLocation;
+	protected ProjectSite projectLocation;
 	
 	
 	public WifiScanResult(){
 		
 	}
 	
-	public WifiScanResult(long timestamp,Location location,ProjectLocation projectLocation){
+	public WifiScanResult(long timestamp,Location location,ProjectSite projectLocation){
 		this.timestamp=timestamp;
 		this.location=location;
 		this.projectLocation=projectLocation;
@@ -76,7 +76,7 @@ public class WifiScanResult {
 	/**
 	 * @return the projectLocation
 	 */
-	public ProjectLocation getProjectLocation() {
+	public ProjectSite getProjectLocation() {
 		return projectLocation;
 	}
 
@@ -84,7 +84,7 @@ public class WifiScanResult {
 	/**
 	 * @param projectLocation the projectLocation to set
 	 */
-	public void setProjectLocation(ProjectLocation projectLocation) {
+	public void setProjectLocation(ProjectSite projectLocation) {
 		this.projectLocation = projectLocation;
 	}
 

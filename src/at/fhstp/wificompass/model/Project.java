@@ -20,8 +20,9 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "projects")
+@DatabaseTable(tableName = Project.TABLE_NAME)
 public class Project implements XMLSerializable {
+	public static final String TABLE_NAME="projects";
 
 	@DatabaseField(generatedId = true)
 	protected int id;
@@ -36,9 +37,11 @@ public class Project implements XMLSerializable {
 //	protected String path;
 
 	@ForeignCollectionField
-	protected ForeignCollection<ProjectLocation> locations;
+	protected ForeignCollection<ProjectSite> sites;
 
-	protected static final String XMLTAG = "project", XMLNAME = "name", XMLPATH = "path", XMLLOCATIONS = "locations", XMLDESCRIPTION = "description";
+	protected static final String XMLTAG = "project", XMLNAME = "name", XMLPATH = "path", XMLSITES = "sites", XMLDESCRIPTION = "description";
+	
+	public static final String FIELD_ID="id";
 
 	public Project() {
 		this(ApplicationContext.getContext().getString(R.string.untitled), "");
@@ -88,9 +91,9 @@ public class Project implements XMLSerializable {
 		serializer.startTag(XMLSettings.XMLNS, XMLDESCRIPTION).text(description).endTag(XMLSettings.XMLNS, XMLDESCRIPTION);
 //		serializer.startTag(XMLSettings.XMLNS, XMLPATH).text(path).endTag(XMLSettings.XMLNS, XMLPATH);
 
-		serializer.startTag(XMLSettings.XMLNS, XMLLOCATIONS);
+		serializer.startTag(XMLSettings.XMLNS, XMLSITES);
 
-		serializer.endTag(XMLSettings.XMLNS, XMLLOCATIONS);
+		serializer.endTag(XMLSettings.XMLNS, XMLSITES);
 
 		serializer.endTag(XMLSettings.XMLNS, XMLTAG);
 	}
@@ -102,6 +105,20 @@ public class Project implements XMLSerializable {
 
 	public int getId() {
 		return id;
+	}
+
+	/**
+	 * @return the sites
+	 */
+	public ForeignCollection<ProjectSite> getSites() {
+		return sites;
+	}
+
+	/**
+	 * @return the fieldId
+	 */
+	public static String getFieldId() {
+		return FIELD_ID;
 	}
 
 }

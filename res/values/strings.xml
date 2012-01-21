@@ -95,4 +95,5 @@
    <string name="export_db_drop_finished">database droped and recreated!</string>
    <string name="sensors_update_label">update interval: %1$ds</string>
    <string name="sensors_valuecount_label">values displayed: %1$d</string>
+   <string name="project_site_create_failed">could not create project site!</string>
 </resources>

@@ -31,7 +31,7 @@ import android.util.Log;
  * </ul>
  * </p>
  * <p>
- * The default format string is "<i>%C.%m:%l: %M</i>". A debug message would look like this: <br/>
+ * The default format string is "<i>.%m:%l: %M</i>". A debug message would look like this: <br/>
  * <i>
  * 
  * <pre>
@@ -50,7 +50,7 @@ public class Logger {
 	/**
 	 * the log format to use for all messages
 	 */
-	protected static String logFormat = "%C.%m:%l: %M";
+	protected static String logFormat = ".%m:%l: %M";
 
 	/**
 	 * date format to format dates

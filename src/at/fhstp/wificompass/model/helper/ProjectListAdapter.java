@@ -3,7 +3,7 @@
  * Author: Paul Woelfel
  * Email: frig@frig.at
  */
-package at.fhstp.wificompass.model;
+package at.fhstp.wificompass.model.helper;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import at.fhstp.wificompass.model.Project;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;

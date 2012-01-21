@@ -15,18 +15,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
-import at.fhstp.wificompass.model.DatabaseHelper;
 import at.fhstp.wificompass.model.Project;
+import at.fhstp.wificompass.model.ProjectSite;
+import at.fhstp.wificompass.model.helper.DatabaseHelper;
+import at.fhstp.wificompass.model.helper.ProjectSiteListAdapter;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
-public class ProjectActivity extends Activity implements OnClickListener {
+public class ProjectActivity extends Activity implements OnClickListener, OnItemClickListener {
 
 	protected static final int REQ_SAVE = 1, REQ_LOAD = 2;
 
@@ -84,6 +89,15 @@ public class ProjectActivity extends Activity implements OnClickListener {
 		} else {
 			((EditText) findViewById(R.id.project_title)).setText(project.getName());
 			((EditText) findViewById(R.id.project_description)).setText(project.getDescription());
+		}
+
+		ListView lv = ((ListView) findViewById(R.id.project_sites_listview));
+
+		try {
+			lv.setAdapter(new ProjectSiteListAdapter(this, project));
+			lv.setOnItemClickListener(this);
+		} catch (SQLException e) {
+			Logger.e("could not load project list", e);
 		}
 
 		// ((Button) findViewById(R.id.project_path_button)).setOnClickListener(this);
@@ -168,6 +182,16 @@ public class ProjectActivity extends Activity implements OnClickListener {
 		super.onResume();
 		log.debug("setting context");
 		ApplicationContext.setContext(this);
+
+		ListView lv = ((ListView) findViewById(R.id.project_sites_listview));
+
+		try {
+			lv.setAdapter(new ProjectSiteListAdapter(this, project));
+			lv.setOnItemClickListener(this);
+		} catch (SQLException e) {
+			Logger.e("could not load project list", e);
+		}
+
 	}
 
 	@Override
@@ -190,8 +214,13 @@ public class ProjectActivity extends Activity implements OnClickListener {
 			return true;
 
 		case R.id.project_new_location_option:
-
-			this.addNewLocation();
+			
+			try {
+				this.addNewLocation();
+			} catch (SQLException e) {
+				Logger.e("could not create new site", e);
+				Toast.makeText(this, R.string.project_site_create_failed, Toast.LENGTH_LONG).show();
+			}
 
 			return false;
 
@@ -253,12 +282,17 @@ public class ProjectActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	protected void addNewLocation() {
+	protected void addNewLocation() throws SQLException {
 		saveProject();
 		log.debug("adding a new location");
-		Intent i = new Intent(this, ProjectLocationActivity.class);
-		i.putExtra(ProjectLocationActivity.START_MODE, ProjectLocationActivity.START_NEW);
-		i.putExtra(ProjectLocationActivity.PROJ_KEY, project.getId());
+		Intent i = new Intent(this, ProjectSiteActivity.class);
+		ProjectSite ps=new ProjectSite(project);
+		Dao<ProjectSite,Integer> projectSiteDao=getHelper().getDao(ProjectSite.class);
+		projectSiteDao.create(ps);
+		
+		Logger.d("starting Site Activity");
+		i.putExtra(ProjectSiteActivity.START_MODE, ProjectSiteActivity.START_LOAD);
+		i.putExtra(ProjectSiteActivity.SITE_KEY, ps.getId());
 		startActivity(i);
 	}
 
@@ -271,5 +305,13 @@ public class ProjectActivity extends Activity implements OnClickListener {
 	protected void onPause() {
 		super.onPause();
 		saveProject();
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Intent projectIntent=new Intent(this,ProjectSiteActivity.class);
+		projectIntent.putExtra(ProjectSiteActivity.SITE_KEY, (int)id);
+		projectIntent.putExtra(ProjectActivity.START_MODE, ProjectActivity.REQ_LOAD);
+		startActivity(projectIntent);
 	}
 }
