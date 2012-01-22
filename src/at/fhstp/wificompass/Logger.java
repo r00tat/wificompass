@@ -8,6 +8,8 @@ package at.fhstp.wificompass;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 //TODO: comments and documentation
@@ -64,24 +66,109 @@ public class Logger {
 	 */
 	protected String tag;
 
-	protected boolean[] enabled;
+	/**
+	 * loglevel current active. By default set to DEBUG
+	 */
+	protected static int loglevel=Log.DEBUG;
+	
+	public static final String PREFS_NAME="LOGPREFS",PREFS_LEVEL="LOGLEVEL";
 
 	/**
 	 * default constructor, sets tag to <i>"Logger"</i>
 	 */
 	public Logger() {
 		tag = "Logger";
-		setLoggingEnabled();
+
 	}
 
-	protected void setLoggingEnabled() {
-		enabled = new boolean[7];
-		enabled[Log.VERBOSE] = Log.isLoggable(tag, Log.VERBOSE);
-		enabled[Log.DEBUG] = Log.isLoggable(tag, Log.DEBUG);
-		enabled[Log.INFO] = Log.isLoggable(tag, Log.INFO);
-		enabled[Log.WARN] = Log.isLoggable(tag, Log.WARN);
-		enabled[Log.ERROR] = Log.isLoggable(tag, Log.ERROR);
+	/**
+	 * 
+	 * @param loglevel
+	 *            Loglevel to use possible loglevel: Log.VERBOSE Log.DEBUG Log.INFO Log.WARN Log.ERROR Log.ASSERT loglevel must be at least Log.ASSERT, completely disabling logging makes no sense.
+	 * @see android.util.Log
+	 * 
+	 */
+	public static void setLogLevel(int loglevel) {
+		if (loglevel < Log.VERBOSE && loglevel > Log.ASSERT) {
+			Logger.loglevel = Log.DEBUG;
+		} else {
+			Logger.loglevel = loglevel;
+		}
 
+	}
+	
+	public static boolean saveLogLevel(Context ctx){
+		SharedPreferences settings = ctx.getSharedPreferences(PREFS_NAME, 0);
+		return settings.edit().putInt(PREFS_LEVEL, loglevel).commit();
+	}
+	
+	public static void setLogLevelFromPreferences(Context ctx){
+		SharedPreferences settings = ctx.getSharedPreferences(PREFS_NAME, 0);
+		loglevel=settings.getInt(PREFS_LEVEL, Log.DEBUG);
+	}
+	
+	
+	/**
+	 * get current Log Level
+	 * @return loglevel
+	 * @see android.util.Log
+	 */
+	public static int getLogLevel(){
+		return loglevel;
+	}
+
+	/**
+	 * is VERBOSE enabled
+	 * 
+	 * @return true if VERBOSE or higher is enabled
+	 */
+	public static boolean isVerboseEnabled() {
+		return loglevel >= Log.VERBOSE;
+	}
+
+	/**
+	 * is DEBUG enabled
+	 * 
+	 * @return true if DEBUG or higher is enabled
+	 */
+	public static boolean isDebugEnabled() {
+		return loglevel >= Log.DEBUG;
+	}
+
+	/**
+	 * is INFO enabled
+	 * 
+	 * @return true if INFO or higher is enabled
+	 */
+	public static boolean isInfoEnabled() {
+		return loglevel >= Log.INFO;
+	}
+
+	/**
+	 * is WARN enabled
+	 * 
+	 * @return true if WARN or higher is enabled
+	 */
+	public static boolean isWarnEnabled() {
+		return loglevel >= Log.WARN;
+	}
+
+	/**
+	 * is ERROR enabled
+	 * 
+	 * @return true if ERROR or higher is enabled
+	 */
+	public static boolean isErrorEnabled() {
+		return loglevel >= Log.ERROR;
+	}
+
+	/**
+	 * is ASSERT enabled
+	 * 
+	 * @return true if ASSERT or higher is enabled (always true)
+	 */
+	public static boolean isAssertEnabled() {
+		return loglevel >= Log.ASSERT;
 	}
 
 	/**
@@ -92,7 +179,7 @@ public class Logger {
 	 */
 	public Logger(String logTag) {
 		tag = logTag;
-		setLoggingEnabled();
+
 	}
 
 	/**
@@ -104,7 +191,6 @@ public class Logger {
 	public Logger(Class<?> className) {
 		tag = className.getSimpleName();
 	}
-
 
 	/**
 	 * debug log message
@@ -397,130 +483,134 @@ public class Logger {
 	 *            exception, if existent
 	 */
 	protected static void logMessage(int level, String tag, String msg, Throwable exception) {
-		StringBuffer log = new StringBuffer();
 
-		StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
-		
-		if (tag == null) {
-			tag = caller.getClass().getSimpleName();
-		}
+		if (level >= loglevel) {
 
-		for (int i = 0; i < logFormat.length(); i++) {
+			StringBuffer log = new StringBuffer();
 
-			if (logFormat.charAt(i) == '%') {
+			StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
 
-				switch (logFormat.charAt(i + 1)) {
-				case 'd':
-					// date replacement
-					log.append(new SimpleDateFormat(dateFormat).format(new Date()));
-					break;
+			if (tag == null) {
+				tag = caller.getClass().getSimpleName();
+			}
 
-				case 'p':
-					// package
-					log.append(caller.getClass().getPackage().toString());
-					break;
+			for (int i = 0; i < logFormat.length(); i++) {
 
-				case 'C':
-					// full class name
-					log.append(caller.getClassName());
-					break;
+				if (logFormat.charAt(i) == '%') {
 
-				case 'c':
-					// short class name
+					switch (logFormat.charAt(i + 1)) {
+					case 'd':
+						// date replacement
+						log.append(new SimpleDateFormat(dateFormat).format(new Date()));
+						break;
 
-					log.append(caller.getClass().getSimpleName());
-					break;
+					case 'p':
+						// package
+						log.append(caller.getClass().getPackage().toString());
+						break;
 
-				case 'f':
-					// file name
-					log.append(caller.getFileName());
-					break;
+					case 'C':
+						// full class name
+						log.append(caller.getClassName());
+						break;
 
-				case 'm':
-					// method name
-					log.append(caller.getMethodName());
-					break;
+					case 'c':
+						// short class name
 
-				case 'l':
-					// line number
-					log.append(caller.getLineNumber());
-					break;
+						log.append(caller.getClass().getSimpleName());
+						break;
 
-				case 'M':
-					// log message
-					log.append(msg);
-					break;
+					case 'f':
+						// file name
+						log.append(caller.getFileName());
+						break;
 
-				case '%':
-					// % sign
-					log.append("%");
-					break;
+					case 'm':
+						// method name
+						log.append(caller.getMethodName());
+						break;
 
-				case 'n':
-					// new line
-					log.append("\n");
-					break;
+					case 'l':
+						// line number
+						log.append(caller.getLineNumber());
+						break;
 
-				default:
-					log.append("%" + logFormat.charAt(i + 1));
-					break;
+					case 'M':
+						// log message
+						log.append(msg);
+						break;
 
+					case '%':
+						// % sign
+						log.append("%");
+						break;
+
+					case 'n':
+						// new line
+						log.append("\n");
+						break;
+
+					default:
+						log.append("%" + logFormat.charAt(i + 1));
+						break;
+
+					}
+
+					// skip next character
+					i++;
+				} else {
+					// just add the character
+					log.append(logFormat.charAt(i));
 				}
 
-				// skip next character
-				i++;
+			}
+
+			if (exception == null) {
+				switch (level) {
+				case Log.VERBOSE:
+					Log.v(tag, log.toString());
+					break;
+				case Log.DEBUG:
+					Log.d(tag, log.toString());
+					break;
+				case Log.INFO:
+					Log.i(tag, log.toString());
+					break;
+				case Log.WARN:
+					Log.w(tag, log.toString());
+					break;
+				case Log.ERROR:
+					Log.e(tag, log.toString());
+					break;
+				case Log.ASSERT:
+					Log.wtf(tag, log.toString());
+					break;
+				}
 			} else {
-				// just add the character
-				log.append(logFormat.charAt(i));
+				switch (level) {
+				case Log.VERBOSE:
+					Log.v(tag, log.toString(), exception);
+					break;
+				case Log.DEBUG:
+					Log.d(tag, log.toString(), exception);
+					break;
+				case Log.INFO:
+					Log.i(tag, log.toString(), exception);
+					break;
+				case Log.WARN:
+					Log.w(tag, log.toString(), exception);
+					break;
+				case Log.ERROR:
+					Log.e(tag, log.toString(), exception);
+					break;
+				case Log.ASSERT:
+					Log.wtf(tag, log.toString(), exception);
+					break;
+				}
 			}
 
 		}
-
-		if (exception == null) {
-			switch (level) {
-			case Log.VERBOSE:
-				Log.v(tag, log.toString());
-				break;
-			case Log.DEBUG:
-				Log.d(tag, log.toString());
-				break;
-			case Log.INFO:
-				Log.i(tag, log.toString());
-				break;
-			case Log.WARN:
-				Log.w(tag, log.toString());
-				break;
-			case Log.ERROR:
-				Log.e(tag, log.toString());
-				break;
-			case Log.ASSERT:
-				Log.wtf(tag, log.toString());
-				break;
-			}
-		} else {
-			switch (level) {
-			case Log.VERBOSE:
-				Log.v(tag, log.toString(), exception);
-				break;
-			case Log.DEBUG:
-				Log.d(tag, log.toString(), exception);
-				break;
-			case Log.INFO:
-				Log.i(tag, log.toString(), exception);
-				break;
-			case Log.WARN:
-				Log.w(tag, log.toString(), exception);
-				break;
-			case Log.ERROR:
-				Log.e(tag, log.toString(), exception);
-				break;
-			case Log.ASSERT:
-				Log.wtf(tag, log.toString(), exception);
-				break;
-			}
-		}
-
-		// return log.toString();
+		
 	}
 
 	/**

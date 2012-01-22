@@ -99,4 +99,15 @@
    <string name="project_addsite_button">add survey site</string>
    <string name="project_sites_text">Project sites</string>
    <string name="main_project_text">Projects</string>
+   <string name="main_settings_option">Settings</string>
+   <string name="preferences_activity">Preferences</string>
+   <string name="preferences_loglevel_text">Log Level</string>
+   <string-array name="preferences_loglevels">
+       <item >VERBOSE</item>
+       <item >DEBUG</item>
+       <item >INFO</item>
+       <item >WARN</item>
+       <item >ERROR</item>
+       <item >ASSERT</item>
+   </string-array>
 </resources>

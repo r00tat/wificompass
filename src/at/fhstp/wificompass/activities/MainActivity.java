@@ -45,6 +45,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Logger.setLogLevelFromPreferences(this);
 		log.debug( "MainActivity onCreate");
 		Logger.i("TEST!");
 
@@ -146,34 +147,34 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			Intent i = new Intent(this, AboutActivity.class);
 			startActivity(i);
 
-			return false;
-		case R.id.quitOption:
-			log.debug( "quitting app");
-
-			finish();
-
-			return true;
-			
+			break;
+//		case R.id.quitOption:
+//			log.debug( "quitting app");
+//
+//			finish();
+//
+//			return true;
+//			
 		case R.id.main_new_project_option:
 			log.debug( "new project");
 			Intent npi = new Intent(this, ProjectActivity.class);
 			npi.putExtra(ProjectActivity.START_MODE, ProjectActivity.START_NEW);
 			startActivity(npi);
-			return false;
+			break;
 			
 		case R.id.main_wifi_scan:
 			log.debug( "starting sample scan activity");
 			Intent scanIntent = new Intent(this, SampleScanActivity.class);
 			startActivity(scanIntent);
 			
-			return false;
+			break;
 			
 		case R.id.main_sensors_option:
 			log.debug("starting sensors test activity");
 			Intent sensorsIntent=new Intent(this,SensorsActivity.class);
 			startActivity(sensorsIntent);
 			
-			return false;
+			break;
 			
 			
 		case R.id.main_export_option:
@@ -182,12 +183,20 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			startActivity(exportIntent);
 			
 			
-			return false;
+			break;
+			
+		case R.id.main_settings_option:
+			log.debug("starting preferences activity");
+			Intent prefsIntent=new Intent(this,PreferencesActivity.class);
+			startActivity(prefsIntent);
+			break;
 			
 		default:
 			log.debug("could not identify sender: "+item.getItemId());
 			return super.onOptionsItemSelected(item);
 		}
+		
+		return false;
 
 	}
 
