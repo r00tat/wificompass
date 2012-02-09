@@ -111,4 +111,5 @@
        <item >ASSERT</item>
    </string-array>
        <string name="project_site_reset_zoom">reset zoom</string>
+       <string name="project_site_reset_position">reset position</string>
 </resources>

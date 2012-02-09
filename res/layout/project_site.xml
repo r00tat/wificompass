@@ -5,11 +5,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/project_site_reset_zoom_button"
+    <LinearLayout
+        android:id="@+id/project_site_button_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/project_site_reset_zoom" android:layout_gravity="center"/>
+        android:layout_height="wrap_content" android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/project_site_reset_zoom_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/project_site_reset_zoom" />
+
+        <Button
+            android:id="@+id/project_site_reset_pos_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/project_site_reset_position" />
+    </LinearLayout>
 
     <at.fhstp.wificompass.view.SiteResultView
         android:id="@+id/project_site_resultview"

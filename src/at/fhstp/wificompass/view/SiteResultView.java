@@ -164,4 +164,52 @@ public class SiteResultView extends View implements MultiTouchObjectCanvas<View>
 	public void setImg(Bitmap img) {
 		this.img = img;
 	}
+	
+	public void setZoom(float scale){
+		this.scale=scale;
+		invalidate();
+	}
+
+	/**
+	 * @return the x
+	 */
+	public float getX() {
+		return x;
+	}
+
+	/**
+	 * @param x the x to set
+	 */
+	public void setX(float x) {
+		this.x = x;
+		invalidate();
+	}
+
+	/**
+	 * @return the y
+	 */
+	public float getY() {
+		return y;
+	}
+
+	/**
+	 * @param y the y to set
+	 */
+	public void setY(float y) {
+		this.y = y;
+		invalidate();
+	}
+
+	public void setXY(float x, float y){
+		this.x=x;
+		this.y=y;
+		invalidate();
+	}
+	
+	/**
+	 * @return the scale
+	 */
+	public float getZoom() {
+		return scale;
+	}
 }
