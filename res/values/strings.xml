@@ -110,4 +110,5 @@
        <item >ERROR</item>
        <item >ASSERT</item>
    </string-array>
+       <string name="project_site_reset_zoom">reset zoom</string>
 </resources>

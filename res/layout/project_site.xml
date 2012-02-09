@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" android:background="@color/project_site_background">
+    android:orientation="vertical" >
 
-    
+    <Button
+        android:id="@+id/project_site_reset_zoom_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/project_site_reset_zoom" android:layout_gravity="center"/>
+
+    <at.fhstp.wificompass.view.SiteResultView
+        android:id="@+id/project_site_resultview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/project_site_background" />
 
 </LinearLayout>

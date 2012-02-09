@@ -4,7 +4,7 @@
     <color name="mainForeground">#fff</color>
     <color name="globalBackground">#000</color>
     <color name="globalForeground">#ffcccccc</color>
-    <color name="project_site_background">#FFFFFFFF</color>
+    <color name="project_site_background">#ffcccccc</color>
 
     
 </resources>
