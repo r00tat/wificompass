@@ -489,9 +489,13 @@ public class Logger {
 			StringBuffer log = new StringBuffer();
 
 			StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+			
+			String fullClass=caller.getClassName();
+			int dotPos=fullClass.lastIndexOf('.');
 
 			if (tag == null) {
-				tag = caller.getClass().getSimpleName();
+				tag = dotPos<0?fullClass:fullClass.substring(dotPos+1);
+//				Log.d("LOGGER", caller.getClassName());
 			}
 
 			for (int i = 0; i < logFormat.length(); i++) {
@@ -506,18 +510,17 @@ public class Logger {
 
 					case 'p':
 						// package
-						log.append(caller.getClass().getPackage().toString());
+						log.append(dotPos<0?"":fullClass.substring(0, dotPos));
 						break;
 
 					case 'C':
 						// full class name
-						log.append(caller.getClassName());
+						log.append(fullClass);
 						break;
 
 					case 'c':
 						// short class name
-
-						log.append(caller.getClass().getSimpleName());
+						log.append(dotPos<0?fullClass:fullClass.substring(dotPos+1));
 						break;
 
 					case 'f':
