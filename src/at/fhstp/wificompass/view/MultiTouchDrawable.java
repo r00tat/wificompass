@@ -5,11 +5,16 @@
  */
 package at.fhstp.wificompass.view;
 
-import android.graphics.Bitmap;
+import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
+
+import android.graphics.drawable.Drawable;
 
 public interface MultiTouchDrawable {
-	public Bitmap getDrawableBitmap();
+	public Drawable getDrawable();
 	public int getWidth();
 	public int getHeight();
 	public String getId();
+	public boolean onTouch(PointInfo pointinfo);
+	public void setAngle(float angle);
+	public void setScale(float scaleX,float scaleY);
 }

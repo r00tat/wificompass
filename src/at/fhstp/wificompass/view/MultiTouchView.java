@@ -47,6 +47,8 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	// --
 
 	private Paint mLinePaintTouchPointCircle = new Paint();
+	
+	public boolean rearangable=true;
 
 	// ---------------------------------------------------------------------------------------------------
 
@@ -149,8 +151,13 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 		int n = drawables.size();
 		for (int i = n - 1; i >= 0; i--) {
 			MultiTouchViewObject im = drawables.get(i);
-			if (im.containsPoint(x, y))
-				return im;
+			if (im.containsPoint(x, y)){
+				if(!im.onTouch(pt)){
+					return im;
+				}else {
+					return null;
+				}
+			}
 		}
 		return null;
 	}
@@ -162,9 +169,12 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	public void selectObject(MultiTouchViewObject drawable, PointInfo touchPoint) {
 		currTouchPoint.set(touchPoint);
 		if (drawable != null) {
+			
+			if(rearangable){
 			// Move image to the top of the stack when selected
 			drawables.remove(drawable);
 			drawables.add(drawable);
+			}
 		} else {
 			// Called with drawable == null when drag stops.
 		}
@@ -222,6 +232,20 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 				drawables.remove(i);
 			}
 		}
+	}
+
+	/**
+	 * @return the rearangable
+	 */
+	public boolean isRearangable() {
+		return rearangable;
+	}
+
+	/**
+	 * @param rearangable the rearangable to set
+	 */
+	public void setRearangable(boolean rearangable) {
+		this.rearangable = rearangable;
 	}
 	
 	

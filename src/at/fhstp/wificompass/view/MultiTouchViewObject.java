@@ -5,12 +5,12 @@
  */
 package at.fhstp.wificompass.view;
 
+import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 import org.metalev.multitouch.controller.MultiTouchController.PositionAndScale;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import at.fhstp.wificompass.Logger;
@@ -137,6 +137,8 @@ public class MultiTouchViewObject {
 		this.minY = newMinY;
 		this.maxX = newMaxX;
 		this.maxY = newMaxY;
+		drawable.setAngle(angle);
+		drawable.setScale(scaleX, scaleY);
 		return true;
 	}
 
@@ -145,25 +147,29 @@ public class MultiTouchViewObject {
 		// FIXME: need to correctly account for image rotation
 		return (scrnX >= minX && scrnX <= maxX && scrnY >= minY && scrnY <= maxY);
 	}
+	
+	public boolean onTouch(PointInfo pointInfo){
+		// FIXME, TODO: calculate normalized point!
+		return drawable.onTouch(pointInfo);
+	}
 
 	public void draw(Canvas canvas) {
 //		Logger.d("drawing "+this.toString());
 		canvas.save();
 		float dx = (maxX + minX) / 2;
 		float dy = (maxY + minY) / 2;
-		Drawable d=getDrawable();
+		Drawable d=drawable.getDrawable();
 		d.setBounds((int) minX, (int) minY, (int) maxX, (int) maxY);
 		canvas.translate(dx, dy);
 		canvas.rotate(angle * 180.0f / (float) Math.PI);
 		canvas.translate(-dx, -dy);
-//		canvas.drawBitmap(drawable.getDrawableBitmap(), dx, dy, null);
 		d.draw(canvas);
-//		drawable.draw(canvas);
 		canvas.restore();
 	}
 
-	public Drawable getDrawable() {
-		return new BitmapDrawable(resources,drawable.getDrawableBitmap());
+	
+	public MultiTouchDrawable getDrawable(){
+		return drawable;
 	}
 
 	public int getWidth() {

@@ -43,7 +43,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 		resetXY.setOnClickListener(this);
 		
 		siteResultView=((MultiTouchView)findViewById(R.id.project_site_resultview));
-		map=new SiteMap();
+		map=new SiteMap(this);
 		siteResultView.addDrawable(map);
 		
 	}
