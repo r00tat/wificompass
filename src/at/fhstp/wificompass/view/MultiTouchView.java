@@ -223,8 +223,22 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	
 	public void addDrawable(MultiTouchDrawable drawable){
 		Logger.d("added new drawable: "+drawable.getId());
-		drawables.add(new MultiTouchViewObject(drawable,this.getResources()));
+		MultiTouchViewObject mtvo=new MultiTouchViewObject(drawable,this.getResources());
+		drawables.add(mtvo);
 	}
+	
+	public void addDrawable(MultiTouchDrawable drawable,MultiTouchDrawable superDrawable){
+		Logger.d("added new drawable: "+drawable.getId());
+		MultiTouchViewObject mtvo=new MultiTouchViewObject(drawable,this.getResources());
+		drawables.add(mtvo);
+		for(int i=0;i<drawables.size();i++){
+			if(drawables.get(i).getDrawableId()==superDrawable.getId()){
+				// this is the super drawable
+				drawables.get(i).addSubViewObject(mtvo);
+			}
+		}
+	}
+	
 	
 	public void removeDrawable(MultiTouchDrawable drawable){
 		for(int i=0;i<drawables.size();i++){

@@ -17,4 +17,5 @@ public interface MultiTouchDrawable {
 	public boolean onTouch(PointInfo pointinfo);
 	public void setAngle(float angle);
 	public void setScale(float scaleX,float scaleY);
+	
 }

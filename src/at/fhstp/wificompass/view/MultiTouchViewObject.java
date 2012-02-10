@@ -5,6 +5,8 @@
  */
 package at.fhstp.wificompass.view;
 
+import java.util.ArrayList;
+
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 import org.metalev.multitouch.controller.MultiTouchController.PositionAndScale;
 
@@ -35,12 +37,15 @@ public class MultiTouchViewObject {
 	protected MultiTouchDrawable drawable;
 	
 	protected Resources resources;
+	
+	protected ArrayList<MultiTouchViewObject> subObjects;
 
 	public MultiTouchViewObject(MultiTouchDrawable d,Resources res) {
 		Logger.d("created MultiTouchObject for "+d.getId());
 		this.firstLoad = true;
 		this.drawable=d;
 		this.resources=res;
+		subObjects=new ArrayList<MultiTouchViewObject>();
 		getMetrics();
 		load();
 	}
@@ -253,11 +258,19 @@ public class MultiTouchViewObject {
 	}
 	
 	public String getDrawableId(){
-		return drawable.getId();
+		return drawable.getId();	
 	}
 	
 	public String toString(){
 		return "MultiTouchViewObject for "+drawable.getId()+" "+drawable.getWidth()+"x"+drawable.getHeight()+
 				" center ("+centerX+","+centerY+") min ("+minX+","+minY+") max ("+maxX+","+maxY+") scale ("+scaleX+","+scaleY+") angle "+angle;
+	}
+	
+	public void addSubViewObject(MultiTouchViewObject subObject){
+		subObjects.add(subObject);
+	}
+	
+	public void removeSubViewObject(MultiTouchViewObject subObject){
+		subObjects.remove(subObject);
 	}
 }
