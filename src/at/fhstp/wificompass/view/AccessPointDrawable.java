@@ -7,8 +7,9 @@ import at.fhstp.wificompass.R;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-public class AccessPointDrawable extends MultiTouchDrawable {
+public class AccessPointDrawable implements MultiTouchDrawable {
 
+	protected static int counter=0;
 	protected int id;
 	protected static Drawable icon;
 	protected Context ctx;

@@ -15,7 +15,9 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-public class SiteMap extends MultiTouchDrawable {
+public class SiteMap implements MultiTouchDrawable {
+	
+	protected static int counter=0;
 		
 	protected int id;
 	
