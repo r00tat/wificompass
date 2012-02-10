@@ -6,6 +6,7 @@
 package at.fhstp.wificompass.view;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 import org.metalev.multitouch.controller.MultiTouchController.PositionAndScale;
@@ -146,6 +147,22 @@ public class MultiTouchViewObject {
 		this.maxY = newMaxY;
 		drawable.setAngle(angle);
 		drawable.setScale(scaleX, scaleY);
+		
+		// Iterate through the subobjects and change their position (TODO: this doesn't work yet)		
+		Iterator<MultiTouchViewObject> iterator = subObjects.iterator();
+		while (iterator.hasNext()) {
+			MultiTouchViewObject object = iterator.next();
+			
+			Logger.d("Repositioning sub-drawable.");
+			
+			object.centerX = this.centerX - object.centerX;
+			object.centerY = this.centerY - object.centerY;
+			object.minX = this.minX - object.minX;
+			object.minY = this.minY - object.minY;
+			object.maxX = this.maxX - object.maxX;
+			object.maxY = this.maxY - object.maxY;
+		}
+		
 		return true;
 	}
 
@@ -171,6 +188,16 @@ public class MultiTouchViewObject {
 		canvas.rotate(angle * 180.0f / (float) Math.PI);
 		canvas.translate(-dx, -dy);
 		d.draw(canvas);
+		canvas.restore();
+		
+		// Iterate through the subobjects and draw them (TODO: this doesn't work yet)
+		canvas.save();
+		Iterator<MultiTouchViewObject> iterator = subObjects.iterator();
+		while (iterator.hasNext()) {
+			MultiTouchViewObject object = iterator.next();
+			
+			object.draw(canvas);
+		}
 		canvas.restore();
 	}
 

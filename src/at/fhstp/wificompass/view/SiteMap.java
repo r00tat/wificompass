@@ -15,11 +15,9 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-public class SiteMap implements MultiTouchDrawable {
-	
-	protected static int counter=1;
-	
-	protected static int id;
+public class SiteMap extends MultiTouchDrawable {
+		
+	protected int id;
 	
 	protected static Bitmap bmp;
 	
@@ -37,7 +35,6 @@ public class SiteMap implements MultiTouchDrawable {
 		bmpCanvas.drawColor(Color.BLUE);
 	}
 
-	@Override
 	public Drawable getDrawable() {
 		Bitmap bmpToDraw=Bitmap.createBitmap(bmp);
 		Canvas cnv=new Canvas(bmpToDraw);
@@ -62,7 +59,7 @@ public class SiteMap implements MultiTouchDrawable {
 
 	@Override
 	public String getId() {
-		return this.getClass().getCanonicalName()+":"+id;
+		return Integer.toString(id);
 	}
 
 	@Override

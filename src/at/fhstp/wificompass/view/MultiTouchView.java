@@ -26,16 +26,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import at.fhstp.wificompass.Logger;
 
-public class MultiTouchView extends View implements MultiTouchObjectCanvas<MultiTouchViewObject> {
+public class MultiTouchView extends View implements
+		MultiTouchObjectCanvas<MultiTouchViewObject> {
 	private static final int UI_MODE_ROTATE = 1, UI_MODE_ANISOTROPIC_SCALE = 2;
 
 	private int mUIMode = UI_MODE_ROTATE;
-	
+
 	private ArrayList<MultiTouchViewObject> drawables = new ArrayList<MultiTouchViewObject>();
 
 	// --
 
-	private MultiTouchController<MultiTouchViewObject> multiTouchController = new MultiTouchController<MultiTouchViewObject>(this);
+	private MultiTouchController<MultiTouchViewObject> multiTouchController = new MultiTouchController<MultiTouchViewObject>(
+			this);
 
 	// --
 
@@ -43,12 +45,11 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 
 	private boolean mShowDebugInfo = true;
 
-
 	// --
 
 	private Paint mLinePaintTouchPointCircle = new Paint();
-	
-	public boolean rearangable=true;
+
+	public boolean rearangable = true;
 
 	// ---------------------------------------------------------------------------------------------------
 
@@ -80,7 +81,7 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	protected void init() {
 
 		Logger.d("initializing MultiTouchView");
-		 
+
 		mLinePaintTouchPointCircle.setColor(Color.YELLOW);
 		mLinePaintTouchPointCircle.setStrokeWidth(5);
 		mLinePaintTouchPointCircle.setStyle(Style.STROKE);
@@ -90,13 +91,16 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	// ---------------------------------------------------------------------------------------------------
 	/** Called by activity's onResume() method to load the images */
 	public void loadImages(Context context) {
-//		Resources res = context.getResources();
-//		int n = drawables.size();
-//		for (int i = 0; i < n; i++)
-//			drawables.get(i).load(res);
+		// Resources res = context.getResources();
+		// int n = drawables.size();
+		// for (int i = 0; i < n; i++)
+		// drawables.get(i).load(res);
 	}
 
-	/** Called by activity's onPause() method to free memory used for loading the images */
+	/**
+	 * Called by activity's onPause() method to free memory used for loading the
+	 * images
+	 */
 	public void unloadImages() {
 		int n = drawables.size();
 		for (int i = 0; i < n; i++)
@@ -109,8 +113,8 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		int n = drawables.size();
-		Logger.d("drawing "+n+" drawables");
-		
+		Logger.d("drawing " + n + " drawables");
+
 		for (int i = 0; i < n; i++)
 			drawables.get(i).draw(canvas);
 		if (mShowDebugInfo)
@@ -120,7 +124,8 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	// ---------------------------------------------------------------------------------------------------
 
 	public void trackballClicked() {
-		mUIMode = (mUIMode==UI_MODE_ROTATE?UI_MODE_ANISOTROPIC_SCALE:UI_MODE_ROTATE);
+		mUIMode = (mUIMode == UI_MODE_ROTATE ? UI_MODE_ANISOTROPIC_SCALE
+				: UI_MODE_ROTATE);
 		invalidate();
 	}
 
@@ -131,9 +136,11 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 			float[] pressures = currTouchPoint.getPressures();
 			int numPoints = Math.min(currTouchPoint.getNumTouchPoints(), 2);
 			for (int i = 0; i < numPoints; i++)
-				canvas.drawCircle(xs[i], ys[i], 50 + pressures[i] * 80, mLinePaintTouchPointCircle);
+				canvas.drawCircle(xs[i], ys[i], 50 + pressures[i] * 80,
+						mLinePaintTouchPointCircle);
 			if (numPoints == 2)
-				canvas.drawLine(xs[0], ys[0], xs[1], ys[1], mLinePaintTouchPointCircle);
+				canvas.drawLine(xs[0], ys[0], xs[1], ys[1],
+						mLinePaintTouchPointCircle);
 		}
 	}
 
@@ -145,16 +152,19 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 		return multiTouchController.onTouchEvent(event);
 	}
 
-	/** Get the image that is under the single-touch point, or return null (canceling the drag op) if none */
+	/**
+	 * Get the image that is under the single-touch point, or return null
+	 * (canceling the drag op) if none
+	 */
 	public MultiTouchViewObject getDraggableObjectAtPoint(PointInfo pt) {
 		float x = pt.getX(), y = pt.getY();
 		int n = drawables.size();
 		for (int i = n - 1; i >= 0; i--) {
 			MultiTouchViewObject im = drawables.get(i);
-			if (im.containsPoint(x, y)){
-				if(!im.onTouch(pt)){
+			if (im.containsPoint(x, y)) {
+				if (!im.onTouch(pt)) {
 					return im;
-				}else {
+				} else {
 					return null;
 				}
 			}
@@ -163,17 +173,18 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	}
 
 	/**
-	 * Select an object for dragging. Called whenever an object is found to be under the point (non-null is returned by getDraggableObjectAtPoint())
-	 * and a drag operation is starting. Called with null when drag op ends.
+	 * Select an object for dragging. Called whenever an object is found to be
+	 * under the point (non-null is returned by getDraggableObjectAtPoint()) and
+	 * a drag operation is starting. Called with null when drag op ends.
 	 */
 	public void selectObject(MultiTouchViewObject drawable, PointInfo touchPoint) {
 		currTouchPoint.set(touchPoint);
 		if (drawable != null) {
-			
-			if(rearangable){
-			// Move image to the top of the stack when selected
-			drawables.remove(drawable);
-			drawables.add(drawable);
+
+			if (rearangable) {
+				// Move image to the top of the stack when selected
+				drawables.remove(drawable);
+				drawables.add(drawable);
 			}
 		} else {
 			// Called with drawable == null when drag stops.
@@ -181,68 +192,79 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 		invalidate();
 	}
 
-	/** Get the current position and scale of the selected image. Called whenever a drag starts or is reset. */
-	public void getPositionAndScale(MultiTouchViewObject drawable, PositionAndScale objPosAndScaleOut) {
-		// FIXME affine-izem (and fix the fact that the anisotropic_scale part requires averaging the two scale factors)
-		objPosAndScaleOut.set(drawable.getCenterX(), drawable.getCenterY(), (mUIMode & UI_MODE_ANISOTROPIC_SCALE) == 0,
-				(drawable.getScaleX() + drawable.getScaleY()) / 2, (mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0, drawable.getScaleX(), drawable.getScaleY(),
+	/**
+	 * Get the current position and scale of the selected image. Called whenever
+	 * a drag starts or is reset.
+	 */
+	public void getPositionAndScale(MultiTouchViewObject drawable,
+			PositionAndScale objPosAndScaleOut) {
+		// FIXME affine-izem (and fix the fact that the anisotropic_scale part
+		// requires averaging the two scale factors)
+		objPosAndScaleOut.set(drawable.getCenterX(), drawable.getCenterY(),
+				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) == 0,
+				(drawable.getScaleX() + drawable.getScaleY()) / 2,
+				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0,
+				drawable.getScaleX(), drawable.getScaleY(),
 				(mUIMode & UI_MODE_ROTATE) != 0, drawable.getAngle());
 	}
 
 	/** Set the position and scale of the dragged/stretched image. */
-	public boolean setPositionAndScale(MultiTouchViewObject drawable, PositionAndScale newImgPosAndScale, PointInfo touchPoint) {
+	public boolean setPositionAndScale(MultiTouchViewObject drawable,
+			PositionAndScale newImgPosAndScale, PointInfo touchPoint) {
 		currTouchPoint.set(touchPoint);
 		boolean ok = drawable.setPos(newImgPosAndScale);
 		if (ok)
 			invalidate();
 		return ok;
 	}
-	
 
-
-	public void resetAllXY(){
-		for(int i=0;i<drawables.size();i++){
+	public void resetAllXY() {
+		for (int i = 0; i < drawables.size(); i++) {
 			drawables.get(i).resetXY();
 		}
 		invalidate();
 	}
-	
-	public void resetAllAngle(){
-		for(int i=0;i<drawables.size();i++){
+
+	public void resetAllAngle() {
+		for (int i = 0; i < drawables.size(); i++) {
 			drawables.get(i).resetAngle();
 		}
 		invalidate();
 	}
-	
-	public void resetAllScale(){
-		for(int i=0;i<drawables.size();i++){
+
+	public void resetAllScale() {
+		for (int i = 0; i < drawables.size(); i++) {
 			drawables.get(i).resetScale();
 		}
 		invalidate();
 	}
-	
-	public void addDrawable(MultiTouchDrawable drawable){
-		Logger.d("added new drawable: "+drawable.getId());
-		MultiTouchViewObject mtvo=new MultiTouchViewObject(drawable,this.getResources());
+
+	public void addDrawable(MultiTouchDrawable drawable) {
+		Logger.d("added new drawable: " + drawable.getId());
+		MultiTouchViewObject mtvo = new MultiTouchViewObject(drawable,
+				this.getResources());
 		drawables.add(mtvo);
 	}
-	
-	public void addDrawable(MultiTouchDrawable drawable,MultiTouchDrawable superDrawable){
-		Logger.d("added new drawable: "+drawable.getId());
-		MultiTouchViewObject mtvo=new MultiTouchViewObject(drawable,this.getResources());
-		drawables.add(mtvo);
-		for(int i=0;i<drawables.size();i++){
-			if(drawables.get(i).getDrawableId()==superDrawable.getId()){
+
+	public void addDrawable(MultiTouchDrawable drawable,
+			MultiTouchDrawable superDrawable) {
+		Logger.d("added new drawable: " + drawable.getId());
+		MultiTouchViewObject mtvo = new MultiTouchViewObject(drawable,
+				this.getResources());
+		//drawables.add(mtvo);
+		
+		for (int i = 0; i < drawables.size(); i++) {
+			if (drawables.get(i).getDrawableId() == superDrawable.getId()) {
 				// this is the super drawable
 				drawables.get(i).addSubViewObject(mtvo);
+				Logger.d("added sub drawable: " + drawable.getId());
 			}
 		}
 	}
-	
-	
-	public void removeDrawable(MultiTouchDrawable drawable){
-		for(int i=0;i<drawables.size();i++){
-			if(drawables.get(i).getDrawableId()==drawable.getId()){
+
+	public void removeDrawable(MultiTouchDrawable drawable) {
+		for (int i = 0; i < drawables.size(); i++) {
+			if (drawables.get(i).getDrawableId() == drawable.getId()) {
 				drawables.remove(i);
 			}
 		}
@@ -256,11 +278,11 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	}
 
 	/**
-	 * @param rearangable the rearangable to set
+	 * @param rearangable
+	 *            the rearangable to set
 	 */
 	public void setRearangable(boolean rearangable) {
 		this.rearangable = rearangable;
 	}
-	
-	
+
 }

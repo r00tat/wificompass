@@ -9,13 +9,15 @@ import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 
 import android.graphics.drawable.Drawable;
 
-public interface MultiTouchDrawable {
-	public Drawable getDrawable();
-	public int getWidth();
-	public int getHeight();
-	public String getId();
-	public boolean onTouch(PointInfo pointinfo);
-	public void setAngle(float angle);
-	public void setScale(float scaleX,float scaleY);
+public abstract class MultiTouchDrawable {
+	public static int counter=1;
+	
+	public abstract Drawable getDrawable();
+	public abstract int getWidth();
+	public abstract int getHeight();
+	public abstract String getId();
+	public abstract boolean onTouch(PointInfo pointinfo);
+	public abstract void setAngle(float angle);
+	public abstract void setScale(float scaleX,float scaleY);
 	
 }
