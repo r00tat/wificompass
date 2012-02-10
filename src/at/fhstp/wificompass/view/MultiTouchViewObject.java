@@ -128,6 +128,8 @@ public class MultiTouchViewObject {
 
 	/** Set the position and scale of an image in screen coordinates */
 	private boolean setPos(float centerX, float centerY, float scaleX, float scaleY, float angle) {
+		
+		// TODO adapt subobject position
 		float ws = (width / 2) * scaleX, hs = (height / 2) * scaleY;
 		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX + ws, newMaxY = centerY + hs;
 		if (newMinX > displayWidth - SCREEN_MARGIN || newMaxX < SCREEN_MARGIN || newMinY > displayHeight - SCREEN_MARGIN
