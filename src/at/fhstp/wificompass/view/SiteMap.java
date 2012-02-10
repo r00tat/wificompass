@@ -15,27 +15,34 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-public class SiteMap implements MultiTouchDrawable {
+public class SiteMap extends MultiTouchDrawable {
 	
-	protected static int counter=0;
-		
-	protected int id;
+	
 	
 	protected static Bitmap bmp;
 	
-	protected Context ctx;
+	
 	
 	protected int drawed=0;
 	
-	protected float angle=0,scaleX=1.0f,scaleY=1.0f;
+
 	
 	public SiteMap(Context ctx){
-		this.ctx=ctx;
-		id=counter++;
+		super(ctx);
+		init();
+	}
+	
+	public SiteMap(Context ctx,MultiTouchDrawable superDrawable){
+		super(ctx,superDrawable);
+		init();
+	}
+	
+	protected void init(){
 		bmp=Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
 		Canvas bmpCanvas=new Canvas(bmp);
 		bmpCanvas.drawColor(Color.BLUE);
 	}
+	
 
 	public Drawable getDrawable() {
 		Bitmap bmpToDraw=Bitmap.createBitmap(bmp);
@@ -78,6 +85,40 @@ public class SiteMap implements MultiTouchDrawable {
 	public void setScale(float scaleX, float scaleY) {
 		this.scaleX=scaleX;
 		this.scaleY=scaleY;
+	}
+
+	@Override
+	public void setRelativePosition(float xPos, float yPos) {
+	}
+
+	@Override
+	public boolean isScalable() {
+		return true;
+	}
+
+	@Override
+	public boolean isRotateable() {
+		return true;
+	}
+
+	@Override
+	public boolean isDragable() {
+		return true;
+	}
+
+	@Override
+	public boolean isOnlyInSuper() {
+		return false;
+	}
+
+	@Override
+	public boolean hasSuperDrawable() {
+		return false;
+	}
+
+	@Override
+	public MultiTouchDrawable getSuperDrawable() {
+		return null;
 	}
 
 }

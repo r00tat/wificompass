@@ -49,7 +49,7 @@ public class MultiTouchView extends View implements
 
 	private Paint mLinePaintTouchPointCircle = new Paint();
 
-	public boolean rearangable = true;
+	public boolean rearrangable = true;
 
 	// ---------------------------------------------------------------------------------------------------
 
@@ -181,7 +181,7 @@ public class MultiTouchView extends View implements
 		currTouchPoint.set(touchPoint);
 		if (drawable != null) {
 
-			if (rearangable) {
+			if (rearrangable) {
 				// Move image to the top of the stack when selected
 				drawables.remove(drawable);
 				drawables.add(drawable);
@@ -271,18 +271,21 @@ public class MultiTouchView extends View implements
 	}
 
 	/**
-	 * @return the rearangable
+	 * @return the rearrangable
 	 */
-	public boolean isRearangable() {
-		return rearangable;
+	public boolean isRearrangable() {
+		return rearrangable;
 	}
 
 	/**
-	 * @param rearangable
-	 *            the rearangable to set
+	 * @param rearrangable
+	 *            the rearrangable to set
 	 */
-	public void setRearangable(boolean rearangable) {
-		this.rearangable = rearangable;
+	public void setRearrangable(boolean rearrangable) {
+		this.rearrangable = rearrangable;
 	}
+	
+	
+	
 
 }

@@ -7,20 +7,23 @@ import at.fhstp.wificompass.R;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-public class AccessPointDrawable implements MultiTouchDrawable {
+public class AccessPointDrawable extends MultiTouchDrawable {
 
-	protected static int counter=0;
-	protected int id;
 	protected static Drawable icon;
-	protected Context ctx;
-	protected float angle = 0, scaleX = 1.0f, scaleY = 1.0f;
 
 	public AccessPointDrawable(Context ctx) {
-		this.ctx = ctx;
-		id=counter++;
+		super(ctx);
+		init();
+	}
+	
+	public AccessPointDrawable(Context ctx,MultiTouchDrawable superDrawable) {
+		super(ctx,superDrawable);
+		init();
+	}
+
+	protected void init() {
 		icon = ctx.getResources().getDrawable(R.drawable.access_point_icon);
-		icon.setBounds(0, 0, icon.getIntrinsicWidth(),
-				icon.getIntrinsicHeight());
+		icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
 	}
 
 	public Drawable getDrawable() {
@@ -35,21 +38,36 @@ public class AccessPointDrawable implements MultiTouchDrawable {
 		return icon.getIntrinsicHeight();
 	}
 
-	public String getId() {
-		return Integer.toString(id);
-	}
 
+	@Override
 	public boolean onTouch(PointInfo pointinfo) {
 		return false;
 	}
 
-	public void setAngle(float angle) {
-		this.angle=angle;
+	@Override
+	public void setRelativePosition(float xPos, float yPos) {
 	}
 
-	public void setScale(float scaleX, float scaleY) {
-		this.scaleX=scaleX;
-		this.scaleY=scaleY;
+	@Override
+	public boolean isScalable() {
+		return false;
 	}
+
+	@Override
+	public boolean isRotateable() {
+		return false;
+	}
+
+	@Override
+	public boolean isDragable() {
+		return false;
+	}
+
+	@Override
+	public boolean isOnlyInSuper() {
+		return true;
+	}
+
+	
 
 }
