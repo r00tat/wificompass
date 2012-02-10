@@ -13,7 +13,8 @@ import android.widget.Button;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
-import at.fhstp.wificompass.view.SiteResultView;
+import at.fhstp.wificompass.view.MultiTouchView;
+import at.fhstp.wificompass.view.SiteMap;
 
 public class ProjectSiteActivity extends Activity implements OnClickListener {
 	
@@ -23,8 +24,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 	
 	public static final int START_NEW=1,START_LOAD=2;
 	
-	protected SiteResultView siteResultView;
+	protected MultiTouchView siteResultView;
 	
+	protected SiteMap map;
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -40,7 +42,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 		Button resetXY=((Button)findViewById(R.id.project_site_reset_pos_button));
 		resetXY.setOnClickListener(this);
 		
-		siteResultView=((SiteResultView)findViewById(R.id.project_site_resultview));
+		siteResultView=((MultiTouchView)findViewById(R.id.project_site_resultview));
+		map=new SiteMap();
+		siteResultView.addDrawable(map);
+		
 	}
 
 	/* (non-Javadoc)
@@ -57,6 +62,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		siteResultView.unloadImages();
 	}
 	
 	@Override
@@ -64,6 +70,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 		super.onResume();
 		log.debug("setting context");
 		ApplicationContext.setContext(this);
+		siteResultView.loadImages(this);
 	}
 
 	@Override
@@ -71,12 +78,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 		switch(v.getId()){
 			case R.id.project_site_reset_zoom_button:
 				Logger.d("resetting Zoom");
-				siteResultView.setZoom(1.0f);
+				siteResultView.resetAllScale();
 				break;
 			
 			case R.id.project_site_reset_pos_button:
 				Logger.d("resetting position");
-				siteResultView.setXY(100.0f, 100.0f);
+				siteResultView.resetAllXY();
 				break;
 				
 		}

@@ -25,7 +25,7 @@
             android:text="@string/project_site_reset_position" />
     </LinearLayout>
 
-    <at.fhstp.wificompass.view.SiteResultView
+    <at.fhstp.wificompass.view.MultiTouchView
         android:id="@+id/project_site_resultview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
