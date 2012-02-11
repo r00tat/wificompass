@@ -231,8 +231,9 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 		drawables.add(mtvo);
 
 		if (drawable.hasSuperDrawable()) {
+			Logger.d("Searching for supdrawable "+drawable.getSuperDrawable().getId());
 			for (int i = 0; i < drawables.size(); i++) {
-				if (drawables.get(i).getDrawableId() == drawable.getSuperDrawable().getId()) {
+				if (drawables.get(i).getDrawableId().equals(drawable.getSuperDrawable().getId())) {
 					// this is the super drawable
 					drawables.get(i).addSubViewObject(mtvo);
 					Logger.d("added sub drawable: " + drawable.getId());

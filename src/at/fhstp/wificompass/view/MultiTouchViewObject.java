@@ -48,6 +48,7 @@ public class MultiTouchViewObject {
 		this.drawable = d;
 		this.resources = res;
 		subObjects = new ArrayList<MultiTouchViewObject>();
+		
 		// getMetrics();
 		load();
 	}
@@ -133,7 +134,7 @@ public class MultiTouchViewObject {
 	}
 
 	protected boolean setPos(float centerX, float centerY, float scaleX, float scaleY, float angle) {
-		return setPos(centerX, centerX, scaleX, scaleY, angle, 0);
+		return setPos(centerX, centerY, scaleX, scaleY, angle, 0);
 	}
 
 	/** Set the position and scale of an image in screen coordinates */
@@ -153,16 +154,16 @@ public class MultiTouchViewObject {
 
 		float dAngle = angle - this.angle;
 
-		// if((flags&FLAG_FORCEXY)!=0||drawable.isDragable()){
+		 if((flags&FLAG_FORCEXY)!=0||drawable.isDragable()){
 
 		this.centerX = centerX;
 		this.centerY = centerY;
-		// }else {
-		// dCenterY=0;
-		// dCenterX=0;
-		// }
+		 }else {
+		 dCenterY=0;
+		 dCenterX=0;
+		 }
 
-		// if ((flags&FLAG_FORCESCALE)!=0||drawable.isScalable()) {
+		 if ((flags&FLAG_FORCESCALE)!=0||drawable.isScalable()) {
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 		drawable.setScale(scaleX, scaleY);
@@ -171,27 +172,27 @@ public class MultiTouchViewObject {
 		this.minY = newMinY;
 		this.maxX = newMaxX;
 		this.maxY = newMaxY;
-		// }else {
-		// dScaleY=0;
-		// dScaleX=0;
-		// }
-		// if ((flags&FLAG_FORCEROTATE)!=0||drawable.isRotateable()) {
+		 }else {
+		 dScaleY=0;
+		 dScaleX=0;
+		 }
+		 if ((flags&FLAG_FORCEROTATE)!=0||drawable.isRotateable()) {
 		this.angle = angle;
 		drawable.setAngle(angle);
-		// }else {
-		// dAngle=0;
-		// }
+		 }else {
+		 dAngle=0;
+		 }
 
-		// Iterate through the subobjects and change their position (TODO: this doesn't work yet)
-//		Iterator<MultiTouchViewObject> iterator = subObjects.iterator();
-//		while (iterator.hasNext()) {
-//			MultiTouchViewObject subobject = iterator.next();
-//
-//			Logger.d("Repositioning sub-drawable.");
-//
-//			subobject.setPos(subobject.centerX + dCenterX, subobject.centerY + dCenterY, subobject.scaleX + dScaleX, subobject.scaleY + dScaleY,
-//					subobject.angle + dAngle, FLAG_FORCEXY);
-//		}
+//		 Iterate through the subobjects and change their position (TODO: this doesn't work yet)
+		Iterator<MultiTouchViewObject> iterator = subObjects.iterator();
+		while (iterator.hasNext()) {
+			MultiTouchViewObject subobject = iterator.next();
+
+			Logger.d("Repositioning sub-drawable.");
+
+			subobject.setPos(subobject.centerX + dCenterX, subobject.centerY + dCenterY, subobject.scaleX + dScaleX, subobject.scaleY + dScaleY,
+					subobject.angle + dAngle, FLAG_FORCEXY|FLAG_FORCESCALE);
+		}
 
 		return true;
 	}
