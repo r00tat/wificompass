@@ -2,11 +2,9 @@ package at.fhstp.wificompass.view;
 
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 
-import at.fhstp.wificompass.Logger;
-import at.fhstp.wificompass.R;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import at.fhstp.wificompass.R;
 
 public class AccessPointDrawable extends MultiTouchDrawable {
 
@@ -29,8 +27,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	}
 
 	public Drawable getDrawable() {
-		// FIXME there is something wrong with the drawable, it gets drawed, but it does not appear?!?
-		Logger.d("get ap drawable");
+//		Logger.d("get ap drawable");
 		return icon;
 	}
 

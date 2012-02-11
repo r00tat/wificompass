@@ -66,10 +66,6 @@ public class SiteMap extends MultiTouchDrawable {
 		return 300;
 	}
 
-	@Override
-	public String getId() {
-		return Integer.toString(id);
-	}
 
 	@Override
 	public boolean onTouch(PointInfo pointinfo) {
