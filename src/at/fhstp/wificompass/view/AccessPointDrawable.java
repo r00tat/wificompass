@@ -21,8 +21,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	}
 
 	protected void init() {
-		icon = ctx.getResources().getDrawable(R.drawable.access_point_icon);
-		
+		icon = ctx.getResources().getDrawable(R.drawable.cross);
 //		icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
 	}
 
@@ -43,10 +42,6 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	@Override
 	public boolean onTouch(PointInfo pointinfo) {
 		return false;
-	}
-
-	@Override
-	public void setRelativePosition(float xPos, float yPos) {
 	}
 
 	@Override

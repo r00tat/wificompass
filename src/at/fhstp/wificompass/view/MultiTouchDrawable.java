@@ -31,7 +31,7 @@ public abstract class MultiTouchDrawable {
 	 * current angle of drawable
 	 */
 	protected float angle = 0;
-	
+
 	/**
 	 * x and y scale factors
 	 */
@@ -40,46 +40,50 @@ public abstract class MultiTouchDrawable {
 	/**
 	 * relative x and y position
 	 */
-	protected float xPos=0, yPos=0;
+	protected float relX = 0, relY = 0;
 
 	/**
 	 * super Drawable
 	 */
-	protected MultiTouchDrawable superDrawable=null;
-	
+	protected MultiTouchDrawable superDrawable = null;
+
 	/**
 	 * Context
 	 */
 	protected Context ctx;
-	
+
 	/**
 	 * default constructor
+	 * 
 	 * @param context
 	 */
-	public MultiTouchDrawable(Context context){
-		id=counter++;
-		this.ctx=context;
+	public MultiTouchDrawable(Context context) {
+		id = counter++;
+		this.ctx = context;
 	}
-	
+
 	/**
 	 * constructor with superDrawable
+	 * 
 	 * @param context
-	 * @param superDrawable super Drawable Object
+	 * @param superDrawable
+	 *            super Drawable Object
 	 */
-	public MultiTouchDrawable(Context context,MultiTouchDrawable superDrawable){
-		id=counter++;
-		
-		this.ctx=context;
-		this.superDrawable=superDrawable;
+	public MultiTouchDrawable(Context context, MultiTouchDrawable superDrawable) {
+		id = counter++;
+
+		this.ctx = context;
+		this.superDrawable = superDrawable;
 	}
-	
-	
+
 	/**
 	 * <p>
 	 * returns a Drawable object, to be painted on the MultiTochView.
 	 * </p>
 	 * <p>
-	 * This function is called by the MultiTouchView onDraw method. This should return a BitmapDrawable or any other Drawable which should represent the content
+	 * This function is called by the MultiTouchView onDraw method. This should
+	 * return a BitmapDrawable or any other Drawable which should represent the
+	 * content
 	 * </p>
 	 * 
 	 * @return Drawable to be painted
@@ -115,7 +119,8 @@ public abstract class MultiTouchDrawable {
 	 * 
 	 * @param pointinfo
 	 *            info about the touch event
-	 * @return true if the touch event is handled, false if it should be handled by the MultiTouchController
+	 * @return true if the touch event is handled, false if it should be handled
+	 *         by the MultiTouchController
 	 */
 	public abstract boolean onTouch(PointInfo pointinfo);
 
@@ -149,20 +154,42 @@ public abstract class MultiTouchDrawable {
 	 * @param yPos
 	 *            relative y position
 	 */
-	public void setRelativePosition(float xPos, float yPos) {
-		this.xPos=xPos;
-		this.yPos=yPos;
+	public void setRelativePosition(float relX, float relY) {
+		this.relX = relX;
+		this.relY = relY;
 	}
 
 	/**
-	 * does this object support scaleing, or should it stay the same size all the time
+	 * Get the x position of the drawable relative to it's super-drawable (if
+	 * set)
+	 * 
+	 * @return The x position relative to it's super drawable
+	 */
+	public float getRelativeX() {
+		return this.relX;
+	}
+
+	/**
+	 * Get the y position of the drawable relative to it's super-drawable (if
+	 * set)
+	 * 
+	 * @return The y position relative to it's super drawable
+	 */
+	public float getRelativeY() {
+		return this.relY;
+	}
+
+	/**
+	 * does this object support scaleing, or should it stay the same size all
+	 * the time
 	 * 
 	 * @return true if scalable
 	 */
 	public abstract boolean isScalable();
 
 	/**
-	 * does this object support rotateing, or should it have the same angle all the time
+	 * does this object support rotateing, or should it have the same angle all
+	 * the time
 	 * 
 	 * @return true if rotateable
 	 */
@@ -183,12 +210,13 @@ public abstract class MultiTouchDrawable {
 	public abstract boolean isOnlyInSuper();
 
 	/**
-	 * does this object have a Drawable, which it corresponds to and should be modified with its super Drawable, i.e. scaled or moved.
+	 * does this object have a Drawable, which it corresponds to and should be
+	 * modified with its super Drawable, i.e. scaled or moved.
 	 * 
 	 * @return true, if it suppports and has a super Drawable
 	 */
 	public boolean hasSuperDrawable() {
-		return (superDrawable==null?false:true);
+		return (superDrawable == null ? false : true);
 	}
 
 	/**

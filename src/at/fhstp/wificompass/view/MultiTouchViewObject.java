@@ -20,9 +20,11 @@ import at.fhstp.wificompass.Logger;
 
 public class MultiTouchViewObject {
 
-	protected static final int UI_MODE_ROTATE = 1, UI_MODE_ANISOTROPIC_SCALE = 2;
+	protected static final int UI_MODE_ROTATE = 1,
+			UI_MODE_ANISOTROPIC_SCALE = 2;
 
-	protected static final int FLAG_FORCEXY = 1, FLAG_FORCESCALE = 2, FLAG_FORCEROTATE = 4, FLAG_FORCEALL = 7;
+	protected static final int FLAG_FORCEXY = 1, FLAG_FORCESCALE = 2,
+			FLAG_FORCEROTATE = 4, FLAG_FORCEALL = 7;
 
 	protected int mUIMode = UI_MODE_ROTATE;
 
@@ -34,7 +36,7 @@ public class MultiTouchViewObject {
 
 	protected float minX, maxX, minY, maxY;
 
-	protected static final float SCREEN_MARGIN = 100;
+	protected static final float SCREEN_MARGIN = 0;
 
 	protected MultiTouchDrawable drawable;
 
@@ -48,24 +50,27 @@ public class MultiTouchViewObject {
 		this.drawable = d;
 		this.resources = res;
 		subObjects = new ArrayList<MultiTouchViewObject>();
-		
+
 		// getMetrics();
 		load();
 	}
 
 	protected void getMetrics() {
 		DisplayMetrics metrics = resources.getDisplayMetrics();
-		// The DisplayMetrics don't seem to always be updated on screen rotate, so we hard code a portrait
+		// The DisplayMetrics don't seem to always be updated on screen rotate,
+		// so we hard code a portrait
 		// screen orientation for the non-rotated screen here...
 		// this.displayWidth = metrics.widthPixels;
 		// this.displayHeight = metrics.heightPixels;
 
 		// TODO remove randomness
 
-		this.displayWidth = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.max(metrics.widthPixels,
-				metrics.heightPixels) : Math.min(metrics.widthPixels, metrics.heightPixels);
-		this.displayHeight = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.min(metrics.widthPixels,
-				metrics.heightPixels) : Math.max(metrics.widthPixels, metrics.heightPixels);
+		this.displayWidth = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math
+				.max(metrics.widthPixels, metrics.heightPixels) : Math.min(
+				metrics.widthPixels, metrics.heightPixels);
+		this.displayHeight = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math
+				.min(metrics.widthPixels, metrics.heightPixels) : Math.max(
+				metrics.widthPixels, metrics.heightPixels);
 	}
 
 	/** Called by activity's onResume() method to load the images */
@@ -76,14 +81,19 @@ public class MultiTouchViewObject {
 		this.height = drawable.getHeight();
 		float cx, cy, sx, sy;
 		if (firstLoad) {
-			cx = SCREEN_MARGIN + (float) (Math.random() * (displayWidth - 2 * SCREEN_MARGIN));
-			cy = SCREEN_MARGIN + (float) (Math.random() * (displayHeight - 2 * SCREEN_MARGIN));
-			float sc = (float) (Math.max(displayWidth, displayHeight) / (float) Math.max(width, height) * Math.random() * 0.3 + 0.2);
+			cx = 300;
+			// + (float) (Math.random() * (displayWidth - 2 * SCREEN_MARGIN));
+			cy = 300;
+			// + (float) (Math.random() * (displayHeight - 2 * SCREEN_MARGIN));
+			
+			float sc = 1;// (float) (Math.max(displayWidth, displayHeight)
+			// / (float) Math.max(width, height) * Math.random() * 0.3 + 0.2);
 			sx = sy = sc;
 			firstLoad = false;
 		} else {
 			// Reuse position and scale information if it is available
-			// FIXME this doesn't actually work because the whole activity is torn down and re-created on rotate
+			// FIXME this doesn't actually work because the whole activity is
+			// torn down and re-created on rotate
 			cx = this.centerX;
 			cy = this.centerY;
 			sx = this.scaleX;
@@ -102,13 +112,16 @@ public class MultiTouchViewObject {
 	}
 
 	public void resetXY() {
-		this.centerX = SCREEN_MARGIN + (float) (Math.random() * (displayWidth - 2 * SCREEN_MARGIN));
-		this.centerY = SCREEN_MARGIN + (float) (Math.random() * (displayHeight - 2 * SCREEN_MARGIN));
+		this.centerX = SCREEN_MARGIN;
+		// + (float) (Math.random() * (displayWidth - 2 * SCREEN_MARGIN));
+		this.centerY = SCREEN_MARGIN;
+		// + (float) (Math.random() * (displayHeight - 2 * SCREEN_MARGIN));
 
 	}
 
 	public void resetScale() {
-		scaleX = scaleY = (float) (Math.max(displayWidth, displayHeight) / (float) Math.max(width, height) * Math.random() * 0.5 + 0.2);
+		scaleX = scaleY = 1;// (float) (Math.max(displayWidth, displayHeight)
+		// / (float) Math.max(width, height) * Math.random() * 0.5 + 0.2);
 
 	}
 
@@ -116,34 +129,47 @@ public class MultiTouchViewObject {
 		angle = 0.0f;
 	}
 
-	/** Called by activity's onPause() method to free memory used for loading the images */
+	/**
+	 * Called by activity's onPause() method to free memory used for loading the
+	 * images
+	 */
 	public void unload() {
 
 	}
 
 	/** Set the position and scale of an image in screen coordinates */
 	public boolean setPos(PositionAndScale newImgPosAndScale) {
-		return setPos(newImgPosAndScale.getXOff(), newImgPosAndScale.getYOff(),
-				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0 ? newImgPosAndScale.getScaleX() : newImgPosAndScale.getScale(),
-				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0 ? newImgPosAndScale.getScaleY() : newImgPosAndScale.getScale(),
+		return setPos(
+				newImgPosAndScale.getXOff(),
+				newImgPosAndScale.getYOff(),
+				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0 ? newImgPosAndScale
+						.getScaleX() : newImgPosAndScale.getScale(),
+				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0 ? newImgPosAndScale
+						.getScaleY() : newImgPosAndScale.getScale(),
 				newImgPosAndScale.getAngle());
 		// FIXME: anisotropic scaling jumps when axis-snapping
 		// FIXME: affine-ize
-		// return setPos(newImgPosAndScale.getXOff(), newImgPosAndScale.getYOff(), newImgPosAndScale.getScaleAnisotropicX(),
+		// return setPos(newImgPosAndScale.getXOff(),
+		// newImgPosAndScale.getYOff(),
+		// newImgPosAndScale.getScaleAnisotropicX(),
 		// newImgPosAndScale.getScaleAnisotropicY(), 0.0f);
 	}
 
-	protected boolean setPos(float centerX, float centerY, float scaleX, float scaleY, float angle) {
+	protected boolean setPos(float centerX, float centerY, float scaleX,
+			float scaleY, float angle) {
 		return setPos(centerX, centerY, scaleX, scaleY, angle, 0);
 	}
 
 	/** Set the position and scale of an image in screen coordinates */
-	protected boolean setPos(float centerX, float centerY, float scaleX, float scaleY, float angle, int flags) {
+	protected boolean setPos(float centerX, float centerY, float scaleX,
+			float scaleY, float angle, int flags) {
 
-		// TODO adapt subobject position
 		float ws = (width / 2) * scaleX, hs = (height / 2) * scaleY;
-		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX + ws, newMaxY = centerY + hs;
-		if (newMinX > displayWidth - SCREEN_MARGIN || newMaxX < SCREEN_MARGIN || newMinY > displayHeight - SCREEN_MARGIN || newMaxY < SCREEN_MARGIN)
+		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX
+				+ ws, newMaxY = centerY + hs;
+		if (newMinX > displayWidth - SCREEN_MARGIN || newMaxX < SCREEN_MARGIN
+				|| newMinY > displayHeight - SCREEN_MARGIN
+				|| newMaxY < SCREEN_MARGIN)
 			return false;
 
 		float dCenterX = centerX - this.centerX;
@@ -154,44 +180,48 @@ public class MultiTouchViewObject {
 
 		float dAngle = angle - this.angle;
 
-		 if((flags&FLAG_FORCEXY)!=0||drawable.isDragable()){
+		if ((flags & FLAG_FORCEXY) != 0 || drawable.isDragable()) {
 
-		this.centerX = centerX;
-		this.centerY = centerY;
-		 }else {
-		 dCenterY=0;
-		 dCenterX=0;
-		 }
+			this.centerX = centerX;
+			this.centerY = centerY;
+		} else {
+			dCenterY = 0;
+			dCenterX = 0;
+		}
 
-		 if ((flags&FLAG_FORCESCALE)!=0||drawable.isScalable()) {
-		this.scaleX = scaleX;
-		this.scaleY = scaleY;
-		drawable.setScale(scaleX, scaleY);
+		if ((flags & FLAG_FORCESCALE) != 0 || drawable.isScalable()) {
+			this.scaleX = scaleX;
+			this.scaleY = scaleY;
+			drawable.setScale(scaleX, scaleY);
 
-		this.minX = newMinX;
-		this.minY = newMinY;
-		this.maxX = newMaxX;
-		this.maxY = newMaxY;
-		 }else {
-		 dScaleY=0;
-		 dScaleX=0;
-		 }
-		 if ((flags&FLAG_FORCEROTATE)!=0||drawable.isRotateable()) {
-		this.angle = angle;
-		drawable.setAngle(angle);
-		 }else {
-		 dAngle=0;
-		 }
+			this.minX = newMinX;
+			this.minY = newMinY;
+			this.maxX = newMaxX;
+			this.maxY = newMaxY;
+		} else {
+			dScaleY = 0;
+			dScaleX = 0;
+		}
+		if ((flags & FLAG_FORCEROTATE) != 0 || drawable.isRotateable()) {
+			this.angle = angle;
+			drawable.setAngle(angle);
+		} else {
+			dAngle = 0;
+		}
 
-//		 Iterate through the subobjects and change their position (TODO: this doesn't work yet)
+		Logger.d(this.toString());
+
+		// Iterate through the subobjects and change their position (TODO: this
+		// doesn't work yet)
 		Iterator<MultiTouchViewObject> iterator = subObjects.iterator();
 		while (iterator.hasNext()) {
 			MultiTouchViewObject subobject = iterator.next();
 
-			Logger.d("Repositioning sub-drawable.");
+			Logger.d("Repositioning sub-drawable." + subobject.getDrawable().getRelativeX());
 
-			subobject.setPos(subobject.centerX + dCenterX, subobject.centerY + dCenterY, subobject.scaleX + dScaleX, subobject.scaleY + dScaleY,
-					subobject.angle + dAngle, FLAG_FORCEXY|FLAG_FORCESCALE);
+			subobject.setPos(newMinX + subobject.getDrawable().getRelativeX() * scaleX,
+					newMinY + subobject.getDrawable().getRelativeY() * scaleY,
+					1, 1, 0, FLAG_FORCEXY | FLAG_FORCESCALE);
 		}
 
 		return true;
@@ -199,8 +229,15 @@ public class MultiTouchViewObject {
 
 	/** Return whether or not the given screen coords are inside this image */
 	public boolean containsPoint(float scrnX, float scrnY) {
-		// FIXME: need to correctly account for image rotation
-		return (scrnX >= minX && scrnX <= maxX && scrnY >= minY && scrnY <= maxY);
+		// If this is a subdrawable, then don't let the controller think this is
+		// the item to be dragged. Otherwise non-draggable subdrawables will not
+		// allow to drag the superdrawable when the user's finger is exactly on
+		// them. FIXME: Is this the right place to do this?
+		if (drawable.hasSuperDrawable())
+			return false;
+		else
+			// FIXME: need to correctly account for image rotation
+			return (scrnX >= minX && scrnX <= maxX && scrnY >= minY && scrnY <= maxY);
 	}
 
 	public boolean onTouch(PointInfo pointInfo) {
@@ -209,7 +246,7 @@ public class MultiTouchViewObject {
 	}
 
 	public void draw(Canvas canvas) {
-		Logger.d("drawing " + this.toString());
+		// Logger.d("drawing " + this.toString());
 		canvas.save();
 		float dx = (maxX + minX) / 2;
 		float dy = (maxY + minY) / 2;
@@ -317,8 +354,11 @@ public class MultiTouchViewObject {
 	}
 
 	public String toString() {
-		return "MultiTouchViewObject for " + drawable.getId() + " " + drawable.getWidth() + "x" + drawable.getHeight() + " center (" + centerX + ","
-				+ centerY + ") min (" + minX + "," + minY + ") max (" + maxX + "," + maxY + ") scale (" + scaleX + "," + scaleY + ") angle " + angle;
+		return "MultiTouchViewObject for " + drawable.getId() + " "
+				+ drawable.getWidth() + "x" + drawable.getHeight()
+				+ " center (" + centerX + "," + centerY + ") min (" + minX
+				+ "," + minY + ") max (" + maxX + "," + maxY + ") scale ("
+				+ scaleX + "," + scaleY + ") angle " + angle;
 	}
 
 	public void addSubViewObject(MultiTouchViewObject subObject) {

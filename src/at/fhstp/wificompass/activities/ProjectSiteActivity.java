@@ -18,50 +18,48 @@ import at.fhstp.wificompass.view.MultiTouchView;
 import at.fhstp.wificompass.view.SiteMap;
 
 public class ProjectSiteActivity extends Activity implements OnClickListener {
-	
-	protected Logger log=new Logger(ProjectSiteActivity.class);
-	
-	public static final String SITE_KEY="SITE",START_MODE="START_MODE",PROJECT_KEY="PROJECT";
-	
-	public static final int START_NEW=1,START_LOAD=2;
-	
+
+	protected Logger log = new Logger(ProjectSiteActivity.class);
+
+	public static final String SITE_KEY = "SITE", START_MODE = "START_MODE",
+			PROJECT_KEY = "PROJECT";
+
+	public static final int START_NEW = 1, START_LOAD = 2;
+
 	protected MultiTouchView multiTouchView;
-	
+
 	protected SiteMap map;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.project_site);
-		
-		Button resetZoom=((Button)findViewById(R.id.project_site_reset_zoom_button));
+
+		Button resetZoom = ((Button) findViewById(R.id.project_site_reset_zoom_button));
 		resetZoom.setOnClickListener(this);
-		
-		Button resetXY=((Button)findViewById(R.id.project_site_reset_pos_button));
+
+		Button resetXY = ((Button) findViewById(R.id.project_site_reset_pos_button));
 		resetXY.setOnClickListener(this);
-		
-		multiTouchView=((MultiTouchView)findViewById(R.id.project_site_resultview));
+
+		multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
 		multiTouchView.setRearrangable(false);
-		map=new SiteMap(this);
-		
-		AccessPointDrawable icon1 = new AccessPointDrawable(this,map);
-		AccessPointDrawable icon2 = new AccessPointDrawable(this,map);
-		AccessPointDrawable icon3 = new AccessPointDrawable(this);
-		
+		map = new SiteMap(this);
+
+		AccessPointDrawable icon1 = new AccessPointDrawable(this, map);
+		icon1.setRelativePosition(50, 50);
 		multiTouchView.addDrawable(map);
-		
 		multiTouchView.addDrawable(icon1);
-		multiTouchView.addDrawable(icon2);
-		multiTouchView.addDrawable(icon3);
-		
-		multiTouchView.addDrawable(new SiteMap(this));
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onDestroy()
 	 */
 	@Override
@@ -69,7 +67,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 		super.onDestroy();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onPause()
 	 */
 	@Override
@@ -77,7 +77,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 		super.onPause();
 		multiTouchView.unloadImages();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -88,18 +88,18 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
-			case R.id.project_site_reset_zoom_button:
-				Logger.d("resetting Zoom");
-				multiTouchView.resetAllScale();
-				break;
-			
-			case R.id.project_site_reset_pos_button:
-				Logger.d("resetting position");
-				multiTouchView.resetAllXY();
-				break;
-				
+		switch (v.getId()) {
+		case R.id.project_site_reset_zoom_button:
+			Logger.d("resetting Zoom");
+			multiTouchView.resetAllScale();
+			break;
+
+		case R.id.project_site_reset_pos_button:
+			Logger.d("resetting position");
+			multiTouchView.resetAllXY();
+			break;
+
 		}
 	}
-	
+
 }

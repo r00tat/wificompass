@@ -11,7 +11,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
@@ -20,11 +19,6 @@ public class SiteMap extends MultiTouchDrawable {
 	
 	
 	protected static Bitmap bmp;
-	
-	
-	
-	protected int drawed=0;
-	
 
 	
 	public SiteMap(Context ctx){
@@ -46,13 +40,6 @@ public class SiteMap extends MultiTouchDrawable {
 
 	public Drawable getDrawable() {
 		Bitmap bmpToDraw=Bitmap.createBitmap(bmp);
-		Canvas cnv=new Canvas(bmpToDraw);
-		Paint textPaint=new Paint();
-		textPaint.setColor(Color.GREEN);
-		cnv.save();
-		cnv.rotate(angle * -180.0f / (float) Math.PI);
-		cnv.drawText("Hallo "+drawed++, 40,40, textPaint);
-		cnv.restore();
 		return new BitmapDrawable(ctx.getResources(), bmpToDraw);
 	}
 

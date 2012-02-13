@@ -41,7 +41,7 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 
 	private PointInfo currTouchPoint = new PointInfo();
 
-	private boolean mShowDebugInfo = true;
+	private boolean mShowDebugInfo = false;
 
 	// --
 
