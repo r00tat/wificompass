@@ -99,14 +99,14 @@ public class MultiTouchViewObject {
 			sx = this.scaleX;
 			sy = this.scaleY;
 			// Make sure the image is not off the screen after a screen rotation
-//			if (this.maxX < SCREEN_MARGIN)
-//				cx = SCREEN_MARGIN;
-//			else if (this.minX > displayWidth - SCREEN_MARGIN)
-//				cx = displayWidth - SCREEN_MARGIN;
-//			if (this.maxY > SCREEN_MARGIN)
-//				cy = SCREEN_MARGIN;
-//			else if (this.minY > displayHeight - SCREEN_MARGIN)
-//				cy = displayHeight - SCREEN_MARGIN;
+			// if (this.maxX < SCREEN_MARGIN)
+			// cx = SCREEN_MARGIN;
+			// else if (this.minX > displayWidth - SCREEN_MARGIN)
+			// cx = displayWidth - SCREEN_MARGIN;
+			// if (this.maxY > SCREEN_MARGIN)
+			// cy = SCREEN_MARGIN;
+			// else if (this.minY > displayHeight - SCREEN_MARGIN)
+			// cy = displayHeight - SCREEN_MARGIN;
 		}
 		setPos(cx, cy, sx, sy, 0.0f, FLAG_FORCEALL);
 	}
@@ -167,26 +167,11 @@ public class MultiTouchViewObject {
 		float ws = (width / 2) * scaleX, hs = (height / 2) * scaleY;
 		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX
 				+ ws, newMaxY = centerY + hs;
-		if (newMinX > displayWidth - SCREEN_MARGIN || newMaxX < SCREEN_MARGIN
-				|| newMinY > displayHeight - SCREEN_MARGIN
-				|| newMaxY < SCREEN_MARGIN)
-			return false;
-
-//		float dCenterX = centerX - this.centerX;
-//		float dCenterY = centerY - this.centerY;
-//
-//		float dScaleX = scaleX - this.scaleX;
-//		float dScaleY = scaleY - this.scaleY;
-//
-//		float dAngle = angle - this.angle;
 
 		if ((flags & FLAG_FORCEXY) != 0 || drawable.isDragable()) {
 
 			this.centerX = centerX;
 			this.centerY = centerY;
-		} else {
-//			dCenterY = 0;
-//			dCenterX = 0;
 		}
 
 		if ((flags & FLAG_FORCESCALE) != 0 || drawable.isScalable()) {
@@ -198,40 +183,44 @@ public class MultiTouchViewObject {
 			this.minY = newMinY;
 			this.maxX = newMaxX;
 			this.maxY = newMaxY;
-		} else {
-//			dScaleY = 0;
-//			dScaleX = 0;
 		}
+
 		if ((flags & FLAG_FORCEROTATE) != 0 || drawable.isRotateable()) {
 			this.angle = angle;
 			drawable.setAngle(angle);
-		} else {
-//			dAngle = 0;
 		}
 
 		Logger.d(this.toString());
 
 		// Iterate through the subobjects and change their position
 		Iterator<MultiTouchViewObject> iterator = subObjects.iterator();
-		if (subObjects.size() > 0) Logger.d("Subobjects count: " + subObjects.size());
+		if (subObjects.size() > 0)
+			Logger.d("Subobjects count: " + subObjects.size());
 		while (iterator.hasNext()) {
 			MultiTouchViewObject subobject = iterator.next();
 
-			Logger.d("Repositioning sub-drawable." + subobject.getDrawable().getRelativeX());
+			Logger.d("Repositioning sub-drawable."
+					+ subobject.getDrawable().getRelativeX());
 
-			float xBeforeRotate = newMinX + subobject.getDrawable().getRelativeX() * scaleX;
-			float yBeforeRotate = newMinY + subobject.getDrawable().getRelativeY() * scaleY;
+			float xBeforeRotate = newMinX
+					+ subobject.getDrawable().getRelativeX() * scaleX;
+			float yBeforeRotate = newMinY
+					+ subobject.getDrawable().getRelativeY() * scaleY;
 
-			float radius = (float) Math.sqrt(Math.pow(Math.abs(centerX - xBeforeRotate), 2) + Math.pow(Math.abs(centerY - yBeforeRotate), 2));
+			float radius = (float) Math.sqrt(Math.pow(
+					Math.abs(centerX - xBeforeRotate), 2)
+					+ Math.pow(Math.abs(centerY - yBeforeRotate), 2));
 
-			float angleBeforeRotate = (float) Math.atan2(yBeforeRotate - centerY, xBeforeRotate - centerX);
+			float angleBeforeRotate = (float) Math.atan2(yBeforeRotate
+					- centerY, xBeforeRotate - centerX);
 
 			float newAngle = angle + angleBeforeRotate;
 
 			float newY = (float) (centerY + radius * Math.sin(newAngle));
 			float newX = (float) (centerX + radius * Math.cos(newAngle));
 
-			subobject.setPos(newX, newY, 1, 1, 0, FLAG_FORCEXY | FLAG_FORCESCALE);
+			subobject.setPos(newX, newY, 1, 1, 0, FLAG_FORCEXY
+					| FLAG_FORCESCALE);
 		}
 
 		return true;
