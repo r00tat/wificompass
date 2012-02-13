@@ -51,9 +51,19 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 		map = new SiteMap(this);
 
 		AccessPointDrawable icon1 = new AccessPointDrawable(this, map);
-		icon1.setRelativePosition(50, 50);
+		icon1.setRelativePosition(400, 149);
+		AccessPointDrawable icon2 = new AccessPointDrawable(this, map);
+		icon2.setRelativePosition(199, 0);
+		AccessPointDrawable icon3 = new AccessPointDrawable(this, map);
+		icon3.setRelativePosition(0, 151);
+		AccessPointDrawable icon4 = new AccessPointDrawable(this, map);
+		icon4.setRelativePosition(201, 300);
+		
 		multiTouchView.addDrawable(map);
 		multiTouchView.addDrawable(icon1);
+		multiTouchView.addDrawable(icon2);
+		multiTouchView.addDrawable(icon3);
+		multiTouchView.addDrawable(icon4);
 
 	}
 

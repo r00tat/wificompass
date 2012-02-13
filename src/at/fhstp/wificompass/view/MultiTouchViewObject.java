@@ -85,7 +85,7 @@ public class MultiTouchViewObject {
 			// + (float) (Math.random() * (displayWidth - 2 * SCREEN_MARGIN));
 			cy = 300;
 			// + (float) (Math.random() * (displayHeight - 2 * SCREEN_MARGIN));
-			
+
 			float sc = 1;// (float) (Math.max(displayWidth, displayHeight)
 			// / (float) Math.max(width, height) * Math.random() * 0.3 + 0.2);
 			sx = sy = sc;
@@ -217,11 +217,28 @@ public class MultiTouchViewObject {
 		while (iterator.hasNext()) {
 			MultiTouchViewObject subobject = iterator.next();
 
-			Logger.d("Repositioning sub-drawable." + subobject.getDrawable().getRelativeX());
+			Logger.d("Repositioning sub-drawable."
+					+ subobject.getDrawable().getRelativeX());
 
-			subobject.setPos(newMinX + subobject.getDrawable().getRelativeX() * scaleX,
-					newMinY + subobject.getDrawable().getRelativeY() * scaleY,
-					1, 1, 0, FLAG_FORCEXY | FLAG_FORCESCALE);
+			float xBeforeRotate = newMinX
+					+ subobject.getDrawable().getRelativeX() * scaleX;
+			float yBeforeRotate = newMinY
+					+ subobject.getDrawable().getRelativeY() * scaleY;
+
+			float radius = (float) Math.sqrt(Math.pow(centerX - xBeforeRotate,
+					2) * Math.pow(centerY - yBeforeRotate, 2))
+					/ scaleX;
+
+			float angleBeforeRotate = (float) Math.atan2(yBeforeRotate
+					- centerY, xBeforeRotate - centerX);
+
+			float newAngle = angle + angleBeforeRotate;
+
+			float newY = (float) (centerY + radius * Math.sin(newAngle));
+			float newX = (float) (centerX + radius * Math.cos(newAngle));
+
+			subobject.setPos(newX, newY, 1, 1, 0, FLAG_FORCEXY
+					| FLAG_FORCESCALE);
 		}
 
 		return true;
@@ -358,7 +375,7 @@ public class MultiTouchViewObject {
 				+ drawable.getWidth() + "x" + drawable.getHeight()
 				+ " center (" + centerX + "," + centerY + ") min (" + minX
 				+ "," + minY + ") max (" + maxX + "," + maxY + ") scale ("
-				+ scaleX + "," + scaleY + ") angle " + angle;
+				+ scaleX + "," + scaleY + ") angle " + angle * 180.0f / Math.PI;
 	}
 
 	public void addSubViewObject(MultiTouchViewObject subObject) {
