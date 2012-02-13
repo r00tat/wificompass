@@ -172,21 +172,21 @@ public class MultiTouchViewObject {
 				|| newMaxY < SCREEN_MARGIN)
 			return false;
 
-		float dCenterX = centerX - this.centerX;
-		float dCenterY = centerY - this.centerY;
-
-		float dScaleX = scaleX - this.scaleX;
-		float dScaleY = scaleY - this.scaleY;
-
-		float dAngle = angle - this.angle;
+//		float dCenterX = centerX - this.centerX;
+//		float dCenterY = centerY - this.centerY;
+//
+//		float dScaleX = scaleX - this.scaleX;
+//		float dScaleY = scaleY - this.scaleY;
+//
+//		float dAngle = angle - this.angle;
 
 		if ((flags & FLAG_FORCEXY) != 0 || drawable.isDragable()) {
 
 			this.centerX = centerX;
 			this.centerY = centerY;
 		} else {
-			dCenterY = 0;
-			dCenterX = 0;
+//			dCenterY = 0;
+//			dCenterX = 0;
 		}
 
 		if ((flags & FLAG_FORCESCALE) != 0 || drawable.isScalable()) {
@@ -199,14 +199,14 @@ public class MultiTouchViewObject {
 			this.maxX = newMaxX;
 			this.maxY = newMaxY;
 		} else {
-			dScaleY = 0;
-			dScaleX = 0;
+//			dScaleY = 0;
+//			dScaleX = 0;
 		}
 		if ((flags & FLAG_FORCEROTATE) != 0 || drawable.isRotateable()) {
 			this.angle = angle;
 			drawable.setAngle(angle);
 		} else {
-			dAngle = 0;
+//			dAngle = 0;
 		}
 
 		Logger.d(this.toString());
@@ -380,6 +380,7 @@ public class MultiTouchViewObject {
 
 	public void addSubViewObject(MultiTouchViewObject subObject) {
 		subObjects.add(subObject);
+		this.setPos(centerX, centerY, scaleX, scaleY, angle);
 	}
 
 	public void removeSubViewObject(MultiTouchViewObject subObject) {

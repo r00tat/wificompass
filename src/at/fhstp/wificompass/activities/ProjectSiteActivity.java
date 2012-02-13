@@ -59,12 +59,18 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 		AccessPointDrawable icon4 = new AccessPointDrawable(this, map);
 		icon4.setRelativePosition(201, 300);
 		
+		AccessPointDrawable icon5 = new AccessPointDrawable(this, map);
+		icon5.setRelativePosition(50, 50);
+		
 		multiTouchView.addDrawable(map);
 		multiTouchView.addDrawable(icon1);
 		multiTouchView.addDrawable(icon2);
 		multiTouchView.addDrawable(icon3);
 		multiTouchView.addDrawable(icon4);
+		multiTouchView.addDrawable(icon5);
 
+		
+		
 	}
 
 	/*
