@@ -56,6 +56,7 @@ public class SiteMap extends MultiTouchDrawable {
 
 	@Override
 	public boolean onTouch(PointInfo pointinfo) {
+		
 		return true;
 	}
 

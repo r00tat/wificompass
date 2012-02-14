@@ -26,16 +26,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import at.fhstp.wificompass.Logger;
 
-public class MultiTouchView extends View implements MultiTouchObjectCanvas<MultiTouchViewObject> {
+public class MultiTouchView extends View implements MultiTouchObjectCanvas<MultiTouchDrawable> {
 	private static final int UI_MODE_ROTATE = 1, UI_MODE_ANISOTROPIC_SCALE = 2;
 
 	private int mUIMode = UI_MODE_ROTATE;
 
-	private ArrayList<MultiTouchViewObject> drawables = new ArrayList<MultiTouchViewObject>();
+	private ArrayList<MultiTouchDrawable> drawables = new ArrayList<MultiTouchDrawable>();
 
 	// --
 
-	private MultiTouchController<MultiTouchViewObject> multiTouchController = new MultiTouchController<MultiTouchViewObject>(this);
+	private MultiTouchController<MultiTouchDrawable> multiTouchController = new MultiTouchController<MultiTouchDrawable>(this);
 
 	// --
 
@@ -149,11 +149,11 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	/**
 	 * Get the image that is under the single-touch point, or return null (canceling the drag op) if none
 	 */
-	public MultiTouchViewObject getDraggableObjectAtPoint(PointInfo pt) {
+	public MultiTouchDrawable getDraggableObjectAtPoint(PointInfo pt) {
 		float x = pt.getX(), y = pt.getY();
 		int n = drawables.size();
 		for (int i = n - 1; i >= 0; i--) {
-			MultiTouchViewObject im = drawables.get(i);
+			MultiTouchDrawable im = drawables.get(i);
 			if (im.containsPoint(x, y)) {
 				if (im.onTouch(pt)) {
 					return im;
@@ -170,7 +170,7 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	 * Select an object for dragging. Called whenever an object is found to be under the point (non-null is returned by getDraggableObjectAtPoint()) and a drag operation is starting. Called with null
 	 * when drag op ends.
 	 */
-	public void selectObject(MultiTouchViewObject drawable, PointInfo touchPoint) {
+	public void selectObject(MultiTouchDrawable drawable, PointInfo touchPoint) {
 		currTouchPoint.set(touchPoint);
 		if (drawable != null) {
 
@@ -188,7 +188,7 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	/**
 	 * Get the current position and scale of the selected image. Called whenever a drag starts or is reset.
 	 */
-	public void getPositionAndScale(MultiTouchViewObject drawable, PositionAndScale objPosAndScaleOut) {
+	public void getPositionAndScale(MultiTouchDrawable drawable, PositionAndScale objPosAndScaleOut) {
 		// FIXME affine-izem (and fix the fact that the anisotropic_scale part
 		// requires averaging the two scale factors)
 		objPosAndScaleOut.set(drawable.getCenterX(), drawable.getCenterY(), (mUIMode & UI_MODE_ANISOTROPIC_SCALE) == 0,
@@ -197,7 +197,7 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	}
 
 	/** Set the position and scale of the dragged/stretched image. */
-	public boolean setPositionAndScale(MultiTouchViewObject drawable, PositionAndScale newImgPosAndScale, PointInfo touchPoint) {
+	public boolean setPositionAndScale(MultiTouchDrawable drawable, PositionAndScale newImgPosAndScale, PointInfo touchPoint) {
 		currTouchPoint.set(touchPoint);
 		boolean ok = drawable.setPos(newImgPosAndScale);
 		if (ok)
@@ -228,25 +228,31 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 
 	public void addDrawable(MultiTouchDrawable drawable) {
 //		Logger.d("added new drawable: " + drawable.getId());
-		MultiTouchViewObject mtvo = new MultiTouchViewObject(drawable, this.getResources());
-		drawables.add(mtvo);
-
-		if (drawable.hasSuperDrawable()) {
-//			Logger.d("Searching for supdrawable "+drawable.getSuperDrawable().getId());
-			for (int i = 0; i < drawables.size(); i++) {
-				if (drawables.get(i).getDrawableId().equals(drawable.getSuperDrawable().getId())) {
-					// this is the super drawable
-					drawables.get(i).addSubViewObject(mtvo);
-//					Logger.d("added sub drawable: " + drawable.getId());
-					break;
-				}
-			}
+		
+		if(!drawable.hasSuperDrawable()){
+		drawables.add(drawable);
+		}else {
+			Logger.w("only drawables without a superdrawable have to be added to the view!");
 		}
+
+//		if (drawable.hasSuperDrawable()) {
+////			Logger.d("Searching for supdrawable "+drawable.getSuperDrawable().getId());
+//			for (int i = 0; i < drawables.size(); i++) {
+//				if (drawables.get(i).getId().equals(drawable.getSuperDrawable().getId())) {
+//					// this is the super drawable
+//					drawables.get(i).addSubViewObject(drawable);
+////					Logger.d("added sub drawable: " + drawable.getId());
+//					break;
+//				}
+//			}
+//		}else {
+//			drawables.add(drawable);
+//		}
 	}
 
 	public void removeDrawable(MultiTouchDrawable drawable) {
 		for (int i = 0; i < drawables.size(); i++) {
-			if (drawables.get(i).getDrawableId() == drawable.getId()) {
+			if (drawables.get(i).getId() == drawable.getId()) {
 				drawables.remove(i);
 			}
 		}
