@@ -3,12 +3,13 @@ package at.fhstp.wificompass.view;
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.R;
 
 public class AccessPointDrawable extends MultiTouchDrawable {
 
-	protected static Drawable icon;
+	protected static BitmapDrawable icon;
 
 	public AccessPointDrawable(Context ctx) {
 		super(ctx);
@@ -21,21 +22,20 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	}
 
 	protected void init() {
-		icon = ctx.getResources().getDrawable(R.drawable.access_point_icon);
+		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.access_point_icon);
 		this.setPivot(30, 43);
 	}
 
 	public Drawable getDrawable() {
-//		Logger.d("get ap drawable");
 		return icon;
 	}
 
 	public int getWidth() {
-		return icon.getIntrinsicWidth();
+		return icon.getBitmap().getWidth();
 	}
 
 	public int getHeight() {
-		return icon.getIntrinsicHeight();
+		return icon.getBitmap().getHeight();
 	}
 
 
