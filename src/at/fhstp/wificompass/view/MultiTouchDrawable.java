@@ -48,7 +48,7 @@ public abstract class MultiTouchDrawable {
 	protected boolean isCustomPivotUsed = false;
 
 	/**
-	 * The pivot point needed for rotation
+	 * The pivot point needed for rotation (value between 0 and 1)
 	 */
 	protected float pivotX = 0, pivotY = 0;
 
@@ -129,13 +129,16 @@ public abstract class MultiTouchDrawable {
 	 * 
 	 * @param pointinfo
 	 *            info about the touch event
-	 * @return <p><b>true</b> if the touch event is handled by this event<br />
-	 * <b>false</b> if this touch event is not for this element
-	 * </p>
-	 * <p>
-	 * This is intended, that a subobject can check, if it should handle a click or so, or if the event should be sent to the underlying object.
-	 * </p>
-	 *         
+	 * @return <p>
+	 *         <b>true</b> if the touch event is handled by this event<br />
+	 *         <b>false</b> if this touch event is not for this element
+	 *         </p>
+	 *         <p>
+	 *         This is intended, that a subobject can check, if it should handle
+	 *         a click or so, or if the event should be sent to the underlying
+	 *         object.
+	 *         </p>
+	 * 
 	 */
 	public abstract boolean onTouch(PointInfo pointinfo);
 
@@ -205,14 +208,15 @@ public abstract class MultiTouchDrawable {
 	}
 
 	/**
-	 * Sets the pivot point or, in other words, the semantic center of the
-	 * image. This is the point relative to which sub-drawables will be
-	 * positioned when the super-drawable is scaled and rotated.
+	 * Sets the pivot point (value between 0 and 1) or, in other words, the
+	 * semantic center of the image. This is the point relative to which
+	 * sub-drawables will be positioned when the super-drawable is scaled and
+	 * rotated.
 	 * 
 	 * @param pivotX
-	 *            The x-coordinate of the pivot point
+	 *            The relative x value (between 0 and 1) of the pivot point
 	 * @param pivotY
-	 *            The y-coordinate of the pivot point
+	 *            The relative x value (between 0 and 1) of the pivot point
 	 */
 	public void setPivot(float pivotX, float pivotY) {
 		this.pivotX = pivotX;
@@ -249,7 +253,7 @@ public abstract class MultiTouchDrawable {
 	 *         center
 	 */
 	public float getPivotXRelativeToCenter() {
-		return this.pivotX - this.getWidth() / 2;
+		return this.getWidth() * this.pivotX - this.getWidth() / 2;
 	}
 
 	/**
@@ -261,7 +265,7 @@ public abstract class MultiTouchDrawable {
 	 *         center
 	 */
 	public float getPivotYRelativeToCenter() {
-		return this.pivotY - this.getHeight() / 2;
+		return this.getHeight() * this.pivotY - this.getHeight() / 2;
 	}
 
 	/**

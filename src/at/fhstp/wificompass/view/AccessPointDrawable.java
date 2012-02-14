@@ -23,7 +23,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 
 	protected void init() {
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.access_point_icon);
-		this.setPivot(30, 43);
+		this.setPivot(0.5f, 0.716f);
 	}
 
 	public Drawable getDrawable() {
