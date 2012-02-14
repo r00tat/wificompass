@@ -155,11 +155,12 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 		for (int i = n - 1; i >= 0; i--) {
 			MultiTouchViewObject im = drawables.get(i);
 			if (im.containsPoint(x, y)) {
-				if (!im.onTouch(pt)) {
+				if (im.onTouch(pt)) {
 					return im;
-				} else {
-					return null;
-				}
+				} 
+//				else {
+//					return null;
+//				}
 			}
 		}
 		return null;

@@ -211,9 +211,9 @@ public class MultiTouchViewObject {
 		// the item to be dragged. Otherwise non-draggable subdrawables will not
 		// allow to drag the superdrawable when the user's finger is exactly on
 		// them. FIXME: Is this the right place to do this?
-		if (drawable.hasSuperDrawable())
-			return false;
-		else
+//		if (drawable.hasSuperDrawable())
+//			return false;
+//		else
 			// FIXME: need to correctly account for image rotation
 			return (scrnX >= minX && scrnX <= maxX && scrnY >= minY && scrnY <= maxY);
 	}

@@ -129,8 +129,13 @@ public abstract class MultiTouchDrawable {
 	 * 
 	 * @param pointinfo
 	 *            info about the touch event
-	 * @return true if the touch event is handled, false if it should be handled
-	 *         by the MultiTouchController
+	 * @return <p><b>true</b> if the touch event is handled by this event<br />
+	 * <b>false</b> if this touch event is not for this element
+	 * </p>
+	 * <p>
+	 * This is intended, that a subobject can check, if it should handle a click or so, or if the event should be sent to the underlying object.
+	 * </p>
+	 *         
 	 */
 	public abstract boolean onTouch(PointInfo pointinfo);
 

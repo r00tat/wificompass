@@ -7,6 +7,8 @@
         <item name="android:background">@color/globalBackground</item>
     </style>
     <style name="textview" parent="@style/background"></style>
-
+    <style name="listview" parent="@style/background">
+        
+    </style>
     
 </resources>

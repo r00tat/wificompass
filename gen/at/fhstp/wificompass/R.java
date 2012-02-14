@@ -196,6 +196,7 @@ public final class R {
     }
     public static final class style {
         public static final int background=0x7f080000;
+        public static final int listview=0x7f080002;
         public static final int textview=0x7f080001;
     }
 }
