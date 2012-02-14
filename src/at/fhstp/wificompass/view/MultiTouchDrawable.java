@@ -43,7 +43,17 @@ public abstract class MultiTouchDrawable {
 	protected float relX = 0, relY = 0;
 
 	/**
-	 * super Drawable
+	 * Reflects whether a custom pivot point is used or the center of the image
+	 */
+	protected boolean isCustomPivotUsed = false;
+
+	/**
+	 * The pivot point needed for rotation
+	 */
+	protected float pivotX = 0, pivotY = 0;
+
+	/**
+	 * Super drawable
 	 */
 	protected MultiTouchDrawable superDrawable = null;
 
@@ -177,6 +187,76 @@ public abstract class MultiTouchDrawable {
 	 */
 	public float getRelativeY() {
 		return this.relY;
+	}
+
+	/**
+	 * Returns whether a custom pivot point is used for this drawable. If not,
+	 * the image center will be used.
+	 * 
+	 * @return Whether a custom pivot is used or not
+	 */
+	public boolean isCustomPivotUsed() {
+		return this.isCustomPivotUsed;
+	}
+
+	/**
+	 * Sets the pivot point or, in other words, the semantic center of the
+	 * image. This is the point relative to which sub-drawables will be
+	 * positioned when the super-drawable is scaled and rotated.
+	 * 
+	 * @param pivotX
+	 *            The x-coordinate of the pivot point
+	 * @param pivotY
+	 *            The y-coordinate of the pivot point
+	 */
+	public void setPivot(float pivotX, float pivotY) {
+		this.pivotX = pivotX;
+		this.pivotY = pivotY;
+
+		// This means a custom pivot point is used
+		this.isCustomPivotUsed = true;
+	}
+
+	/**
+	 * Returns the the x coordinate of the pivot point
+	 * 
+	 * @return The x coordinate of the pivot point
+	 */
+	public float getPivotX() {
+		return this.pivotX;
+	}
+
+	/**
+	 * Returns the the y coordinate of the pivot point
+	 * 
+	 * @return The y coordinate of the pivot point
+	 */
+	public float getPivotY() {
+		return this.pivotY;
+	}
+
+	/**
+	 * Returns the the x coordinate of the pivot point relative to the image's
+	 * center. This is useful when the image is by default positioned relative
+	 * to it's center and has to be moved from there.
+	 * 
+	 * @return The x coordinate of the pivot point relative to the image's
+	 *         center
+	 */
+	public float getPivotXRelativeToCenter() {
+		return this.pivotX - this.getWidth() / 2;
+	}
+
+	/**
+	 * Returns the the y coordinate of the pivot point relative to the image's
+	 * center. This is useful when the image is by default positioned relative
+	 * to it's center and has to be moved from there.
+	 * 
+	 * @return The y coordinate of the pivot point relative to the image's
+	 *         center
+	 */
+	public float getPivotYRelativeToCenter() {
+		return this.pivotY - this.getHeight() / 2;
 	}
 
 	/**

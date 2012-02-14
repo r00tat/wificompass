@@ -110,7 +110,7 @@ public class MultiTouchView extends View implements MultiTouchObjectCanvas<Multi
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		int n = drawables.size();
-		Logger.d("drawing " + n + " drawables");
+//		Logger.d("drawing " + n + " drawables");
 
 		for (int i = 0; i < n; i++)
 			drawables.get(i).draw(canvas);

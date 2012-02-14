@@ -16,7 +16,6 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
-import at.fhstp.wificompass.Logger;
 
 public class MultiTouchViewObject {
 
@@ -45,7 +44,7 @@ public class MultiTouchViewObject {
 	protected ArrayList<MultiTouchViewObject> subObjects;
 
 	public MultiTouchViewObject(MultiTouchDrawable d, Resources res) {
-		Logger.d("created MultiTouchObject for " + d.getId());
+//		Logger.d("created MultiTouchObject for " + d.getId());
 		this.firstLoad = true;
 		this.drawable = d;
 		this.resources = res;
@@ -190,27 +189,23 @@ public class MultiTouchViewObject {
 			drawable.setAngle(angle);
 		}
 
-		Logger.d(this.toString());
-
 		// Iterate through the subobjects and change their position
 		Iterator<MultiTouchViewObject> iterator = subObjects.iterator();
-		if (subObjects.size() > 0)
-			Logger.d("Subobjects count: " + subObjects.size());
 		while (iterator.hasNext()) {
 			MultiTouchViewObject subobject = iterator.next();
-
-			Logger.d("Repositioning sub-drawable."
-					+ subobject.getDrawable().getRelativeX());
 
 			float xBeforeRotate = newMinX
 					+ subobject.getDrawable().getRelativeX() * scaleX;
 			float yBeforeRotate = newMinY
 					+ subobject.getDrawable().getRelativeY() * scaleY;
 
-			float radius = (float) Math.sqrt(Math.pow(
-					Math.abs(centerX - xBeforeRotate), 2)
-					+ Math.pow(Math.abs(centerY - yBeforeRotate), 2));
+			// julery_isqrt is much faster than Math.sqrt()
+			float radius = julery_isqrt(Math.round((float)Math.pow(
+					Math.abs(centerX - xBeforeRotate), 2))
+					+ Math.round((float)Math.pow(Math.abs(centerY - yBeforeRotate), 2)));
 
+			//float radius = (float) Math.sqrt(Math.pow( Math.abs(centerX - xBeforeRotate), 2) + Math.pow(Math.abs(centerY - yBeforeRotate), 2));
+			
 			float angleBeforeRotate = (float) Math.atan2(yBeforeRotate
 					- centerY, xBeforeRotate - centerX);
 
@@ -218,6 +213,12 @@ public class MultiTouchViewObject {
 
 			float newY = (float) (centerY + radius * Math.sin(newAngle));
 			float newX = (float) (centerX + radius * Math.cos(newAngle));
+
+			// Move the drawable according to it's pivot point if one is set
+			if (subobject.getDrawable().isCustomPivotUsed()) {
+				newX -= subobject.getDrawable().getPivotXRelativeToCenter();
+				newY -= subobject.getDrawable().getPivotYRelativeToCenter();
+			}
 
 			subobject.setPos(newX, newY, 1, 1, 0, FLAG_FORCEXY
 					| FLAG_FORCESCALE);
@@ -367,5 +368,20 @@ public class MultiTouchViewObject {
 
 	public void removeSubViewObject(MultiTouchViewObject subObject) {
 		subObjects.remove(subObject);
+	}
+
+	/**
+	 * Fast integer sqrt, by Jim Ulery. Much faster than Math.sqrt() for
+	 * integers.
+	 */
+	private int julery_isqrt(int val) {
+		int temp, g = 0, b = 0x8000, bshft = 15;
+		do {
+			if (val >= (temp = (((g << 1) + b) << bshft--))) {
+				g += b;
+				val -= temp;
+			}
+		} while ((b >>= 1) > 0);
+		return g;
 	}
 }

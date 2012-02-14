@@ -21,8 +21,8 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	}
 
 	protected void init() {
-		icon = ctx.getResources().getDrawable(R.drawable.cross);
-//		icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
+		icon = ctx.getResources().getDrawable(R.drawable.access_point_icon);
+		this.setPivot(30, 43);
 	}
 
 	public Drawable getDrawable() {
