@@ -31,6 +31,7 @@ import at.fhstp.wificompass.model.helper.ProjectSiteListAdapter;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
 
 public class ProjectActivity extends Activity implements OnClickListener, OnItemClickListener {
 
@@ -288,9 +289,10 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 
 				try {
 
-					dao.createOrUpdate(project);
+					CreateOrUpdateStatus changed=dao.createOrUpdate(project);
 					log.debug("saved project went fine " + project.getId());
-					Toast.makeText(this, R.string.project_saved, Toast.LENGTH_SHORT).show();
+					if(changed.getNumLinesChanged()>0)
+						Toast.makeText(this, R.string.project_saved, Toast.LENGTH_SHORT).show();
 				} catch (SQLException e) {
 					log.error("could not save project", e);
 					Toast.makeText(this, R.string.project_save_failed, Toast.LENGTH_LONG).show();
