@@ -100,7 +100,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 		} catch (SQLException e) {
 			Logger.e("could not load project list", e);
 		}
-		
+
 		((Button) findViewById(R.id.project_addsite_button)).setOnClickListener(this);
 
 		// ((Button) findViewById(R.id.project_path_button)).setOnClickListener(this);
@@ -193,6 +193,11 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 		super.onResume();
 		log.debug("setting context");
 		ApplicationContext.setContext(this);
+		try {
+			dao.refresh(project);
+		} catch (SQLException e1) {
+			Logger.e("could not refresh project from database?!?",e1);
+		}
 
 		ListView lv = ((ListView) findViewById(R.id.project_sites_listview));
 
@@ -225,7 +230,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 			return true;
 
 		case R.id.project_new_location_option:
-			
+
 			try {
 				this.addNewLocation();
 			} catch (SQLException e) {
@@ -284,6 +289,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 				try {
 
 					dao.createOrUpdate(project);
+					log.debug("saved project went fine " + project.getId());
 					Toast.makeText(this, R.string.project_saved, Toast.LENGTH_SHORT).show();
 				} catch (SQLException e) {
 					log.error("could not save project", e);
@@ -295,16 +301,22 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 
 	protected void addNewLocation() throws SQLException {
 		saveProject();
-		log.debug("adding a new location");
-		Intent i = new Intent(this, ProjectSiteActivity.class);
-		ProjectSite ps=new ProjectSite(project);
-		Dao<ProjectSite,Integer> projectSiteDao=getHelper().getDao(ProjectSite.class);
-		projectSiteDao.create(ps);
-		
-		Logger.d("starting Site Activity");
-		i.putExtra(ProjectSiteActivity.START_MODE, ProjectSiteActivity.START_LOAD);
-		i.putExtra(ProjectSiteActivity.SITE_KEY, ps.getId());
-		startActivity(i);
+
+		if (project.getId() == 0) {
+			log.debug("project was not saved yet, no name given?");
+			Toast.makeText(this, R.string.project_save_failed, Toast.LENGTH_LONG).show();
+		} else {
+			log.debug("adding a new location");
+			Intent i = new Intent(this, ProjectSiteActivity.class);
+			ProjectSite ps = new ProjectSite(project);
+			Dao<ProjectSite, Integer> projectSiteDao = getHelper().getDao(ProjectSite.class);
+			projectSiteDao.create(ps);
+
+			Logger.d("starting Site Activity");
+			i.putExtra(ProjectSiteActivity.START_MODE, ProjectSiteActivity.START_LOAD);
+			i.putExtra(ProjectSiteActivity.SITE_KEY, ps.getId());
+			startActivity(i);
+		}
 	}
 
 	/*
@@ -320,8 +332,8 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Intent projectIntent=new Intent(this,ProjectSiteActivity.class);
-		projectIntent.putExtra(ProjectSiteActivity.SITE_KEY, (int)id);
+		Intent projectIntent = new Intent(this, ProjectSiteActivity.class);
+		projectIntent.putExtra(ProjectSiteActivity.SITE_KEY, (int) id);
 		projectIntent.putExtra(ProjectActivity.START_MODE, ProjectActivity.REQ_LOAD);
 		startActivity(projectIntent);
 	}
