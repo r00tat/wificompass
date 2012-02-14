@@ -44,13 +44,13 @@ public class MultiTouchViewObject {
 	protected ArrayList<MultiTouchViewObject> subObjects;
 
 	public MultiTouchViewObject(MultiTouchDrawable d, Resources res) {
-//		Logger.d("created MultiTouchObject for " + d.getId());
+		// Logger.d("created MultiTouchObject for " + d.getId());
 		this.firstLoad = true;
 		this.drawable = d;
 		this.resources = res;
 		subObjects = new ArrayList<MultiTouchViewObject>();
 
-		// getMetrics();
+		getMetrics();
 		load();
 	}
 
@@ -59,10 +59,8 @@ public class MultiTouchViewObject {
 		// The DisplayMetrics don't seem to always be updated on screen rotate,
 		// so we hard code a portrait
 		// screen orientation for the non-rotated screen here...
-		// this.displayWidth = metrics.widthPixels;
-		// this.displayHeight = metrics.heightPixels;
-
-		// TODO remove randomness
+		this.displayWidth = metrics.widthPixels;
+		this.displayHeight = metrics.heightPixels;
 
 		this.displayWidth = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math
 				.max(metrics.widthPixels, metrics.heightPixels) : Math.min(
@@ -81,12 +79,9 @@ public class MultiTouchViewObject {
 		float cx, cy, sx, sy;
 		if (firstLoad) {
 			cx = 300;
-			// + (float) (Math.random() * (displayWidth - 2 * SCREEN_MARGIN));
 			cy = 300;
-			// + (float) (Math.random() * (displayHeight - 2 * SCREEN_MARGIN));
 
-			float sc = 1;// (float) (Math.max(displayWidth, displayHeight)
-			// / (float) Math.max(width, height) * Math.random() * 0.3 + 0.2);
+			float sc = 1;
 			sx = sy = sc;
 			firstLoad = false;
 		} else {
@@ -97,31 +92,17 @@ public class MultiTouchViewObject {
 			cy = this.centerY;
 			sx = this.scaleX;
 			sy = this.scaleY;
-			// Make sure the image is not off the screen after a screen rotation
-			// if (this.maxX < SCREEN_MARGIN)
-			// cx = SCREEN_MARGIN;
-			// else if (this.minX > displayWidth - SCREEN_MARGIN)
-			// cx = displayWidth - SCREEN_MARGIN;
-			// if (this.maxY > SCREEN_MARGIN)
-			// cy = SCREEN_MARGIN;
-			// else if (this.minY > displayHeight - SCREEN_MARGIN)
-			// cy = displayHeight - SCREEN_MARGIN;
 		}
 		setPos(cx, cy, sx, sy, 0.0f, FLAG_FORCEALL);
 	}
 
 	public void resetXY() {
 		this.centerX = SCREEN_MARGIN;
-		// + (float) (Math.random() * (displayWidth - 2 * SCREEN_MARGIN));
 		this.centerY = SCREEN_MARGIN;
-		// + (float) (Math.random() * (displayHeight - 2 * SCREEN_MARGIN));
-
 	}
 
 	public void resetScale() {
-		scaleX = scaleY = 1;// (float) (Math.max(displayWidth, displayHeight)
-		// / (float) Math.max(width, height) * Math.random() * 0.5 + 0.2);
-
+		scaleX = scaleY = 1;
 	}
 
 	public void resetAngle() {
@@ -199,13 +180,10 @@ public class MultiTouchViewObject {
 			float yBeforeRotate = newMinY
 					+ subobject.getDrawable().getRelativeY() * scaleY;
 
-			// julery_isqrt is much faster than Math.sqrt()
-			float radius = julery_isqrt(Math.round((float)Math.pow(
-					Math.abs(centerX - xBeforeRotate), 2))
-					+ Math.round((float)Math.pow(Math.abs(centerY - yBeforeRotate), 2)));
+			float radius = (float) Math.sqrt(Math.pow(
+					Math.abs(centerX - xBeforeRotate), 2)
+					+ Math.pow(Math.abs(centerY - yBeforeRotate), 2));
 
-			//float radius = (float) Math.sqrt(Math.pow( Math.abs(centerX - xBeforeRotate), 2) + Math.pow(Math.abs(centerY - yBeforeRotate), 2));
-			
 			float angleBeforeRotate = (float) Math.atan2(yBeforeRotate
 					- centerY, xBeforeRotate - centerX);
 
@@ -368,20 +346,5 @@ public class MultiTouchViewObject {
 
 	public void removeSubViewObject(MultiTouchViewObject subObject) {
 		subObjects.remove(subObject);
-	}
-
-	/**
-	 * Fast integer sqrt, by Jim Ulery. Much faster than Math.sqrt() for
-	 * integers.
-	 */
-	private int julery_isqrt(int val) {
-		int temp, g = 0, b = 0x8000, bshft = 15;
-		do {
-			if (val >= (temp = (((g << 1) + b) << bshft--))) {
-				g += b;
-				val -= temp;
-			}
-		} while ((b >>= 1) > 0);
-		return g;
 	}
 }
