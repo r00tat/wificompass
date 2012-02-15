@@ -11,12 +11,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class SiteMap extends MultiTouchDrawable {
 
-	protected static Bitmap bmp;
+	protected static int gridSpacingX = 30;
+	protected static int gridSpacingY = 30;
 
 	public SiteMap(Context ctx) {
 		super(ctx);
@@ -29,18 +31,84 @@ public class SiteMap extends MultiTouchDrawable {
 	}
 
 	protected void init() {
-		width = 400;
-		height = 300;
+		width = displayWidth;
+		height = displayHeight;
 
-		bmp = Bitmap.createBitmap(getWidth(), getHeight(),
-				Bitmap.Config.ARGB_8888);
-		Canvas bmpCanvas = new Canvas(bmp);
-		bmpCanvas.drawColor(Color.BLUE);
+		this.resetXY();
 	}
 
 	public Drawable getDrawable() {
-		Bitmap bmpToDraw = Bitmap.createBitmap(bmp);
-		return new BitmapDrawable(ctx.getResources(), bmpToDraw);
+		Bitmap bmp = Bitmap
+				.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+		Canvas canvas = new Canvas(bmp);
+		canvas.drawColor(Color.rgb(250, 250, 250));
+
+//		Paint paint = new Paint();
+//		paint.setStyle(Paint.Style.STROKE);
+//		paint.setColor(Color.rgb(230, 230, 230));
+//
+//		for (int x = 0; x < displayWidth; x += gridSpacingX) {
+//			canvas.drawLine(x, 0, x, displayHeight, paint);
+//		}
+//		
+//		for (int y = 0; y < displayHeight; y += gridSpacingY) {
+//			canvas.drawLine(0, y, displayWidth, y, paint);
+//		}
+
+		return new BitmapDrawable(ctx.getResources(), bmp);
+	}
+	
+	@Override
+	public void draw(Canvas canvas) {
+		//Logger.d("Drawing " + this.toString());
+		canvas.save();
+		float dx = (maxX + minX) / 2;
+		float dy = (maxY + minY) / 2;
+
+		canvas.translate(dx, dy);
+		canvas.rotate(angle * 180.0f / (float) Math.PI);
+		canvas.translate(-dx, -dy);
+	
+		canvas.drawColor(Color.rgb(250, 250, 250));
+
+		Paint paint = new Paint();
+		paint.setStyle(Paint.Style.STROKE);
+		paint.setColor(Color.rgb(230, 230, 230));
+
+		int counterX = 0;
+		for (float x = minX; x < maxX; x += gridSpacingX * scaleX) {
+			if (counterX % 10 == 0) {
+				paint.setColor(Color.rgb(220, 220, 220));
+				paint.setStrokeWidth(2);
+			} else if (counterX % 5 == 0) {
+				paint.setColor(Color.rgb(220, 220, 220));
+			}
+			
+			canvas.drawLine(x, minY, x, maxY, paint);
+			paint.setStrokeWidth(0);
+			paint.setColor(Color.rgb(230, 230, 230));
+			counterX ++;
+		}
+		
+		int counterY = 0;
+		for (float y = minY; y < maxY; y += gridSpacingY * scaleY) {
+			if (counterY % 10 == 0) {
+				paint.setColor(Color.rgb(220, 220, 220));
+				paint.setStrokeWidth(2);
+			} else if (counterY % 5 == 0) {
+				paint.setColor(Color.rgb(220, 220, 220));
+			}			
+			
+			canvas.drawLine(minX, y, maxX, y, paint);
+			paint.setStrokeWidth(0);
+			paint.setColor(Color.rgb(230, 230, 230));
+			counterY ++;
+		}
+		
+		canvas.restore();
+
+		this.drawSubdrawables(canvas);
 	}
 
 	@Override

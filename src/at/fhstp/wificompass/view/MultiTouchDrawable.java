@@ -104,9 +104,7 @@ public abstract class MultiTouchDrawable {
 		this.resources = context.getResources();
 		subDrawables = new ArrayList<MultiTouchDrawable>();
 
-		getMetrics();
 		load();
-
 	}
 
 	/**
@@ -403,8 +401,8 @@ public abstract class MultiTouchDrawable {
 
 		float cx, cy, sx, sy;
 		if (firstLoad) {
-			cx = 300;
-			cy = 300;
+			cx = 0;
+			cy = 0;
 
 			float sc = 1;
 			sx = sy = sc;
@@ -422,8 +420,8 @@ public abstract class MultiTouchDrawable {
 	}
 
 	public void resetXY() {
-		this.centerX = SCREEN_MARGIN;
-		this.centerY = SCREEN_MARGIN;
+		this.centerX = this.width / 2;
+		this.centerY = this.height / 2;
 	}
 
 	public void resetScale() {
@@ -574,13 +572,16 @@ public abstract class MultiTouchDrawable {
 		d.draw(canvas);
 		canvas.restore();
 
+		this.drawSubdrawables(canvas);
+	}
+
+	public void drawSubdrawables(Canvas canvas) {
 		// Logger.d(subDrawables.toString());
 		for (int i = 0; i < subDrawables.size(); i++) {
 			subDrawables.get(i).draw(canvas);
 		}
-
 	}
-
+	
 	public float getCenterX() {
 		return centerX;
 	}
