@@ -15,60 +15,49 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class SiteMap extends MultiTouchDrawable {
-	
-	
-	
+
 	protected static Bitmap bmp;
 
-	
-	public SiteMap(Context ctx){
+	public SiteMap(Context ctx) {
 		super(ctx);
 		init();
 	}
-	
-	public SiteMap(Context ctx,MultiTouchDrawable superDrawable){
-		super(ctx,superDrawable);
+
+	public SiteMap(Context ctx, MultiTouchDrawable superDrawable) {
+		super(ctx, superDrawable);
 		init();
 	}
-	
-	protected void init(){
-		bmp=Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-		Canvas bmpCanvas=new Canvas(bmp);
+
+	protected void init() {
+		width = 400;
+		height = 300;
+
+		bmp = Bitmap.createBitmap(getWidth(), getHeight(),
+				Bitmap.Config.ARGB_8888);
+		Canvas bmpCanvas = new Canvas(bmp);
 		bmpCanvas.drawColor(Color.BLUE);
 	}
-	
 
 	public Drawable getDrawable() {
-		Bitmap bmpToDraw=Bitmap.createBitmap(bmp);
+		Bitmap bmpToDraw = Bitmap.createBitmap(bmp);
 		return new BitmapDrawable(ctx.getResources(), bmpToDraw);
 	}
 
 	@Override
-	public int getWidth() {
-		return 400;
-	}
-
-	@Override
-	public int getHeight() {
-		return 300;
-	}
-
-
-	@Override
 	public boolean onTouch(PointInfo pointinfo) {
-		
+
 		return true;
 	}
 
 	@Override
 	public void setAngle(float angle) {
-		this.angle=angle;
+		this.angle = angle;
 	}
 
 	@Override
 	public void setScale(float scaleX, float scaleY) {
-		this.scaleX=scaleX;
-		this.scaleY=scaleY;
+		this.scaleX = scaleX;
+		this.scaleY = scaleY;
 	}
 
 	@Override

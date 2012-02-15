@@ -17,7 +17,6 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
-import at.fhstp.wificompass.Logger;
 
 /**
  * Abstract Class for drawable objects for the MultiTouchView
@@ -89,11 +88,10 @@ public abstract class MultiTouchDrawable {
 
 	protected static final float SCREEN_MARGIN = 0;
 
-	
 	protected Resources resources;
 
 	protected ArrayList<MultiTouchDrawable> subDrawables;
-	
+
 	/**
 	 * default constructor
 	 * 
@@ -123,12 +121,11 @@ public abstract class MultiTouchDrawable {
 
 		this.ctx = context;
 		this.superDrawable = superDrawable;
-		
+
 		this.firstLoad = true;
 		this.resources = context.getResources();
 		subDrawables = new ArrayList<MultiTouchDrawable>();
 
-		
 		superDrawable.addSubDrawable(this);
 	}
 
@@ -152,14 +149,18 @@ public abstract class MultiTouchDrawable {
 	 * 
 	 * @return width in pixel
 	 */
-	public abstract int getWidth();
+	public int getWidth() {
+		return this.width;
+	}
 
 	/**
 	 * get the height in pixel of the Drawable
 	 * 
 	 * @return height in pixel
 	 */
-	public abstract int getHeight();
+	public int getHeight() {
+		return this.height;
+	}
 
 	/**
 	 * get an unique ID of one instance
@@ -186,21 +187,20 @@ public abstract class MultiTouchDrawable {
 	 *         </p>
 	 * 
 	 */
-	public boolean onTouch(PointInfo pointinfo){
-		boolean handleEvent=false;
-		
+	public boolean onTouch(PointInfo pointinfo) {
+		boolean handleEvent = false;
+
 		// first ask our subobjects to handle it, otherwise let us handle it
-		
-		
-		for(int i=subDrawables.size()-1;i>=0&&!handleEvent;i--){
-			
-			MultiTouchDrawable sub=subDrawables.get(i);
-			
-			if(sub.containsPoint(pointinfo.getX(), pointinfo.getY())){
-				handleEvent=sub.onTouch(pointinfo);
+
+		for (int i = subDrawables.size() - 1; i >= 0 && !handleEvent; i--) {
+
+			MultiTouchDrawable sub = subDrawables.get(i);
+
+			if (sub.containsPoint(pointinfo.getX(), pointinfo.getY())) {
+				handleEvent = sub.onTouch(pointinfo);
 			}
 		}
-		
+
 		return handleEvent;
 	}
 
@@ -379,9 +379,7 @@ public abstract class MultiTouchDrawable {
 		return superDrawable;
 	}
 
-	
 	// imported from MultiTouchDrawable
-	
 
 	protected void getMetrics() {
 		DisplayMetrics metrics = resources.getDisplayMetrics();
@@ -402,9 +400,7 @@ public abstract class MultiTouchDrawable {
 	/** Called by activity's onResume() method to load the images */
 	public void load() {
 		getMetrics();
-		// this.drawable = res.getDrawable(resId);
-		this.width = this.getWidth();
-		this.height = this.getHeight();
+
 		float cx, cy, sx, sy;
 		if (firstLoad) {
 			cx = 300;
@@ -476,6 +472,15 @@ public abstract class MultiTouchDrawable {
 		float ws = (width / 2) * scaleX, hs = (height / 2) * scaleY;
 		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX
 				+ ws, newMaxY = centerY + hs;
+		
+		// Min and max values need to be set when item is dragged or scaled
+		if ((flags & FLAG_FORCEXY) != 0 || this.isDragable()
+				|| (flags & FLAG_FORCESCALE) != 0 || this.isScalable()) {
+			this.minX = newMinX;
+			this.minY = newMinY;
+			this.maxX = newMaxX;
+			this.maxY = newMaxY;
+		}
 
 		if ((flags & FLAG_FORCEXY) != 0 || this.isDragable()) {
 
@@ -487,11 +492,6 @@ public abstract class MultiTouchDrawable {
 			this.scaleX = scaleX;
 			this.scaleY = scaleY;
 			this.setScale(scaleX, scaleY);
-
-			this.minX = newMinX;
-			this.minY = newMinY;
-			this.maxX = newMaxX;
-			this.maxY = newMaxY;
 		}
 
 		if ((flags & FLAG_FORCEROTATE) != 0 || this.isRotateable()) {
@@ -504,10 +504,8 @@ public abstract class MultiTouchDrawable {
 		while (iterator.hasNext()) {
 			MultiTouchDrawable subobject = iterator.next();
 
-			float xBeforeRotate = newMinX
-					+ subobject.getRelativeX() * scaleX;
-			float yBeforeRotate = newMinY
-					+ subobject.getRelativeY() * scaleY;
+			float xBeforeRotate = newMinX + subobject.getRelativeX() * scaleX;
+			float yBeforeRotate = newMinY + subobject.getRelativeY() * scaleY;
 
 			float radius = (float) Math.sqrt(Math.pow(
 					Math.abs(centerX - xBeforeRotate), 2)
@@ -527,11 +525,14 @@ public abstract class MultiTouchDrawable {
 				newY -= subobject.getPivotYRelativeToCenter();
 			}
 
-			subobject.setPos(newX, newY, 1, 1, 0, FLAG_FORCEXY
-					| FLAG_FORCESCALE);
+			subobject.setPos(newX, newY, 1, 1, 0, FLAG_FORCEXY);
 		}
 
 		return true;
+	}
+	
+	public void recalculateSubdrawablePositions() {
+		this.setPos(centerX, centerY, scaleX, scaleY, angle);
 	}
 
 	/** Return whether or not the given screen coords are inside this image */
@@ -540,31 +541,28 @@ public abstract class MultiTouchDrawable {
 		// the item to be dragged. Otherwise non-draggable subdrawables will not
 		// allow to drag the superdrawable when the user's finger is exactly on
 		// them. FIXME: Is this the right place to do this?
-//		if (this.hasSuperDrawable())
-//			return false;
-//		else
-			// FIXME: need to correctly account for image rotation
-			boolean inside= (scrnX >= minX && scrnX <= maxX && scrnY >= minY && scrnY <= maxY);
-			
-			if(inside)
+		// if (this.hasSuperDrawable())
+		// return false;
+		// else
+		// FIXME: need to correctly account for image rotation
+		boolean inside = (scrnX >= minX && scrnX <= maxX && scrnY >= minY && scrnY <= maxY);
+
+		if (inside)
+			return true;
+
+		Iterator<MultiTouchDrawable> it = this.subDrawables.iterator();
+		while (it.hasNext()) {
+			MultiTouchDrawable sub = it.next();
+			if (sub.containsPoint(scrnX, scrnY)) {
 				return true;
-			
-			
-			Iterator<MultiTouchDrawable> it=this.subDrawables.iterator();
-			while(it.hasNext()){
-				MultiTouchDrawable sub=it.next();
-				if(sub.containsPoint(scrnX, scrnY)){
-					return true;
-				}
 			}
-			
-			return false;
+		}
+
+		return false;
 	}
 
-
-
 	public void draw(Canvas canvas) {
-		// Logger.d("drawing " + this.toString());
+		//Logger.d("Drawing " + this.toString());
 		canvas.save();
 		float dx = (maxX + minX) / 2;
 		float dy = (maxY + minY) / 2;
@@ -575,17 +573,14 @@ public abstract class MultiTouchDrawable {
 		canvas.translate(-dx, -dy);
 		d.draw(canvas);
 		canvas.restore();
-		
-		
-		Logger.d(subDrawables.toString());
-		for(int i=0;i<subDrawables.size();i++){
+
+		// Logger.d(subDrawables.toString());
+		for (int i = 0; i < subDrawables.size(); i++) {
 			subDrawables.get(i).draw(canvas);
 		}
-		
 
 	}
 
-	
 	public float getCenterX() {
 		return centerX;
 	}
@@ -639,7 +634,6 @@ public abstract class MultiTouchDrawable {
 		this.centerY = centerY;
 	}
 
-	
 	/**
 	 * @param scaleX
 	 *            the scaleX to set
@@ -656,14 +650,12 @@ public abstract class MultiTouchDrawable {
 		this.scaleY = scaleY;
 	}
 
-
-
 	public String toString() {
-		return "MultiTouchDrawable for " + this.getId() + " "
-				+ this.getWidth() + "x" + this.getHeight()
-				+ " center (" + centerX + "," + centerY + ") min (" + minX
-				+ "," + minY + ") max (" + maxX + "," + maxY + ") scale ("
-				+ scaleX + "," + scaleY + ") angle " + angle * 180.0f / Math.PI;
+		return "MultiTouchDrawable for " + this.getId() + " " + this.getWidth()
+				+ "x" + this.getHeight() + " center (" + centerX + ","
+				+ centerY + ") min (" + minX + "," + minY + ") max (" + maxX
+				+ "," + maxY + ") scale (" + scaleX + "," + scaleY + ") angle "
+				+ angle * 180.0f / Math.PI;
 	}
 
 	public void addSubDrawable(MultiTouchDrawable subObject) {
@@ -674,6 +666,5 @@ public abstract class MultiTouchDrawable {
 	public void removeSubDrawable(MultiTouchDrawable subObject) {
 		subDrawables.remove(subObject);
 	}
-	
-	
+
 }

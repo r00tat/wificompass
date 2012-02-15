@@ -24,20 +24,14 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	protected void init() {
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.access_point_icon);
 		this.setPivot(0.5f, 0.716f);
+		
+		this.width = icon.getBitmap().getWidth();
+		this.height = icon.getBitmap().getHeight();
 	}
 
 	public Drawable getDrawable() {
 		return icon;
 	}
-
-	public int getWidth() {
-		return icon.getBitmap().getWidth();
-	}
-
-	public int getHeight() {
-		return icon.getBitmap().getHeight();
-	}
-
 
 	@Override
 	public boolean onTouch(PointInfo pointinfo) {
