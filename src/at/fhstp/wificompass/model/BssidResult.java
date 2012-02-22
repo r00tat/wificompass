@@ -40,11 +40,16 @@ public class BssidResult {
 	}
 	
 	public BssidResult(ScanResult sr){
+		this(sr,null);
+	}
+	
+	public BssidResult(ScanResult sr,WifiScanResult result){
 		bssid=sr.BSSID;
 		ssid=sr.SSID;
 		capabilities=sr.capabilities;
 		frequency=sr.frequency;
 		level=sr.level;
+		this.scanResult=result;
 	}
 
 	/**

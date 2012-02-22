@@ -29,6 +29,7 @@ public class LocationServiceImpl implements LocationService {
 	public LocationServiceImpl() {
 		providers = new Vector<LocationProvider>();
 		pos = new Location();
+		LocationServiceFactory.setLocationService(this);
 	}
 
 	/*

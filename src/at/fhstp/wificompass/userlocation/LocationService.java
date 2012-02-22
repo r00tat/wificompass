@@ -74,4 +74,6 @@ public interface LocationService {
 	 * @return List of registered LocationProviders
 	 */
 	List<LocationProvider> getLocationProviders();
+	
+	
 }
