@@ -149,7 +149,9 @@ public class MultiTouchView extends View implements
 	/** Pass touch events to the MT controller */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		return multiTouchController.onTouchEvent(event);
+		boolean handled = multiTouchController.onTouchEvent(event);
+		invalidate();
+		return handled;
 	}
 
 	/**
@@ -162,8 +164,10 @@ public class MultiTouchView extends View implements
 		for (int i = n - 1; i >= 0; i--) {
 			MultiTouchDrawable im = drawables.get(i);
 			if (im.containsPoint(x, y)) {
-				if (im.onTouch(pt)) {
-					return im;
+				
+				
+				if (!im.onTouch(pt)) {
+					return im.getDraggableObjectAtPoint(pt);
 				}
 				// else {
 				// return null;
@@ -190,7 +194,7 @@ public class MultiTouchView extends View implements
 		} else {
 			// Called with drawable == null when drag stops.
 		}
-		invalidate();
+		//invalidate();
 	}
 
 	/**
@@ -213,7 +217,7 @@ public class MultiTouchView extends View implements
 	public boolean setPositionAndScale(MultiTouchDrawable drawable,
 			PositionAndScale newImgPosAndScale, PointInfo touchPoint) {
 		currTouchPoint.set(touchPoint);
-		boolean ok = drawable.setPos(newImgPosAndScale);
+		boolean ok = drawable.setPos(newImgPosAndScale, true);
 		if (ok)
 			invalidate();
 		return ok;

@@ -47,7 +47,7 @@ public class UserDrawable extends MultiTouchDrawable {
 	@Override
 	public boolean isDragable() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

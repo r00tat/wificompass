@@ -16,8 +16,10 @@ import android.graphics.BitmapFactory;
 import at.fhstp.wificompass.interfaces.XMLSerializable;
 import at.fhstp.wificompass.model.xml.XMLSettings;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = ProjectSite.TABLE_NAME)
@@ -49,6 +51,9 @@ public class ProjectSite implements XMLSerializable {
 	@DatabaseField(foreign = true,foreignAutoRefresh = true)
 	protected Project project;
 
+	@ForeignCollectionField
+	protected ForeignCollection<AccessPoint> accessPoints;
+	
 	protected static final String XMLTAG = "location", XMLTITLE = "title";
 	
 	public static final String UNTITLED="untitled";
