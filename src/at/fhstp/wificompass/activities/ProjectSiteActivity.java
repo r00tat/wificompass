@@ -11,6 +11,7 @@ import java.util.Iterator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
@@ -70,6 +71,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected ImageView scanningImageView;
 
 	protected boolean ignoreWifiResults = false;
+	
+	protected BroadcastReceiver wifiBroadcastReceiver;
 
 	/*
 	 * (non-Javadoc)
@@ -123,8 +126,14 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			UserDrawable user = new UserDrawable(this, map);
 			user.setRelativePosition(320, 240);
 
-			MeasuringPointDrawable point = new MeasuringPointDrawable(this, map);
-			point.setRelativePosition(423, 293);
+//			MeasuringPointDrawable point = new MeasuringPointDrawable(this, map);
+//			point.setRelativePosition(423, 293);
+			
+			for(Iterator<WifiScanResult> it=site.getScanResults().iterator();it.hasNext();){
+				WifiScanResult wsr=it.next();
+				new MeasuringPointDrawable(this,map,wsr);
+			}
+			
 
 			multiTouchView.addDrawable(map);
 			// multiTouchView.addDrawable(icon1);
@@ -173,7 +182,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		case R.id.project_site_wifiscan_button:
 			Logger.d("start a wifiscan");
 			try {
-				WifiScanner.startScan(this, this);
+				wifiBroadcastReceiver=WifiScanner.startScan(this, this);
 				ignoreWifiResults = false;
 				showDialog(DIALOG_SCANNING);
 
@@ -346,6 +355,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				Dao<WifiScanResult, Integer> scanResultDao = databaseHelper.getDao(WifiScanResult.class);
 				scanResultDao.update(wr);
 				
+				projectSiteDao.refresh(site);
+				
+				new MeasuringPointDrawable(this,map,wr);
+				
 				
 				StringBuffer sb=new StringBuffer();
 				for(Iterator<BssidResult> it=wr.getBssids().iterator();it.hasNext();){
@@ -354,6 +367,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 					sb.append(result.toString());
 					sb.append("\n");
 				}
+				
+				multiTouchView.invalidate();
 				
 				Toast.makeText(this, this.getString(R.string.project_site_wifiscan_finished,sb.toString()), Toast.LENGTH_SHORT).show();
 				
@@ -382,9 +397,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected void stopWifiScan() {
 		hideWifiScanDialog();
 		
+		if(wifiBroadcastReceiver!=null){
 		
-		WifiScanner.stopScanning(this);
+		WifiScanner.stopScanner(this, wifiBroadcastReceiver);
+		wifiBroadcastReceiver=null;
 
+		}
 		// stop scan
 		// oh, wait, we can't stop the scan, it's asynchronous!
 		// we just have to ignore the result!

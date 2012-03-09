@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import android.util.Log;
+import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.model.Location;
 
 /**
@@ -53,7 +53,7 @@ public class LocationServiceImpl implements LocationService {
 		 */
 		
 		if(force||
-				location.getTimestamp().after(pos.getTimestamp())||
+				location.getTimestampmilis()>=pos.getTimestampmilis()||
 				(
 					pos.getAccurancy()==-1||
 					location.getAccurancy()>=0&&(location.getAccurancy()<pos.getAccurancy())
@@ -61,7 +61,7 @@ public class LocationServiceImpl implements LocationService {
 			){
 			pos=location;
 		}else {
-			Log.d(TAG, "Location not updated");
+			Logger.d( "Location not updated");
 		}
 		return pos;
 	}

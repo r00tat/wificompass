@@ -21,15 +21,15 @@ public class Location {
 	protected int id;
 	
 	@DatabaseField
-	protected double x;
+	protected float x;
 	
 	@DatabaseField
-	protected double y;
+	protected float y;
 	
-//	protected double z;
+//	protected float z;
 	
 	@DatabaseField
-	protected double accurancy;
+	protected float accurancy;
 	
 	@DatabaseField
 	protected String provider;
@@ -47,17 +47,17 @@ public class Location {
 	/**
 	 * 
 	 */
-	public Location(double x,double y) {
+	public Location(float x,float y) {
 		this(null,x,y,-1,null);
 	}
 	
 	
-	public Location(double x,double y,double accurancy) {
+	public Location(float x,float y,float accurancy) {
 		this(null,x,y,-1,null);
 	}
 	
 	
-	public Location(String provider,double x,double y, double accurancy,Date timestamp){
+	public Location(String provider,float x,float y, float accurancy,Date timestamp){
 		this.provider=provider;
 		this.x=x;
 		this.y=y;
@@ -69,28 +69,28 @@ public class Location {
 		}
 	}
 
-	public double getX() {
+	public float getX() {
 		return x;
 	}
 
-	public void setX(double x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 
-	public double getY() {
+	public float getY() {
 		return y;
 	}
 
-	public void setY(double y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 
 
-	public double getAccurancy() {
+	public float getAccurancy() {
 		return accurancy;
 	}
 
-	public void setAccurancy(double accurancy) {
+	public void setAccurancy(float accurancy) {
 		this.accurancy = accurancy;
 	}
 
@@ -112,6 +112,13 @@ public class Location {
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 		timestampmilis=timestamp.getTime();
+	}
+
+	/**
+	 * @return the timestampmilis
+	 */
+	public long getTimestampmilis() {
+		return timestampmilis;
 	}
 	
 	

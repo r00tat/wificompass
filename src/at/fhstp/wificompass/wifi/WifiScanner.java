@@ -20,6 +20,7 @@ import android.net.wifi.WifiManager;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.exceptions.WifiException;
 import at.fhstp.wificompass.model.BssidResult;
+import at.fhstp.wificompass.model.Location;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
@@ -31,7 +32,7 @@ public class WifiScanner {
 	
 	protected static Vector<BroadcastReceiver> receivers=null;
 	
-	public static boolean startScan(Context ctx, WifiResultCallback callback) throws WifiException{
+	public static BroadcastReceiver startScan(Context ctx, WifiResultCallback callback) throws WifiException{
 		if(receivers==null){
 			receivers=new Vector<BroadcastReceiver>();
 		}
@@ -101,8 +102,11 @@ public class WifiScanner {
 					try {
 						
 						databaseHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+						Location curLocation=LocationServiceFactory.getLocationService().getLocation();
 						
-						WifiScanResult wifiScanResult=new WifiScanResult(new Date().getTime(),LocationServiceFactory.getLocationService().getLocation(),null);
+						databaseHelper.getDao(Location.class).create(curLocation);
+						
+						WifiScanResult wifiScanResult=new WifiScanResult(new Date().getTime(),curLocation,null);
 						
 						Dao<WifiScanResult,Integer> scanResultDao=databaseHelper.getDao(WifiScanResult.class);
 						scanResultDao.create(wifiScanResult);
@@ -146,7 +150,7 @@ public class WifiScanner {
 			wm.startScan();
 
 		
-		return false;
+		return wifiScanReceiver;
 
 	}
 	
@@ -161,4 +165,13 @@ public class WifiScanner {
 		
 	}
 
+	
+	public static void stopScanner(Context ctx,BroadcastReceiver receiver){
+		ctx.unregisterReceiver(receiver);
+		if(receivers.contains(receiver)){
+			receivers.remove(receiver);
+		}
+	}
+	
+	
 }

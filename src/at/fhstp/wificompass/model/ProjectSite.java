@@ -54,6 +54,10 @@ public class ProjectSite implements XMLSerializable {
 	@ForeignCollectionField
 	protected ForeignCollection<AccessPoint> accessPoints;
 	
+	@ForeignCollectionField
+	protected ForeignCollection<WifiScanResult> scanResults;
+	
+	
 	protected static final String XMLTAG = "location", XMLTITLE = "title";
 	
 	public static final String UNTITLED="untitled";
@@ -155,6 +159,20 @@ public class ProjectSite implements XMLSerializable {
 
 	public int getId() {
 		return id;
+	}
+
+	/**
+	 * @return the accessPoints
+	 */
+	public ForeignCollection<AccessPoint> getAccessPoints() {
+		return accessPoints;
+	}
+
+	/**
+	 * @return the scanResults
+	 */
+	public ForeignCollection<WifiScanResult> getScanResults() {
+		return scanResults;
 	}
 
 }

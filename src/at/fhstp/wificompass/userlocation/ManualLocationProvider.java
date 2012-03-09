@@ -48,17 +48,17 @@ public class ManualLocationProvider implements LocationProvider {
 	}
 
 	@Override
-	public double getLocationX() {
+	public float getLocationX() {
 		return loc.getX();
 	}
 
 	@Override
-	public double getLocationY() {
+	public float getLocationY() {
 		return loc.getY();
 	}
 
 	@Override
-	public double getLocationZ() {
+	public float getLocationZ() {
 		return 0;
 	}
 
@@ -71,6 +71,7 @@ public class ManualLocationProvider implements LocationProvider {
 		loc.setX(x);
 		loc.setY(y);
 		loc.setTimestamp(new Date());
+		locationService.updateLocation(loc);
 	}
 
 }

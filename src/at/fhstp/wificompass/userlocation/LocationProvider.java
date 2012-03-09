@@ -36,19 +36,19 @@ public interface LocationProvider {
 	  * get X coordinate
 	 * @return x coordinate
 	 */
-	double getLocationX();
+	float getLocationX();
 	 
 	 /**
 	  * get Y coordinate
 	 * @return y coordinate
 	 */
-	double getLocationY();
+	float getLocationY();
 
 	/**
 	 * get Z coordinate if applicable, otherwise zero
 	 * @return z coordinate
 	 */
-	double getLocationZ();
+	float getLocationZ();
 	
 	/**
 	 * get current Location of the user
