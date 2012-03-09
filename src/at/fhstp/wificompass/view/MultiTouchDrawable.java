@@ -18,7 +18,6 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
-import at.fhstp.wificompass.Logger;
 
 /**
  * Abstract Class for drawable objects for the MultiTouchView
@@ -224,6 +223,15 @@ public abstract class MultiTouchDrawable {
 			this.scaleX = scaleX;
 			this.scaleY = scaleY;
 		}
+	}
+
+	/**
+	 * set relative position to super object if set
+	 * 
+	 * @param relativePosition
+	 */
+	public void setRelativePosition(PointF relativePosition) {
+		this.setRelativePosition(relativePosition.x, relativePosition.y);
 	}
 
 	/**
@@ -443,7 +451,8 @@ public abstract class MultiTouchDrawable {
 	}
 
 	/** Set the position and scale of an image in screen coordinates */
-	public boolean setPos(PositionAndScale newImgPosAndScale, boolean isDraggedOrPinched) {
+	public boolean setPos(PositionAndScale newImgPosAndScale,
+			boolean isDraggedOrPinched) {
 		return setPos(
 				newImgPosAndScale.getXOff(),
 				newImgPosAndScale.getYOff(),
@@ -451,8 +460,7 @@ public abstract class MultiTouchDrawable {
 						.getScaleX() : newImgPosAndScale.getScale(),
 				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0 ? newImgPosAndScale
 						.getScaleY() : newImgPosAndScale.getScale(),
-				newImgPosAndScale.getAngle(),
-				isDraggedOrPinched);
+				newImgPosAndScale.getAngle(), isDraggedOrPinched);
 		// FIXME: anisotropic scaling jumps when axis-snapping
 		// FIXME: affine-ize
 		// return setPos(newImgPosAndScale.getXOff(),
@@ -463,7 +471,8 @@ public abstract class MultiTouchDrawable {
 
 	protected boolean setPos(float centerX, float centerY, float scaleX,
 			float scaleY, float angle, boolean isDraggedOrPinched) {
-		return setPos(centerX, centerY, scaleX, scaleY, angle, 0, isDraggedOrPinched);
+		return setPos(centerX, centerY, scaleX, scaleY, angle, 0,
+				isDraggedOrPinched);
 	}
 
 	/** Set the position and scale of an image in screen coordinates */
@@ -473,7 +482,7 @@ public abstract class MultiTouchDrawable {
 		float ws = (width / 2) * scaleX, hs = (height / 2) * scaleY;
 		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX
 				+ ws, newMaxY = centerY + hs;
-		
+
 		// Min and max values need to be set when item is dragged or scaled
 		if ((flags & FLAG_FORCEXY) != 0 || this.isDragable()
 				|| (flags & FLAG_FORCESCALE) != 0 || this.isScalable()) {
@@ -501,24 +510,27 @@ public abstract class MultiTouchDrawable {
 		}
 
 		if (isDraggedOrPinched && this.hasSuperDrawable()) {
-			PointF relativePosition = getRelativePositionToSuperobject(this.getSuperDrawable());
+			PointF relativePosition = getRelativePositionToSuperobject();
+			this.setRelativePosition(relativePosition.x, relativePosition.y);
 		}
-		
+
 		// Iterate through the subobjects and change their position
 		Iterator<MultiTouchDrawable> iterator = subDrawables.iterator();
 		while (iterator.hasNext()) {
 			MultiTouchDrawable subobject = iterator.next();
 
-			PointF absolutePosition = this.getAbsolutePositionOfSubobject(subobject);
+			PointF absolutePosition = this
+					.getAbsolutePositionOfSubobject(subobject);
 
-			subobject.setPos(absolutePosition.x, absolutePosition.y, 1, 1, 0, FLAG_FORCEXY, false);
+			subobject.setPos(absolutePosition.x, absolutePosition.y, 1, 1, 0,
+					FLAG_FORCEXY, false);
 		}
 
 		return true;
 	}
-	
+
 	protected PointF getAbsolutePositionOfSubobject(MultiTouchDrawable subobject) {
-		
+
 		float xBeforeRotate = this.minX + subobject.getRelativeX() * scaleX;
 		float yBeforeRotate = this.minY + subobject.getRelativeY() * scaleY;
 
@@ -526,8 +538,8 @@ public abstract class MultiTouchDrawable {
 				Math.abs(centerX - xBeforeRotate), 2)
 				+ Math.pow(Math.abs(centerY - yBeforeRotate), 2));
 
-		float angleBeforeRotate = (float) Math.atan2(yBeforeRotate
-				- centerY, xBeforeRotate - centerX);
+		float angleBeforeRotate = (float) Math.atan2(yBeforeRotate - centerY,
+				xBeforeRotate - centerX);
 
 		float newAngle = angle + angleBeforeRotate;
 
@@ -539,18 +551,36 @@ public abstract class MultiTouchDrawable {
 			newX -= subobject.getPivotXRelativeToCenter();
 			newY -= subobject.getPivotYRelativeToCenter();
 		}
-		
+
 		return new PointF(newX, newY);
 	}
-	
-	protected PointF getRelativePositionToSuperobject(MultiTouchDrawable superobject) {
-		PointF relativePosition = new PointF();
+
+	protected PointF getRelativePositionToSuperobject() {
+
+		float x = (this.isCustomPivotUsed()) ? centerX
+				+ getPivotXRelativeToCenter() : centerX;
+		float y = (this.isCustomPivotUsed()) ? centerY
+				+ getPivotYRelativeToCenter() : centerY;
+
+		float superAngle = superDrawable.angle;
+		float angleToCenter = (float) Math.atan2(y - superDrawable.centerY, x
+				- superDrawable.centerX);
+
+		float angle = superAngle - angleToCenter;
+
+		float radius = (float) Math.sqrt(Math.pow(
+				Math.abs(x - superDrawable.centerX), 2)
+				+ Math.pow(Math.abs(y - superDrawable.centerY), 2))
+				/ superDrawable.scaleX;
+
 		
-		
-		
+		float newX = (float) (radius * Math.cos(angle) + superDrawable.getWidth() / 2);
+		float newY = (float) (radius * Math.sin(angle * -1) + superDrawable.getHeight() / 2);
+
+		PointF relativePosition = new PointF(newX, newY);// xBeforeRotate, yBeforeRotate);
 		return relativePosition;
 	}
-	
+
 	public void recalculateSubdrawablePositions() {
 		this.setPos(centerX, centerY, scaleX, scaleY, angle, false);
 	}
@@ -586,21 +616,21 @@ public abstract class MultiTouchDrawable {
 		int n = subDrawables.size();
 		for (int i = n - 1; i >= 0; i--) {
 			MultiTouchDrawable im = subDrawables.get(i);
-			
+
 			if (im.isDragable() && im.containsPoint(x, y)) {
 				return im.getDraggableObjectAtPoint(pt);
 			}
 		}
-		
+
 		if (this.containsPoint(pt.getX(), pt.getY())) {
 			return this;
 		}
-		
+
 		return null;
 	}
-	
+
 	public void draw(Canvas canvas) {
-		//Logger.d("Drawing " + this.toString());
+		// Logger.d("Drawing " + this.toString());
 		canvas.save();
 		float dx = (maxX + minX) / 2;
 		float dy = (maxY + minY) / 2;
@@ -621,7 +651,7 @@ public abstract class MultiTouchDrawable {
 			subDrawables.get(i).draw(canvas);
 		}
 	}
-	
+
 	public float getCenterX() {
 		return centerX;
 	}
