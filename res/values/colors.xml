@@ -5,6 +5,7 @@
     <color name="globalBackground">#000</color>
     <color name="globalForeground">#ffcccccc</color>
     <color name="project_site_background">#ffcccccc</color>
+    <color name="popup_text">#000</color>
 
     
 </resources>

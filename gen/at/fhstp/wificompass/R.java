@@ -19,6 +19,7 @@ public final class R {
         public static final int globalForeground=0x7f050003;
         public static final int mainBackground=0x7f050000;
         public static final int mainForeground=0x7f050001;
+        public static final int popup_text=0x7f050005;
         public static final int project_site_background=0x7f050004;
     }
     public static final class drawable {
@@ -44,56 +45,59 @@ public final class R {
         public static final int user_icon=0x7f020013;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f0a0013;
-        public static final int aboutOption=0x7f0a002c;
-        public static final int dirPath=0x7f0a0005;
-        public static final int export_db_button=0x7f0a0001;
-        public static final int export_db_drop_button=0x7f0a0003;
-        public static final int export_db_import_button=0x7f0a0002;
-        public static final int export_db_info=0x7f0a0000;
-        public static final int export_db_message=0x7f0a0004;
-        public static final int fileList=0x7f0a0009;
-        public static final int filebrowser_button_layout=0x7f0a0006;
-        public static final int filebrowser_new_dir_button=0x7f0a0008;
-        public static final int main_export_option=0x7f0a002a;
-        public static final int main_new_project_option=0x7f0a0027;
-        public static final int main_project_list=0x7f0a000c;
-        public static final int main_sensors_option=0x7f0a0029;
-        public static final int main_settings_option=0x7f0a002b;
-        public static final int main_wifi_scan=0x7f0a0028;
-        public static final int new_project_button=0x7f0a000b;
-        public static final int preferences_loglevel=0x7f0a000d;
-        public static final int project_addsite_button=0x7f0a0010;
-        public static final int project_delete_option=0x7f0a002e;
-        public static final int project_description=0x7f0a000f;
-        public static final int project_list_view=0x7f0a0012;
-        public static final int project_new_location_option=0x7f0a002f;
-        public static final int project_save_option=0x7f0a002d;
-        public static final int project_site_button_layout=0x7f0a0014;
-        public static final int project_site_menu_change_name=0x7f0a0030;
-        public static final int project_site_menu_save=0x7f0a0031;
-        public static final int project_site_reset_pos_button=0x7f0a0016;
-        public static final int project_site_reset_zoom_button=0x7f0a0015;
-        public static final int project_site_resultview=0x7f0a0018;
-        public static final int project_site_wifiscan_button=0x7f0a0017;
-        public static final int project_sites_listview=0x7f0a0011;
-        public static final int project_title=0x7f0a000e;
-        public static final int sample_scan_button=0x7f0a000a;
-        public static final int sample_scan_result_scroll=0x7f0a001a;
-        public static final int sample_scan_result_scroll_horizontal=0x7f0a001b;
-        public static final int sample_scan_result_table=0x7f0a001c;
-        public static final int sample_scan_result_table_row_title=0x7f0a001d;
-        public static final int sample_scan_result_table_row_title_ssid=0x7f0a001e;
-        public static final int sample_scan_text=0x7f0a0019;
-        public static final int saveButton=0x7f0a0007;
-        public static final int sensors_layout=0x7f0a001f;
-        public static final int sensors_scan_label=0x7f0a0021;
-        public static final int sensors_scan_toggle=0x7f0a0022;
-        public static final int sensors_table=0x7f0a0020;
-        public static final int sensors_update_label=0x7f0a0023;
-        public static final int sensors_update_seekbar=0x7f0a0024;
-        public static final int sensors_valuecount_label=0x7f0a0025;
-        public static final int sensors_valuecount_seekbar=0x7f0a0026;
+        public static final int LinearLayout1=0x7f0b0013;
+        public static final int aboutOption=0x7f0b002c;
+        public static final int dirPath=0x7f0b0005;
+        public static final int export_db_button=0x7f0b0001;
+        public static final int export_db_drop_button=0x7f0b0003;
+        public static final int export_db_import_button=0x7f0b0002;
+        public static final int export_db_info=0x7f0b0000;
+        public static final int export_db_message=0x7f0b0004;
+        public static final int fileList=0x7f0b0009;
+        public static final int filebrowser_button_layout=0x7f0b0006;
+        public static final int filebrowser_new_dir_button=0x7f0b0008;
+        public static final int main_export_option=0x7f0b002a;
+        public static final int main_new_project_option=0x7f0b0027;
+        public static final int main_project_list=0x7f0b000c;
+        public static final int main_sensors_option=0x7f0b0029;
+        public static final int main_settings_option=0x7f0b002b;
+        public static final int main_wifi_scan=0x7f0b0028;
+        public static final int new_project_button=0x7f0b000b;
+        public static final int preferences_loglevel=0x7f0b000d;
+        public static final int project_addsite_button=0x7f0b0010;
+        public static final int project_delete_option=0x7f0b002e;
+        public static final int project_description=0x7f0b000f;
+        public static final int project_list_view=0x7f0b0012;
+        public static final int project_new_location_option=0x7f0b002f;
+        public static final int project_save_option=0x7f0b002d;
+        public static final int project_site_button_layout=0x7f0b0014;
+        public static final int project_site_menu_change_name=0x7f0b0030;
+        public static final int project_site_menu_save=0x7f0b0031;
+        public static final int project_site_reset_pos_button=0x7f0b0016;
+        public static final int project_site_reset_zoom_button=0x7f0b0015;
+        public static final int project_site_resultview=0x7f0b0018;
+        public static final int project_site_wifiscan_button=0x7f0b0017;
+        public static final int project_sites_listview=0x7f0b0011;
+        public static final int project_title=0x7f0b000e;
+        public static final int sample_scan_button=0x7f0b000a;
+        public static final int sample_scan_result_scroll=0x7f0b001a;
+        public static final int sample_scan_result_scroll_horizontal=0x7f0b001b;
+        public static final int sample_scan_result_table=0x7f0b001c;
+        public static final int sample_scan_result_table_row_title=0x7f0b001d;
+        public static final int sample_scan_result_table_row_title_ssid=0x7f0b001e;
+        public static final int sample_scan_text=0x7f0b0019;
+        public static final int saveButton=0x7f0b0007;
+        public static final int sensors_layout=0x7f0b001f;
+        public static final int sensors_scan_label=0x7f0b0021;
+        public static final int sensors_scan_toggle=0x7f0b0022;
+        public static final int sensors_table=0x7f0b0020;
+        public static final int sensors_update_label=0x7f0b0023;
+        public static final int sensors_update_seekbar=0x7f0b0024;
+        public static final int sensors_valuecount_label=0x7f0b0025;
+        public static final int sensors_valuecount_seekbar=0x7f0b0026;
+    }
+    public static final class integer {
+        public static final int popup_text_size=0x7f090000;
     }
     public static final class layout {
         public static final int about=0x7f030000;
@@ -108,9 +112,9 @@ public final class R {
         public static final int sensors=0x7f030009;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
-        public static final int project=0x7f090001;
-        public static final int project_site=0x7f090002;
+        public static final int main=0x7f0a0000;
+        public static final int project=0x7f0a0001;
+        public static final int project_site=0x7f0a0002;
     }
     public static final class raw {
         public static final int ormlite_config=0x7f040000;
@@ -231,6 +235,7 @@ public final class R {
     public static final class style {
         public static final int background=0x7f080000;
         public static final int listview=0x7f080002;
+        public static final int popuptext=0x7f080003;
         public static final int textview=0x7f080001;
     }
 }

@@ -31,12 +31,12 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
 		
-		popup = new PopupDrawable(ctx);
+		popup = new PopupDrawable(ctx,"This is a test text, which should wrap arround!");
 		Logger.d("Popup width: " + popup.width);
 		popup.setRelativePosition(this.width / 2 - popup.width / 2, popup.height * -0.5f);
 	}
 
-	public void setIsPopupActive(boolean isPopupActive) {
+	public void setPopupActive(boolean isPopupActive) {
 		this.isPopupActive = isPopupActive;
 		
 		if (this.isPopupActive)
@@ -52,13 +52,13 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	@Override
 	public boolean onTouch(PointInfo pointinfo) {
 		
-		Logger.d("Touch event for AP " + this.getId() + ": " + pointinfo.isMultiTouch() + ", " + pointinfo.getNumTouchPoints() + ", " + pointinfo.getAction());
+//		Logger.d("Touch event for AP " + this.getId() + ": " + pointinfo.isMultiTouch() + ", " + pointinfo.getNumTouchPoints() + ", " + pointinfo.getAction());
 		
 		if (pointinfo.isMultiTouch() == false &&
 			pointinfo.getNumTouchPoints() == 1 &&
 			pointinfo.getAction() == 0
 				) {
-			this.setIsPopupActive(!isPopupActive);
+			this.setPopupActive(!isPopupActive);
 			return true;
 		}
 			
