@@ -14,8 +14,10 @@ import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.view.AccessPointDrawable;
+import at.fhstp.wificompass.view.MeasuringPointDrawable;
 import at.fhstp.wificompass.view.MultiTouchView;
 import at.fhstp.wificompass.view.SiteMap;
+import at.fhstp.wificompass.view.UserDrawable;
 
 public class ProjectSiteActivity extends Activity implements OnClickListener {
 
@@ -60,6 +62,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener {
 		icon4.setRelativePosition(52, 81);
 		AccessPointDrawable icon5 = new AccessPointDrawable(this, map);
 		icon5.setRelativePosition(423, 214);
+		
+		UserDrawable user = new UserDrawable(this, map);
+		user.setRelativePosition(320, 240);
+		
+		MeasuringPointDrawable point = new MeasuringPointDrawable(this, map);
+		point.setRelativePosition(423, 293);
 		
 		multiTouchView.addDrawable(map);
 //		multiTouchView.addDrawable(icon1);

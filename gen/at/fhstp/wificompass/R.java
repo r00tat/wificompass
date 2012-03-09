@@ -27,6 +27,8 @@ public final class R {
         public static final int folder=0x7f020002;
         public static final int ic_launcher=0x7f020003;
         public static final int icon=0x7f020004;
+        public static final int red_dot=0x7f020005;
+        public static final int user_icon=0x7f020006;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f0a0013;
