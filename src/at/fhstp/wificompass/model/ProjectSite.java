@@ -51,7 +51,7 @@ public class ProjectSite implements XMLSerializable {
 
 	protected static final String XMLTAG = "location", XMLTITLE = "title";
 	
-	protected static final String UNTITLED="untitled";
+	public static final String UNTITLED="untitled";
 	
 	public static String FIELD_PROJECT_FK=Project.TABLE_NAME+"_"+Project.FIELD_ID;
 

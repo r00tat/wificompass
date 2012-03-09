@@ -57,6 +57,8 @@ public final class R {
         public static final int project_new_location_option=0x7f0a002e;
         public static final int project_save_option=0x7f0a002c;
         public static final int project_site_button_layout=0x7f0a0014;
+        public static final int project_site_menu_change_name=0x7f0a002f;
+        public static final int project_site_menu_save=0x7f0a0030;
         public static final int project_site_reset_pos_button=0x7f0a0016;
         public static final int project_site_reset_zoom_button=0x7f0a0015;
         public static final int project_site_resultview=0x7f0a0017;
@@ -94,6 +96,7 @@ public final class R {
     public static final class menu {
         public static final int main=0x7f090000;
         public static final int project=0x7f090001;
+        public static final int project_site=0x7f090002;
     }
     public static final class raw {
         public static final int ormlite_config=0x7f040000;
@@ -103,6 +106,8 @@ public final class R {
         public static final int aboutText=0x7f060011;
         public static final int app_name=0x7f060001;
         public static final int app_package=0x7f060049;
+        public static final int button_cancel=0x7f060064;
+        public static final int button_ok=0x7f060063;
         public static final int database_create_failed=0x7f060035;
         public static final int database_failure=0x7f060034;
         public static final int enableingWiFiSucceed=0x7f060028;
@@ -158,8 +163,15 @@ public final class R {
         public static final int project_save_failed=0x7f060037;
         public static final int project_saved=0x7f060036;
         public static final int project_site_create_failed=0x7f060057;
+        public static final int project_site_dialog_title_message=0x7f060062;
+        public static final int project_site_dialog_title_title=0x7f060061;
+        public static final int project_site_load_failed=0x7f060060;
+        public static final int project_site_menu_change_name=0x7f060065;
+        public static final int project_site_menu_save=0x7f060068;
         public static final int project_site_reset_position=0x7f06005f;
         public static final int project_site_reset_zoom=0x7f06005e;
+        public static final int project_site_save_failed=0x7f060067;
+        public static final int project_site_saved=0x7f060066;
         public static final int project_sites_text=0x7f060059;
         public static final int project_title=0x7f06001d;
         public static final int quit=0x7f060009;

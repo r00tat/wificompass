@@ -315,7 +315,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 			projectSiteDao.create(ps);
 
 			Logger.d("starting Site Activity");
-			i.putExtra(ProjectSiteActivity.START_MODE, ProjectSiteActivity.START_LOAD);
+//			i.putExtra(ProjectSiteActivity.START_MODE, ProjectSiteActivity.START_LOAD);
 			i.putExtra(ProjectSiteActivity.SITE_KEY, ps.getId());
 			startActivity(i);
 		}
