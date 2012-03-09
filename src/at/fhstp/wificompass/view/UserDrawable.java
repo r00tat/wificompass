@@ -4,10 +4,13 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.R;
+import at.fhstp.wificompass.userlocation.ManualLocationProvider;
 
 public class UserDrawable extends MultiTouchDrawable {
 
 	protected static BitmapDrawable icon;
+	
+	protected ManualLocationProvider locProvider;
 	
 	public UserDrawable(Context ctx) {
 		super(ctx);
@@ -25,6 +28,9 @@ public class UserDrawable extends MultiTouchDrawable {
 		
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
+		
+		// create a Location Provider to update the LocationService
+		locProvider=new ManualLocationProvider(ctx);
 	}
 	
 	@Override
@@ -53,6 +59,15 @@ public class UserDrawable extends MultiTouchDrawable {
 	@Override
 	public boolean isOnlyInSuper() {
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#setRelativePosition(float, float)
+	 */
+	@Override
+	public void setRelativePosition(float relX, float relY) {
+		super.setRelativePosition(relX, relY);
+		locProvider.updateCurrentPosition(relX, relY);
 	}
 
 }

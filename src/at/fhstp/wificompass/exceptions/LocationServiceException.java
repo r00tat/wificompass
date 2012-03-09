@@ -3,7 +3,7 @@
  * Author: Paul Woelfel
  * Email: frig@frig.at
  */
-package at.fhstp.wificompass.userlocation;
+package at.fhstp.wificompass.exceptions;
 
 public class LocationServiceException extends Exception {
 

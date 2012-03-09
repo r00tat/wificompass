@@ -14,6 +14,7 @@ import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.AccessPoint;
 import at.fhstp.wificompass.model.BssidResult;
+import at.fhstp.wificompass.model.Location;
 import at.fhstp.wificompass.model.Project;
 import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.model.SensorData;
@@ -31,11 +32,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public static final String DATABASE_NAME = "wificompass.db";
 
 	// any time you make changes to your database objects, you may have to increase the database version
-	private static final int DATABASE_VERSION = 10;
+	private static final int DATABASE_VERSION = 11;
 
 	protected Context context;
 
-	protected static final Class<?>[] ormClasses = { Project.class, ProjectSite.class, WifiScanResult.class, BssidResult.class, SensorData.class, AccessPoint.class };
+	protected static final Class<?>[] ormClasses = { Project.class, ProjectSite.class, WifiScanResult.class, BssidResult.class, SensorData.class, AccessPoint.class,Location.class };
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

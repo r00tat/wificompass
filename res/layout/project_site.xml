@@ -23,6 +23,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/project_site_reset_position" />
+
+        <Button
+            android:id="@+id/project_site_wifiscan_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/project_site_start_scan" />
+        
     </LinearLayout>
 
     <at.fhstp.wificompass.view.MultiTouchView

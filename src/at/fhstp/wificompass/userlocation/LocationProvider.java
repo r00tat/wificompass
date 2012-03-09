@@ -23,7 +23,7 @@ public interface LocationProvider {
 	 * remove the LocationService, which should be updated on location changes
 	 * @param service service to update
 	 */
-	public void removeLocationService(LocationService service);
+	public void unsetLocationService(LocationService service);
 	
 
 	/**

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,17 +18,24 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import at.fhstp.wificompass.Logger;
+import at.fhstp.wificompass.exceptions.WifiException;
 import at.fhstp.wificompass.model.BssidResult;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
-import at.fhstp.wificompass.userlocation.LocationServiceException;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
 public class WifiScanner {
+	
+	protected static Vector<BroadcastReceiver> receivers=null;
+	
 	public static boolean startScan(Context ctx, WifiResultCallback callback) throws WifiException{
+		if(receivers==null){
+			receivers=new Vector<BroadcastReceiver>();
+		}
+		
 		BroadcastReceiver wifiScanReceiver = null;
 		final Context context=ctx;
 		final WifiResultCallback resultCallback=callback;
@@ -85,6 +93,10 @@ public class WifiScanner {
 //					}
 
 					context.unregisterReceiver(this);
+					
+					if(receivers.contains(this))
+						receivers.remove(this);
+					
 					DatabaseHelper databaseHelper = null;
 					try {
 						
@@ -108,8 +120,6 @@ public class WifiScanner {
 						
 						resultCallback.scanFinished(wifiScanResult);
 						
-					} catch (LocationServiceException e) {
-						resultCallback.scanFailed(e);
 					} catch (SQLException e) {
 						resultCallback.scanFailed(e);
 					} finally {
@@ -125,15 +135,30 @@ public class WifiScanner {
 
 				}
 			};
+			
+			
 			context.registerReceiver(wifiScanReceiver, i);
+			
+			receivers.add(wifiScanReceiver);
 
 			Logger.d( "starting scan");
 			// Now you can call this and it should execute the broadcastReceiver's onReceive()
-			
+			wm.startScan();
 
 		
 		return false;
 
+	}
+	
+	public static void stopScanning(Context ctx){
+		// we don't stop scanning, we just unregister all Broadcast Intent Receivers
+		
+		for(Iterator<BroadcastReceiver> it=receivers.iterator();it.hasNext();){
+			ctx.unregisterReceiver(it.next());
+		}
+		receivers=new Vector<BroadcastReceiver>();
+		
+		
 	}
 
 }

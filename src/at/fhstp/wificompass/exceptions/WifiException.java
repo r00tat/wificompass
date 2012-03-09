@@ -3,7 +3,7 @@
  * Author: Paul Woelfel
  * Email: frig@frig.at
  */
-package at.fhstp.wificompass.wifi;
+package at.fhstp.wificompass.exceptions;
 
 public class WifiException extends Exception {
 

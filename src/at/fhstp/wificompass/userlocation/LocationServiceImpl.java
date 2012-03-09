@@ -73,6 +73,7 @@ public class LocationServiceImpl implements LocationService {
 
 	@Override
 	public void registerProvider(LocationProvider provider) {
+		providers.add(provider);
 		provider.setLocationService(this);
 	}
 
@@ -89,14 +90,14 @@ public class LocationServiceImpl implements LocationService {
 	@Override
 	public void unregisterProvider(LocationProvider provider) {
 		if (providers.contains(provider)) {
-
+			providers.remove(provider);
 		}
 	}
 
 	protected void finalize() {
 		for (Iterator<LocationProvider> it = providers.iterator(); it.hasNext();) {
 			LocationProvider p = it.next();
-			p.removeLocationService(this);
+			p.unsetLocationService(this);
 		}
 	}
 
