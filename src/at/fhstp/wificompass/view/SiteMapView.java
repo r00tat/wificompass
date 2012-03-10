@@ -26,7 +26,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import at.fhstp.wificompass.Logger;
 
-public class MultiTouchView extends View implements
+public class SiteMapView extends View implements
 		MultiTouchObjectCanvas<MultiTouchDrawable> {
 	private static final int UI_MODE_ROTATE = 1, UI_MODE_ANISOTROPIC_SCALE = 2;
 
@@ -53,7 +53,7 @@ public class MultiTouchView extends View implements
 
 	// ---------------------------------------------------------------------------------------------------
 
-	public MultiTouchView(Context context) {
+	public SiteMapView(Context context) {
 		super(context);
 		init();
 
@@ -64,7 +64,7 @@ public class MultiTouchView extends View implements
 	 * @param attrs
 	 * @param defStyle
 	 */
-	public MultiTouchView(Context context, AttributeSet attrs, int defStyle) {
+	public SiteMapView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
 	}
@@ -73,7 +73,7 @@ public class MultiTouchView extends View implements
 	 * @param context
 	 * @param attrs
 	 */
-	public MultiTouchView(Context context, AttributeSet attrs) {
+	public SiteMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
 	}
@@ -244,12 +244,30 @@ public class MultiTouchView extends View implements
 		invalidate();
 	}
 
+	public void recalculateDrawablePositions() {
+		int n = drawables.size();
+		for (int i = n - 1; i >= 0; i--) {
+			MultiTouchDrawable im = drawables.get(i);
+			im.recalculatePositions();
+		}
+	}
+	
+	public void snapUserDrawablesToGrid() {
+		int n = drawables.size();
+		for (int i = n - 1; i >= 0; i--) {
+			MultiTouchDrawable im = drawables.get(i);
+			im.snapUserDrawablesToGrid();
+		}
+		
+		this.invalidate();
+	}
+	
 	public void addDrawable(MultiTouchDrawable drawable) {
 		// Logger.d("added new drawable: " + drawable.getId());
 
 		if (!drawable.hasSuperDrawable()) {
 			drawables.add(drawable);
-			drawable.recalculateSubdrawablePositions();
+			drawable.recalculatePositions();
 		} else {
 			Logger.w("only drawables without a superdrawable have to be added to the view!");
 		}

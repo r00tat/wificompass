@@ -13,6 +13,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	protected static BitmapDrawable icon;
 	protected PopupDrawable popup;
 	protected boolean isPopupActive = false;
+	
 
 	public AccessPointDrawable(Context ctx) {
 		super(ctx);

@@ -73,9 +73,9 @@ public final class R {
         public static final int project_site_button_layout=0x7f0b0014;
         public static final int project_site_menu_change_name=0x7f0b0030;
         public static final int project_site_menu_save=0x7f0b0031;
-        public static final int project_site_reset_pos_button=0x7f0b0016;
         public static final int project_site_reset_zoom_button=0x7f0b0015;
         public static final int project_site_resultview=0x7f0b0018;
+        public static final int project_site_snap_user_button=0x7f0b0016;
         public static final int project_site_wifiscan_button=0x7f0b0017;
         public static final int project_sites_listview=0x7f0b0011;
         public static final int project_title=0x7f0b000e;
@@ -192,6 +192,7 @@ public final class R {
         public static final int project_site_reset_zoom=0x7f06005e;
         public static final int project_site_save_failed=0x7f060067;
         public static final int project_site_saved=0x7f060066;
+        public static final int project_site_snap_user=0x7f06006f;
         public static final int project_site_start_scan=0x7f060069;
         public static final int project_site_wifiscan_failed=0x7f06006d;
         public static final int project_site_wifiscan_finished=0x7f06006e;

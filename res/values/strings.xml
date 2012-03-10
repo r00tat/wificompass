@@ -114,7 +114,7 @@
         <item>ASSERT</item>
     </string-array>
 
-    <string name="project_site_reset_zoom">reset zoom</string>
+    <string name="project_site_reset_zoom">Reset zoom/rotation</string>
     <string name="project_site_reset_position">reset position</string>
     <string name="project_site_load_failed">failed to load project site!</string>
     <string name="project_site_dialog_title_title">Project Site title</string>
@@ -125,11 +125,12 @@
     <string name="project_site_saved">project site saved!</string>
     <string name="project_site_save_failed">project site could not be saved!</string>
     <string name="project_site_menu_save">save</string>
-    <string name="project_site_start_scan">scan!</string>
+    <string name="project_site_start_scan">Scan here!</string>
     <string name="project_site_wifiscan_start_failed">Failed to start a wifi scan!</string>
     <string name="project_site_dialog_scanning_title">WiFi Scan</string>
     <string name="project_site_dialog_scanning_message">scanning for WiFi networks&#8230;</string>
     <string name="project_site_wifiscan_failed">The Wifi Scan encountered an error: %1$s</string>
     <string name="project_site_wifiscan_finished">WiFi scan finished!\n%1$s</string>
+    <string name="project_site_snap_user">Snap user to grid</string>
 
 </resources>

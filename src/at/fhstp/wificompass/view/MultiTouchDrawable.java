@@ -66,6 +66,10 @@ public abstract class MultiTouchDrawable {
 	 */
 	protected MultiTouchDrawable superDrawable = null;
 
+
+	protected static int gridSpacingX = 30;
+	protected static int gridSpacingY = 30;
+	
 	/**
 	 * Context
 	 */
@@ -581,7 +585,7 @@ public abstract class MultiTouchDrawable {
 		return relativePosition;
 	}
 
-	public void recalculateSubdrawablePositions() {
+	public void recalculatePositions() {
 		this.setPos(centerX, centerY, scaleX, scaleY, angle, false);
 	}
 
@@ -738,4 +742,36 @@ public abstract class MultiTouchDrawable {
 		subDrawables.remove(subObject);
 	}
 
+	public void snapUserDrawablesToGrid() {
+		for (int i = 0; i < subDrawables.size(); i++) {
+			MultiTouchDrawable subDrawable = subDrawables.get(i);
+			
+			if (subDrawable.getClass() == UserDrawable.class) {
+				subDrawable.snapPositionToGrid();
+			}
+			
+			subDrawable.snapUserDrawablesToGrid();
+			this.recalculatePositions();
+		}
+	}
+	
+	public void snapPositionToGrid() {
+		float unfittingX = this.relX % gridSpacingX;
+		float unfittingY = this.relY % gridSpacingY;
+		
+		float newRelX = this.relX;
+		float newRelY = this.relY;
+		
+		if (unfittingX >= (gridSpacingX / 2.0f)) 
+			newRelX += gridSpacingX - unfittingX;
+		else
+			newRelX -= unfittingX;
+		
+		if (unfittingY >= (gridSpacingY / 2.0f)) 
+			newRelY += gridSpacingY - unfittingY;
+		else
+			newRelY -= unfittingY;
+		
+		this.setRelativePosition(newRelX, newRelY);
+	}
 }

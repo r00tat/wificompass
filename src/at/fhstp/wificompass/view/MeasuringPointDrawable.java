@@ -53,7 +53,7 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 		}
 
 		if (this.hasSuperDrawable()) {
-			this.getSuperDrawable().recalculateSubdrawablePositions();
+			this.getSuperDrawable().recalculatePositions();
 		}
 
 		StringBuffer sb = new StringBuffer();

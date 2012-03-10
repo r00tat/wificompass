@@ -15,17 +15,15 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-public class SiteMap extends MultiTouchDrawable {
+public class SiteMapDrawable extends MultiTouchDrawable {
 
-	protected static int gridSpacingX = 30;
-	protected static int gridSpacingY = 30;
 
-	public SiteMap(Context ctx) {
+	public SiteMapDrawable(Context ctx) {
 		super(ctx);
 		init();
 	}
 
-	public SiteMap(Context ctx, MultiTouchDrawable superDrawable) {
+	public SiteMapDrawable(Context ctx, MultiTouchDrawable superDrawable) {
 		super(ctx, superDrawable);
 		init();
 	}

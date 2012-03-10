@@ -37,8 +37,8 @@ import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.view.AccessPointDrawable;
 import at.fhstp.wificompass.view.MeasuringPointDrawable;
-import at.fhstp.wificompass.view.MultiTouchView;
-import at.fhstp.wificompass.view.SiteMap;
+import at.fhstp.wificompass.view.SiteMapView;
+import at.fhstp.wificompass.view.SiteMapDrawable;
 import at.fhstp.wificompass.view.UserDrawable;
 import at.fhstp.wificompass.wifi.WifiResultCallback;
 import at.fhstp.wificompass.wifi.WifiScanner;
@@ -56,9 +56,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2;
 
-	protected MultiTouchView multiTouchView;
+	protected SiteMapView multiTouchView;
 
-	protected SiteMap map;
+	protected SiteMapDrawable map;
 
 	protected ProjectSite site;
 
@@ -101,16 +101,16 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			Button resetZoom = ((Button) findViewById(R.id.project_site_reset_zoom_button));
 			resetZoom.setOnClickListener(this);
-
-			Button resetXY = ((Button) findViewById(R.id.project_site_reset_pos_button));
-			resetXY.setOnClickListener(this);
+			
+			Button snapUser = ((Button) findViewById(R.id.project_site_snap_user_button));
+			snapUser.setOnClickListener(this);
 			
 			Button startWifiScanButton = ((Button) findViewById(R.id.project_site_wifiscan_button));
 			startWifiScanButton.setOnClickListener(this);
 
-			multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
+			multiTouchView = ((SiteMapView) findViewById(R.id.project_site_resultview));
 			multiTouchView.setRearrangable(false);
-			map = new SiteMap(this);
+			map = new SiteMapDrawable(this);
 
 			AccessPointDrawable icon1 = new AccessPointDrawable(this, map);
 			icon1.setRelativePosition(134, 57);
@@ -195,13 +195,16 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		case R.id.project_site_reset_zoom_button:
 			Logger.d("resetting Zoom");
 			multiTouchView.resetAllScale();
-			break;
-
-		case R.id.project_site_reset_pos_button:
-			Logger.d("resetting position");
 			multiTouchView.resetAllXY();
+			multiTouchView.resetAllAngle();
+			multiTouchView.recalculateDrawablePositions();
+			multiTouchView.invalidate();
 			break;
 
+		case R.id.project_site_snap_user_button:
+			Logger.d("Snapping user to grid");
+			multiTouchView.snapUserDrawablesToGrid();
+			break;
 		}
 	}
 

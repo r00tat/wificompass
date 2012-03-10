@@ -18,11 +18,10 @@
             android:text="@string/project_site_reset_zoom" />
 
         <Button
-            android:id="@+id/project_site_reset_pos_button"
+            android:id="@+id/project_site_snap_user_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/project_site_reset_position" />
+            android:text="@string/project_site_snap_user" />
 
         <Button
             android:id="@+id/project_site_wifiscan_button"
@@ -32,7 +31,7 @@
         
     </LinearLayout>
 
-    <at.fhstp.wificompass.view.MultiTouchView
+    <at.fhstp.wificompass.view.SiteMapView
         android:id="@+id/project_site_resultview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
