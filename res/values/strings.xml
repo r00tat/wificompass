@@ -138,5 +138,11 @@
     <string name="project_site_dialog_size_message">How large (in pixels) should the map be?</string>
     <string name="project_site_dialog_size_nan">Width and height must be numeric values!</string>
     <string name="project_site_dialog_size_finished">Map size set to %1$dx%2$d!</string>
+    <string name="project_site_menu_set_background">set background image</string>
+    <string name="project_site_dialog_background_title">background image</string>
+    <string name="project_site_dialog_background_message">Choose an image of a map, which should be used as background: </string>
+    <string name="project_site_dialog_background_path_button">choose image</string>
+    <string name="project_site_dialog_background_default_path">/mnt/sdcard/</string>
+    <string name="project_site_set_background_failed">Could not set background image: %1$s</string>
 
 </resources>

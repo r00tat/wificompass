@@ -16,6 +16,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.text.InputType;
@@ -44,11 +46,12 @@ import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
 import at.fhstp.wificompass.view.MeasuringPointDrawable;
-import at.fhstp.wificompass.view.SiteMapDrawable;
 import at.fhstp.wificompass.view.MultiTouchView;
+import at.fhstp.wificompass.view.SiteMapDrawable;
 import at.fhstp.wificompass.view.UserDrawable;
 import at.fhstp.wificompass.wifi.WifiResultCallback;
 import at.fhstp.wificompass.wifi.WifiScanner;
+import at.woelfel.philip.filebrowser.FileBrowser;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -61,7 +64,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	// public static final int START_NEW = 1, START_LOAD = 2;
 
-	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3;
+	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4;
+
+	protected static final int FILEBROWSER_REQUEST = 1;
 
 	protected MultiTouchView multiTouchView;
 
@@ -84,6 +89,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected UserDrawable user;
 
 	protected final Context context = this;
+
+	protected TextView backgroundPathTextView;
 
 	/*
 	 * (non-Javadoc)
@@ -127,6 +134,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				site.setSize(map.getWidth(), map.getHeight());
 			} else {
 				map.setSize(site.getWidth(), site.getHeight());
+			}
+			if(site.getBackgroundBitmap()!=null){
+				map.setBackgroundImage(site.getBackgroundBitmap());
 			}
 
 			// do not add the testicons any more
@@ -239,30 +249,30 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case DIALOG_TITLE:
-			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			AlertDialog.Builder titleAlert = new AlertDialog.Builder(this);
 
-			alert.setTitle(R.string.project_site_dialog_title_title);
-			alert.setMessage(R.string.project_site_dialog_title_message);
+			titleAlert.setTitle(R.string.project_site_dialog_title_title);
+			titleAlert.setMessage(R.string.project_site_dialog_title_message);
 
 			// Set an EditText view to get user input
 			final EditText input = new EditText(this);
 			input.setSingleLine(true);
-			alert.setView(input);
+			titleAlert.setView(input);
 
-			alert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+			titleAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setSiteTitle(input.getText().toString());
-					
+
 				}
 			});
 
-			alert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+			titleAlert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					// Canceled.
 				}
 			});
 
-			return alert.create();
+			return titleAlert.create();
 
 		case DIALOG_SCANNING:
 
@@ -362,6 +372,59 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			return sizeAlert.create();
 
+		case DIALOG_SET_BACKGROUND:
+
+			AlertDialog.Builder bckgAlert = new AlertDialog.Builder(this);
+			bckgAlert.setTitle(R.string.project_site_dialog_background_title);
+			bckgAlert.setMessage(R.string.project_site_dialog_background_message);
+
+			LinearLayout bckgLayout = new LinearLayout(this);
+			bckgLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			bckgLayout.setGravity(Gravity.CENTER);
+			bckgLayout.setOrientation(LinearLayout.VERTICAL);
+			bckgLayout.setPadding(5, 5, 5, 5);
+
+			final TextView pathTextView = new TextView(this);
+			backgroundPathTextView = pathTextView;
+			pathTextView.setText(R.string.project_site_dialog_background_default_path);
+			pathTextView.setPadding(10, 0, 10, 10);
+
+			bckgLayout.addView(pathTextView);
+
+			Button pathButton = new Button(this);
+			pathButton.setText(R.string.project_site_dialog_background_path_button);
+			pathButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent i = new Intent(context, FileBrowser.class);
+					i.putExtra(FileBrowser.EXTRA_MODE, FileBrowser.MODE_LOAD);
+					startActivityForResult(i, FILEBROWSER_REQUEST);
+				}
+
+			});
+
+			bckgLayout.addView(pathButton);
+
+			bckgAlert.setView(bckgLayout);
+
+			bckgAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					setBackgroundImage(pathTextView.getText().toString());
+				}
+			});
+
+			bckgAlert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+				}
+			});
+
+			Dialog bckgDialog = bckgAlert.create();
+			bckgDialog.setCanceledOnTouchOutside(true);
+
+			return bckgDialog;
+
 		default:
 			return super.onCreateDialog(id);
 		}
@@ -393,6 +456,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_menu_change_size:
 			showDialog(DIALOG_CHANGE_SIZE);
+			return false;
+
+		case R.id.project_site_menu_set_background:
+			showDialog(DIALOG_SET_BACKGROUND);
 			return false;
 
 		default:
@@ -548,4 +615,53 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		// }
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		Logger.d("Activity result of " + requestCode + " " + resultCode + " " + (data!=null?data.toString():""));
+
+		switch (requestCode) {
+		case FILEBROWSER_REQUEST:
+
+			if (resultCode == Activity.RESULT_OK && data!=null) {
+				String path = data.getExtras().getString(FileBrowser.EXTRA_PATH);
+
+				if (backgroundPathTextView != null) {
+					backgroundPathTextView.setText(path);
+				} else {
+					Logger.w("the background image dialog textview should not be null?!?");
+				}
+			}
+			break;
+
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
+			break;
+		}
+
+	}
+
+	protected void setBackgroundImage(String path) {
+		
+
+		try {
+			Bitmap bmp = BitmapFactory.decodeFile(path);
+			site.setBackgroundBitmap(bmp);
+			map.setBackgroundImage(bmp);
+			site.setSize(bmp.getWidth(), bmp.getHeight());
+			map.setSize(bmp.getWidth(), bmp.getHeight());
+			multiTouchView.invalidate();
+			Toast.makeText(context, "set "+path +" as new background image!", Toast.LENGTH_LONG).show();
+			saveProjectSite();
+
+		} catch (Exception e) {
+			Logger.e("could not set background", e);
+			Toast.makeText(context, getString(R.string.project_site_set_background_failed, e.getMessage()), Toast.LENGTH_LONG).show();
+		}
+	}
 }

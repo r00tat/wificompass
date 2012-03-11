@@ -12,11 +12,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class SiteMapDrawable extends MultiTouchDrawable {
 
+	protected Bitmap backgroundImage;
 
 	public SiteMapDrawable(Context ctx) {
 		super(ctx);
@@ -31,35 +33,34 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 	protected void init() {
 		width = displayWidth;
 		height = displayHeight;
-
+		backgroundImage = null;
 		this.resetXY();
 	}
 
 	public Drawable getDrawable() {
-		Bitmap bmp = Bitmap
-				.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+		Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 
 		Canvas canvas = new Canvas(bmp);
 		canvas.drawColor(Color.rgb(250, 250, 250));
 
-//		Paint paint = new Paint();
-//		paint.setStyle(Paint.Style.STROKE);
-//		paint.setColor(Color.rgb(230, 230, 230));
-//
-//		for (int x = 0; x < displayWidth; x += gridSpacingX) {
-//			canvas.drawLine(x, 0, x, displayHeight, paint);
-//		}
-//		
-//		for (int y = 0; y < displayHeight; y += gridSpacingY) {
-//			canvas.drawLine(0, y, displayWidth, y, paint);
-//		}
+		// Paint paint = new Paint();
+		// paint.setStyle(Paint.Style.STROKE);
+		// paint.setColor(Color.rgb(230, 230, 230));
+		//
+		// for (int x = 0; x < displayWidth; x += gridSpacingX) {
+		// canvas.drawLine(x, 0, x, displayHeight, paint);
+		// }
+		//
+		// for (int y = 0; y < displayHeight; y += gridSpacingY) {
+		// canvas.drawLine(0, y, displayWidth, y, paint);
+		// }
 
 		return new BitmapDrawable(ctx.getResources(), bmp);
 	}
-	
+
 	@Override
 	public void draw(Canvas canvas) {
-		//Logger.d("Drawing " + this.toString());
+		// Logger.d("Drawing " + this.toString());
 		canvas.save();
 		float dx = (maxX + minX) / 2;
 		float dy = (maxY + minY) / 2;
@@ -67,8 +68,14 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 		canvas.translate(dx, dy);
 		canvas.rotate(angle * 180.0f / (float) Math.PI);
 		canvas.translate(-dx, -dy);
-	
+
+		// fill the canvas with nearly white colur
 		canvas.drawColor(Color.rgb(250, 250, 250));
+
+		// draw backgroundimage
+		if (backgroundImage != null)
+			canvas.drawBitmap(backgroundImage, new Rect(0, 0, backgroundImage.getWidth(), backgroundImage.getHeight()), new Rect((int) minX,
+					(int) minY, (int) maxX, (int) maxY), null);
 
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.STROKE);
@@ -82,13 +89,13 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 			} else if (counterX % 5 == 0) {
 				paint.setColor(Color.rgb(220, 220, 220));
 			}
-			
+
 			canvas.drawLine(x, minY, x, maxY, paint);
 			paint.setStrokeWidth(0);
 			paint.setColor(Color.rgb(230, 230, 230));
-			counterX ++;
+			counterX++;
 		}
-		
+
 		int counterY = 0;
 		for (float y = minY; y < maxY; y += gridSpacingY * scaleY) {
 			if (counterY % 10 == 0) {
@@ -96,14 +103,14 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 				paint.setStrokeWidth(2);
 			} else if (counterY % 5 == 0) {
 				paint.setColor(Color.rgb(220, 220, 220));
-			}			
-			
+			}
+
 			canvas.drawLine(minX, y, maxX, y, paint);
 			paint.setStrokeWidth(0);
 			paint.setColor(Color.rgb(230, 230, 230));
-			counterY ++;
+			counterY++;
 		}
-		
+
 		canvas.restore();
 
 		this.drawSubdrawables(canvas);
@@ -158,17 +165,35 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 	public MultiTouchDrawable getSuperDrawable() {
 		return null;
 	}
-	
+
 	/**
 	 * set the size of the map
-	 * @param width	in pixels
-	 * @param height in pixels
+	 * 
+	 * @param width
+	 *            in pixels
+	 * @param height
+	 *            in pixels
 	 */
-	public void setSize(int width,int height){
-		this.width=width;
-		this.height=height;
+	public void setSize(int width, int height) {
+		this.width = width;
+		this.height = height;
 		this.recalculatePositions();
-		
+
+	}
+
+	/**
+	 * @return the backgroundImage
+	 */
+	public Bitmap getBackgroundImage() {
+		return backgroundImage;
+	}
+
+	/**
+	 * @param backgroundImage
+	 *            the backgroundImage to set
+	 */
+	public void setBackgroundImage(Bitmap backgroundImage) {
+		this.backgroundImage = backgroundImage;
 	}
 
 }
