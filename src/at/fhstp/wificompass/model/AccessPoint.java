@@ -28,4 +28,19 @@ public class AccessPoint {
 	public AccessPoint() {
 		
 	}
+	
+	public AccessPoint(BssidResult bssidResult) {
+		this.bssid = bssidResult.getBssid();
+		this.ssid = bssidResult.getSsid();
+		this.capabilities = bssidResult.getCapabilities();
+		this.frequency = bssidResult.getFrequency();
+	}
+	
+	public String getSsid() {
+		return this.ssid;
+	}
+	
+	public String getBssid() {
+		return this.bssid;
+	}
 }

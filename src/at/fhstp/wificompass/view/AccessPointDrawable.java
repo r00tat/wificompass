@@ -7,15 +7,18 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
+import at.fhstp.wificompass.model.AccessPoint;
 
 public class AccessPointDrawable extends MultiTouchDrawable{
 
 	protected static BitmapDrawable icon;
 	protected PopupDrawable popup;
+	protected AccessPoint accessPoint;
 	
 
-	public AccessPointDrawable(Context ctx) {
+	public AccessPointDrawable(Context ctx, AccessPoint accessPoint) {
 		super(ctx);
+		this.accessPoint = accessPoint;
 		init();
 	}
 	
@@ -31,7 +34,7 @@ public class AccessPointDrawable extends MultiTouchDrawable{
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
 		
-		popup = new PopupDrawable(ctx,this,"This is a test text, which should wrap arround!");
+		popup = new PopupDrawable(ctx,this, this.getPopupText());
 		
 		Logger.d("Popup width: " + popup.width);
 		
@@ -43,6 +46,10 @@ public class AccessPointDrawable extends MultiTouchDrawable{
 		return icon;
 	}
 
+	protected String getPopupText() {
+		return accessPoint.getSsid() + "\n[" + accessPoint.getBssid() + "]\nPosition: " + this.getRelativeX() + " / " + this.getRelativeY();
+	}
+	
 	@Override
 	public boolean onTouch(PointInfo pointinfo) {
 		
@@ -52,6 +59,7 @@ public class AccessPointDrawable extends MultiTouchDrawable{
 			pointinfo.getNumTouchPoints() == 1 &&
 			pointinfo.getAction() == 0
 				) {
+			popup.setPopupText(this.getPopupText());
 			popup.setActive(!popup.isActive());
 			return true;
 		}
@@ -78,9 +86,4 @@ public class AccessPointDrawable extends MultiTouchDrawable{
 	public boolean isOnlyInSuper() {
 		return true;
 	}
-
-
-
-	
-
 }

@@ -7,6 +7,7 @@ package at.fhstp.wificompass.activities;
 
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.Vector;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -44,7 +45,9 @@ import at.fhstp.wificompass.model.Location;
 import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
+import at.fhstp.wificompass.triangulation.WeightedCentroidTriangulation;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
+import at.fhstp.wificompass.view.AccessPointDrawable;
 import at.fhstp.wificompass.view.MeasuringPointDrawable;
 import at.fhstp.wificompass.view.MultiTouchView;
 import at.fhstp.wificompass.view.SiteMapDrawable;
@@ -125,6 +128,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			Button startWifiScanButton = ((Button) findViewById(R.id.project_site_wifiscan_button));
 			startWifiScanButton.setOnClickListener(this);
+			
+			Button calculateApPositions = ((Button) findViewById(R.id.project_site_calculate_ap_positions_button));
+			calculateApPositions.setOnClickListener(this);
 
 			multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
 			multiTouchView.setRearrangable(false);
@@ -236,6 +242,19 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			Logger.d("Snapping user to grid");
 			user.snapPositionToGrid();
 			multiTouchView.invalidate();
+			break;
+			
+		case R.id.project_site_calculate_ap_positions_button:
+			WeightedCentroidTriangulation tri = new WeightedCentroidTriangulation(context, site);
+			Vector<AccessPointDrawable> aps = tri.calculateAllAndGetDrawables();
+			
+			for (Iterator<AccessPointDrawable> it = aps.iterator(); it.hasNext();) {
+				AccessPointDrawable ap = it.next();
+				map.addSubDrawable(ap);
+				map.recalculatePositions();
+				multiTouchView.invalidate();
+			}
+			
 			break;
 		}
 	}

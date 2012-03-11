@@ -39,6 +39,11 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 		init();
 		setPopupText(text);
 	}
+	
+	public PopupDrawable(Context ctx, MultiTouchDrawable superDrawable) {
+		super(ctx, superDrawable);
+		init();
+	}
 
 	protected void init() {
 		isActive = false;

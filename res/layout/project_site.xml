@@ -31,6 +31,12 @@
             android:layout_gravity="center"
             android:text="@string/project_site_start_scan" />
         
+        <Button
+            android:id="@+id/project_site_calculate_ap_positions_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/project_site_calculate_ap_positions" />
+        
     </LinearLayout>
 
     <at.fhstp.wificompass.view.MultiTouchView
