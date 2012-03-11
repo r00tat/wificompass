@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
@@ -40,6 +41,7 @@ import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.exceptions.SiteNotFoundException;
 import at.fhstp.wificompass.exceptions.WifiException;
+import at.fhstp.wificompass.model.AccessPoint;
 import at.fhstp.wificompass.model.BssidResult;
 import at.fhstp.wificompass.model.Location;
 import at.fhstp.wificompass.model.ProjectSite;
@@ -49,6 +51,7 @@ import at.fhstp.wificompass.triangulation.WeightedCentroidTriangulation;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
 import at.fhstp.wificompass.view.AccessPointDrawable;
 import at.fhstp.wificompass.view.MeasuringPointDrawable;
+import at.fhstp.wificompass.view.MultiTouchDrawable;
 import at.fhstp.wificompass.view.MultiTouchView;
 import at.fhstp.wificompass.view.SiteMapDrawable;
 import at.fhstp.wificompass.view.UserDrawable;
@@ -103,8 +106,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		try {
+			this.setContentView(R.layout.project_site);
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.project_site);
 			Intent intent = this.getIntent();
 
 			int siteId = intent.getExtras().getInt(SITE_KEY, -1);
@@ -119,21 +122,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			if (site == null) {
 				throw new SiteNotFoundException("The ProjectSite Id could not be found in the database!");
 			}
-
-			Button resetZoom = ((Button) findViewById(R.id.project_site_reset_zoom_button));
-			resetZoom.setOnClickListener(this);
-
-			Button snapUser = ((Button) findViewById(R.id.project_site_snap_user_button));
-			snapUser.setOnClickListener(this);
-
-			Button startWifiScanButton = ((Button) findViewById(R.id.project_site_wifiscan_button));
-			startWifiScanButton.setOnClickListener(this);
 			
-			Button calculateApPositions = ((Button) findViewById(R.id.project_site_calculate_ap_positions_button));
-			calculateApPositions.setOnClickListener(this);
-
-			multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
-			multiTouchView.setRearrangable(false);
+			
+			
 			map = new SiteMapDrawable(this);
 
 			if (site.getWidth() == 0 || site.getHeight() == 0) {
@@ -145,43 +136,30 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				map.setBackgroundImage(site.getBackgroundBitmap());
 			}
 
-			// do not add the testicons any more
-			// AccessPointDrawable icon1 = new AccessPointDrawable(this, map);
-			// icon1.setRelativePosition(134, 57);
-			// AccessPointDrawable icon2 = new AccessPointDrawable(this, map);
-			// icon2.setRelativePosition(199, 301);
-			// AccessPointDrawable icon3 = new AccessPointDrawable(this, map);
-			// icon3.setRelativePosition(541, 332);
-			// AccessPointDrawable icon4 = new AccessPointDrawable(this, map);
-			// icon4.setRelativePosition(52, 81);
-			// AccessPointDrawable icon5 = new AccessPointDrawable(this, map);
-			// icon5.setRelativePosition(423, 214);
+			
+			for(Iterator<AccessPoint> it=site.getAccessPoints().iterator();it.hasNext();){
+				new AccessPointDrawable(this,map,it.next());
+			}
+			
+			
 
 			user = new UserDrawable(this, map);
 
 			if (site.getLastLocation() != null) {
 				user.setRelativePosition(site.getLastLocation().getX(), site.getLastLocation().getY());
-			} else
+			} else {
 				user.setRelativePosition(map.getWidth() / 2, map.getHeight() / 2);
+			}
 
-			// MeasuringPointDrawable point = new MeasuringPointDrawable(this, map);
-			// point.setRelativePosition(423, 293);
 
 			for (Iterator<WifiScanResult> it = site.getScanResults().iterator(); it.hasNext();) {
 				WifiScanResult wsr = it.next();
 				new MeasuringPointDrawable(this, map, wsr);
 			}
 
-			multiTouchView.addDrawable(map);
-			// multiTouchView.addDrawable(icon1);
-			// multiTouchView.addDrawable(icon2);
-			// multiTouchView.addDrawable(icon3);
-			// multiTouchView.addDrawable(icon4);
-			// multiTouchView.addDrawable(icon5);
-
-			if (site.getTitle().equals(ProjectSite.UNTITLED)) {
-				showDialog(DIALOG_TITLE);
-			}
+			
+			initUI();
+ 
 
 		} catch (Exception ex) {
 			log.error("Failed to create ProjectSiteActivity: " + ex.getMessage(), ex);
@@ -190,6 +168,32 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		}
 	}
 
+	
+	protected void initUI(){
+		
+		Button resetZoom = ((Button) findViewById(R.id.project_site_reset_zoom_button));
+		resetZoom.setOnClickListener(this);
+
+		Button snapUser = ((Button) findViewById(R.id.project_site_snap_user_button));
+		snapUser.setOnClickListener(this);
+
+		Button startWifiScanButton = ((Button) findViewById(R.id.project_site_wifiscan_button));
+		startWifiScanButton.setOnClickListener(this);
+		
+		Button calculateApPositions = ((Button) findViewById(R.id.project_site_calculate_ap_positions_button));
+		calculateApPositions.setOnClickListener(this);
+
+		multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
+		multiTouchView.setRearrangable(false);
+		
+		multiTouchView.addDrawable(map);
+		
+		if (site.getTitle().equals(ProjectSite.UNTITLED)) {
+			showDialog(DIALOG_TITLE);
+		}
+
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -247,6 +251,41 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		case R.id.project_site_calculate_ap_positions_button:
 			WeightedCentroidTriangulation tri = new WeightedCentroidTriangulation(context, site);
 			Vector<AccessPointDrawable> aps = tri.calculateAllAndGetDrawables();
+			
+			// delete all old messurements
+			for(Iterator<MultiTouchDrawable> it=map.getSubDrawables().iterator();it.hasNext();){
+				MultiTouchDrawable d=it.next();
+				if(d instanceof AccessPointDrawable){
+					map.removeSubDrawable(d);
+				}
+			}
+			
+			try{
+			Dao<AccessPoint, Integer> apDao=databaseHelper.getDao(AccessPoint.class);
+			Dao<Location,Integer> locDao=databaseHelper.getDao(Location.class);
+			
+			for(Iterator<AccessPoint> it=site.getAccessPoints().iterator();it.hasNext();){
+				AccessPoint ap=it.next();
+				try{
+					apDao.delete(ap);
+				}catch(Exception e){
+					
+				}
+			}
+			
+			for (Iterator<AccessPointDrawable> it = aps.iterator(); it.hasNext();) {
+				AccessPointDrawable ap = it.next();
+				locDao.createIfNotExists(ap.getAccessPoint().getLocation());
+				ap.getAccessPoint().setProjectSite(site);
+				apDao.createOrUpdate(ap.getAccessPoint());
+			}
+			
+			projectSiteDao.refresh(site);
+			
+			}catch(SQLException e){
+				Logger.e("could not delete old or create new ap results",e);
+			}
+			
 			
 			for (Iterator<AccessPointDrawable> it = aps.iterator(); it.hasNext();) {
 				AccessPointDrawable ap = it.next();
@@ -682,5 +721,16 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			Logger.e("could not set background", e);
 			Toast.makeText(context, getString(R.string.project_site_set_background_failed, e.getMessage()), Toast.LENGTH_LONG).show();
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onConfigurationChanged(android.content.res.Configuration)
+	 */
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+
+		this.setContentView(R.layout.project_site);
+		initUI();
 	}
 }

@@ -101,6 +101,7 @@ public abstract class AccessPointTriangulation {
 			PointF position = this.calculateAccessPointPosition(pair.getKey());
 
 			if (position != null) {
+				pair.getKey().setLocation(new Location(position.x,position.y));
 				AccessPointDrawable ap = new AccessPointDrawable(context,
 						pair.getKey());
 				ap.setRelativePosition(position);

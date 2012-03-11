@@ -23,6 +23,9 @@ public class AccessPoint {
 	protected int frequency;
 	
 	@DatabaseField(foreign = true,foreignAutoRefresh = true)
+	protected Location location;
+	
+	@DatabaseField(foreign = true,foreignAutoRefresh = true)
 	protected ProjectSite projectSite;
 	
 	public AccessPoint() {
@@ -42,5 +45,33 @@ public class AccessPoint {
 	
 	public String getBssid() {
 		return this.bssid;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public Location getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	/**
+	 * @return the projectSite
+	 */
+	public ProjectSite getProjectSite() {
+		return projectSite;
+	}
+
+	/**
+	 * @param projectSite the projectSite to set
+	 */
+	public void setProjectSite(ProjectSite projectSite) {
+		this.projectSite = projectSite;
 	}
 }

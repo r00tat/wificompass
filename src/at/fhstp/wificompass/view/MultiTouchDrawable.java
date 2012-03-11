@@ -727,4 +727,11 @@ public abstract class MultiTouchDrawable {
 		this.setRelativePosition(newRelX, newRelY);
 	}
 
+	/**
+	 * @return the subDrawables
+	 */
+	public ArrayList<MultiTouchDrawable> getSubDrawables() {
+		return subDrawables;
+	}
+
 }

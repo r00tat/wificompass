@@ -45,6 +45,25 @@ public final class R {
         public static final int red_dot=0x7f020013;
         public static final int resize=0x7f020014;
         public static final int user_icon=0x7f020015;
+        public static final int wifi_blue=0x7f020016;
+        public static final int wifi_blue_1=0x7f020017;
+        public static final int wifi_blue_2=0x7f020018;
+        public static final int wifi_blue_3=0x7f020019;
+        public static final int wifi_blue_4=0x7f02001a;
+        public static final int wifi_blue_5=0x7f02001b;
+        public static final int wifi_green=0x7f02001c;
+        public static final int wifi_green_1=0x7f02001d;
+        public static final int wifi_green_2=0x7f02001e;
+        public static final int wifi_green_3=0x7f02001f;
+        public static final int wifi_green_4=0x7f020020;
+        public static final int wifi_green_5=0x7f020021;
+        public static final int wifi_green_6=0x7f020022;
+        public static final int wifi_red=0x7f020023;
+        public static final int wifi_red_1=0x7f020024;
+        public static final int wifi_red_2=0x7f020025;
+        public static final int wifi_red_3=0x7f020026;
+        public static final int wifi_red_4=0x7f020027;
+        public static final int wifi_red_5=0x7f020028;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f0b0013;
@@ -66,14 +85,14 @@ public final class R {
         public static final int main_wifi_scan=0x7f0b0029;
         public static final int new_project_button=0x7f0b000b;
         public static final int preferences_loglevel=0x7f0b000d;
-        public static final int project_addsite_button=0x7f0b0010;
+        public static final int project_addsite_button=0x7f0b0011;
         public static final int project_delete_option=0x7f0b002f;
         public static final int project_description=0x7f0b000f;
         public static final int project_list_view=0x7f0b0012;
         public static final int project_new_location_option=0x7f0b0030;
         public static final int project_save_option=0x7f0b002e;
         public static final int project_site_button_layout=0x7f0b0014;
-        public static final int project_site_calculate_ap_positions_button=0x7f0b0018;
+        public static final int project_site_calculate_ap_positions_button=0x7f0b0017;
         public static final int project_site_menu_change_name=0x7f0b0031;
         public static final int project_site_menu_change_size=0x7f0b0032;
         public static final int project_site_menu_save=0x7f0b0034;
@@ -81,8 +100,8 @@ public final class R {
         public static final int project_site_reset_zoom_button=0x7f0b0015;
         public static final int project_site_resultview=0x7f0b0019;
         public static final int project_site_snap_user_button=0x7f0b0016;
-        public static final int project_site_wifiscan_button=0x7f0b0017;
-        public static final int project_sites_listview=0x7f0b0011;
+        public static final int project_site_wifiscan_button=0x7f0b0018;
+        public static final int project_sites_listview=0x7f0b0010;
         public static final int project_title=0x7f0b000e;
         public static final int sample_scan_button=0x7f0b000a;
         public static final int sample_scan_result_scroll=0x7f0b001b;

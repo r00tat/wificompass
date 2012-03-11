@@ -1,98 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <EditText
+        android:id="@+id/project_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/project_title"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/project_description"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" 
-        android:padding="10dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/project_description"
+        android:inputType="textMultiLine" >
+    </EditText>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/project_title" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/project_sites_text" />
 
-        <EditText
-            android:id="@+id/project_title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:inputType="text"/>
+    <ListView
+        android:id="@+id/project_sites_listview"
+        style="@style/listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
+    </ListView>
 
-        <!--
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/project_path" android:layout_marginBottom="10dp"/>
+    <Button
+        android:id="@+id/project_addsite_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/project_addsite_button" />
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/project_path_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/folder" android:layout_marginBottom="20dp"/>
-
-            <TextView
-                android:id="@+id/project_path_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/project_path_default" />
-        </TableRow>
-        -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/project_description" />
-
-        <EditText
-            android:id="@+id/project_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:inputType="textMultiLine" >
-        </EditText>
-
-<!--         <Button -->
-<!--             android:id="@+id/project_save" -->
-<!--             android:layout_width="fill_parent" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:layout_marginBottom="10dp" -->
-<!--             android:text="@string/project_save_button" /> -->
-
-<!--         <Button -->
-<!--             android:id="@+id/project_delete" -->
-<!--             android:layout_width="fill_parent" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:layout_marginBottom="20dp" -->
-<!--             android:text="@string/project_delete_button" /> -->
-
-<!--         <Button -->
-<!--             android:id="@+id/project_new_location_button" -->
-<!--             android:layout_width="fill_parent" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:text="@string/project_new_location_button" /> -->
-
-        <Button
-            android:id="@+id/project_addsite_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/project_addsite_button" android:layout_marginTop="10dp" android:layout_marginBottom="10dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/project_sites_text" android:layout_marginBottom="3dp" android:layout_marginTop="5dp" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
-
-        <ListView
-            android:id="@+id/project_sites_listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="5dp" style="@style/listview">
-        </ListView>
-
-      
-    </LinearLayout>
+</LinearLayout>

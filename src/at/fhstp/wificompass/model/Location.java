@@ -17,6 +17,8 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Location {
 	public static final String TABLE_NAME="locations";
 	
+	public static final String PROVIDER_NONE="defined";
+	
 	@DatabaseField(generatedId=true)
 	protected int id;
 	
@@ -41,19 +43,19 @@ public class Location {
 	protected long timestampmilis;
 	
 	public Location(){
-		this(null,0,0,-1,null);
+		this(PROVIDER_NONE,0,0,-1,null);
 	}
 
 	/**
 	 * 
 	 */
 	public Location(float x,float y) {
-		this(null,x,y,-1,null);
+		this(PROVIDER_NONE,x,y,-1,null);
 	}
 	
 	
 	public Location(float x,float y,float accurancy) {
-		this(null,x,y,-1,null);
+		this(PROVIDER_NONE,x,y,-1,null);
 	}
 	
 	
