@@ -63,6 +63,9 @@ public class ProjectSite implements XMLSerializable {
 	@ForeignCollectionField
 	protected ForeignCollection<WifiScanResult> scanResults;
 	
+	@DatabaseField(foreign = true,foreignAutoRefresh = true)
+	protected Location lastLocation;
+	
 	
 	protected static final String XMLTAG = "location", XMLTITLE = "title";
 	
@@ -205,6 +208,20 @@ public class ProjectSite implements XMLSerializable {
 	public void setSize(int width,int height){
 		this.width=width;
 		this.height=height;
+	}
+
+	/**
+	 * @return the last known Location
+	 */
+	public Location getLastLocation() {
+		return lastLocation;
+	}
+
+	/**
+	 * @param lastLocation the lastLocation to set
+	 */
+	public void setLastLocation(Location lastLocation) {
+		this.lastLocation = lastLocation;
 	}
 
 }

@@ -63,10 +63,10 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 			sb.append("\n");
 		}
 
-		popup = new PopupDrawable(ctx,sb.toString());
+		popup = new PopupDrawable(ctx,this,sb.toString());
 		popup.width=300;
-		popup.setRelativePosition(this.width / 2 - popup.width / 2, popup.height * -0.5f);
 		
+		popup.setActive(false);
 
 	}
 
@@ -117,21 +117,13 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 				pointinfo.getNumTouchPoints() == 1 &&
 				pointinfo.getAction() == 0
 					) {
-				this.setPopupActive(!isPopupActive);
+				popup.setActive(!popup.isActive());
 				return true;
 			}
 		
 		return super.onTouch(pointinfo);
 	}
 
-	
-	public void setPopupActive(boolean isPopupActive) {
-		this.isPopupActive = isPopupActive;
 		
-		if (this.isPopupActive)
-			this.addSubDrawable(popup);
-		else
-			this.removeSubDrawable(popup);
-	}
 	
 }
