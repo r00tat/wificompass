@@ -46,8 +46,8 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Logger.setLogLevelFromPreferences(this);
-		log.debug( "MainActivity onCreate");
-		Logger.i("TEST!");
+//		log.debug( "MainActivity onCreate");
+//		Logger.i("TEST!");
 
 		init();
 	}

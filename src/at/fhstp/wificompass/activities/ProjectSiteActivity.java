@@ -253,10 +253,11 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			Vector<AccessPointDrawable> aps = tri.calculateAllAndGetDrawables();
 			
 			// delete all old messurements
-			for(Iterator<MultiTouchDrawable> it=map.getSubDrawables().iterator();it.hasNext();){
-				MultiTouchDrawable d=it.next();
+			for(int i=0;i<map.getSubDrawables().size();i++){
+				MultiTouchDrawable d=map.getSubDrawables().get(i);
 				if(d instanceof AccessPointDrawable){
 					map.removeSubDrawable(d);
+					i--;
 				}
 			}
 			
