@@ -251,7 +251,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			alert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setSiteTitle(input.getText().toString());
-
+					
 				}
 			});
 
@@ -344,6 +344,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 						multiTouchView.invalidate();
 						Toast.makeText(context, context.getString(R.string.project_site_dialog_size_finished, w, h), Toast.LENGTH_SHORT).show();
 
+						saveProjectSite();
 					} catch (NumberFormatException e) {
 						Logger.w("change size width or height not a number ", e);
 						Toast.makeText(context, context.getString(R.string.project_site_dialog_size_nan), Toast.LENGTH_LONG).show();
@@ -367,6 +368,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected void setSiteTitle(String title) {
 		site.setTitle(title);
+		saveProjectSite();
 	}
 
 	@Override
