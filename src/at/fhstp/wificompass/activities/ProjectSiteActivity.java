@@ -224,7 +224,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_snap_user_button:
 			Logger.d("Snapping user to grid");
-			multiTouchView.snapUserDrawablesToGrid();
+			user.snapPositionToGrid();
+			multiTouchView.invalidate();
 			break;
 		}
 	}

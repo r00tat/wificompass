@@ -707,19 +707,6 @@ public abstract class MultiTouchDrawable {
 		subDrawables.remove(subObject);
 	}
 
-	public void snapUserDrawablesToGrid() {
-		for (int i = 0; i < subDrawables.size(); i++) {
-			MultiTouchDrawable subDrawable = subDrawables.get(i);
-
-			if (subDrawable.getClass() == UserDrawable.class) {
-				subDrawable.snapPositionToGrid();
-			}
-
-			subDrawable.snapUserDrawablesToGrid();
-			this.recalculatePositions();
-		}
-	}
-
 	public void snapPositionToGrid() {
 		float unfittingX = this.relX % gridSpacingX;
 		float unfittingY = this.relY % gridSpacingY;

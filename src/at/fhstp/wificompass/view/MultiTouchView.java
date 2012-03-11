@@ -252,16 +252,6 @@ public class MultiTouchView extends View implements
 		}
 	}
 	
-	public void snapUserDrawablesToGrid() {
-		int n = drawables.size();
-		for (int i = n - 1; i >= 0; i--) {
-			MultiTouchDrawable im = drawables.get(i);
-			im.snapUserDrawablesToGrid();
-		}
-		
-		this.invalidate();
-	}
-	
 	public void addDrawable(MultiTouchDrawable drawable) {
 		// Logger.d("added new drawable: " + drawable.getId());
 
