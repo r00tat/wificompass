@@ -243,6 +243,9 @@ public abstract class MultiTouchDrawable {
 	public void setRelativePosition(float relX, float relY) {
 		this.relX = relX;
 		this.relY = relY;
+		if(superDrawable!=null){
+			superDrawable.recalculatePositions();
+		}
 	}
 
 	/**
