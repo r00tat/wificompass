@@ -33,7 +33,7 @@
         
     </LinearLayout>
 
-    <at.fhstp.wificompass.view.SiteMapView
+    <at.fhstp.wificompass.view.MultiTouchView
         android:id="@+id/project_site_resultview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -45,7 +45,7 @@ import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
 import at.fhstp.wificompass.view.MeasuringPointDrawable;
 import at.fhstp.wificompass.view.SiteMapDrawable;
-import at.fhstp.wificompass.view.SiteMapView;
+import at.fhstp.wificompass.view.MultiTouchView;
 import at.fhstp.wificompass.view.UserDrawable;
 import at.fhstp.wificompass.wifi.WifiResultCallback;
 import at.fhstp.wificompass.wifi.WifiScanner;
@@ -63,7 +63,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3;
 
-	protected SiteMapView multiTouchView;
+	protected MultiTouchView multiTouchView;
 
 	protected SiteMapDrawable map;
 
@@ -119,7 +119,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			Button startWifiScanButton = ((Button) findViewById(R.id.project_site_wifiscan_button));
 			startWifiScanButton.setOnClickListener(this);
 
-			multiTouchView = ((SiteMapView) findViewById(R.id.project_site_resultview));
+			multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
 			multiTouchView.setRearrangable(false);
 			map = new SiteMapDrawable(this);
 

@@ -26,7 +26,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import at.fhstp.wificompass.Logger;
 
-public class SiteMapView extends View implements
+public class MultiTouchView extends View implements
 		MultiTouchObjectCanvas<MultiTouchDrawable> {
 	private static final int UI_MODE_ROTATE = 1, UI_MODE_ANISOTROPIC_SCALE = 2;
 
@@ -53,7 +53,7 @@ public class SiteMapView extends View implements
 
 	// ---------------------------------------------------------------------------------------------------
 
-	public SiteMapView(Context context) {
+	public MultiTouchView(Context context) {
 		super(context);
 		init();
 
@@ -64,7 +64,7 @@ public class SiteMapView extends View implements
 	 * @param attrs
 	 * @param defStyle
 	 */
-	public SiteMapView(Context context, AttributeSet attrs, int defStyle) {
+	public MultiTouchView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
 	}
@@ -73,7 +73,7 @@ public class SiteMapView extends View implements
 	 * @param context
 	 * @param attrs
 	 */
-	public SiteMapView(Context context, AttributeSet attrs) {
+	public MultiTouchView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
 	}
