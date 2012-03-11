@@ -21,12 +21,14 @@
             android:id="@+id/project_site_snap_user_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/project_site_snap_user" />
 
         <Button
             android:id="@+id/project_site_wifiscan_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/project_site_start_scan" />
         
     </LinearLayout>

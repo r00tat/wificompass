@@ -12,19 +12,25 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
@@ -35,10 +41,9 @@ import at.fhstp.wificompass.model.BssidResult;
 import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
-import at.fhstp.wificompass.view.AccessPointDrawable;
 import at.fhstp.wificompass.view.MeasuringPointDrawable;
-import at.fhstp.wificompass.view.SiteMapView;
 import at.fhstp.wificompass.view.SiteMapDrawable;
+import at.fhstp.wificompass.view.SiteMapView;
 import at.fhstp.wificompass.view.UserDrawable;
 import at.fhstp.wificompass.wifi.WifiResultCallback;
 import at.fhstp.wificompass.wifi.WifiScanner;
@@ -54,7 +59,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	// public static final int START_NEW = 1, START_LOAD = 2;
 
-	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2;
+	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2,DIALOG_CHANGE_SIZE=3;
 
 	protected SiteMapView multiTouchView;
 
@@ -73,6 +78,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected boolean ignoreWifiResults = false;
 	
 	protected BroadcastReceiver wifiBroadcastReceiver;
+	
+	protected final Context context = this;
 
 	/*
 	 * (non-Javadoc)
@@ -111,17 +118,24 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			multiTouchView = ((SiteMapView) findViewById(R.id.project_site_resultview));
 			multiTouchView.setRearrangable(false);
 			map = new SiteMapDrawable(this);
+			
+			if(site.getWidth()==0||site.getHeight()==0){
+				site.setSize(map.getWidth(), map.getHeight());
+			}else {
+				map.setSize(site.getWidth(), site.getHeight());
+			}
 
-			AccessPointDrawable icon1 = new AccessPointDrawable(this, map);
-			icon1.setRelativePosition(134, 57);
-			AccessPointDrawable icon2 = new AccessPointDrawable(this, map);
-			icon2.setRelativePosition(199, 301);
-			AccessPointDrawable icon3 = new AccessPointDrawable(this, map);
-			icon3.setRelativePosition(541, 332);
-			AccessPointDrawable icon4 = new AccessPointDrawable(this, map);
-			icon4.setRelativePosition(52, 81);
-			AccessPointDrawable icon5 = new AccessPointDrawable(this, map);
-			icon5.setRelativePosition(423, 214);
+			// do not add the testicons any more
+//			AccessPointDrawable icon1 = new AccessPointDrawable(this, map);
+//			icon1.setRelativePosition(134, 57);
+//			AccessPointDrawable icon2 = new AccessPointDrawable(this, map);
+//			icon2.setRelativePosition(199, 301);
+//			AccessPointDrawable icon3 = new AccessPointDrawable(this, map);
+//			icon3.setRelativePosition(541, 332);
+//			AccessPointDrawable icon4 = new AccessPointDrawable(this, map);
+//			icon4.setRelativePosition(52, 81);
+//			AccessPointDrawable icon5 = new AccessPointDrawable(this, map);
+//			icon5.setRelativePosition(423, 214);
 
 			UserDrawable user = new UserDrawable(this, map);
 			user.setRelativePosition(320, 240);
@@ -278,6 +292,71 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			
 
 			return scanAlertDialog;
+			
+			
+		case DIALOG_CHANGE_SIZE:
+			AlertDialog.Builder sizeAlert = new AlertDialog.Builder(this);
+
+			sizeAlert.setTitle(R.string.project_site_dialog_size_title);
+			sizeAlert.setMessage(R.string.project_site_dialog_size_message);
+
+			LinearLayout sizeLayout= new LinearLayout(this);
+			sizeLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			sizeLayout.setGravity(Gravity.CENTER);
+			
+			// Set an EditText view to get user input
+			final EditText widthInput = new EditText(this);
+			widthInput.setSingleLine(true);
+			widthInput.setText(""+map.getWidth());
+			widthInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+			sizeLayout.addView(widthInput);
+			
+			TextView sizeMiddleText=new TextView(this);
+			sizeMiddleText.setText(getString(R.string.project_site_dialog_size_middle_text));
+			sizeLayout.addView(sizeMiddleText);
+			
+			final EditText heightInput = new EditText(this);
+			heightInput.setSingleLine(true);
+			heightInput.setText(""+map.getHeight());
+			heightInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+			sizeLayout.addView(heightInput);
+			
+			
+			sizeAlert.setView(sizeLayout);
+
+			sizeAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					try{
+						int w=Integer.parseInt(widthInput.getText().toString()),h=Integer.parseInt(heightInput.getText().toString());
+						if(w<=0){
+							throw new NumberFormatException("width has to be larger than 0");
+						}
+						if(h<=0){
+							throw new NumberFormatException("height has to be larger than 0");
+						}
+						
+						map.setSize(w, h);
+						site.setSize(w, h);
+						
+						multiTouchView.invalidate();
+						Toast.makeText(context, context.getString(R.string.project_site_dialog_size_finished, w,h), Toast.LENGTH_SHORT).show();
+						
+					}catch(NumberFormatException e){
+						Logger.w("change size width or height not a number ",e);
+						Toast.makeText(context, context.getString(R.string.project_site_dialog_size_nan), Toast.LENGTH_LONG).show();
+					}
+
+				}
+			});
+
+			sizeAlert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+				}
+			});
+
+			return sizeAlert.create();
+			
 
 		default:
 			return super.onCreateDialog(id);
@@ -309,6 +388,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			saveProjectSite();
 			return false;
 
+		case R.id.project_site_menu_change_size:
+			showDialog(DIALOG_CHANGE_SIZE);
+			return false;
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -327,6 +410,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		saveProjectSite();
 	}
 
+	/**
+	 * save current project site
+	 */
 	protected void saveProjectSite() {
 		log.debug("saveing project site");
 
@@ -397,6 +483,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	}
 
+	/**
+	 * stop the wifi scan, if in progress
+	 */
 	protected void stopWifiScan() {
 		hideWifiScanDialog();
 		
@@ -413,6 +502,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	}
 
+	/**
+	 * hide the wifi scan dialog if shown
+	 */
 	protected void hideWifiScanDialog() {
 		if (scanningImageView != null) {
 			((AnimationDrawable) scanningImageView.getDrawable()).stop();

@@ -81,7 +81,7 @@
     <string name="sensors_gyroscope_format">x: %1$f\ny: %2$f\nz: %3$f</string>
     <string name="export_db_info_text">You can export the database, import or drop the database by pressing the button.</string>
     <string name="export_db_button_text">export projects to SD card</string>
-    <string name="export_db_message_text">nothing to do…</string>
+    <string name="export_db_message_text">nothing to do&#8230;</string>
     <string name="export_db_save_start_message">Saving database backup under %1$s.\ncopying…</string>
     <string name="app_package">at.fhstp.wificompass</string>
     <string name="export_db_save_finished_message"> done!</string>
@@ -132,5 +132,11 @@
     <string name="project_site_wifiscan_failed">The Wifi Scan encountered an error: %1$s</string>
     <string name="project_site_wifiscan_finished">WiFi scan finished!\n%1$s</string>
     <string name="project_site_snap_user">Snap user to grid</string>
+    <string name="project_site_menu_change_size">change map size</string>
+    <string name="project_site_dialog_size_middle_text">x</string>
+    <string name="project_site_dialog_size_title">Change map size</string>
+    <string name="project_site_dialog_size_message">How large (in pixels) should the map be?</string>
+    <string name="project_site_dialog_size_nan">Width and height must be numeric values!</string>
+    <string name="project_site_dialog_size_finished">Map size set to %1$dx%2$d!</string>
 
 </resources>

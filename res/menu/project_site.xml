@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/project_site_menu_change_name" android:title="@string/project_site_menu_change_name"></item>
-    <item android:id="@+id/project_site_menu_save" android:icon="@android:drawable/ic_menu_save" android:title="@string/project_site_menu_save"></item>
+    <item android:id="@+id/project_site_menu_change_size" android:icon="@drawable/resize" android:title="@string/project_site_menu_change_size"></item><item android:id="@+id/project_site_menu_save" android:icon="@android:drawable/ic_menu_save" android:title="@string/project_site_menu_save"></item>
+    
     
 
 </menu>

@@ -42,7 +42,8 @@ public final class R {
         public static final int loading_8=0x7f020010;
         public static final int loading_9=0x7f020011;
         public static final int red_dot=0x7f020012;
-        public static final int user_icon=0x7f020013;
+        public static final int resize=0x7f020013;
+        public static final int user_icon=0x7f020014;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f0b0013;
@@ -72,7 +73,8 @@ public final class R {
         public static final int project_save_option=0x7f0b002d;
         public static final int project_site_button_layout=0x7f0b0014;
         public static final int project_site_menu_change_name=0x7f0b0030;
-        public static final int project_site_menu_save=0x7f0b0031;
+        public static final int project_site_menu_change_size=0x7f0b0031;
+        public static final int project_site_menu_save=0x7f0b0032;
         public static final int project_site_reset_zoom_button=0x7f0b0015;
         public static final int project_site_resultview=0x7f0b0018;
         public static final int project_site_snap_user_button=0x7f0b0016;
@@ -183,10 +185,16 @@ public final class R {
         public static final int project_site_create_failed=0x7f060057;
         public static final int project_site_dialog_scanning_message=0x7f06006c;
         public static final int project_site_dialog_scanning_title=0x7f06006b;
+        public static final int project_site_dialog_size_finished=0x7f060075;
+        public static final int project_site_dialog_size_message=0x7f060073;
+        public static final int project_site_dialog_size_middle_text=0x7f060071;
+        public static final int project_site_dialog_size_nan=0x7f060074;
+        public static final int project_site_dialog_size_title=0x7f060072;
         public static final int project_site_dialog_title_message=0x7f060062;
         public static final int project_site_dialog_title_title=0x7f060061;
         public static final int project_site_load_failed=0x7f060060;
         public static final int project_site_menu_change_name=0x7f060065;
+        public static final int project_site_menu_change_size=0x7f060070;
         public static final int project_site_menu_save=0x7f060068;
         public static final int project_site_reset_position=0x7f06005f;
         public static final int project_site_reset_zoom=0x7f06005e;

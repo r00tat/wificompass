@@ -158,5 +158,17 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 	public MultiTouchDrawable getSuperDrawable() {
 		return null;
 	}
+	
+	/**
+	 * set the size of the map
+	 * @param width	in pixels
+	 * @param height in pixels
+	 */
+	public void setSize(int width,int height){
+		this.width=width;
+		this.height=height;
+		this.recalculatePositions();
+		
+	}
 
 }

@@ -41,6 +41,12 @@ public class ProjectSite implements XMLSerializable {
 	
 	protected Bitmap backgroundBitmap;
 	
+	@DatabaseField
+	protected int width;
+	
+	@DatabaseField
+	protected int height;
+	
 	@DatabaseField(dataType = DataType.BYTE_ARRAY)
 	protected byte[] image;
 	
@@ -82,6 +88,8 @@ public class ProjectSite implements XMLSerializable {
 		if(this.title==null){
 			this.title=UNTITLED;
 		}
+		width=0;
+		height=0;
 	}
 	
 	
@@ -173,6 +181,30 @@ public class ProjectSite implements XMLSerializable {
 	 */
 	public ForeignCollection<WifiScanResult> getScanResults() {
 		return scanResults;
+	}
+
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+	
+	/**
+	 * set the size of the project site
+	 * @param width
+	 * @param height
+	 */
+	public void setSize(int width,int height){
+		this.width=width;
+		this.height=height;
 	}
 
 }
