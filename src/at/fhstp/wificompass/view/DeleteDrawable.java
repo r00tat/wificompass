@@ -7,7 +7,9 @@ package at.fhstp.wificompass.view;
 
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.R;
@@ -17,24 +19,27 @@ public class DeleteDrawable extends MultiTouchDrawable implements Popup{
 	protected BitmapDrawable icon; 
 	
 	protected boolean isActive=false;
+	
+	protected String elementName;
 
 	/**
 	 * @param context
 	 * @param superDrawable
 	 */
-	public DeleteDrawable(Context context, MultiTouchDrawable superDrawable) {
+	public DeleteDrawable(Context context, MultiTouchDrawable superDrawable, String elementName) {
 		super(context, superDrawable);
+		this.elementName=elementName;
 		init();
 	}
 
 	protected void init(){
-		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.cross_circle);
-		this.setPivot(0, 0.7f);
+		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.cross_delete);
+		this.setPivot(0.7f, 0.3f);
 		
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
 
-		this.setRelativePosition(this.width/2+5, -5);
+		this.setRelativePosition(superDrawable.getWidth(), 0);
 	}
 
 	@Override
@@ -70,9 +75,24 @@ public class DeleteDrawable extends MultiTouchDrawable implements Popup{
 	 */
 	@Override
 	public boolean onSingleTouch(PointInfo pointinfo) {
-		if(superDrawable!=null){
-			superDrawable.deleteDrawable();
-		}
+		AlertDialog.Builder alertBuilder=new AlertDialog.Builder(ctx);
+		alertBuilder.setTitle(R.string.project_site_delete_drawable_title);
+		alertBuilder.setMessage(ctx.getString(R.string.project_site_delete_drawable_message,elementName));
+		
+		alertBuilder.setPositiveButton(ctx.getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				forceDelete();
+			}
+		});
+
+		alertBuilder.setNegativeButton(ctx.getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
+		});
+		
+		alertBuilder.create().show();
+		
 		return true;
 	}
 
@@ -86,6 +106,12 @@ public class DeleteDrawable extends MultiTouchDrawable implements Popup{
 		return isActive;
 	}
 	
+	protected void forceDelete(){
+		if(superDrawable!=null){
+			superDrawable.deleteDrawable();
+			refresher.invalidate();
+		}
+	}
 	
 
 }

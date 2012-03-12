@@ -145,5 +145,7 @@
     <string name="project_site_dialog_background_default_path">/mnt/sdcard/</string>
     <string name="project_site_set_background_failed">Could not set background image: %1$s</string>
     <string name="project_site_calculate_ap_positions">Calculate AP positions</string>
+    <string name="project_site_delete_drawable_title">Delete element</string>
+    <string name="project_site_delete_drawable_message">Do you really want to delete %1$s?</string>
 
 </resources>

@@ -17,7 +17,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	protected AccessPoint accessPoint;
 
 	public AccessPointDrawable(Context ctx, AccessPoint accessPoint) {
-		super(ctx);
+		super(ctx,(RefreshableView)null);
 		this.accessPoint = accessPoint;
 		init();
 	}

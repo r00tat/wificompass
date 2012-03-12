@@ -20,8 +20,8 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 
 	protected Bitmap backgroundImage;
 
-	public SiteMapDrawable(Context ctx) {
-		super(ctx);
+	public SiteMapDrawable(Context ctx,RefreshableView refresher) {
+		super(ctx,refresher);
 		init();
 	}
 
@@ -116,10 +116,6 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 		this.drawSubdrawables(canvas);
 	}
 
-	@Override
-	public boolean onTouch(PointInfo pointinfo) {
-		return super.onTouch(pointinfo);
-	}
 
 	@Override
 	public void setAngle(float angle) {
@@ -194,6 +190,38 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 	 */
 	public void setBackgroundImage(Bitmap backgroundImage) {
 		this.backgroundImage = backgroundImage;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#bringSubDrawableToFront(at.fhstp.wificompass.view.MultiTouchDrawable)
+	 */
+	@Override
+	protected void bringSubDrawableToFront(MultiTouchDrawable drawable) {
+		super.bringSubDrawableToFront(drawable);
+
+		if (!(drawable instanceof UserDrawable)) {
+			// user should be one of the last drawables, so we search the vector reverse
+			for (int i = subDrawables.size() - 1; i >= 0; i--) {
+				if (subDrawables.get(i) instanceof UserDrawable) {
+					// the user should always be in front
+					subDrawables.get(i).bringToFront();
+					break;
+				}
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onSingleTouch(org.metalev.multitouch.controller.MultiTouchController.PointInfo)
+	 */
+	@Override
+	public boolean onSingleTouch(PointInfo pointinfo) {
+		hidePopups();
+		return true;
 	}
 
 }

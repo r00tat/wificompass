@@ -53,6 +53,7 @@ import at.fhstp.wificompass.view.AccessPointDrawable;
 import at.fhstp.wificompass.view.MeasuringPointDrawable;
 import at.fhstp.wificompass.view.MultiTouchDrawable;
 import at.fhstp.wificompass.view.MultiTouchView;
+import at.fhstp.wificompass.view.RefreshableView;
 import at.fhstp.wificompass.view.SiteMapDrawable;
 import at.fhstp.wificompass.view.UserDrawable;
 import at.fhstp.wificompass.wifi.WifiResultCallback;
@@ -62,7 +63,7 @@ import at.woelfel.philip.filebrowser.FileBrowser;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
-public class ProjectSiteActivity extends Activity implements OnClickListener, WifiResultCallback {
+public class ProjectSiteActivity extends Activity implements OnClickListener, WifiResultCallback,RefreshableView {
 
 	protected Logger log = new Logger(ProjectSiteActivity.class);
 
@@ -125,7 +126,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			
 			
 			
-			map = new SiteMapDrawable(this);
+			map = new SiteMapDrawable(this,this);
 
 			if (site.getWidth() == 0 || site.getHeight() == 0) {
 				site.setSize(map.getWidth(), map.getHeight());
@@ -601,6 +602,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 					sb.append(result.toString());
 					sb.append("\n");
 				}
+				
+				user.bringToFront();
 
 				multiTouchView.invalidate();
 
@@ -733,5 +736,13 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		this.setContentView(R.layout.project_site);
 		initUI();
+	}
+
+
+	@Override
+	public void invalidate() {
+		if(multiTouchView!=null){
+			multiTouchView.invalidate();
+		}
 	}
 }

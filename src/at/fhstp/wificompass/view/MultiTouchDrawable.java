@@ -95,19 +95,21 @@ public abstract class MultiTouchDrawable {
 	protected Resources resources;
 
 	protected ArrayList<MultiTouchDrawable> subDrawables;
+	
+	protected RefreshableView refresher;
 
 	/**
 	 * default constructor
 	 * 
 	 * @param context
 	 */
-	public MultiTouchDrawable(Context context) {
+	public MultiTouchDrawable(Context context,RefreshableView containingView) {
 		id = counter++;
 		this.ctx = context;
 		this.firstLoad = true;
 		this.resources = context.getResources();
 		subDrawables = new ArrayList<MultiTouchDrawable>();
-
+		this.refresher=containingView;
 		load();
 	}
 
@@ -127,6 +129,8 @@ public abstract class MultiTouchDrawable {
 		this.firstLoad = true;
 		this.resources = context.getResources();
 		subDrawables = new ArrayList<MultiTouchDrawable>();
+		
+		this.refresher=superDrawable.refresher;
 
 		superDrawable.addSubDrawable(this);
 	}
@@ -200,7 +204,7 @@ public abstract class MultiTouchDrawable {
 		}
 
 		if (!handleEvent && pointinfo.isMultiTouch() == false && pointinfo.getNumTouchPoints() == 1 && pointinfo.getAction() == 0) {
-			this.onSingleTouch(pointinfo);
+			handleEvent=this.onSingleTouch(pointinfo);
 		}
 
 		return handleEvent;
@@ -720,6 +724,7 @@ public abstract class MultiTouchDrawable {
 
 	public void addSubDrawable(MultiTouchDrawable subObject) {
 		subDrawables.add(subObject);
+		subObject.refresher=this.refresher;
 		this.setPos(centerX, centerY, scaleX, scaleY, angle, false);
 	}
 
@@ -761,19 +766,22 @@ public abstract class MultiTouchDrawable {
 	 */
 	public boolean bringToFront() {
 		if (superDrawable != null) {
-
-			// do we need the clean way?
-			// superDrawable.removeSubDrawable(this);
-			// superDrawable.addSubDrawable(this);
-
-			// or is the dirty one sufficient?
-			superDrawable.subDrawables.remove(this);
-			superDrawable.subDrawables.add(this);
+			superDrawable.bringSubDrawableToFront(this);
 			return true;
 		} else {
 			Logger.d("we can't bring ourselfs to front, because we are not attached to a super drawable");
 		}
 		return false;
+	}
+
+	protected void bringSubDrawableToFront(MultiTouchDrawable drawable) {
+		// do we need the clean way?
+		// this.removeSubDrawable(drawable);
+		// this.addSubDrawable(drawable);
+
+		// or is the dirty one sufficient?
+		subDrawables.remove(drawable);
+		subDrawables.add(drawable);
 	}
 
 	public void deleteDrawable() {
@@ -791,6 +799,19 @@ public abstract class MultiTouchDrawable {
 	 */
 	public void onDelete() {
 
+	}
+	
+	/**
+	 * hide all open popups
+	 */
+	public void hidePopups(){
+		if(this instanceof Popup){
+			((Popup)this).setActive(false);
+		}
+		
+		for(Iterator<MultiTouchDrawable> it=subDrawables.iterator();it.hasNext();){
+			it.next().hidePopups();
+		}
 	}
 
 }

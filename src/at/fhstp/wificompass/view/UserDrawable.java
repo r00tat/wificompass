@@ -14,10 +14,10 @@ public class UserDrawable extends MultiTouchDrawable {
 	
 	protected ManualLocationProvider locProvider;
 	
-	public UserDrawable(Context ctx) {
-		super(ctx);
-		init();
-	}
+//	public UserDrawable(Context ctx) {
+//		super(ctx);
+//		init();
+//	}
 	
 	public UserDrawable(Context ctx,MultiTouchDrawable superDrawable) {
 		super(ctx,superDrawable);

@@ -27,11 +27,11 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 	protected StaticLayout layout;
 
 
-	public PopupDrawable(Context ctx, String text) {
-		super(ctx);
-		init();
-		setPopupText(text);
-	}
+//	public PopupDrawable(Context ctx, String text) {
+//		super(ctx);
+//		init();
+//		setPopupText(text);
+//	}
 
 	public PopupDrawable(Context ctx, MultiTouchDrawable superDrawable, String text) {
 		super(ctx, superDrawable);

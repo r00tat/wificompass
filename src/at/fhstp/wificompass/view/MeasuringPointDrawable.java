@@ -32,11 +32,6 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 
 	protected boolean isPopupActive = false;
 
-	public MeasuringPointDrawable(Context ctx, WifiScanResult scanResult) {
-		super(ctx);
-		this.scanResult = scanResult;
-		init();
-	}
 
 	public MeasuringPointDrawable(Context ctx, MultiTouchDrawable superDrawable, WifiScanResult scanResult) {
 		super(ctx, superDrawable);
@@ -74,7 +69,7 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 
 		popup.setActive(false);
 
-		deletePopup = new DeleteDrawable(ctx, this);
+		deletePopup = new DeleteDrawable(ctx, this,"Scan Result "+scanResult.getId()+(scanResult.getLocation() != null?" ("+scanResult.getLocation().getX()+","+scanResult.getLocation().getY()+")":""));
 		deletePopup.setActive(false);
 
 	}
