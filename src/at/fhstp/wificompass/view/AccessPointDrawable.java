@@ -35,7 +35,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 
 	protected void init() {
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.wifi_red_2);
-		this.setPivot(0.5f, 1f);
+		this.setPivot(0.5f, 0.94f);
 
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();

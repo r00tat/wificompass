@@ -39,8 +39,8 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 	}
 
 	protected void init() {
-		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.wifi_blue_2);
-		this.setPivot(0.5f, 1f);
+		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.footprint_6);
+		this.setPivot(0.5f, 0.94f);
 
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
