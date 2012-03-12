@@ -198,20 +198,21 @@ public abstract class MultiTouchDrawable {
 				handleEvent = sub.onTouch(pointinfo);
 			}
 		}
-		
-		if(!handleEvent&&pointinfo.isMultiTouch() == false && pointinfo.getNumTouchPoints() == 1 && pointinfo.getAction() == 0){
+
+		if (!handleEvent && pointinfo.isMultiTouch() == false && pointinfo.getNumTouchPoints() == 1 && pointinfo.getAction() == 0) {
 			this.onSingleTouch(pointinfo);
 		}
 
 		return handleEvent;
 	}
-	
+
 	/**
 	 * called if a single touch event is found
+	 * 
 	 * @param pointinfo
 	 * @return
 	 */
-	public boolean onSingleTouch(PointInfo pointinfo){
+	public boolean onSingleTouch(PointInfo pointinfo) {
 		return false;
 	}
 
@@ -257,7 +258,7 @@ public abstract class MultiTouchDrawable {
 	public void setRelativePosition(float relX, float relY) {
 		this.relX = relX;
 		this.relY = relY;
-		if(superDrawable!=null){
+		if (superDrawable != null) {
 			superDrawable.recalculatePositions();
 		}
 	}
@@ -609,19 +610,22 @@ public abstract class MultiTouchDrawable {
 	public void draw(Canvas canvas) {
 		// Logger.d("Drawing " + this.toString());
 		canvas.save();
-		
+
 		// hmm, why did we calculate dx and dy, this should be the same as centerX and centerY?
-		
-//		float dx = (maxX + minX) / 2;
-//		float dy = (maxY + minY) / 2;
+
+		// float dx = (maxX + minX) / 2;
+		// float dy = (maxY + minY) / 2;
 		Drawable d = this.getDrawable();
-		d.setBounds((int) minX, (int) minY, (int) maxX, (int) maxY);
-//		canvas.translate(dx, dy);
-		canvas.translate(centerX, centerY);
-		canvas.rotate(angle * 180.0f / (float) Math.PI);
-		canvas.translate(-centerX, -centerY);
-		d.draw(canvas);
-		canvas.restore();
+		if (d != null) {
+			d.setBounds((int) minX, (int) minY, (int) maxX, (int) maxY);
+			// canvas.translate(dx, dy);
+			canvas.translate(centerX, centerY);
+			canvas.rotate(angle * 180.0f / (float) Math.PI);
+			canvas.translate(-centerX, -centerY);
+			d.draw(canvas);
+			canvas.restore();
+
+		}
 
 		this.drawSubdrawables(canvas);
 	}
@@ -702,14 +706,16 @@ public abstract class MultiTouchDrawable {
 		this.scaleY = scaleY;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return this.getId() + " " + this.getWidth() + "x" + this.getHeight() + "px (" + centerX + "[" + minX
-				+ "-" + maxX + "]," + centerY + "[" + minY + "-" + maxY + "]) scale (" + scaleX + "," + scaleY + ") angle " + angle * 180.0f
-				/ Math.PI +(superDrawable!=null?" super: "+superDrawable.id+" rel: ("+relX+","+relY+")":"");
+		return this.getId() + " " + this.getWidth() + "x" + this.getHeight() + "px (" + centerX + "[" + minX + "-" + maxX + "]," + centerY + "["
+				+ minY + "-" + maxY + "]) scale (" + scaleX + "," + scaleY + ") angle " + angle * 180.0f / Math.PI
+				+ (superDrawable != null ? " super: " + superDrawable.id + " rel: (" + relX + "," + relY + ")" : "");
 	}
 
 	public void addSubDrawable(MultiTouchDrawable subObject) {
@@ -747,28 +753,44 @@ public abstract class MultiTouchDrawable {
 	public ArrayList<MultiTouchDrawable> getSubDrawables() {
 		return subDrawables;
 	}
-	
+
 	/**
 	 * tries to bring the current element to the front.
+	 * 
 	 * @return true, if this element could be brought to front
 	 */
-	public boolean bringToFront(){
-		if(superDrawable!=null){
-			
+	public boolean bringToFront() {
+		if (superDrawable != null) {
+
 			// do we need the clean way?
-//			superDrawable.removeSubDrawable(this);
-//			superDrawable.addSubDrawable(this);
-			
+			// superDrawable.removeSubDrawable(this);
+			// superDrawable.addSubDrawable(this);
+
 			// or is the dirty one sufficient?
 			superDrawable.subDrawables.remove(this);
 			superDrawable.subDrawables.add(this);
 			return true;
-		}else {
+		} else {
 			Logger.d("we can't bring ourselfs to front, because we are not attached to a super drawable");
 		}
 		return false;
 	}
-	
-	
+
+	public void deleteDrawable() {
+		if (this.superDrawable == null) {
+			Logger.d("don't know how to delete myself, if I have not super Drawable");
+		} else {
+			superDrawable.subDrawables.remove(this);
+
+		}
+		onDelete();
+	}
+
+	/**
+	 * this method is called, if this method is deleted
+	 */
+	public void onDelete() {
+
+	}
 
 }

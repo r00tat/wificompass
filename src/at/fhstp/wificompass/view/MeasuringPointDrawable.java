@@ -1,5 +1,6 @@
 package at.fhstp.wificompass.view;
 
+import java.sql.SQLException;
 import java.util.Iterator;
 
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
@@ -12,6 +13,10 @@ import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.BssidResult;
 import at.fhstp.wificompass.model.WifiScanResult;
+import at.fhstp.wificompass.model.helper.DatabaseHelper;
+
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 
 public class MeasuringPointDrawable extends MultiTouchDrawable {
 
@@ -19,11 +24,12 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 
 	protected WifiScanResult scanResult;
 
-	
+	protected DeleteDrawable deletePopup;
 
 	protected static final int padding = 5;
 
 	protected PopupDrawable popup;
+
 	protected boolean isPopupActive = false;
 
 	public MeasuringPointDrawable(Context ctx, WifiScanResult scanResult) {
@@ -63,10 +69,13 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 			sb.append("\n");
 		}
 
-		popup = new PopupDrawable(ctx,this,sb.toString());
+		popup = new PopupDrawable(ctx, this, sb.toString());
 		popup.setWidth(400);
-		
+
 		popup.setActive(false);
+
+		deletePopup = new DeleteDrawable(ctx, this);
+		deletePopup.setActive(false);
 
 	}
 
@@ -104,21 +113,38 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 
-		
-
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onSingleTouch(org.metalev.multitouch.controller.MultiTouchController.PointInfo)
 	 */
 	@Override
 	public boolean onSingleTouch(PointInfo pointinfo) {
 		popup.setActive(!popup.isActive());
+		deletePopup.setActive(popup.isActive());
 		bringToFront();
 		return true;
 	}
 
-		
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onDelete()
+	 */
+	@Override
+	public void onDelete() {
+		try {
+			// try to delete myself from the database
+			DatabaseHelper databaseHelper = OpenHelperManager.getHelper(this.ctx, DatabaseHelper.class);
+
+			Dao<WifiScanResult, Integer> srDao = databaseHelper.getDao(WifiScanResult.class);
+			srDao.delete(scanResult);
+			
+		} catch (SQLException e) {
+			Logger.w("could not delete myself from the database");
+		}
+	}
+
 }
