@@ -64,7 +64,7 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 		}
 
 		popup = new PopupDrawable(ctx,this,sb.toString());
-		popup.width=300;
+		popup.setWidth(400);
 		
 		popup.setActive(false);
 

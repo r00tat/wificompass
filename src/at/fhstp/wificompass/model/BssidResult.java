@@ -12,44 +12,44 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = BssidResult.TABLE_NAME)
 public class BssidResult {
-	protected static final String TABLE_NAME="bssidresults";
-	
-	@DatabaseField(generatedId=true)
+	protected static final String TABLE_NAME = "bssidresults";
+
+	@DatabaseField(generatedId = true)
 	protected int id;
-	
+
 	@DatabaseField
 	protected String bssid;
-	
+
 	@DatabaseField
 	protected String ssid;
-	
+
 	@DatabaseField
 	protected String capabilities;
-	
+
 	@DatabaseField
 	protected int frequency;
-	
+
 	@DatabaseField
 	protected int level;
-	
-	@DatabaseField(foreign = true,foreignAutoRefresh = true)
+
+	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	protected WifiScanResult scanResult;
-	
-	public BssidResult(){
-		
+
+	public BssidResult() {
+
 	}
-	
-	public BssidResult(ScanResult sr){
-		this(sr,null);
+
+	public BssidResult(ScanResult sr) {
+		this(sr, null);
 	}
-	
-	public BssidResult(ScanResult sr,WifiScanResult result){
-		bssid=sr.BSSID;
-		ssid=sr.SSID;
-		capabilities=sr.capabilities;
-		frequency=sr.frequency;
-		level=sr.level;
-		this.scanResult=result;
+
+	public BssidResult(ScanResult sr, WifiScanResult result) {
+		bssid = sr.BSSID;
+		ssid = sr.SSID;
+		capabilities = sr.capabilities;
+		frequency = sr.frequency;
+		level = sr.level;
+		this.scanResult = result;
 	}
 
 	/**
@@ -60,7 +60,8 @@ public class BssidResult {
 	}
 
 	/**
-	 * @param bssid the bssid to set
+	 * @param bssid
+	 *            the bssid to set
 	 */
 	public void setBssid(String bssid) {
 		this.bssid = bssid;
@@ -74,7 +75,8 @@ public class BssidResult {
 	}
 
 	/**
-	 * @param ssid the ssid to set
+	 * @param ssid
+	 *            the ssid to set
 	 */
 	public void setSsid(String ssid) {
 		this.ssid = ssid;
@@ -88,7 +90,8 @@ public class BssidResult {
 	}
 
 	/**
-	 * @param capabilities the capabilities to set
+	 * @param capabilities
+	 *            the capabilities to set
 	 */
 	public void setCapabilities(String capabilities) {
 		this.capabilities = capabilities;
@@ -102,7 +105,8 @@ public class BssidResult {
 	}
 
 	/**
-	 * @param frequency the frequency to set
+	 * @param frequency
+	 *            the frequency to set
 	 */
 	public void setFrequency(int frequency) {
 		this.frequency = frequency;
@@ -116,7 +120,8 @@ public class BssidResult {
 	}
 
 	/**
-	 * @param level the level to set
+	 * @param level
+	 *            the level to set
 	 */
 	public void setLevel(int level) {
 		this.level = level;
@@ -137,21 +142,21 @@ public class BssidResult {
 	}
 
 	/**
-	 * @param scanResult the scanResult to set
+	 * @param scanResult
+	 *            the scanResult to set
 	 */
 	public void setScanResult(WifiScanResult scanResult) {
 		this.scanResult = scanResult;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return bssid + " " + ssid + " " + level + "dBm " + frequency + "MHz " + capabilities;
+		return ssid + " " + bssid + " " + level + "dBm " + frequency + "MHz " + capabilities;
 	}
-	
-	
-	
 
 }

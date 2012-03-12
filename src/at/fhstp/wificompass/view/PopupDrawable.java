@@ -23,10 +23,9 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 	protected TextPaint tp;
 
 	protected boolean isActive;
+	
+	protected StaticLayout layout;
 
-//	protected TextView tv;
-//
-//	protected RelativeLayout tvLayout;
 
 	public PopupDrawable(Context ctx, String text) {
 		super(ctx);
@@ -71,7 +70,7 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 	public void draw(Canvas canvas) {
 		if (isActive) {
 			canvas.save();
-
+			
 			canvas.translate(minX, minY);
 
 			Paint paint = new Paint();
@@ -93,7 +92,8 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 
 			canvas.translate(padding, padding);
 
-			new StaticLayout(popupText.toString(), tp, width - 2 * padding, Layout.Alignment.ALIGN_NORMAL, 1f, 0f, true).draw(canvas);
+			
+			layout.draw(canvas);
 
 			// tv.draw(canvas);
 
@@ -141,7 +141,8 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 	 */
 	public void setPopupText(String popupText) {
 		this.popupText = popupText;
-//		tv.setText(popupText);
+		layout=new StaticLayout(popupText, tp, width - 2 * padding, Layout.Alignment.ALIGN_NORMAL, 1f, 0f, true);
+		this.height=layout.getHeight()+2*padding;
 	}
 
 	/*
@@ -192,4 +193,13 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 		return isActive;
 	}
 
+	
+	public int getWidth(){
+		return width;
+	}
+	
+	public void setWidth(int width){
+		this.width=width;
+		this.setPopupText(popupText);
+	}
 }
