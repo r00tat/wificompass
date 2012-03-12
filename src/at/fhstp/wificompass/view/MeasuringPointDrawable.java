@@ -108,20 +108,15 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 
 	}
 
+
 	/* (non-Javadoc)
-	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onTouch(org.metalev.multitouch.controller.MultiTouchController.PointInfo)
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onSingleTouch(org.metalev.multitouch.controller.MultiTouchController.PointInfo)
 	 */
 	@Override
-	public boolean onTouch(PointInfo pointinfo) {
-		if (pointinfo.isMultiTouch() == false &&
-				pointinfo.getNumTouchPoints() == 1 &&
-				pointinfo.getAction() == 0
-					) {
-				popup.setActive(!popup.isActive());
-				return true;
-			}
-		
-		return super.onTouch(pointinfo);
+	public boolean onSingleTouch(PointInfo pointinfo) {
+		popup.setActive(!popup.isActive());
+		bringToFront();
+		return true;
 	}
 
 		

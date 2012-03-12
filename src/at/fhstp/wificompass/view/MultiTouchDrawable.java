@@ -18,6 +18,7 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import at.fhstp.wificompass.Logger;
 
 /**
  * Abstract Class for drawable objects for the MultiTouchView
@@ -197,8 +198,21 @@ public abstract class MultiTouchDrawable {
 				handleEvent = sub.onTouch(pointinfo);
 			}
 		}
+		
+		if(!handleEvent&&pointinfo.isMultiTouch() == false && pointinfo.getNumTouchPoints() == 1 && pointinfo.getAction() == 0){
+			this.onSingleTouch(pointinfo);
+		}
 
 		return handleEvent;
+	}
+	
+	/**
+	 * called if a single touch event is found
+	 * @param pointinfo
+	 * @return
+	 */
+	public boolean onSingleTouch(PointInfo pointinfo){
+		return false;
 	}
 
 	/**
@@ -733,5 +747,28 @@ public abstract class MultiTouchDrawable {
 	public ArrayList<MultiTouchDrawable> getSubDrawables() {
 		return subDrawables;
 	}
+	
+	/**
+	 * tries to bring the current element to the front.
+	 * @return true, if this element could be brought to front
+	 */
+	public boolean bringToFront(){
+		if(superDrawable!=null){
+			
+			// do we need the clean way?
+//			superDrawable.removeSubDrawable(this);
+//			superDrawable.addSubDrawable(this);
+			
+			// or is the dirty one sufficient?
+			superDrawable.subDrawables.remove(this);
+			superDrawable.subDrawables.add(this);
+			return true;
+		}else {
+			Logger.d("we can't bring ourselfs to front, because we are not attached to a super drawable");
+		}
+		return false;
+	}
+	
+	
 
 }

@@ -34,7 +34,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	}
 
 	protected void init() {
-		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.wifi_green_2);
+		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.wifi_red_2);
 		this.setPivot(0.5f, 1f);
 
 		this.width = icon.getBitmap().getWidth();
@@ -60,19 +60,6 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 			return "";
 	}
 
-	@Override
-	public boolean onTouch(PointInfo pointinfo) {
-
-		// Logger.d("Touch event for AP " + this.getId() + ": " + pointinfo.isMultiTouch() + ", " + pointinfo.getNumTouchPoints() + ", " + pointinfo.getAction());
-
-		if (pointinfo.isMultiTouch() == false && pointinfo.getNumTouchPoints() == 1 && pointinfo.getAction() == 0) {
-			popup.setPopupText(this.getPopupText());
-			popup.setActive(!popup.isActive());
-			return true;
-		}
-
-		return false;
-	}
 
 	@Override
 	public boolean isScalable() {
@@ -108,6 +95,17 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	public void setAccessPoint(AccessPoint accessPoint) {
 		this.accessPoint = accessPoint;
 		popup.setPopupText(getPopupText());
+	}
+
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onSingleTouch(org.metalev.multitouch.controller.MultiTouchController.PointInfo)
+	 */
+	@Override
+	public boolean onSingleTouch(PointInfo pointinfo) {
+		popup.setPopupText(this.getPopupText());
+		popup.setActive(!popup.isActive());
+		bringToFront();
+		return true;
 	}
 
 }

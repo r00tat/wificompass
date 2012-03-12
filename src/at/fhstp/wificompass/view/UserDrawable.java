@@ -1,5 +1,7 @@
 package at.fhstp.wificompass.view;
 
+import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
+
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -68,6 +70,15 @@ public class UserDrawable extends MultiTouchDrawable {
 	public void setRelativePosition(float relX, float relY) {
 		super.setRelativePosition(relX, relY);
 		locProvider.updateCurrentPosition(relX, relY);
+	}
+
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onSingleTouch(org.metalev.multitouch.controller.MultiTouchController.PointInfo)
+	 */
+	@Override
+	public boolean onSingleTouch(PointInfo pointinfo) {
+		bringToFront();
+		return true;
 	}
 
 }
