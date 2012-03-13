@@ -162,5 +162,7 @@
     <string name="about_app_revision">Revision</string>
     <string name="about_app_commit_date">Last commit</string>
     <string name="about_app_repository_url">Repository URL</string>
+    <string name="project_site_dialog_change_size_width">width</string>
+    <string name="project_site_dialog_change_size_height">height</string>
 
 </resources>

@@ -22,13 +22,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,7 +64,7 @@ import at.woelfel.philip.filebrowser.FileBrowser;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
-public class ProjectSiteActivity extends Activity implements OnClickListener, WifiResultCallback,RefreshableView {
+public class ProjectSiteActivity extends Activity implements OnClickListener, WifiResultCallback, RefreshableView {
 
 	protected Logger log = new Logger(ProjectSiteActivity.class);
 
@@ -95,7 +95,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected BroadcastReceiver wifiBroadcastReceiver;
 
 	protected UserDrawable user;
-	
+
 	protected ScaleLineDrawable scaler = null;
 
 	protected final Context context = this;
@@ -103,7 +103,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected TextView backgroundPathTextView;
 
 	protected float scalerDistance;
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -128,26 +128,21 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			if (site == null) {
 				throw new SiteNotFoundException("The ProjectSite Id could not be found in the database!");
 			}
-			
-			
-			
-			map = new SiteMapDrawable(this,this);
+
+			map = new SiteMapDrawable(this, this);
 
 			if (site.getWidth() == 0 || site.getHeight() == 0) {
 				site.setSize(map.getWidth(), map.getHeight());
 			} else {
 				map.setSize(site.getWidth(), site.getHeight());
 			}
-			if(site.getBackgroundBitmap()!=null){
+			if (site.getBackgroundBitmap() != null) {
 				map.setBackgroundImage(site.getBackgroundBitmap());
 			}
 
-			
-			for(Iterator<AccessPoint> it=site.getAccessPoints().iterator();it.hasNext();){
-				new AccessPointDrawable(this,map,it.next());
+			for (Iterator<AccessPoint> it = site.getAccessPoints().iterator(); it.hasNext();) {
+				new AccessPointDrawable(this, map, it.next());
 			}
-			
-			
 
 			user = new UserDrawable(this, map);
 
@@ -157,15 +152,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				user.setRelativePosition(map.getWidth() / 2, map.getHeight() / 2);
 			}
 
-
 			for (Iterator<WifiScanResult> it = site.getScanResults().iterator(); it.hasNext();) {
 				WifiScanResult wsr = it.next();
 				new MeasuringPointDrawable(this, map, wsr);
 			}
 
-			
 			initUI();
- 
 
 		} catch (Exception ex) {
 			log.error("Failed to create ProjectSiteActivity: " + ex.getMessage(), ex);
@@ -174,11 +166,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		}
 	}
 
-	
-	protected void initUI(){
-		
-		Button setScaleOfMap = ((Button) findViewById(R.id.project_site_set_scale_of_map_button));
-		setScaleOfMap.setOnClickListener(this);
+	protected void initUI() {
+
 		
 		Button resetZoom = ((Button) findViewById(R.id.project_site_reset_zoom_button));
 		resetZoom.setOnClickListener(this);
@@ -188,21 +177,21 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		Button startWifiScanButton = ((Button) findViewById(R.id.project_site_wifiscan_button));
 		startWifiScanButton.setOnClickListener(this);
-		
+
 		Button calculateApPositions = ((Button) findViewById(R.id.project_site_calculate_ap_positions_button));
 		calculateApPositions.setOnClickListener(this);
 
 		multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
 		multiTouchView.setRearrangable(false);
-		
+
 		multiTouchView.addDrawable(map);
-		
+
 		if (site.getTitle().equals(ProjectSite.UNTITLED)) {
 			showDialog(DIALOG_TITLE);
 		}
 
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -256,72 +245,56 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			user.snapPositionToGrid();
 			multiTouchView.invalidate();
 			break;
-			
+
 		case R.id.project_site_calculate_ap_positions_button:
 			WeightedCentroidTriangulation tri = new WeightedCentroidTriangulation(context, site);
 			Vector<AccessPointDrawable> aps = tri.calculateAllAndGetDrawables();
-			
+
 			// delete all old messurements
-			for(int i=0;i<map.getSubDrawables().size();i++){
-				MultiTouchDrawable d=map.getSubDrawables().get(i);
-				if(d instanceof AccessPointDrawable){
+			for (int i = 0; i < map.getSubDrawables().size(); i++) {
+				MultiTouchDrawable d = map.getSubDrawables().get(i);
+				if (d instanceof AccessPointDrawable) {
 					map.removeSubDrawable(d);
 					i--;
 				}
 			}
-			
-			try{
-			Dao<AccessPoint, Integer> apDao=databaseHelper.getDao(AccessPoint.class);
-			Dao<Location,Integer> locDao=databaseHelper.getDao(Location.class);
-			
-			for(Iterator<AccessPoint> it=site.getAccessPoints().iterator();it.hasNext();){
-				AccessPoint ap=it.next();
-				try{
-					apDao.delete(ap);
-				}catch(Exception e){
-					
+
+			try {
+				Dao<AccessPoint, Integer> apDao = databaseHelper.getDao(AccessPoint.class);
+				Dao<Location, Integer> locDao = databaseHelper.getDao(Location.class);
+
+				for (Iterator<AccessPoint> it = site.getAccessPoints().iterator(); it.hasNext();) {
+					AccessPoint ap = it.next();
+					try {
+						apDao.delete(ap);
+					} catch (Exception e) {
+
+					}
 				}
+
+				for (Iterator<AccessPointDrawable> it = aps.iterator(); it.hasNext();) {
+					AccessPointDrawable ap = it.next();
+					locDao.createIfNotExists(ap.getAccessPoint().getLocation());
+					ap.getAccessPoint().setProjectSite(site);
+					apDao.createOrUpdate(ap.getAccessPoint());
+				}
+
+				projectSiteDao.refresh(site);
+
+			} catch (SQLException e) {
+				Logger.e("could not delete old or create new ap results", e);
 			}
-			
-			for (Iterator<AccessPointDrawable> it = aps.iterator(); it.hasNext();) {
-				AccessPointDrawable ap = it.next();
-				locDao.createIfNotExists(ap.getAccessPoint().getLocation());
-				ap.getAccessPoint().setProjectSite(site);
-				apDao.createOrUpdate(ap.getAccessPoint());
-			}
-			
-			projectSiteDao.refresh(site);
-			
-			}catch(SQLException e){
-				Logger.e("could not delete old or create new ap results",e);
-			}
-			
-			
+
 			for (Iterator<AccessPointDrawable> it = aps.iterator(); it.hasNext();) {
 				AccessPointDrawable ap = it.next();
 				map.addSubDrawable(ap);
 				map.recalculatePositions();
 				multiTouchView.invalidate();
 			}
-			
+
 			break;
-			
-		case R.id.project_site_set_scale_of_map_button:
-			
-			if (scaler == null) {
-				scaler = new ScaleLineDrawable(context, map);
-				multiTouchView.invalidate();
-			} else {
-				this.scalerDistance = scaler.getSliderDistance();
-				scaler.removeScaleSliders();
-				map.removeSubDrawable(scaler);
-				scaler = null;
-				multiTouchView.invalidate();
-				
-				this.showDialog(DIALOG_SET_SCALE_OF_MAP);
-			}
-			
-			break;
+
+		
 		}
 	}
 
@@ -329,7 +302,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		MultiTouchDrawable.setGridSpacing(scalerDistance / scale, scalerDistance / scale);
 		multiTouchView.invalidate();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -405,33 +378,15 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			sizeAlert.setTitle(R.string.project_site_dialog_size_title);
 			sizeAlert.setMessage(R.string.project_site_dialog_size_message);
 
-			LinearLayout sizeLayout = new LinearLayout(this);
-			sizeLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-			sizeLayout.setGravity(Gravity.CENTER);
+			sizeAlert.setView(getLayoutInflater().inflate(R.layout.project_site_dialog_change_size, (ViewGroup) getCurrentFocus()));
 
-			// Set an EditText view to get user input
-			final EditText widthInput = new EditText(this);
-			widthInput.setSingleLine(true);
-			widthInput.setText("" + map.getWidth());
-			widthInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-			sizeLayout.addView(widthInput);
-
-			TextView sizeMiddleText = new TextView(this);
-			sizeMiddleText.setText(getString(R.string.project_site_dialog_size_middle_text));
-			sizeLayout.addView(sizeMiddleText);
-
-			final EditText heightInput = new EditText(this);
-			heightInput.setSingleLine(true);
-			heightInput.setText("" + map.getHeight());
-			heightInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-			sizeLayout.addView(heightInput);
-
-			sizeAlert.setView(sizeLayout);
 
 			sizeAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					try {
-						int w = Integer.parseInt(widthInput.getText().toString()), h = Integer.parseInt(heightInput.getText().toString());
+						int w = Integer.parseInt(((EditText) ((AlertDialog) dialog).findViewById(R.id.project_site_dialog_change_size_width))
+								.getText().toString()), h = Integer.parseInt(((EditText) ((AlertDialog) dialog)
+								.findViewById(R.id.project_site_dialog_change_size_height)).getText().toString());
 						if (w <= 0) {
 							throw new NumberFormatException("width has to be larger than 0");
 						}
@@ -528,13 +483,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			scaleOfMapDialog.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-					
+
 					try {
 						float value = Float.parseFloat(scaleInput.getText().toString());
 						setScaleOfMap(value);
-					}
-					catch (NumberFormatException nfe) {
-						
+					} catch (NumberFormatException nfe) {
+
 					}
 				}
 			});
@@ -546,7 +500,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			});
 
 			return scaleOfMapDialog.create();
-			
+
 		default:
 			return super.onCreateDialog(id);
 		}
@@ -582,6 +536,23 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_menu_set_background:
 			showDialog(DIALOG_SET_BACKGROUND);
+			return false;
+			
+		case R.id.project_site_menu_set_scale_of_map:
+
+			if (scaler == null) {
+				scaler = new ScaleLineDrawable(context, map);
+				multiTouchView.invalidate();
+			} else {
+				this.scalerDistance = scaler.getSliderDistance();
+				scaler.removeScaleSliders();
+				map.removeSubDrawable(scaler);
+				scaler = null;
+				multiTouchView.invalidate();
+
+				this.showDialog(DIALOG_SET_SCALE_OF_MAP);
+			}
+
 			return false;
 
 		default:
@@ -664,7 +635,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 					sb.append(result.toString());
 					sb.append("\n");
 				}
-				
+
 				user.bringToFront();
 
 				multiTouchView.invalidate();
@@ -747,12 +718,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		Logger.d("Activity result of " + requestCode + " " + resultCode + " " + (data!=null?data.toString():""));
+		Logger.d("Activity result of " + requestCode + " " + resultCode + " " + (data != null ? data.toString() : ""));
 
 		switch (requestCode) {
 		case FILEBROWSER_REQUEST:
 
-			if (resultCode == Activity.RESULT_OK && data!=null) {
+			if (resultCode == Activity.RESULT_OK && data != null) {
 				String path = data.getExtras().getString(FileBrowser.EXTRA_PATH);
 
 				if (backgroundPathTextView != null) {
@@ -771,7 +742,6 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	}
 
 	protected void setBackgroundImage(String path) {
-		
 
 		try {
 			Bitmap bmp = BitmapFactory.decodeFile(path);
@@ -780,7 +750,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			site.setSize(bmp.getWidth(), bmp.getHeight());
 			map.setSize(bmp.getWidth(), bmp.getHeight());
 			multiTouchView.invalidate();
-			Toast.makeText(context, "set "+path +" as new background image!", Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "set " + path + " as new background image!", Toast.LENGTH_LONG).show();
 			saveProjectSite();
 
 		} catch (Exception e) {
@@ -789,7 +759,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onConfigurationChanged(android.content.res.Configuration)
 	 */
 	@Override
@@ -800,10 +772,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		initUI();
 	}
 
-
 	@Override
 	public void invalidate() {
-		if(multiTouchView!=null){
+		if (multiTouchView != null) {
 			multiTouchView.invalidate();
 		}
 	}

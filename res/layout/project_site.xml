@@ -13,13 +13,7 @@
 
         <TableRow>
 
-            <Button
-                android:id="@+id/project_site_set_scale_of_map_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/project_site_set_scale_of_map" />
-
+           
             <Button
                 android:id="@+id/project_site_reset_zoom_button"
                 android:layout_width="wrap_content"
