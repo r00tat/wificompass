@@ -147,5 +147,8 @@
     <string name="project_site_calculate_ap_positions">Calculate AP positions</string>
     <string name="project_site_delete_drawable_title">Delete element</string>
     <string name="project_site_delete_drawable_message">Do you really want to delete %1$s?</string>
+    <string name="project_site_set_scale_of_map">Set scale of map</string>
+    <string name="project_site_dialog_scale_of_map_title">Scale of map</string>
+    <string name="project_site_dialog_scale_of_map_message">How many meters have you just marked on the map?</string>
 
 </resources>

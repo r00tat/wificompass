@@ -54,6 +54,7 @@ import at.fhstp.wificompass.view.MeasuringPointDrawable;
 import at.fhstp.wificompass.view.MultiTouchDrawable;
 import at.fhstp.wificompass.view.MultiTouchView;
 import at.fhstp.wificompass.view.RefreshableView;
+import at.fhstp.wificompass.view.ScaleLineDrawable;
 import at.fhstp.wificompass.view.SiteMapDrawable;
 import at.fhstp.wificompass.view.UserDrawable;
 import at.fhstp.wificompass.wifi.WifiResultCallback;
@@ -71,7 +72,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	// public static final int START_NEW = 1, START_LOAD = 2;
 
-	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4;
+	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4, DIALOG_SET_SCALE_OF_MAP = 5;
 
 	protected static final int FILEBROWSER_REQUEST = 1;
 
@@ -94,11 +95,15 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected BroadcastReceiver wifiBroadcastReceiver;
 
 	protected UserDrawable user;
+	
+	protected ScaleLineDrawable scaler = null;
 
 	protected final Context context = this;
 
 	protected TextView backgroundPathTextView;
 
+	protected float scalerDistance;
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -171,6 +176,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	
 	protected void initUI(){
+		
+		Button setScaleOfMap = ((Button) findViewById(R.id.project_site_set_scale_of_map_button));
+		setScaleOfMap.setOnClickListener(this);
 		
 		Button resetZoom = ((Button) findViewById(R.id.project_site_reset_zoom_button));
 		resetZoom.setOnClickListener(this);
@@ -297,9 +305,31 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			}
 			
 			break;
+			
+		case R.id.project_site_set_scale_of_map_button:
+			
+			if (scaler == null) {
+				scaler = new ScaleLineDrawable(context, map);
+				multiTouchView.invalidate();
+			} else {
+				this.scalerDistance = scaler.getSliderDistance();
+				scaler.removeScaleSliders();
+				map.removeSubDrawable(scaler);
+				scaler = null;
+				multiTouchView.invalidate();
+				
+				this.showDialog(DIALOG_SET_SCALE_OF_MAP);
+			}
+			
+			break;
 		}
 	}
 
+	protected void setScaleOfMap(float scale) {
+		MultiTouchDrawable.setGridSpacing(scalerDistance / scale, scalerDistance / scale);
+		multiTouchView.invalidate();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -485,6 +515,38 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			return bckgDialog;
 
+		case DIALOG_SET_SCALE_OF_MAP:
+			AlertDialog.Builder scaleOfMapDialog = new AlertDialog.Builder(this);
+
+			scaleOfMapDialog.setTitle(R.string.project_site_dialog_scale_of_map_title);
+			scaleOfMapDialog.setMessage(R.string.project_site_dialog_scale_of_map_message);
+
+			// Set an EditText view to get user input
+			final EditText scaleInput = new EditText(this);
+			scaleInput.setSingleLine(true);
+			scaleOfMapDialog.setView(scaleInput);
+
+			scaleOfMapDialog.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					
+					try {
+						float value = Float.parseFloat(scaleInput.getText().toString());
+						setScaleOfMap(value);
+					}
+					catch (NumberFormatException nfe) {
+						
+					}
+				}
+			});
+
+			scaleOfMapDialog.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+				}
+			});
+
+			return scaleOfMapDialog.create();
+			
 		default:
 			return super.onCreateDialog(id);
 		}
