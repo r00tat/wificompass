@@ -137,6 +137,8 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 			Dao<WifiScanResult, Integer> srDao = databaseHelper.getDao(WifiScanResult.class);
 			srDao.delete(scanResult);
 			
+			OpenHelperManager.releaseHelper();
+			
 		} catch (SQLException e) {
 			Logger.w("could not delete myself from the database");
 		}
