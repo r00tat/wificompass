@@ -199,7 +199,7 @@ public class DBActivity extends Activity implements OnClickListener {
 				try {
 					String path = data.getExtras().getString(FileBrowser.EXTRA_PATH);
 					
-					if(!path.matches("\\.wcdb$")){
+					if(!path.endsWith(".wcdb")){
 						Toast.makeText(this, getString(R.string.export_db_wrong_file,path), Toast.LENGTH_LONG).show();
 					}
 					else
