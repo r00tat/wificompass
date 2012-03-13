@@ -44,7 +44,7 @@ public class ManualLocationProvider implements LocationProvider {
 
 	@Override
 	public String getProviderName() {
-		return this.getClass().getName();
+		return this.getClass().getSimpleName();
 	}
 
 	@Override
