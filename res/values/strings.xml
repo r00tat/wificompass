@@ -147,6 +147,13 @@
     <string name="project_site_calculate_ap_positions">Calculate AP positions</string>
     <string name="project_site_delete_drawable_title">Delete element</string>
     <string name="project_site_delete_drawable_message">Do you really want to delete %1$s?</string>
+    <string name="export_db_import_failed">Database import failed:\n%1$s</string>
+    <string name="export_db_importing">importing %1$s</string>
+    <string name="export_db_importing_done"> done.</string>
+    <string name="export_db_starting_import">startinging import&#8230;\n</string>
+    <string name="export_db_progress_title">importing projects &#8230;</string>
+    <string name="export_db_progress_message">processing data, please wait!</string>
+    <string name="export_db_import_interrupted">import interrupted!</string>
     <string name="project_site_set_scale_of_map">Set scale of map</string>
     <string name="project_site_dialog_scale_of_map_title">Scale of map</string>
     <string name="project_site_dialog_scale_of_map_message">How many meters have you just marked on the map?</string>

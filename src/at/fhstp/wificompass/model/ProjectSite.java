@@ -24,78 +24,104 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = ProjectSite.TABLE_NAME)
 public class ProjectSite implements XMLSerializable {
-	
-	public static final String TABLE_NAME="sites";
+
+	public static final String TABLE_NAME = "sites";
 
 	@DatabaseField(generatedId = true)
 	protected int id;
 
 	@DatabaseField
 	protected String title;
-	
+
 	@DatabaseField
 	protected String description;
-	
+
 	@DatabaseField(dataType = DataType.BYTE_ARRAY)
 	protected byte[] background;
-	
+
 	protected Bitmap backgroundBitmap;
-	
+
 	@DatabaseField
 	protected int width;
-	
+
 	@DatabaseField
 	protected int height;
-	
+
 	@DatabaseField(dataType = DataType.BYTE_ARRAY)
 	protected byte[] image;
-	
+
 	protected Bitmap imageBitmap;
-	
-	protected static final int quality=100;
-	
-	@DatabaseField(foreign = true,foreignAutoRefresh = true)
+
+	protected static final int quality = 100;
+
+	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	protected Project project;
 
 	@ForeignCollectionField
 	protected ForeignCollection<AccessPoint> accessPoints;
-	
+
 	@ForeignCollectionField
 	protected ForeignCollection<WifiScanResult> scanResults;
-	
-	@DatabaseField(foreign = true,foreignAutoRefresh = true)
+
+	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	protected Location lastLocation;
-	
-	
+
 	protected static final String XMLTAG = "location", XMLTITLE = "title";
-	
-	public static final String UNTITLED="untitled";
-	
-	public static String FIELD_PROJECT_FK=Project.TABLE_NAME+"_"+Project.FIELD_ID;
+
+	public static final String UNTITLED = "untitled";
+
+	public static String FIELD_PROJECT_FK = Project.TABLE_NAME + "_" + Project.FIELD_ID;
 
 	public ProjectSite() {
-		this(null,null);
+		this(null, null);
 	}
 
 	public ProjectSite(String title) {
-		this(null,title);
+		this(null, title);
 	}
-	
-	public ProjectSite(Project project){
-		this(project,null);
+
+	public ProjectSite(Project project) {
+		this(project, null);
 	}
-	
-	public ProjectSite(Project project,String title){
-		this.title= title;
-		this.project=project;
-		if(this.title==null){
-			this.title=UNTITLED;
+
+	public ProjectSite(Project project, String title) {
+		this.title = title;
+		this.project = project;
+		if (this.title == null) {
+			this.title = UNTITLED;
 		}
-		width=0;
-		height=0;
+		width = 0;
+		height = 0;
 	}
-	
-	
+
+	/**
+	 * copy constructor
+	 * 
+	 * @param copy
+	 */
+	public ProjectSite(ProjectSite copy) {
+		title = copy.title;
+		description = copy.description;
+		if (copy.image != null)
+			image = copy.image.clone();
+		else
+			image = null;
+		
+		if(copy.background!=null){
+			background=copy.background.clone();
+		}else
+			background=null;
+		
+		project = copy.project;
+		if (copy.lastLocation != null)
+			lastLocation = new Location(copy.lastLocation);
+		else
+			lastLocation = null;
+		width=copy.width;
+		height=copy.height;
+				
+	}
+
 	@Override
 	public void serialize(XmlSerializer serializer) throws RuntimeException, IOException {
 		serializer.startTag(XMLSettings.XMLNS, XMLTAG);
@@ -126,17 +152,17 @@ public class ProjectSite implements XMLSerializable {
 	}
 
 	public Bitmap getBackgroundBitmap() {
-		if(backgroundBitmap==null&&background!=null){
-			backgroundBitmap=BitmapFactory.decodeByteArray(background, 0, background.length);
+		if (backgroundBitmap == null && background != null) {
+			backgroundBitmap = BitmapFactory.decodeByteArray(background, 0, background.length);
 		}
 		return backgroundBitmap;
 	}
 
 	public boolean setBackgroundBitmap(Bitmap backgroundBitmap) {
-		
-		ByteArrayOutputStream baos=new ByteArrayOutputStream();
-		if(backgroundBitmap.compress(Bitmap.CompressFormat.PNG, quality, baos)){
-			background=baos.toByteArray();
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		if (backgroundBitmap.compress(Bitmap.CompressFormat.PNG, quality, baos)) {
+			background = baos.toByteArray();
 			this.backgroundBitmap = backgroundBitmap;
 			return true;
 		}
@@ -144,16 +170,16 @@ public class ProjectSite implements XMLSerializable {
 	}
 
 	public Bitmap getImageBitmap() {
-		if(imageBitmap==null&&image!=null){
-			imageBitmap=BitmapFactory.decodeByteArray(image, 0, image.length);
+		if (imageBitmap == null && image != null) {
+			imageBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
 		}
 		return imageBitmap;
 	}
 
 	public boolean setImageBitmap(Bitmap imageBitmap) {
-		ByteArrayOutputStream baos=new ByteArrayOutputStream();
-		if(imageBitmap.compress(Bitmap.CompressFormat.PNG, quality, baos)){
-			image=baos.toByteArray();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		if (imageBitmap.compress(Bitmap.CompressFormat.PNG, quality, baos)) {
+			image = baos.toByteArray();
 			this.imageBitmap = imageBitmap;
 			return true;
 		}
@@ -199,15 +225,16 @@ public class ProjectSite implements XMLSerializable {
 	public int getHeight() {
 		return height;
 	}
-	
+
 	/**
 	 * set the size of the project site
+	 * 
 	 * @param width
 	 * @param height
 	 */
-	public void setSize(int width,int height){
-		this.width=width;
-		this.height=height;
+	public void setSize(int width, int height) {
+		this.width = width;
+		this.height = height;
 	}
 
 	/**
@@ -218,10 +245,21 @@ public class ProjectSite implements XMLSerializable {
 	}
 
 	/**
-	 * @param lastLocation the lastLocation to set
+	 * @param lastLocation
+	 *            the lastLocation to set
 	 */
 	public void setLastLocation(Location lastLocation) {
 		this.lastLocation = lastLocation;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ProjectSite(" + id + ") " + title + " " + width + "x" + height;
 	}
 
 }

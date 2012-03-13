@@ -72,7 +72,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 		running = false;
 		((Button) findViewById(R.id.new_project_button)).setOnClickListener(this);
 //		((Button) findViewById(R.id.load_project_button)).setOnClickListener(this);
-		((Button) findViewById(R.id.sample_scan_button)).setOnClickListener(this);
+//		((Button) findViewById(R.id.sample_scan_button)).setOnClickListener(this);
 //		Button about_button = ((Button) findViewById(R.id.aboutButton));
 //		if (about_button != null) {
 //			about_button.setOnClickListener(this);
@@ -106,11 +106,11 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 //			startActivityForResult(lpi, REQ_PROJECT_LIST);
 //			
 //			break;
-		case R.id.sample_scan_button:
-			log.debug( "starting sample scan activity");
-			Intent i = new Intent(this, SampleScanActivity.class);
-			startActivity(i);
-			break;
+//		case R.id.sample_scan_button:
+//			log.debug( "starting sample scan activity");
+//			Intent i = new Intent(this, SampleScanActivity.class);
+//			startActivity(i);
+//			break;
 //		case R.id.aboutButton:
 //			log.debug( "show About");
 //			Intent aboutIntent = new Intent(this, AboutActivity.class);

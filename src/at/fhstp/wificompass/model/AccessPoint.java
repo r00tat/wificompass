@@ -39,6 +39,18 @@ public class AccessPoint {
 		this.frequency = bssidResult.getFrequency();
 	}
 	
+	public AccessPoint(AccessPoint copy){
+		this.bssid=copy.bssid;
+		ssid=copy.ssid;
+		capabilities=copy.ssid;
+		frequency=copy.frequency;
+		if(copy.location!=null)
+			location=new Location(copy.location);
+		else
+			location=null;
+		projectSite=copy.projectSite;
+	}
+	
 	public String getSsid() {
 		return this.ssid;
 	}
@@ -73,5 +85,13 @@ public class AccessPoint {
 	 */
 	public void setProjectSite(ProjectSite projectSite) {
 		this.projectSite = projectSite;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "AccessPoint("+id+") "+ssid+" "+bssid+" "+frequency+" "+capabilities+(location!=null?" "+location.toString():"");
 	}
 }

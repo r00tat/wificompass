@@ -70,6 +70,20 @@ public class Location {
 			this.timestamp=timestamp;
 		}
 	}
+	
+	/**
+	 * copy constructor
+	 * @param copy
+	 */
+	public Location(Location copy){
+		x=copy.x;
+		y=copy.y;
+//		z=copy.z;
+		accurancy=copy.accurancy;
+		provider=copy.provider;
+		timestamp=copy.timestamp;
+		timestampmilis=copy.timestampmilis;
+	}
 
 	public float getX() {
 		return x;
@@ -122,9 +136,13 @@ public class Location {
 	public long getTimestampmilis() {
 		return timestampmilis;
 	}
-	
-	
-	
-	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Location("+id+") "+x+","+y+" accurate "+accurancy+ " "+ timestamp.toLocaleString() ;
+	}
 
 }

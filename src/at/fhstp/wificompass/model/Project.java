@@ -57,6 +57,16 @@ public class Project implements XMLSerializable {
 //		this.path = path;
 //		this.locations = new ForeignCollection<ProjectLocation>();
 	}
+	
+	/**
+	 * copy constructor
+	 * @param copy
+	 */
+	public Project(Project copy){
+		name=copy.name;
+		description=copy.description;
+		
+	}
 
 	public String getName() {
 		return name;
@@ -119,6 +129,14 @@ public class Project implements XMLSerializable {
 	 */
 	public static String getFieldId() {
 		return FIELD_ID;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Project("+id+"): "+name;
 	}
 
 }

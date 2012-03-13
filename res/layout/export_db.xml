@@ -36,13 +36,23 @@
         android:layout_marginBottom="10dp"
         android:text="@string/export_db_drop_button_text" />
 
-    <TextView
-        android:id="@+id/export_db_message"
-        style="@style/textview"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="@string/export_db_message_text"
-        android:textColor="@color/globalForeground" />
+        android:layout_marginBottom="10dp" >
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/export_db_message"
+                style="@style/textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/export_db_message_text"
+                android:textColor="@color/globalForeground" />
+        </HorizontalScrollView>
+    </ScrollView>
 
 </LinearLayout>

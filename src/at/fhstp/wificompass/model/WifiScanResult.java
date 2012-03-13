@@ -39,6 +39,19 @@ public class WifiScanResult {
 		this.location=location;
 		this.projectLocation=projectLocation;
 	}
+	
+	/**
+	 * copy constructor
+	 * @param copy
+	 */
+	public WifiScanResult(WifiScanResult copy){
+		timestamp=copy.timestamp;
+		if(copy.location!=null)
+			location=new Location(copy.location);
+		else
+			location=null;
+		projectLocation=copy.projectLocation;
+	}
 
 
 	/**
@@ -102,6 +115,14 @@ public class WifiScanResult {
 	 */
 	public ForeignCollection<BssidResult> getBssids() {
 		return bssids;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName()+"("+id+") "+timestamp+(location!=null?" "+location.toString():"");
 	}
 
 }

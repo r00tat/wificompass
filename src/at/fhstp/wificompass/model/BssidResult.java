@@ -51,6 +51,19 @@ public class BssidResult {
 		level = sr.level;
 		this.scanResult = result;
 	}
+	
+	/**
+	 * copy constructor
+	 * @param copy
+	 */
+	public BssidResult(BssidResult copy){
+		bssid=copy.bssid;
+		ssid=copy.ssid;
+		capabilities=copy.capabilities;
+		frequency=copy.frequency;
+		level=copy.level;
+		scanResult=copy.scanResult;
+	}
 
 	/**
 	 * @return the bssid
