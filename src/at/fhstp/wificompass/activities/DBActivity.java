@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
@@ -197,7 +198,11 @@ public class DBActivity extends Activity implements OnClickListener {
 				tv.setText(R.string.export_db_starting_import);
 				try {
 					String path = data.getExtras().getString(FileBrowser.EXTRA_PATH);
-
+					
+					if(!path.matches("\\.wcdb$")){
+						Toast.makeText(this, getString(R.string.export_db_wrong_file,path), Toast.LENGTH_LONG).show();
+					}
+					else
 					importDataFromFile(path);
 
 				} catch (Exception e) {
@@ -243,6 +248,7 @@ public class DBActivity extends Activity implements OnClickListener {
 			@Override
 			public void run() {
 				try {
+					// FIXME: Android deletes files if this is not a correct database, VERY BAD!!!
 					SQLiteDatabase importDB = SQLiteDatabase.openDatabase(importPath, null, SQLiteDatabase.OPEN_READONLY|SQLiteDatabase.CONFLICT_FAIL);
 					AndroidConnectionSource importSource = new AndroidConnectionSource(importDB);
 

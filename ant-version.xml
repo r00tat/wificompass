@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generate a java class with the current svn revision number -->
+<project name="WiFiCompass" default="generate-version">
+
+	<property name="project.base.dir" value="." />
+	<!--<property environment="env" />-->
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath>
+			<pathelement location="lib/ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+
+	<target name="get-version">
+		<exec executable="svn" output="svninfo.xml">
+			<arg line="info --xml ${project.base.dir}" />
+		</exec>
+		<xmlproperty file="svninfo.xml" prefix="svn" collapseattributes="true" />
+		<delete file="svninfo.xml" />
+
+		<echo>Current Revision: ${svn.info.entry.revision}
+Last Commit Date: ${svn.info.entry.commit.date}
+Repository Url: ${svn.info.entry.url}
+</echo>
+		<!--<echoproperties/>-->
+		
+	</target>
+
+	<target name="generate-version" depends="get-version">
+		<echo>Generate build info class...</echo>
+		
+		<!-- the source code of the java class -->
+		<echo file="${basedir}/gen/at/fhstp/wificompass/BuildInfo.java">
+package at.fhstp.wificompass;
+public class BuildInfo {
+			public static final String revision="${svn.info.entry.revision}";
+			public static final String commitDate="${svn.info.entry.commit.date}";
+			public static final String repositoryURL="${svn.info.entry.url}";
+			public static final int revisionNumber=${svn.info.entry.revision};
+}
+		</echo>
+	</target>
+</project>

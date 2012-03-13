@@ -157,5 +157,10 @@
     <string name="project_site_set_scale_of_map">Set scale of map</string>
     <string name="project_site_dialog_scale_of_map_title">Scale of map</string>
     <string name="project_site_dialog_scale_of_map_message">How many meters have you just marked on the map?</string>
+    <string name="export_db_wrong_file">%1$s is not a correct WiFi Compass DB!\nThe file must end with .wcdb!</string>
+    <string name="unknown">unknown</string>
+    <string name="about_app_revision">Revision</string>
+    <string name="about_app_commit_date">Last commit</string>
+    <string name="about_app_repository_url">Repository URL</string>
 
 </resources>
