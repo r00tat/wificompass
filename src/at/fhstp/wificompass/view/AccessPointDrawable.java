@@ -55,7 +55,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 
 	protected String getPopupText() {
 		if (accessPoint != null)
-			return accessPoint.getSsid() + " [" + accessPoint.getBssid() + "]\nPosition: " + this.getRelativeX() + " / " + this.getRelativeY();
+			return accessPoint.getSsid() + " [" + accessPoint.getBssid() + "]\nPosition: " + this.getRelativeX()/gridSpacingX + " / " + this.getRelativeY()/gridSpacingY;
 		else
 			return "";
 	}
