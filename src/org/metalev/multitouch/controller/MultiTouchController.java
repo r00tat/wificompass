@@ -369,9 +369,10 @@ public class MultiTouchController<T> {
 		switch (mMode) {
 		case MODE_NOTHING:
 			// Not doing anything currently
+			selectedObject = objectCanvas.getDraggableObjectAtPoint(mCurrPt);
+			
 			if (mCurrPt.isDown()) {
 				// Start a new single-point drag
-				selectedObject = objectCanvas.getDraggableObjectAtPoint(mCurrPt);
 				if (selectedObject != null) {
 					// Started a new single-point drag
 					mMode = MODE_DRAG;
@@ -381,6 +382,8 @@ public class MultiTouchController<T> {
 					mSettleStartTime = mSettleEndTime = mCurrPt.getEventTime();
 				}
 			}
+			
+			
 			break;
 
 		case MODE_DRAG:

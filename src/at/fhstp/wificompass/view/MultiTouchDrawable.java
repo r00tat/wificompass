@@ -18,6 +18,7 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import at.fhstp.wificompass.Logger;
 
 /**
@@ -202,8 +203,13 @@ public abstract class MultiTouchDrawable {
 				handleEvent = sub.onTouch(pointinfo);
 			}
 		}
+		
+		Logger.d("touch action: "+this.getClass().getSimpleName()+" " + pointinfo.getAction()+ " 0x"+Integer.toHexString(pointinfo.getAction()));
 
-		if (!handleEvent && pointinfo.isMultiTouch() == false && pointinfo.getNumTouchPoints() == 1 && pointinfo.getAction() == 0) {
+		// it's hard to find MOTION_UP events, because if the finger does not stay exactly on the correct position, 
+		// this will change to dragging and we wont't get the drag end as MOTION_UP
+		
+		if (!handleEvent && pointinfo.isMultiTouch() == false && pointinfo.getNumTouchPoints() == 1 && pointinfo.getAction() == MotionEvent.ACTION_DOWN) {
 			handleEvent=this.onSingleTouch(pointinfo);
 		}
 
