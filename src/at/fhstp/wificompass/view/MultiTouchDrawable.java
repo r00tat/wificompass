@@ -204,7 +204,7 @@ public abstract class MultiTouchDrawable {
 			}
 		}
 		
-		Logger.d("touch action: "+this.getClass().getSimpleName()+" " + pointinfo.getAction()+ " 0x"+Integer.toHexString(pointinfo.getAction()));
+//		Logger.d("touch action: "+this.getClass().getSimpleName()+" " + pointinfo.getAction()+ " 0x"+Integer.toHexString(pointinfo.getAction()));
 
 		// it's hard to find MOTION_UP events, because if the finger does not stay exactly on the correct position, 
 		// this will change to dragging and we wont't get the drag end as MOTION_UP

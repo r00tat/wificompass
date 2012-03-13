@@ -75,6 +75,9 @@ public class DeleteDrawable extends MultiTouchDrawable implements Popup{
 	 */
 	@Override
 	public boolean onSingleTouch(PointInfo pointinfo) {
+		
+		if(!isActive) return false;
+		
 		AlertDialog.Builder alertBuilder=new AlertDialog.Builder(ctx);
 		alertBuilder.setTitle(R.string.project_site_delete_drawable_title);
 		alertBuilder.setMessage(ctx.getString(R.string.project_site_delete_drawable_message,elementName));
