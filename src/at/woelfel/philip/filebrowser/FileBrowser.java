@@ -29,7 +29,9 @@ public class FileBrowser extends Activity implements OnItemClickListener, OnClic
 	public static final int MODE_LOAD = 1;
 	private static final int DIALOG_FILENAME = 0;
 	
-	public static final String EXTRA_MODE = "FileBrowserMode",EXTRA_PATH="path";
+	public static final int HIDE_NONE=0,HIDE_DIRS=1,HIDE_FILES=2,HIDE_ALL_SYSTEM=3;
+	
+	public static final String EXTRA_MODE = "FileBrowserMode",EXTRA_PATH="path",EXTRA_HIDE_SYSTEM_FILES="hide_system_files";
 	protected static final int DIALOG_DIRECTORY = 1;
 	
 	protected static final String TAG="FileBrowser";
@@ -46,7 +48,9 @@ public class FileBrowser extends Activity implements OnItemClickListener, OnClic
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.filebrowser);
-		adap = new FileAdapter(this, Environment.getExternalStorageDirectory());
+		
+		Bundle xtra = getIntent().getExtras();
+		adap = new FileAdapter(this, Environment.getExternalStorageDirectory(),xtra.containsKey(EXTRA_HIDE_SYSTEM_FILES)?xtra.getInt(EXTRA_HIDE_SYSTEM_FILES):HIDE_ALL_SYSTEM);
 
 		header = (TextView) findViewById(R.id.dirPath);
 		header.setText(getString(R.string.filebrowser_dir) + ": " + Environment.getExternalStorageDirectory().getAbsolutePath());
@@ -58,7 +62,7 @@ public class FileBrowser extends Activity implements OnItemClickListener, OnClic
 		but = (Button) findViewById(R.id.saveButton);
 		but.setOnClickListener(this);
 		
-		Bundle xtra = getIntent().getExtras();
+		
 		if (xtra.containsKey(EXTRA_MODE)) {
 			mode = xtra.getInt(EXTRA_MODE);
 			switch (mode) {
