@@ -14,9 +14,9 @@ import java.sql.SQLException;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -38,10 +38,8 @@ import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.woelfel.philip.filebrowser.FileBrowser;
 
-import com.j256.ormlite.android.AndroidConnectionSource;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 
 public class DBActivity extends Activity implements OnClickListener {
 
@@ -221,6 +219,7 @@ public class DBActivity extends Activity implements OnClickListener {
 	protected void importDataFromFile(String path) throws SQLException {
 
 		final String importPath = path;
+		final Context context = this;
 		
 		final ProgressDialog progress=new ProgressDialog(this);
 		progress.setTitle(R.string.export_db_progress_title);
@@ -249,12 +248,17 @@ public class DBActivity extends Activity implements OnClickListener {
 			public void run() {
 				try {
 					// FIXME: Android deletes files if this is not a correct database, VERY BAD!!!
-					SQLiteDatabase importDB = SQLiteDatabase.openDatabase(importPath, null, SQLiteDatabase.OPEN_READONLY|SQLiteDatabase.CONFLICT_FAIL);
-					AndroidConnectionSource importSource = new AndroidConnectionSource(importDB);
+
+//					SQLiteDatabase importDB = SQLiteDatabase.openDatabase(importPath, null, SQLiteDatabase.OPEN_READONLY|SQLiteDatabase.CONFLICT_FAIL);
+//					AndroidConnectionSource importSource = new AndroidConnectionSource(importDB);
 
 					// TODO: hmm, we should check, which databaseVersion is the import database, or we might have an issue
+					
+					// a try: use databaseHelper
+					DatabaseHelper importSource=new DatabaseHelper(context,importPath);
 
-					Dao<Project, Integer> importProjectDao = DaoManager.createDao(importSource, Project.class);
+//					Dao<Project, Integer> importProjectDao = DaoManager.createDao(importSource, Project.class);
+					Dao<Project, Integer> importProjectDao = importSource.getDao(Project.class);
 					Dao<Project, Integer> targetProjectDao = databaseHelper.getDao(Project.class);
 					Dao<Location, Integer> targetLocationDao = databaseHelper.getDao(Location.class);
 					Dao<ProjectSite, Integer> targetSiteDao = databaseHelper.getDao(ProjectSite.class);

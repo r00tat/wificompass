@@ -28,6 +28,9 @@ public class AccessPoint {
 	@DatabaseField(foreign = true,foreignAutoRefresh = true)
 	protected ProjectSite projectSite;
 	
+	@DatabaseField
+	protected boolean calculated = true;
+	
 	public AccessPoint() {
 		
 	}
@@ -44,6 +47,7 @@ public class AccessPoint {
 		ssid=copy.ssid;
 		capabilities=copy.ssid;
 		frequency=copy.frequency;
+		calculated=copy.calculated;
 		if(copy.location!=null)
 			location=new Location(copy.location);
 		else
@@ -93,5 +97,19 @@ public class AccessPoint {
 	@Override
 	public String toString() {
 		return "AccessPoint("+id+") "+ssid+" "+bssid+" "+frequency+" "+capabilities+(location!=null?" "+location.toString():"");
+	}
+
+	/**
+	 * @return the calculated
+	 */
+	public boolean isCalculated() {
+		return calculated;
+	}
+
+	/**
+	 * @param calculated the calculated to set
+	 */
+	public void setCalculated(boolean calculated) {
+		this.calculated = calculated;
 	}
 }

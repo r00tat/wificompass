@@ -22,10 +22,10 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 		init();
 	}
 
-	public AccessPointDrawable(Context ctx, MultiTouchDrawable superDrawable) {
-		super(ctx, superDrawable);
-		init();
-	}
+//	public AccessPointDrawable(Context ctx, MultiTouchDrawable superDrawable) {
+//		super(ctx, superDrawable);
+//		init();
+//	}
 
 	public AccessPointDrawable(Context ctx, MultiTouchDrawable superDrawable, AccessPoint accessPoint) {
 		super(ctx, superDrawable);
