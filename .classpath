@@ -15,5 +15,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/GraphView-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/Jama-1.0.2.jar" sourcepath="lib/Jama-1.0.2-source.zip"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

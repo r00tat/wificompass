@@ -47,7 +47,7 @@ import at.fhstp.wificompass.model.Location;
 import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
-import at.fhstp.wificompass.triangulation.WeightedCentroidTriangulation;
+import at.fhstp.wificompass.triangulation.LocalSignalStrengthGradientTriangulation;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
 import at.fhstp.wificompass.view.AccessPointDrawable;
 import at.fhstp.wificompass.view.MeasuringPointDrawable;
@@ -247,7 +247,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			break;
 
 		case R.id.project_site_calculate_ap_positions_button:
-			WeightedCentroidTriangulation tri = new WeightedCentroidTriangulation(context, site);
+			LocalSignalStrengthGradientTriangulation tri = new LocalSignalStrengthGradientTriangulation(context, site);
 			Vector<AccessPointDrawable> aps = tri.calculateAllAndGetDrawables();
 
 			// delete all old messurements

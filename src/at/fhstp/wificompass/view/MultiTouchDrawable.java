@@ -77,9 +77,11 @@ public abstract class MultiTouchDrawable {
 	 */
 	protected Context ctx;
 
-	protected static final int UI_MODE_ROTATE = 1, UI_MODE_ANISOTROPIC_SCALE = 2;
+	protected static final int UI_MODE_ROTATE = 1,
+			UI_MODE_ANISOTROPIC_SCALE = 2;
 
-	protected static final int FLAG_FORCEXY = 1, FLAG_FORCESCALE = 2, FLAG_FORCEROTATE = 4, FLAG_FORCEALL = 7;
+	protected static final int FLAG_FORCEXY = 1, FLAG_FORCESCALE = 2,
+			FLAG_FORCEROTATE = 4, FLAG_FORCEALL = 7;
 
 	protected int mUIMode = UI_MODE_ROTATE;
 
@@ -96,7 +98,7 @@ public abstract class MultiTouchDrawable {
 	protected Resources resources;
 
 	protected ArrayList<MultiTouchDrawable> subDrawables;
-	
+
 	protected RefreshableView refresher;
 
 	/**
@@ -104,13 +106,13 @@ public abstract class MultiTouchDrawable {
 	 * 
 	 * @param context
 	 */
-	public MultiTouchDrawable(Context context,RefreshableView containingView) {
+	public MultiTouchDrawable(Context context, RefreshableView containingView) {
 		id = counter++;
 		this.ctx = context;
 		this.firstLoad = true;
 		this.resources = context.getResources();
 		subDrawables = new ArrayList<MultiTouchDrawable>();
-		this.refresher=containingView;
+		this.refresher = containingView;
 		load();
 	}
 
@@ -130,8 +132,8 @@ public abstract class MultiTouchDrawable {
 		this.firstLoad = true;
 		this.resources = context.getResources();
 		subDrawables = new ArrayList<MultiTouchDrawable>();
-		
-		this.refresher=superDrawable.refresher;
+
+		this.refresher = superDrawable.refresher;
 
 		superDrawable.addSubDrawable(this);
 	}
@@ -141,7 +143,9 @@ public abstract class MultiTouchDrawable {
 	 * returns a Drawable object, to be painted on the MultiTochView.
 	 * </p>
 	 * <p>
-	 * This function is called by the MultiTouchView onDraw method. This should return a BitmapDrawable or any other Drawable which should represent the content
+	 * This function is called by the MultiTouchView onDraw method. This should
+	 * return a BitmapDrawable or any other Drawable which should represent the
+	 * content
 	 * </p>
 	 * 
 	 * @return Drawable to be painted
@@ -186,7 +190,9 @@ public abstract class MultiTouchDrawable {
 	 *         <b>false</b> if this touch event is not for this element
 	 *         </p>
 	 *         <p>
-	 *         This is intended, that a subobject can check, if it should handle a click or so, or if the event should be sent to the underlying object.
+	 *         This is intended, that a subobject can check, if it should handle
+	 *         a click or so, or if the event should be sent to the underlying
+	 *         object.
 	 *         </p>
 	 * 
 	 */
@@ -203,14 +209,20 @@ public abstract class MultiTouchDrawable {
 				handleEvent = sub.onTouch(pointinfo);
 			}
 		}
-		
-//		Logger.d("touch action: "+this.getClass().getSimpleName()+" " + pointinfo.getAction()+ " 0x"+Integer.toHexString(pointinfo.getAction()));
 
-		// it's hard to find MOTION_UP events, because if the finger does not stay exactly on the correct position, 
-		// this will change to dragging and we wont't get the drag end as MOTION_UP
-		
-		if (!handleEvent && pointinfo.isMultiTouch() == false && pointinfo.getNumTouchPoints() == 1 && pointinfo.getAction() == MotionEvent.ACTION_DOWN) {
-			handleEvent=this.onSingleTouch(pointinfo);
+		// Logger.d("touch action: "+this.getClass().getSimpleName()+" " +
+		// pointinfo.getAction()+
+		// " 0x"+Integer.toHexString(pointinfo.getAction()));
+
+		// it's hard to find MOTION_UP events, because if the finger does not
+		// stay exactly on the correct position,
+		// this will change to dragging and we wont't get the drag end as
+		// MOTION_UP
+
+		if (!handleEvent && pointinfo.isMultiTouch() == false
+				&& pointinfo.getNumTouchPoints() == 1
+				&& pointinfo.getAction() == MotionEvent.ACTION_DOWN) {
+			handleEvent = this.onSingleTouch(pointinfo);
 		}
 
 		return handleEvent;
@@ -274,7 +286,8 @@ public abstract class MultiTouchDrawable {
 	}
 
 	/**
-	 * Get the x position of the drawable relative to it's super-drawable (if set)
+	 * Get the x position of the drawable relative to it's super-drawable (if
+	 * set)
 	 * 
 	 * @return The x position relative to it's super drawable
 	 */
@@ -283,7 +296,8 @@ public abstract class MultiTouchDrawable {
 	}
 
 	/**
-	 * Get the y position of the drawable relative to it's super-drawable (if set)
+	 * Get the y position of the drawable relative to it's super-drawable (if
+	 * set)
 	 * 
 	 * @return The y position relative to it's super drawable
 	 */
@@ -292,7 +306,8 @@ public abstract class MultiTouchDrawable {
 	}
 
 	/**
-	 * Returns whether a custom pivot point is used for this drawable. If not, the image center will be used.
+	 * Returns whether a custom pivot point is used for this drawable. If not,
+	 * the image center will be used.
 	 * 
 	 * @return Whether a custom pivot is used or not
 	 */
@@ -301,8 +316,10 @@ public abstract class MultiTouchDrawable {
 	}
 
 	/**
-	 * Sets the pivot point (value between 0 and 1) or, in other words, the semantic center of the image. This is the point relative to which sub-drawables will be positioned when the super-drawable
-	 * is scaled and rotated.
+	 * Sets the pivot point (value between 0 and 1) or, in other words, the
+	 * semantic center of the image. This is the point relative to which
+	 * sub-drawables will be positioned when the super-drawable is scaled and
+	 * rotated.
 	 * 
 	 * @param pivotX
 	 *            The relative x value (between 0 and 1) of the pivot point
@@ -336,32 +353,40 @@ public abstract class MultiTouchDrawable {
 	}
 
 	/**
-	 * Returns the the x coordinate of the pivot point relative to the image's center. This is useful when the image is by default positioned relative to it's center and has to be moved from there.
+	 * Returns the the x coordinate of the pivot point relative to the image's
+	 * center. This is useful when the image is by default positioned relative
+	 * to it's center and has to be moved from there.
 	 * 
-	 * @return The x coordinate of the pivot point relative to the image's center
+	 * @return The x coordinate of the pivot point relative to the image's
+	 *         center
 	 */
 	public float getPivotXRelativeToCenter() {
 		return this.getWidth() * this.pivotX - this.getWidth() / 2;
 	}
 
 	/**
-	 * Returns the the y coordinate of the pivot point relative to the image's center. This is useful when the image is by default positioned relative to it's center and has to be moved from there.
+	 * Returns the the y coordinate of the pivot point relative to the image's
+	 * center. This is useful when the image is by default positioned relative
+	 * to it's center and has to be moved from there.
 	 * 
-	 * @return The y coordinate of the pivot point relative to the image's center
+	 * @return The y coordinate of the pivot point relative to the image's
+	 *         center
 	 */
 	public float getPivotYRelativeToCenter() {
 		return this.getHeight() * this.pivotY - this.getHeight() / 2;
 	}
 
 	/**
-	 * does this object support scaleing, or should it stay the same size all the time
+	 * does this object support scaleing, or should it stay the same size all
+	 * the time
 	 * 
 	 * @return true if scalable
 	 */
 	public abstract boolean isScalable();
 
 	/**
-	 * does this object support rotateing, or should it have the same angle all the time
+	 * does this object support rotateing, or should it have the same angle all
+	 * the time
 	 * 
 	 * @return true if rotateable
 	 */
@@ -382,7 +407,8 @@ public abstract class MultiTouchDrawable {
 	public abstract boolean isOnlyInSuper();
 
 	/**
-	 * does this object have a Drawable, which it corresponds to and should be modified with its super Drawable, i.e. scaled or moved.
+	 * does this object have a Drawable, which it corresponds to and should be
+	 * modified with its super Drawable, i.e. scaled or moved.
 	 * 
 	 * @return true, if it suppports and has a super Drawable
 	 */
@@ -409,10 +435,12 @@ public abstract class MultiTouchDrawable {
 		this.displayWidth = metrics.widthPixels;
 		this.displayHeight = metrics.heightPixels;
 
-		this.displayWidth = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.max(metrics.widthPixels,
-				metrics.heightPixels) : Math.min(metrics.widthPixels, metrics.heightPixels);
-		this.displayHeight = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.min(metrics.widthPixels,
-				metrics.heightPixels) : Math.max(metrics.widthPixels, metrics.heightPixels);
+		this.displayWidth = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math
+				.max(metrics.widthPixels, metrics.heightPixels) : Math.min(
+				metrics.widthPixels, metrics.heightPixels);
+		this.displayHeight = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math
+				.min(metrics.widthPixels, metrics.heightPixels) : Math.max(
+				metrics.widthPixels, metrics.heightPixels);
 	}
 
 	/** Called by activity's onResume() method to load the images */
@@ -453,17 +481,23 @@ public abstract class MultiTouchDrawable {
 	}
 
 	/**
-	 * Called by activity's onPause() method to free memory used for loading the images
+	 * Called by activity's onPause() method to free memory used for loading the
+	 * images
 	 */
 	public void unload() {
 
 	}
 
 	/** Set the position and scale of an image in screen coordinates */
-	public boolean setPos(PositionAndScale newImgPosAndScale, boolean isDraggedOrPinched) {
-		return setPos(newImgPosAndScale.getXOff(), newImgPosAndScale.getYOff(),
-				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0 ? newImgPosAndScale.getScaleX() : newImgPosAndScale.getScale(),
-				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0 ? newImgPosAndScale.getScaleY() : newImgPosAndScale.getScale(),
+	public boolean setPos(PositionAndScale newImgPosAndScale,
+			boolean isDraggedOrPinched) {
+		return setPos(
+				newImgPosAndScale.getXOff(),
+				newImgPosAndScale.getYOff(),
+				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0 ? newImgPosAndScale
+						.getScaleX() : newImgPosAndScale.getScale(),
+				(mUIMode & UI_MODE_ANISOTROPIC_SCALE) != 0 ? newImgPosAndScale
+						.getScaleY() : newImgPosAndScale.getScale(),
 				newImgPosAndScale.getAngle(), isDraggedOrPinched);
 		// FIXME: anisotropic scaling jumps when axis-snapping
 		// FIXME: affine-ize
@@ -473,18 +507,23 @@ public abstract class MultiTouchDrawable {
 		// newImgPosAndScale.getScaleAnisotropicY(), 0.0f);
 	}
 
-	protected boolean setPos(float centerX, float centerY, float scaleX, float scaleY, float angle, boolean isDraggedOrPinched) {
-		return setPos(centerX, centerY, scaleX, scaleY, angle, 0, isDraggedOrPinched);
+	protected boolean setPos(float centerX, float centerY, float scaleX,
+			float scaleY, float angle, boolean isDraggedOrPinched) {
+		return setPos(centerX, centerY, scaleX, scaleY, angle, 0,
+				isDraggedOrPinched);
 	}
 
 	/** Set the position and scale of an image in screen coordinates */
-	protected boolean setPos(float centerX, float centerY, float scaleX, float scaleY, float angle, int flags, boolean isDraggedOrPinched) {
+	protected boolean setPos(float centerX, float centerY, float scaleX,
+			float scaleY, float angle, int flags, boolean isDraggedOrPinched) {
 
 		float ws = (width / 2) * scaleX, hs = (height / 2) * scaleY;
-		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX + ws, newMaxY = centerY + hs;
+		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX
+				+ ws, newMaxY = centerY + hs;
 
 		// Min and max values need to be set when item is dragged or scaled
-		if ((flags & FLAG_FORCEXY) != 0 || this.isDragable() || (flags & FLAG_FORCESCALE) != 0 || this.isScalable()) {
+		if ((flags & FLAG_FORCEXY) != 0 || this.isDragable()
+				|| (flags & FLAG_FORCESCALE) != 0 || this.isScalable()) {
 			this.minX = newMinX;
 			this.minY = newMinY;
 			this.maxX = newMaxX;
@@ -518,9 +557,11 @@ public abstract class MultiTouchDrawable {
 		while (iterator.hasNext()) {
 			MultiTouchDrawable subobject = iterator.next();
 
-			PointF absolutePosition = this.getAbsolutePositionOfSubobject(subobject);
+			PointF absolutePosition = this
+					.getAbsolutePositionOfSubobject(subobject);
 
-			subobject.setPos(absolutePosition.x, absolutePosition.y, 1, 1, 0, FLAG_FORCEXY, false);
+			subobject.setPos(absolutePosition.x, absolutePosition.y, 1, 1, 0,
+					FLAG_FORCEXY, false);
 		}
 
 		return true;
@@ -531,9 +572,12 @@ public abstract class MultiTouchDrawable {
 		float xBeforeRotate = this.minX + subobject.getRelativeX() * scaleX;
 		float yBeforeRotate = this.minY + subobject.getRelativeY() * scaleY;
 
-		float radius = (float) Math.sqrt(Math.pow(Math.abs(centerX - xBeforeRotate), 2) + Math.pow(Math.abs(centerY - yBeforeRotate), 2));
+		float radius = (float) Math.sqrt(Math.pow(
+				Math.abs(centerX - xBeforeRotate), 2)
+				+ Math.pow(Math.abs(centerY - yBeforeRotate), 2));
 
-		float angleBeforeRotate = (float) Math.atan2(yBeforeRotate - centerY, xBeforeRotate - centerX);
+		float angleBeforeRotate = (float) Math.atan2(yBeforeRotate - centerY,
+				xBeforeRotate - centerX);
 
 		float newAngle = angle + angleBeforeRotate;
 
@@ -551,21 +595,29 @@ public abstract class MultiTouchDrawable {
 
 	protected PointF getRelativePositionToSuperobject() {
 
-		float x = (this.isCustomPivotUsed()) ? centerX + getPivotXRelativeToCenter() : centerX;
-		float y = (this.isCustomPivotUsed()) ? centerY + getPivotYRelativeToCenter() : centerY;
+		float x = (this.isCustomPivotUsed()) ? centerX
+				+ getPivotXRelativeToCenter() : centerX;
+		float y = (this.isCustomPivotUsed()) ? centerY
+				+ getPivotYRelativeToCenter() : centerY;
 
 		float superAngle = superDrawable.angle;
-		float angleToCenter = (float) Math.atan2(y - superDrawable.centerY, x - superDrawable.centerX);
+		float angleToCenter = (float) Math.atan2(y - superDrawable.centerY, x
+				- superDrawable.centerX);
 
 		float angle = superAngle - angleToCenter;
 
-		float radius = (float) Math.sqrt(Math.pow(Math.abs(x - superDrawable.centerX), 2) + Math.pow(Math.abs(y - superDrawable.centerY), 2))
+		float radius = (float) Math.sqrt(Math.pow(
+				Math.abs(x - superDrawable.centerX), 2)
+				+ Math.pow(Math.abs(y - superDrawable.centerY), 2))
 				/ superDrawable.scaleX;
 
-		float newX = (float) (radius * Math.cos(angle) + superDrawable.getWidth() / 2);
-		float newY = (float) (radius * Math.sin(angle * -1) + superDrawable.getHeight() / 2);
+		float newX = (float) (radius * Math.cos(angle) + superDrawable
+				.getWidth() / 2);
+		float newY = (float) (radius * Math.sin(angle * -1) + superDrawable
+				.getHeight() / 2);
 
-		PointF relativePosition = new PointF(newX, newY);// xBeforeRotate, yBeforeRotate);
+		PointF relativePosition = new PointF(newX, newY);// xBeforeRotate,
+															// yBeforeRotate);
 		return relativePosition;
 	}
 
@@ -621,7 +673,8 @@ public abstract class MultiTouchDrawable {
 		// Logger.d("Drawing " + this.toString());
 		canvas.save();
 
-		// hmm, why did we calculate dx and dy, this should be the same as centerX and centerY?
+		// hmm, why did we calculate dx and dy, this should be the same as
+		// centerX and centerY?
 
 		// float dx = (maxX + minX) / 2;
 		// float dy = (maxY + minY) / 2;
@@ -723,14 +776,38 @@ public abstract class MultiTouchDrawable {
 	 */
 	@Override
 	public String toString() {
-		return this.getId() + " " + this.getWidth() + "x" + this.getHeight() + "px (" + centerX + "[" + minX + "-" + maxX + "]," + centerY + "["
-				+ minY + "-" + maxY + "]) scale (" + scaleX + "," + scaleY + ") angle " + angle * 180.0f / Math.PI
-				+ (superDrawable != null ? " super: " + superDrawable.id + " rel: (" + relX + "," + relY + ")" : "");
+		return this.getId()
+				+ " "
+				+ this.getWidth()
+				+ "x"
+				+ this.getHeight()
+				+ "px ("
+				+ centerX
+				+ "["
+				+ minX
+				+ "-"
+				+ maxX
+				+ "],"
+				+ centerY
+				+ "["
+				+ minY
+				+ "-"
+				+ maxY
+				+ "]) scale ("
+				+ scaleX
+				+ ","
+				+ scaleY
+				+ ") angle "
+				+ angle
+				* 180.0f
+				/ Math.PI
+				+ (superDrawable != null ? " super: " + superDrawable.id
+						+ " rel: (" + relX + "," + relY + ")" : "");
 	}
 
 	public void addSubDrawable(MultiTouchDrawable subObject) {
 		subDrawables.add(subObject);
-		subObject.refresher=this.refresher;
+		subObject.refresher = this.refresher;
 		this.setPos(centerX, centerY, scaleX, scaleY, angle, false);
 	}
 
@@ -806,23 +883,52 @@ public abstract class MultiTouchDrawable {
 	public void onDelete() {
 
 	}
-	
+
 	/**
 	 * hide all open popups
 	 */
-	public void hidePopups(){
-		if(this instanceof Popup){
-			((Popup)this).setActive(false);
+	public void hidePopups() {
+		if (this instanceof Popup) {
+			((Popup) this).setActive(false);
 		}
-		
-		for(Iterator<MultiTouchDrawable> it=subDrawables.iterator();it.hasNext();){
+
+		for (Iterator<MultiTouchDrawable> it = subDrawables.iterator(); it
+				.hasNext();) {
 			it.next().hidePopups();
 		}
 	}
 
-	
+	/**
+	 * Sets the grid spacing. If, for example, grid spacing is 10, then 10
+	 * pixels of the map are one meter in reality.
+	 * 
+	 * @param gridSpacingX
+	 *            The grid spacing in <b>x</b> direction
+	 * @param gridSpacingY
+	 *            The grid spacing in <b>y</b> direction
+	 */
 	public static void setGridSpacing(float gridSpacingX, float gridSpacingY) {
 		MultiTouchDrawable.gridSpacingX = gridSpacingX;
 		MultiTouchDrawable.gridSpacingY = gridSpacingY;
+	}
+
+	/**
+	 * Returns the grid spacing in x direction. If, for example, grid spacing is
+	 * 10, then 10 pixels of the map are one meter in reality.
+	 * 
+	 * @return The grid spacing in <b>x</b> direction
+	 */
+	public static float getGridSpacingX() {
+		return gridSpacingX;
+	}
+	
+	/**
+	 * Returns the grid spacing in y direction. If, for example, grid spacing is
+	 * 10, then 10 pixels of the map are one meter in reality.
+	 * 
+	 * @return The grid spacing in <b>y</b> direction
+	 */
+	public static float getGridSpacingY() {
+		return gridSpacingY;
 	}
 }

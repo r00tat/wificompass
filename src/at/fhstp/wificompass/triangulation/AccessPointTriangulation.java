@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import android.content.Context;
 import android.graphics.PointF;
+import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.model.AccessPoint;
 import at.fhstp.wificompass.model.BssidResult;
 import at.fhstp.wificompass.model.Location;
@@ -93,6 +94,8 @@ public abstract class AccessPointTriangulation {
 	public Vector<AccessPointDrawable> calculateAllAndGetDrawables() {
 		Vector<AccessPointDrawable> aps = new Vector<AccessPointDrawable>();
 
+		int count = 0;
+		
 		for (Iterator<Entry<AccessPoint, Vector<MeasurementDataSet>>> itm = measurementData
 				.entrySet().iterator(); itm.hasNext();) {
 			Entry<AccessPoint, Vector<MeasurementDataSet>> pair = (Entry<AccessPoint, Vector<MeasurementDataSet>>) itm
@@ -101,12 +104,15 @@ public abstract class AccessPointTriangulation {
 			PointF position = this.calculateAccessPointPosition(pair.getKey());
 
 			if (position != null) {
-				pair.getKey().setLocation(new Location(position.x,position.y));
+				pair.getKey().setLocation(new Location(position.x, position.y));
 				AccessPointDrawable ap = new AccessPointDrawable(context,
 						pair.getKey());
 				ap.setRelativePosition(position);
 				aps.add(ap);
 			}
+			
+			count ++;
+			Logger.d(count / measurementData.size() * 100 + " % (" + count + " out of " + measurementData.size() + ") done.");
 		}
 
 		return aps;
@@ -121,4 +127,6 @@ public abstract class AccessPointTriangulation {
 	 * @return The point where the access point is believed to be located
 	 */
 	public abstract PointF calculateAccessPointPosition(AccessPoint ap);
+
+	
 }
