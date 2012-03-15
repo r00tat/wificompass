@@ -43,18 +43,6 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 		Canvas canvas = new Canvas(bmp);
 		canvas.drawColor(Color.rgb(250, 250, 250));
 
-		// Paint paint = new Paint();
-		// paint.setStyle(Paint.Style.STROKE);
-		// paint.setColor(Color.rgb(230, 230, 230));
-		//
-		// for (int x = 0; x < displayWidth; x += gridSpacingX) {
-		// canvas.drawLine(x, 0, x, displayHeight, paint);
-		// }
-		//
-		// for (int y = 0; y < displayHeight; y += gridSpacingY) {
-		// canvas.drawLine(0, y, displayWidth, y, paint);
-		// }
-
 		return new BitmapDrawable(ctx.getResources(), bmp);
 	}
 
@@ -82,7 +70,7 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 		paint.setColor(Color.rgb(230, 230, 230));
 
 		int counterX = 0;
-		for (float x = minX; x < maxX; x += gridSpacingX * scaleX) {
+		for (float x = minX; Math.floor(x) <= maxX; x += gridSpacingX * scaleX) {
 			if (counterX % 10 == 0) {
 				paint.setColor(Color.rgb(220, 220, 220));
 				paint.setStrokeWidth(2);
@@ -97,7 +85,7 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 		}
 
 		int counterY = 0;
-		for (float y = minY; y < maxY; y += gridSpacingY * scaleY) {
+		for (float y = minY; Math.floor(y) <= maxY; y += gridSpacingY * scaleY) {
 			if (counterY % 10 == 0) {
 				paint.setColor(Color.rgb(220, 220, 220));
 				paint.setStrokeWidth(2);
