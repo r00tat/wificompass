@@ -59,19 +59,20 @@ public class MeasurementDataSet {
 	 *            The vector of <b>MeasurementDataSet</b> objects
 	 * @return The minimum x value of all
 	 */
-	public static float getMinimumValue(Vector<MeasurementDataSet> data, int value) {
+	public static float getMinimumValue(Vector<MeasurementDataSet> data,
+			int value) {
 		float minValue = 0.0f;
 
 		for (MeasurementDataSet dataSet : data) {
 			float currentValue = 0.0f;
-			
+
 			if (value == MeasurementDataSet.VALUE_X)
 				currentValue = dataSet.getX();
 			else if (value == MeasurementDataSet.VALUE_Y)
 				currentValue = dataSet.getY();
 			else if (value == MeasurementDataSet.VALUE_RSSI)
 				currentValue = dataSet.getRssi();
-		
+
 			if ((data.indexOf(dataSet) == 0) || (currentValue < minValue)) {
 				minValue = currentValue;
 			}
@@ -79,7 +80,7 @@ public class MeasurementDataSet {
 
 		return minValue;
 	}
-	
+
 	/**
 	 * Returns the minimum value of the vector of <b>MeasurementDataSet</b>s.
 	 * The <b>value</b> is one of the static constants <b>VALUE_X</b>,
@@ -90,24 +91,48 @@ public class MeasurementDataSet {
 	 *            The vector of <b>MeasurementDataSet</b> objects
 	 * @return The minimum x value of all
 	 */
-	public static float getMaximumValue(Vector<MeasurementDataSet> data, int value) {
+	public static float getMaximumValue(Vector<MeasurementDataSet> data,
+			int value) {
 		float maxValue = 0.0f;
 
 		for (MeasurementDataSet dataSet : data) {
 			float currentValue = 0.0f;
-			
+
 			if (value == MeasurementDataSet.VALUE_X)
 				currentValue = dataSet.getX();
 			else if (value == MeasurementDataSet.VALUE_Y)
 				currentValue = dataSet.getY();
 			else if (value == MeasurementDataSet.VALUE_RSSI)
 				currentValue = dataSet.getRssi();
-		
+
 			if ((data.indexOf(dataSet) == 0) || (currentValue > maxValue)) {
 				maxValue = currentValue;
 			}
 		}
 
 		return maxValue;
+	}
+
+	/**
+	 * Returns the sum of all values <b>VALUE_X</b>, <b>VALUE_Y</b> or
+	 * <b>VALUE_RSSI</b> in a vector of <b>MeasurementDataSet</b> objects
+	 */
+	public static float getSum(Vector<MeasurementDataSet> data, int value) {
+		float sum = 0.0f;
+		
+		for (MeasurementDataSet dataSet : data) {
+			float currentValue = 0.0f;
+
+			if (value == MeasurementDataSet.VALUE_X)
+				currentValue = dataSet.getX();
+			else if (value == MeasurementDataSet.VALUE_Y)
+				currentValue = dataSet.getY();
+			else if (value == MeasurementDataSet.VALUE_RSSI)
+				currentValue = dataSet.getRssi();
+			
+			sum += currentValue;
+		}
+		
+		return sum;
 	}
 }

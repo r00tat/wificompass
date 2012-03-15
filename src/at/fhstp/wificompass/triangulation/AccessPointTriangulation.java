@@ -112,7 +112,7 @@ public abstract class AccessPointTriangulation {
 			}
 			
 			count ++;
-			Logger.d(count / measurementData.size() * 100 + " % (" + count + " out of " + measurementData.size() + ") done.");
+			Logger.d((float)count / measurementData.size() * 100 + " % (" + count + " out of " + measurementData.size() + ") done.");
 		}
 
 		return aps;

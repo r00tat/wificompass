@@ -18,6 +18,7 @@ public class LocalSignalStrengthGradientTriangulation extends
 	 * considered to have similar attenuation
 	 */
 	protected static float windowSize = 3;
+	protected static float g = 2.0f;
 
 	public LocalSignalStrengthGradientTriangulation(Context context,
 			ProjectSite projectSite) {
@@ -27,11 +28,26 @@ public class LocalSignalStrengthGradientTriangulation extends
 	@Override
 	public PointF calculateAccessPointPosition(AccessPoint ap) {
 
-		Vector<MeasurementDataSet> data = this.measurementData.get(ap);
+		Vector<MeasurementDataSet> originalData = this.measurementData.get(ap);
 		Vector<GradientArrow> arrows = new Vector<GradientArrow>();
+		Vector<MeasurementDataSet> data = new Vector<MeasurementDataSet>();
 
-		if (//(ap.getBssid().equalsIgnoreCase("00:1c:10:9a:1d:e8")) &&
-				 data.size() > 3) {
+		if (// (ap.getBssid().equalsIgnoreCase("00:1c:10:9a:1d:e8")) &&
+		originalData.size() > 3) {
+
+			float sumRssi = 0;
+
+			for (Iterator<MeasurementDataSet> it = originalData.iterator(); it
+					.hasNext();) {
+				MeasurementDataSet dataSet = it.next();
+
+				float newRssi = (float) Math.pow(
+						Math.pow(10, dataSet.getRssi() / 20), g);
+				sumRssi += newRssi;
+
+				data.add(new MeasurementDataSet(dataSet.getX(), dataSet.getY(),
+						newRssi));
+			}
 
 			for (Iterator<MeasurementDataSet> it = data.iterator(); it
 					.hasNext();) {
@@ -62,9 +78,13 @@ public class LocalSignalStrengthGradientTriangulation extends
 					// Least squares solution
 					Matrix matrixC = matrixA.solve(matrixZ);
 
+					float weight = currentDataSet.rssi / sumRssi;
+					// Logger.d("Weight: " + weight + " (current RSSI: "
+					// + currentDataSet.rssi + ", sum: " + sumRssi + ")");
+
 					GradientArrow arrow = new GradientArrow(currentDataSet.x,
 							currentDataSet.y, (float) matrixC.get(0, 0),
-							(float) matrixC.get(1, 0));
+							(float) matrixC.get(1, 0), weight);
 					arrows.add(arrow);
 				}
 			}
@@ -72,16 +92,16 @@ public class LocalSignalStrengthGradientTriangulation extends
 			// Steps (in meters) by which the area is divided in order to
 			// calculate the heat map
 			float step = 1.0f * MultiTouchDrawable.getGridSpacingX();
-			float areaFactor = 1.5f; // Factor by which the area is expanded
+			float areaFactor = 2.0f; // Factor by which the area is expanded
 
-			float minX = MeasurementDataSet.getMinimumValue(data,
-					MeasurementDataSet.VALUE_X);
-			float maxX = MeasurementDataSet.getMaximumValue(data,
-					MeasurementDataSet.VALUE_X);
-			float minY = MeasurementDataSet.getMinimumValue(data,
-					MeasurementDataSet.VALUE_Y);
-			float maxY = MeasurementDataSet.getMaximumValue(data,
-					MeasurementDataSet.VALUE_Y);
+			float minX = roundToGridSpacing(MeasurementDataSet.getMinimumValue(
+					data, MeasurementDataSet.VALUE_X));
+			float maxX = roundToGridSpacing(MeasurementDataSet.getMaximumValue(
+					data, MeasurementDataSet.VALUE_X));
+			float minY = roundToGridSpacing(MeasurementDataSet.getMinimumValue(
+					data, MeasurementDataSet.VALUE_Y));
+			float maxY = roundToGridSpacing(MeasurementDataSet.getMaximumValue(
+					data, MeasurementDataSet.VALUE_Y));
 
 			float centerX = (maxX - minX) / 2.0f + minX;
 			float dX = Math.abs(maxX - centerX);
@@ -112,15 +132,18 @@ public class LocalSignalStrengthGradientTriangulation extends
 						if (angleDifference > Math.PI)
 							angleDifference = (float) (2 * Math.PI - angleDifference);
 
-						//Logger.d("Angle difference: " + x + ", " + y + ", " + angleDifference);
-						
-						sumP += (float) Math.pow(angleDifference, 2);
+						// Logger.d("Angle difference: " + x + ", " + y + ", " +
+						// angleDifference);
+
+						sumP += (float) Math.pow(angleDifference, 2)
+								* arrow.weight;
 					}
 
 					probabilities.add(new MeasurementDataSet(x, y, sumP));
 					sumP = 0.0f;
 				}
-				//Logger.d("Done with " + (x - areaMinX) / (areaMaxX - areaMinX) * 100 + " %");
+				// Logger.d("Done with " + (x - areaMinX) / (areaMaxX -
+				// areaMinX) * 100 + " %");
 			}
 
 			float minProb = 0.0f;
@@ -128,9 +151,11 @@ public class LocalSignalStrengthGradientTriangulation extends
 			float minProbY = 0.0f;
 
 			for (MeasurementDataSet probability : probabilities) {
-				
-				//Logger.d("Probability: x(" + probability.getX() + "), y(" + probability.getY() + "), prob(" + probability.getRssi() + ")");
-				
+
+				// Logger.d("Probability: x(" + probability.getX() + "), y(" +
+				// probability.getY() + "), prob(" + probability.getRssi() +
+				// ")");
+
 				if ((probabilities.indexOf(probability) == 0)
 						|| (probability.getRssi() < minProb)) {
 					minProb = probability.getRssi();
@@ -248,6 +273,11 @@ public class LocalSignalStrengthGradientTriangulation extends
 		return angle;
 	}
 
+	protected float roundToGridSpacing(float value) {
+		return Math.round(value / MultiTouchDrawable.getGridSpacingX())
+				* MultiTouchDrawable.getGridSpacingX();
+	}
+
 	/**
 	 * This class holds an arrow needed for the Local Signal Strength Gradient
 	 * algorithm
@@ -260,17 +290,19 @@ public class LocalSignalStrengthGradientTriangulation extends
 		public float y;
 		public float directionX;
 		public float directionY;
+		public float weight;
 
 		public GradientArrow() {
 
 		}
 
 		public GradientArrow(float x, float y, float directionX,
-				float directionY) {
+				float directionY, float weight) {
 			this.x = x;
 			this.y = y;
 			this.directionX = directionX;
 			this.directionY = directionY;
+			this.weight = weight;
 		}
 	}
 }
