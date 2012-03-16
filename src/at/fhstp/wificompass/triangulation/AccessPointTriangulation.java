@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Vector;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.PointF;
-import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.model.AccessPoint;
 import at.fhstp.wificompass.model.BssidResult;
 import at.fhstp.wificompass.model.Location;
@@ -28,6 +28,8 @@ public abstract class AccessPointTriangulation {
 
 	/** The hash map that links BSSIDs to access points */
 	protected HashMap<String, AccessPoint> accessPoints;
+	
+	protected ProgressDialog progressDialog = null;
 
 	/**
 	 * The default constructor. Requires the context and the project site as
@@ -39,6 +41,13 @@ public abstract class AccessPointTriangulation {
 	public AccessPointTriangulation(Context context, ProjectSite projectSite) {
 		this.context = context;
 		this.projectSite = projectSite;
+		this.parseMeasurementData();
+	}
+	
+	public AccessPointTriangulation(Context context, ProjectSite projectSite, ProgressDialog progressDialog) {
+		this.context = context;
+		this.projectSite = projectSite;
+		this.progressDialog = progressDialog;
 		this.parseMeasurementData();
 	}
 
@@ -96,6 +105,10 @@ public abstract class AccessPointTriangulation {
 
 		int count = 0;
 		
+		if (progressDialog != null)
+			progressDialog.setMax(measurementData.entrySet().size());
+			
+		
 		for (Iterator<Entry<AccessPoint, Vector<MeasurementDataSet>>> itm = measurementData
 				.entrySet().iterator(); itm.hasNext();) {
 			Entry<AccessPoint, Vector<MeasurementDataSet>> pair = (Entry<AccessPoint, Vector<MeasurementDataSet>>) itm
@@ -112,9 +125,12 @@ public abstract class AccessPointTriangulation {
 			}
 			
 			count ++;
-			Logger.d((float)count / measurementData.size() * 100 + " % (" + count + " out of " + measurementData.size() + ") done.");
+			
+			if (progressDialog != null)
+				progressDialog.setProgress(count);
+				
 		}
-
+		
 		return aps;
 	}
 

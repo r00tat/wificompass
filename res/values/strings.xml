@@ -164,5 +164,8 @@
     <string name="about_app_repository_url">Repository URL</string>
     <string name="project_site_dialog_change_size_width">width</string>
     <string name="project_site_dialog_change_size_height">height</string>
+    <string name="project_site_triangulation_progress_title">Calculating Access Point positions</string>
+    <string name="project_site_triangulation_progress_message">This may take a while.</string>
+    <string name="project_site_triangulation_progress_message_ssid">This may take a while. Current SSID: </string>
 
 </resources>

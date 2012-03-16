@@ -12,6 +12,7 @@ import java.util.Vector;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +22,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -64,7 +66,8 @@ import at.woelfel.philip.filebrowser.FileBrowser;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
-public class ProjectSiteActivity extends Activity implements OnClickListener, WifiResultCallback, RefreshableView {
+public class ProjectSiteActivity extends Activity implements OnClickListener,
+		WifiResultCallback, RefreshableView {
 
 	protected Logger log = new Logger(ProjectSiteActivity.class);
 
@@ -72,7 +75,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	// public static final int START_NEW = 1, START_LOAD = 2;
 
-	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4, DIALOG_SET_SCALE_OF_MAP = 5;
+	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2,
+			DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4,
+			DIALOG_SET_SCALE_OF_MAP = 5;
 
 	protected static final int FILEBROWSER_REQUEST = 1;
 
@@ -104,6 +109,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected float scalerDistance;
 
+	protected TriangulationTask triangulationTask = null;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -118,15 +125,18 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			int siteId = intent.getExtras().getInt(SITE_KEY, -1);
 			if (siteId == -1) {
-				throw new SiteNotFoundException("ProjectSiteActivity called without a correct site ID!");
+				throw new SiteNotFoundException(
+						"ProjectSiteActivity called without a correct site ID!");
 			}
 
-			databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+			databaseHelper = OpenHelperManager.getHelper(this,
+					DatabaseHelper.class);
 			projectSiteDao = databaseHelper.getDao(ProjectSite.class);
 			site = projectSiteDao.queryForId(siteId);
 
 			if (site == null) {
-				throw new SiteNotFoundException("The ProjectSite Id could not be found in the database!");
+				throw new SiteNotFoundException(
+						"The ProjectSite Id could not be found in the database!");
 			}
 
 			map = new SiteMapDrawable(this, this);
@@ -140,19 +150,23 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				map.setBackgroundImage(site.getBackgroundBitmap());
 			}
 
-			for (Iterator<AccessPoint> it = site.getAccessPoints().iterator(); it.hasNext();) {
+			for (Iterator<AccessPoint> it = site.getAccessPoints().iterator(); it
+					.hasNext();) {
 				new AccessPointDrawable(this, map, it.next());
 			}
 
 			user = new UserDrawable(this, map);
 
 			if (site.getLastLocation() != null) {
-				user.setRelativePosition(site.getLastLocation().getX(), site.getLastLocation().getY());
+				user.setRelativePosition(site.getLastLocation().getX(), site
+						.getLastLocation().getY());
 			} else {
-				user.setRelativePosition(map.getWidth() / 2, map.getHeight() / 2);
+				user.setRelativePosition(map.getWidth() / 2,
+						map.getHeight() / 2);
 			}
 
-			for (Iterator<WifiScanResult> it = site.getScanResults().iterator(); it.hasNext();) {
+			for (Iterator<WifiScanResult> it = site.getScanResults().iterator(); it
+					.hasNext();) {
 				WifiScanResult wsr = it.next();
 				new MeasuringPointDrawable(this, map, wsr);
 			}
@@ -160,15 +174,17 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			initUI();
 
 		} catch (Exception ex) {
-			log.error("Failed to create ProjectSiteActivity: " + ex.getMessage(), ex);
-			Toast.makeText(this, R.string.project_site_load_failed, Toast.LENGTH_LONG).show();
+			log.error(
+					"Failed to create ProjectSiteActivity: " + ex.getMessage(),
+					ex);
+			Toast.makeText(this, R.string.project_site_load_failed,
+					Toast.LENGTH_LONG).show();
 			this.finish();
 		}
 	}
 
 	protected void initUI() {
 
-		
 		Button resetZoom = ((Button) findViewById(R.id.project_site_reset_zoom_button));
 		resetZoom.setOnClickListener(this);
 
@@ -227,7 +243,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			} catch (WifiException e) {
 				Logger.e("could not start wifi scan!", e);
-				Toast.makeText(this, R.string.project_site_wifiscan_start_failed, Toast.LENGTH_LONG).show();
+				Toast.makeText(this,
+						R.string.project_site_wifiscan_start_failed,
+						Toast.LENGTH_LONG).show();
 			}
 
 			break;
@@ -247,59 +265,86 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			break;
 
 		case R.id.project_site_calculate_ap_positions_button:
-			LocalSignalStrengthGradientTriangulation tri = new LocalSignalStrengthGradientTriangulation(context, site);
-			Vector<AccessPointDrawable> aps = tri.calculateAllAndGetDrawables();
 
-			// delete all old messurements
-			for (int i = 0; i < map.getSubDrawables().size(); i++) {
-				MultiTouchDrawable d = map.getSubDrawables().get(i);
-				if (d instanceof AccessPointDrawable) {
-					map.removeSubDrawable(d);
-					i--;
+			final ProgressDialog triangulationProgress = new ProgressDialog(
+					this);
+			triangulationProgress
+					.setTitle(R.string.project_site_triangulation_progress_title);
+			triangulationProgress
+					.setMessage(getString(R.string.project_site_triangulation_progress_message));
+			triangulationProgress
+					.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			triangulationProgress.setButton(getString(R.string.button_cancel),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+							if (triangulationTask != null) {
+								triangulationTask.cancel(true);
+							}
+						}
+					});
+
+			triangulationTask = new TriangulationTask(this,
+					triangulationProgress);
+
+			triangulationProgress.show();
+			triangulationTask.execute();
+
+		}
+	}
+
+	protected void setCalculatedAccessPoints(Vector<AccessPointDrawable> aps) {
+		// delete all old messurements
+		for (int i = 0; i < map.getSubDrawables().size(); i++) {
+			MultiTouchDrawable d = map.getSubDrawables().get(i);
+			if (d instanceof AccessPointDrawable) {
+				map.removeSubDrawable(d);
+				i--;
+			}
+		}
+
+		try {
+			Dao<AccessPoint, Integer> apDao = databaseHelper
+					.getDao(AccessPoint.class);
+			Dao<Location, Integer> locDao = databaseHelper
+					.getDao(Location.class);
+
+			for (Iterator<AccessPoint> it = site.getAccessPoints().iterator(); it
+					.hasNext();) {
+				AccessPoint ap = it.next();
+				try {
+					apDao.delete(ap);
+				} catch (Exception e) {
+
 				}
 			}
 
-			try {
-				Dao<AccessPoint, Integer> apDao = databaseHelper.getDao(AccessPoint.class);
-				Dao<Location, Integer> locDao = databaseHelper.getDao(Location.class);
-
-				for (Iterator<AccessPoint> it = site.getAccessPoints().iterator(); it.hasNext();) {
-					AccessPoint ap = it.next();
-					try {
-						apDao.delete(ap);
-					} catch (Exception e) {
-
-					}
-				}
-
-				for (Iterator<AccessPointDrawable> it = aps.iterator(); it.hasNext();) {
-					AccessPointDrawable ap = it.next();
-					locDao.createIfNotExists(ap.getAccessPoint().getLocation());
-					ap.getAccessPoint().setProjectSite(site);
-					apDao.createOrUpdate(ap.getAccessPoint());
-				}
-
-				projectSiteDao.refresh(site);
-
-			} catch (SQLException e) {
-				Logger.e("could not delete old or create new ap results", e);
-			}
-
-			for (Iterator<AccessPointDrawable> it = aps.iterator(); it.hasNext();) {
+			for (Iterator<AccessPointDrawable> it = aps.iterator(); it
+					.hasNext();) {
 				AccessPointDrawable ap = it.next();
-				map.addSubDrawable(ap);
-				map.recalculatePositions();
-				multiTouchView.invalidate();
+				locDao.createIfNotExists(ap.getAccessPoint().getLocation());
+				ap.getAccessPoint().setProjectSite(site);
+				apDao.createOrUpdate(ap.getAccessPoint());
 			}
 
-			break;
+			projectSiteDao.refresh(site);
 
-		
+		} catch (SQLException e) {
+			Logger.e("could not delete old or create new ap results", e);
+		}
+
+		for (Iterator<AccessPointDrawable> it = aps.iterator(); it.hasNext();) {
+			AccessPointDrawable ap = it.next();
+			map.addSubDrawable(ap);
+			map.recalculatePositions();
+			multiTouchView.invalidate();
 		}
 	}
 
 	protected void setScaleOfMap(float scale) {
-		MultiTouchDrawable.setGridSpacing(scalerDistance / scale, scalerDistance / scale);
+		MultiTouchDrawable.setGridSpacing(scalerDistance / scale,
+				scalerDistance / scale);
 		multiTouchView.invalidate();
 	}
 
@@ -322,18 +367,22 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			input.setSingleLine(true);
 			titleAlert.setView(input);
 
-			titleAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					setSiteTitle(input.getText().toString());
+			titleAlert.setPositiveButton(getString(R.string.button_ok),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							setSiteTitle(input.getText().toString());
 
-				}
-			});
+						}
+					});
 
-			titleAlert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+			titleAlert.setNegativeButton(getString(R.string.button_cancel),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 
 			return titleAlert.create();
 
@@ -349,12 +398,14 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			scanAlert.setView(scanningImageView);
 
-			scanAlert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-					stopWifiScan();
-				}
-			});
+			scanAlert.setNegativeButton(getString(R.string.button_cancel),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+							stopWifiScan();
+						}
+					});
 
 			scanAlertDialog = scanAlert.create();
 
@@ -363,7 +414,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				@Override
 				public void onShow(DialogInterface paramDialogInterface) {
 					if (scanningImageView != null) {
-						((AnimationDrawable) scanningImageView.getDrawable()).start();
+						((AnimationDrawable) scanningImageView.getDrawable())
+								.start();
 					} else {
 						Logger.w("why is scanningImageView null????");
 					}
@@ -378,42 +430,63 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			sizeAlert.setTitle(R.string.project_site_dialog_size_title);
 			sizeAlert.setMessage(R.string.project_site_dialog_size_message);
 
-			sizeAlert.setView(getLayoutInflater().inflate(R.layout.project_site_dialog_change_size, (ViewGroup) getCurrentFocus()));
+			sizeAlert.setView(getLayoutInflater().inflate(
+					R.layout.project_site_dialog_change_size,
+					(ViewGroup) getCurrentFocus()));
 
+			sizeAlert.setPositiveButton(getString(R.string.button_ok),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							try {
+								int w = Integer
+										.parseInt(((EditText) ((AlertDialog) dialog)
+												.findViewById(R.id.project_site_dialog_change_size_width))
+												.getText().toString()), h = Integer
+										.parseInt(((EditText) ((AlertDialog) dialog)
+												.findViewById(R.id.project_site_dialog_change_size_height))
+												.getText().toString());
+								if (w <= 0) {
+									throw new NumberFormatException(
+											"width has to be larger than 0");
+								}
+								if (h <= 0) {
+									throw new NumberFormatException(
+											"height has to be larger than 0");
+								}
 
-			sizeAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					try {
-						int w = Integer.parseInt(((EditText) ((AlertDialog) dialog).findViewById(R.id.project_site_dialog_change_size_width))
-								.getText().toString()), h = Integer.parseInt(((EditText) ((AlertDialog) dialog)
-								.findViewById(R.id.project_site_dialog_change_size_height)).getText().toString());
-						if (w <= 0) {
-							throw new NumberFormatException("width has to be larger than 0");
+								map.setSize(w, h);
+								site.setSize(w, h);
+
+								multiTouchView.invalidate();
+								Toast.makeText(
+										context,
+										context.getString(
+												R.string.project_site_dialog_size_finished,
+												w, h), Toast.LENGTH_SHORT)
+										.show();
+
+								saveProjectSite();
+							} catch (NumberFormatException e) {
+								Logger.w(
+										"change size width or height not a number ",
+										e);
+								Toast.makeText(
+										context,
+										context.getString(R.string.project_site_dialog_size_nan),
+										Toast.LENGTH_LONG).show();
+							}
+
 						}
-						if (h <= 0) {
-							throw new NumberFormatException("height has to be larger than 0");
+					});
+
+			sizeAlert.setNegativeButton(getString(R.string.button_cancel),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
 						}
-
-						map.setSize(w, h);
-						site.setSize(w, h);
-
-						multiTouchView.invalidate();
-						Toast.makeText(context, context.getString(R.string.project_site_dialog_size_finished, w, h), Toast.LENGTH_SHORT).show();
-
-						saveProjectSite();
-					} catch (NumberFormatException e) {
-						Logger.w("change size width or height not a number ", e);
-						Toast.makeText(context, context.getString(R.string.project_site_dialog_size_nan), Toast.LENGTH_LONG).show();
-					}
-
-				}
-			});
-
-			sizeAlert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+					});
 
 			return sizeAlert.create();
 
@@ -421,23 +494,27 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			AlertDialog.Builder bckgAlert = new AlertDialog.Builder(this);
 			bckgAlert.setTitle(R.string.project_site_dialog_background_title);
-			bckgAlert.setMessage(R.string.project_site_dialog_background_message);
+			bckgAlert
+					.setMessage(R.string.project_site_dialog_background_message);
 
 			LinearLayout bckgLayout = new LinearLayout(this);
-			bckgLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			bckgLayout.setLayoutParams(new LinearLayout.LayoutParams(
+					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 			bckgLayout.setGravity(Gravity.CENTER);
 			bckgLayout.setOrientation(LinearLayout.VERTICAL);
 			bckgLayout.setPadding(5, 5, 5, 5);
 
 			final TextView pathTextView = new TextView(this);
 			backgroundPathTextView = pathTextView;
-			pathTextView.setText(R.string.project_site_dialog_background_default_path);
+			pathTextView
+					.setText(R.string.project_site_dialog_background_default_path);
 			pathTextView.setPadding(10, 0, 10, 10);
 
 			bckgLayout.addView(pathTextView);
 
 			Button pathButton = new Button(this);
-			pathButton.setText(R.string.project_site_dialog_background_path_button);
+			pathButton
+					.setText(R.string.project_site_dialog_background_path_button);
 			pathButton.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -453,17 +530,22 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			bckgAlert.setView(bckgLayout);
 
-			bckgAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					setBackgroundImage(pathTextView.getText().toString());
-				}
-			});
+			bckgAlert.setPositiveButton(getString(R.string.button_ok),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							setBackgroundImage(pathTextView.getText()
+									.toString());
+						}
+					});
 
-			bckgAlert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+			bckgAlert.setNegativeButton(getString(R.string.button_cancel),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 
 			Dialog bckgDialog = bckgAlert.create();
 			bckgDialog.setCanceledOnTouchOutside(true);
@@ -473,31 +555,39 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		case DIALOG_SET_SCALE_OF_MAP:
 			AlertDialog.Builder scaleOfMapDialog = new AlertDialog.Builder(this);
 
-			scaleOfMapDialog.setTitle(R.string.project_site_dialog_scale_of_map_title);
-			scaleOfMapDialog.setMessage(R.string.project_site_dialog_scale_of_map_message);
+			scaleOfMapDialog
+					.setTitle(R.string.project_site_dialog_scale_of_map_title);
+			scaleOfMapDialog
+					.setMessage(R.string.project_site_dialog_scale_of_map_message);
 
 			// Set an EditText view to get user input
 			final EditText scaleInput = new EditText(this);
 			scaleInput.setSingleLine(true);
 			scaleOfMapDialog.setView(scaleInput);
 
-			scaleOfMapDialog.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
+			scaleOfMapDialog.setPositiveButton(getString(R.string.button_ok),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
 
-					try {
-						float value = Float.parseFloat(scaleInput.getText().toString());
-						setScaleOfMap(value);
-					} catch (NumberFormatException nfe) {
+							try {
+								float value = Float.parseFloat(scaleInput
+										.getText().toString());
+								setScaleOfMap(value);
+							} catch (NumberFormatException nfe) {
 
-					}
-				}
-			});
+							}
+						}
+					});
 
-			scaleOfMapDialog.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
+			scaleOfMapDialog.setNegativeButton(
+					getString(R.string.button_cancel),
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							// Canceled.
+						}
+					});
 
 			return scaleOfMapDialog.create();
 
@@ -537,7 +627,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		case R.id.project_site_menu_set_background:
 			showDialog(DIALOG_SET_BACKGROUND);
 			return false;
-			
+
 		case R.id.project_site_menu_set_scale_of_map:
 
 			if (scaler == null) {
@@ -581,12 +671,16 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		try {
 
-			Location curLocation = LocationServiceFactory.getLocationService().getLocation(), lastLocation = site.getLastLocation();
+			Location curLocation = LocationServiceFactory.getLocationService()
+					.getLocation(), lastLocation = site.getLastLocation();
 
-			if (lastLocation == null || (curLocation.getX() != lastLocation.getX() && curLocation.getY() != lastLocation.getY())) {
+			if (lastLocation == null
+					|| (curLocation.getX() != lastLocation.getX() && curLocation
+							.getY() != lastLocation.getY())) {
 				site.setLastLocation(curLocation);
 
-				Dao<Location, Integer> locDao = databaseHelper.getDao(Location.class);
+				Dao<Location, Integer> locDao = databaseHelper
+						.getDao(Location.class);
 
 				if (lastLocation != null) {
 					// delete old location
@@ -600,13 +694,15 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			int changed = projectSiteDao.update(site);
 
 			if (changed > 0) {
-				Toast.makeText(this, R.string.project_site_saved, Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.project_site_saved,
+						Toast.LENGTH_SHORT).show();
 			}
 
 			projectSiteDao.refresh(site);
 		} catch (SQLException e) {
 			log.error("could not save or refresh project site", e);
-			Toast.makeText(this, R.string.project_site_save_failed, Toast.LENGTH_LONG).show();
+			Toast.makeText(this, R.string.project_site_save_failed,
+					Toast.LENGTH_LONG).show();
 		}
 
 	}
@@ -621,7 +717,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 				wr.setProjectLocation(site);
 
-				Dao<WifiScanResult, Integer> scanResultDao = databaseHelper.getDao(WifiScanResult.class);
+				Dao<WifiScanResult, Integer> scanResultDao = databaseHelper
+						.getDao(WifiScanResult.class);
 				scanResultDao.update(wr);
 
 				projectSiteDao.refresh(site);
@@ -629,7 +726,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				new MeasuringPointDrawable(this, map, wr);
 
 				StringBuffer sb = new StringBuffer();
-				for (Iterator<BssidResult> it = wr.getBssids().iterator(); it.hasNext();) {
+				for (Iterator<BssidResult> it = wr.getBssids().iterator(); it
+						.hasNext();) {
 					BssidResult result = it.next();
 					Logger.d("ScanResult: " + result.toString());
 					sb.append(result.toString());
@@ -640,11 +738,17 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 				multiTouchView.invalidate();
 
-				Toast.makeText(this, this.getString(R.string.project_site_wifiscan_finished, sb.toString()), Toast.LENGTH_SHORT).show();
+				Toast.makeText(
+						this,
+						this.getString(R.string.project_site_wifiscan_finished,
+								sb.toString()), Toast.LENGTH_SHORT).show();
 
 			} catch (SQLException e) {
 				Logger.e("could not update wifiscanresult!", e);
-				Toast.makeText(this, this.getString(R.string.project_site_wifiscan_failed, e.getMessage()), Toast.LENGTH_LONG).show();
+				Toast.makeText(
+						this,
+						this.getString(R.string.project_site_wifiscan_failed,
+								e.getMessage()), Toast.LENGTH_LONG).show();
 			}
 
 		}
@@ -656,7 +760,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		if (!ignoreWifiResults) {
 
 			Logger.e("Wifi scan failed!", ex);
-			Toast.makeText(this, this.getString(R.string.project_site_wifiscan_failed, ex.getMessage()), Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					this,
+					this.getString(R.string.project_site_wifiscan_failed,
+							ex.getMessage()), Toast.LENGTH_LONG).show();
 
 		}
 
@@ -713,18 +820,21 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 * @see android.app.Activity#onActivityResult(int, int,
+	 * android.content.Intent)
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		Logger.d("Activity result of " + requestCode + " " + resultCode + " " + (data != null ? data.toString() : ""));
+		Logger.d("Activity result of " + requestCode + " " + resultCode + " "
+				+ (data != null ? data.toString() : ""));
 
 		switch (requestCode) {
 		case FILEBROWSER_REQUEST:
 
 			if (resultCode == Activity.RESULT_OK && data != null) {
-				String path = data.getExtras().getString(FileBrowser.EXTRA_PATH);
+				String path = data.getExtras()
+						.getString(FileBrowser.EXTRA_PATH);
 
 				if (backgroundPathTextView != null) {
 					backgroundPathTextView.setText(path);
@@ -750,19 +860,26 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			site.setSize(bmp.getWidth(), bmp.getHeight());
 			map.setSize(bmp.getWidth(), bmp.getHeight());
 			multiTouchView.invalidate();
-			Toast.makeText(context, "set " + path + " as new background image!", Toast.LENGTH_LONG).show();
+			Toast.makeText(context,
+					"set " + path + " as new background image!",
+					Toast.LENGTH_LONG).show();
 			saveProjectSite();
 
 		} catch (Exception e) {
 			Logger.e("could not set background", e);
-			Toast.makeText(context, getString(R.string.project_site_set_background_failed, e.getMessage()), Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					context,
+					getString(R.string.project_site_set_background_failed,
+							e.getMessage()), Toast.LENGTH_LONG).show();
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Activity#onConfigurationChanged(android.content.res.Configuration)
+	 * @see
+	 * android.app.Activity#onConfigurationChanged(android.content.res.Configuration
+	 * )
 	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -776,6 +893,32 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	public void invalidate() {
 		if (multiTouchView != null) {
 			multiTouchView.invalidate();
+		}
+	}
+
+	protected class TriangulationTask extends
+			AsyncTask<Void, Integer, Vector<AccessPointDrawable>> {
+
+		private final ProjectSiteActivity parent;
+		private final ProgressDialog progress;
+
+		public TriangulationTask(final ProjectSiteActivity parent,
+				final ProgressDialog progress) {
+			this.parent = parent;
+			this.progress = progress;
+		}
+
+		@Override
+		protected Vector<AccessPointDrawable> doInBackground(Void... params) {
+			LocalSignalStrengthGradientTriangulation tri = new LocalSignalStrengthGradientTriangulation(
+					context, site, progress);
+			return tri.calculateAllAndGetDrawables();
+		}
+
+		@Override
+		protected void onPostExecute(final Vector<AccessPointDrawable> result) {
+			progress.dismiss();
+			parent.setCalculatedAccessPoints(result);
 		}
 	}
 }

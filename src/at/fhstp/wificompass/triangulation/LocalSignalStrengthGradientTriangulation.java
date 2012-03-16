@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import Jama.Matrix;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.PointF;
 import at.fhstp.wificompass.model.AccessPoint;
@@ -23,6 +24,11 @@ public class LocalSignalStrengthGradientTriangulation extends
 	public LocalSignalStrengthGradientTriangulation(Context context,
 			ProjectSite projectSite) {
 		super(context, projectSite);
+	}
+	
+	public LocalSignalStrengthGradientTriangulation(Context context,
+			ProjectSite projectSite, ProgressDialog progressDialog) {
+		super(context, projectSite, progressDialog);
 	}
 
 	@Override
