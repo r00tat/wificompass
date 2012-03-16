@@ -12,11 +12,11 @@ import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.BssidResult;
+import at.fhstp.wificompass.model.Location;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
 
 public class MeasuringPointDrawable extends MultiTouchDrawable {
 
@@ -134,8 +134,10 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 			// try to delete myself from the database
 			DatabaseHelper databaseHelper = OpenHelperManager.getHelper(this.ctx, DatabaseHelper.class);
 
-			Dao<WifiScanResult, Integer> srDao = databaseHelper.getDao(WifiScanResult.class);
-			srDao.delete(scanResult);
+			
+			if(scanResult.getLocation()!=null)
+				databaseHelper.getDao(Location.class).delete(scanResult.getLocation());
+			databaseHelper.getDao(WifiScanResult.class).delete(scanResult);
 			
 			OpenHelperManager.releaseHelper();
 			

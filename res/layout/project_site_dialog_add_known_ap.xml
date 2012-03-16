@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/project_site_change_size_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/project_site_dialog_add_known_ap_ssid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       
+        android:hint="@string/project_site_dialog_add_known_ap_ssid"
+        android:inputType="text" android:layout_marginLeft="15dp" android:layout_marginRight="15dp">
+
+        <requestFocus />
+    </EditText>
+
+   
+
+    <EditText
+        android:id="@+id/project_site_dialog_add_known_ap_bssid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/project_site_dialog_add_known_ap_bssid"
+        android:inputType="text" android:layout_marginLeft="15dp" android:layout_marginRight="15dp"/>
+
+</LinearLayout>

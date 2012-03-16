@@ -8,7 +8,7 @@ public class AccessPoint {
 	protected static final String TABLE_NAME="accesspoints";
 	
 	@DatabaseField(generatedId=true)
-	protected int id;
+	protected int id=0;
 	
 	@DatabaseField
 	protected String bssid;
@@ -111,5 +111,54 @@ public class AccessPoint {
 	 */
 	public void setCalculated(boolean calculated) {
 		this.calculated = calculated;
+	}
+
+	/**
+	 * @return the capabilities
+	 */
+	public String getCapabilities() {
+		return capabilities;
+	}
+
+	/**
+	 * @param capabilities the capabilities to set
+	 */
+	public void setCapabilities(String capabilities) {
+		this.capabilities = capabilities;
+	}
+
+	/**
+	 * @return the frequency
+	 */
+	public int getFrequency() {
+		return frequency;
+	}
+
+	/**
+	 * @param frequency the frequency to set
+	 */
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param bssid the bssid to set
+	 */
+	public void setBssid(String bssid) {
+		this.bssid = bssid;
+	}
+
+	/**
+	 * @param ssid the ssid to set
+	 */
+	public void setSsid(String ssid) {
+		this.ssid = ssid;
 	}
 }

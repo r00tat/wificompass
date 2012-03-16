@@ -112,7 +112,8 @@ public class DeleteDrawable extends MultiTouchDrawable implements Popup{
 	protected void forceDelete(){
 		if(superDrawable!=null){
 			superDrawable.deleteDrawable();
-			refresher.invalidate();
+			if(refresher!=null)
+				refresher.invalidate();
 		}
 	}
 	

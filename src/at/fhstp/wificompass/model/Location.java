@@ -145,4 +145,11 @@ public class Location {
 		return "Location("+id+") "+x+","+y+" accurate "+accurancy+ " "+ timestamp.toLocaleString() ;
 	}
 
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
 }

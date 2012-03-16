@@ -172,5 +172,13 @@
     <string name="export_db_dialog_overwrite_file_title">Overwriting existing file</string>
     <string name="export_db_dialog_overwrite_file_message">The file %1$s already exists.\nAre you sure you want to overwrite that file?</string>
     <string name="export_db_export_canceled"> canceled.</string>
+    <string name="empty"/>
+    <string name="blank"> </string>
+    <string name="project_site_add_known_ap">add known AP</string>
+    <string name="project_site_dialog_add_known_ap_title">Add known AP</string>
+    <string name="project_site_dialog_add_known_ap_message">Enter the SSID and BSSID of the known Access Point:</string>
+    <string name="project_site_dialog_add_known_ap_ssid">SSID</string>
+    <string name="project_site_dialog_add_known_ap_bssid">BSSID</string>
+    <string name="access_point_format">%1$s [%2$s]\n%3$dMHz %4$s\nPosition: %5$.2f/%6$.2f m</string>
 
 </resources>

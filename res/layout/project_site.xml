@@ -13,7 +13,6 @@
 
         <TableRow>
 
-           
             <Button
                 android:id="@+id/project_site_reset_zoom_button"
                 android:layout_width="wrap_content"
@@ -27,6 +26,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/project_site_snap_user" />
+
+            <Button
+                android:id="@+id/project_site_add_known_ap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/project_site_add_known_ap" />
         </TableRow>
 
         <TableRow>
@@ -42,8 +48,12 @@
                 android:id="@+id/project_site_wifiscan_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/project_site_start_scan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty" />
         </TableRow>
     </TableLayout>
 

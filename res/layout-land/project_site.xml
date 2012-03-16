@@ -26,6 +26,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/project_site_snap_user" />
+        
+        <Button
+                android:id="@+id/project_site_add_known_ap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/project_site_add_known_ap" />
 
         <Button
             android:id="@+id/project_site_calculate_ap_positions_button"
