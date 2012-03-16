@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 import android.content.Context;
 import android.view.View;
@@ -29,7 +30,7 @@ public class FileAdapter extends BaseAdapter {
 
 	protected int hideMode;
 
-	public FileAdapter(Context c, File f, int hideMode) {
+	public FileAdapter(Context c, File f, int hideMode, String extensions) {
 		context = c;
 		files = f.listFiles();
 		this.hideMode = hideMode;
@@ -61,14 +62,31 @@ public class FileAdapter extends BaseAdapter {
 					filesToShow.remove(i--);
 				}
 			}
+			files = filesToShow.toArray(new File[0]);
+		}
+
+		if (extensions != null) {
+			ArrayList<File> filesToShow = new ArrayList<File>(Arrays.asList(files));
+			List<String> allowedExt = (Arrays.asList(extensions.split("([,;] *\\.?)")));
+			for (int i = 0; i < filesToShow.size(); i++) {
+				File item = filesToShow.get(i);
+				if (item.isFile()) {
+					int lastIndex = item.getName().lastIndexOf('.');
+					if (lastIndex < 0 || lastIndex + 1 >= item.getName().length()
+							|| !allowedExt.contains(item.getName().substring(lastIndex + 1).toLowerCase())) {
+						filesToShow.remove(i--);
+					}
+				}
+			}
 			files=filesToShow.toArray(new File[0]);
 		}
+
 		parent = f.getParentFile();
 		currentDir = f;
 	}
 
 	public FileAdapter(Context c, File f) {
-		this(c, f, FileBrowser.HIDE_ALL_SYSTEM);
+		this(c, f, FileBrowser.HIDE_ALL_SYSTEM, null);
 	}
 
 	public int getCount() {

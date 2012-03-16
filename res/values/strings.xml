@@ -150,7 +150,7 @@
     <string name="export_db_import_failed">Database import failed:\n%1$s</string>
     <string name="export_db_importing">importing %1$s</string>
     <string name="export_db_importing_done"> done.</string>
-    <string name="export_db_starting_import">startinging import&#8230;\n</string>
+    <string name="export_db_starting_import">starting import&#8230;\n</string>
     <string name="export_db_progress_title">importing projects &#8230;</string>
     <string name="export_db_progress_message">processing data, please wait!</string>
     <string name="export_db_import_interrupted">import interrupted!</string>
@@ -167,5 +167,10 @@
     <string name="project_site_triangulation_progress_title">Calculating Access Point positions</string>
     <string name="project_site_triangulation_progress_message">This may take a while.</string>
     <string name="project_site_triangulation_progress_message_ssid">This may take a while. Current SSID: </string>
+    <string name="export_db_dialog_dropdb_title">Recreate database</string>
+    <string name="export_db_dialog_dropdb_message">The database will get dropped and recreated. This will purge ALL existing data. \nAre you sure, you want that?</string>
+    <string name="export_db_dialog_overwrite_file_title">Overwriting existing file</string>
+    <string name="export_db_dialog_overwrite_file_message">The file %1$s already exists.\nAre you sure you want to overwrite that file?</string>
+    <string name="export_db_export_canceled"> canceled.</string>
 
 </resources>
