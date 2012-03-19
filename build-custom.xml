@@ -10,7 +10,8 @@
 			<pathelement location="lib/ant-contrib-1.0b3.jar" />
 		</classpath>
 	</taskdef>
-
+	
+	
 	<target name="get-version">
 		<exec executable="svn" output="svninfo.xml">
 			<arg line="info --xml ${project.base.dir}" />
@@ -40,4 +41,6 @@ public class BuildInfo {
 }
 		</echo>
 	</target>
+	
+
 </project>
