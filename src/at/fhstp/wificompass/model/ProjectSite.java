@@ -56,6 +56,15 @@ public class ProjectSite implements XMLSerializable {
 
 	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	protected Project project;
+	
+	@DatabaseField
+	protected float gridSpacingX=30;
+	
+	@DatabaseField
+	protected float gridSpacingY=30;
+	
+	@DatabaseField
+	protected float north=0;
 
 	@ForeignCollectionField
 	protected ForeignCollection<AccessPoint> accessPoints;
@@ -70,7 +79,8 @@ public class ProjectSite implements XMLSerializable {
 
 	public static final String UNTITLED = "untitled";
 
-	public static String FIELD_PROJECT_FK = Project.TABLE_NAME + "_" + Project.FIELD_ID;
+	// maybe we should use TableUtils
+//	public static String FIELD_PROJECT_FK = Project.TABLE_NAME + "_" + Project.FIELD_ID;
 
 	public ProjectSite() {
 		this(null, null);
@@ -260,6 +270,48 @@ public class ProjectSite implements XMLSerializable {
 	@Override
 	public String toString() {
 		return "ProjectSite(" + id + ") " + title + " " + width + "x" + height;
+	}
+
+	/**
+	 * @return the gridSpacingX
+	 */
+	public float getGridSpacingX() {
+		return gridSpacingX;
+	}
+
+	/**
+	 * @param gridSpacingX the gridSpacingX to set
+	 */
+	public void setGridSpacingX(float gridSpacingX) {
+		this.gridSpacingX = gridSpacingX;
+	}
+
+	/**
+	 * @return the gridSpacingY
+	 */
+	public float getGridSpacingY() {
+		return gridSpacingY;
+	}
+
+	/**
+	 * @param gridSpacingY the gridSpacingY to set
+	 */
+	public void setGridSpacingY(float gridSpacingY) {
+		this.gridSpacingY = gridSpacingY;
+	}
+
+	/**
+	 * @return the north
+	 */
+	public float getNorth() {
+		return north;
+	}
+
+	/**
+	 * @param north the north to set
+	 */
+	public void setNorth(float north) {
+		this.north = north;
 	}
 
 }

@@ -21,6 +21,8 @@ import at.fhstp.wificompass.model.SensorData;
 import at.fhstp.wificompass.model.WifiScanResult;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
@@ -32,7 +34,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public static final String DATABASE_NAME = "wificompass.db";
 
 	// any time you make changes to your database objects, you may have to increase the database version
-	private static final int DATABASE_VERSION = 17;
+	private static final int DATABASE_VERSION = 19;
 
 	protected Context context;
 
@@ -59,6 +61,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
 		try {
+			Logger.d("Database Helper onCreate");
 
 			for (int i = 0; i < ormClasses.length; i++) {
 				log.debug("creating table :"+ormClasses[i]);
@@ -74,16 +77,30 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+		Logger.d("Database Helper onUpgrade");
 		if (oldVersion < newVersion) {
+			Logger.i("Database outdated, updateing from "+oldVersion+" to "+newVersion+". Datbase should be "+DATABASE_VERSION);
 			try {
 				switch(oldVersion){
 				
 				case 16:
+					
+					Logger.i("Upgrading database to version 17");
 					// AccessPoint has been changed, the boolean field calculated was added
 					// since all data in the AccessPoint table are calcualted AccessPoints and there is much development ongoing,
 					// it's ok to delete the table and recreate it.
 					TableUtils.dropTable(getConnectionSource(), AccessPoint.class, false);
 					TableUtils.createTable(getConnectionSource(), AccessPoint.class);
+					
+				case 17:
+					
+					Logger.i("Upgrading database to version 19");
+					// 18 and 19 are the same
+					Dao<ProjectSite,Integer> psDao=DaoManager.createDao(getConnectionSource(),ProjectSite.class);
+					
+					psDao.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `gridSpacingX` FLOAT DEFAULT 30;");
+					psDao.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `gridSpacingY` FLOAT DEFAULT 30;");
+					psDao.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `north` FLOAT DEFAULT 0;");
 					
 					
 					// do not break on versions before, only last version should use break;
