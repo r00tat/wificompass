@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
@@ -55,7 +54,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	protected void init() {
 		log.debug( "init");
 
-		ApplicationContext.setContext(this);
+		
 
 		setContentView(R.layout.main);
 
@@ -204,7 +203,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	protected void onResume() {
 		super.onResume();
 		log.debug("setting context");
-		ApplicationContext.setContext(this);
+		
 		
 		
 		log.debug("refreshing project list");
@@ -223,7 +222,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		ApplicationContext.setContext(this);
+		
 
 		if (resultCode == Activity.RESULT_OK&&requestCode==REQ_PROJECT_LIST) {
 			int project=data.getExtras().getInt(ProjectListActivity.PROJ_KEY);

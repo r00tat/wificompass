@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import at.fhstp.wificompass.ApplicationContext;
+
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.Project;
@@ -53,7 +53,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.project);
-		ApplicationContext.setContext(this);
+		
 
 		try {
 			dao = getHelper().getDao(Project.class);
@@ -115,7 +115,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		ApplicationContext.setContext(this);
+		
 
 		if (resultCode == Activity.RESULT_OK) {
 			switch (requestCode) {
@@ -193,7 +193,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 	protected void onResume() {
 		super.onResume();
 		log.debug("setting context");
-		ApplicationContext.setContext(this);
+		
 		try {
 			dao.refresh(project);
 		} catch (SQLException e1) {

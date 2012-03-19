@@ -28,7 +28,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import at.fhstp.wificompass.ApplicationContext;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.AccessPoint;
@@ -100,7 +99,7 @@ public class DBActivity extends Activity implements OnClickListener {
 	protected void onResume() {
 		super.onResume();
 		log.debug("setting context");
-		ApplicationContext.setContext(this);
+		
 
 	}
 
@@ -143,7 +142,7 @@ public class DBActivity extends Activity implements OnClickListener {
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		ApplicationContext.setContext(this);
+		
 
 		switch (requestCode) {
 		case FILEBROWSER_REQUEST:

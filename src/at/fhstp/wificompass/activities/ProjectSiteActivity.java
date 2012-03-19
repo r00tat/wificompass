@@ -38,7 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import at.fhstp.wificompass.ApplicationContext;
+
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.exceptions.SiteNotFoundException;
@@ -213,7 +213,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected void onResume() {
 		super.onResume();
 		log.debug("setting context");
-		ApplicationContext.setContext(this);
+		
 		multiTouchView.loadImages(this);
 	}
 

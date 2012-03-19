@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import at.fhstp.wificompass.ApplicationContext;
+
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.Project;
@@ -32,7 +32,7 @@ public class ProjectListActivity extends Activity implements OnItemClickListener
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.project_list);
-		ApplicationContext.setContext(this);
+		
 		
 		ListView listView=((ListView)findViewById(R.id.project_list_view));
 //		log.azzert(listView==null, "list view is null??!?!?");
@@ -61,6 +61,6 @@ public class ProjectListActivity extends Activity implements OnItemClickListener
 	protected void onResume() {
 		super.onResume();
 		log.debug("setting context");
-		ApplicationContext.setContext(this);
+		
 	}
 }

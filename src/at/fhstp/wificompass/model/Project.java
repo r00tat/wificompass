@@ -10,8 +10,6 @@ import java.io.IOException;
 import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlSerializer;
 
-import at.fhstp.wificompass.ApplicationContext;
-import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.interfaces.XMLSerializable;
 import at.fhstp.wificompass.model.xml.XMLSettings;
 
@@ -42,9 +40,11 @@ public class Project implements XMLSerializable {
 	protected static final String XMLTAG = "project", XMLNAME = "name", XMLPATH = "path", XMLSITES = "sites", XMLDESCRIPTION = "description";
 	
 	public static final String FIELD_ID="id";
+	
+	public static final String untitled="untitled";
 
 	public Project() {
-		this(ApplicationContext.getContext().getString(R.string.untitled), "");
+		this(untitled, "");
 	}
 
 	public Project(String name) {

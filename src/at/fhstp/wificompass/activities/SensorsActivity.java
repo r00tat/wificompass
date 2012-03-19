@@ -25,7 +25,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-import at.fhstp.wificompass.ApplicationContext;
+
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.SensorData;
@@ -240,7 +240,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 	protected void onResume() {
 		super.onResume();
 		log.debug("setting context");
-		ApplicationContext.setContext(this);
+		
 		// startScan();
 
 	}

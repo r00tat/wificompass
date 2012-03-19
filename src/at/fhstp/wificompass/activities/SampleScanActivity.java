@@ -25,7 +25,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import at.fhstp.wificompass.ApplicationContext;
+
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 
@@ -44,7 +44,7 @@ public class SampleScanActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		log.debug( "created sample scan");
 		setContentView(R.layout.sample_scan);
-		ApplicationContext.setContext(this);
+		
 
 		/* First, get the Display from the WindowManager */
 		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
@@ -245,7 +245,7 @@ public class SampleScanActivity extends Activity implements OnClickListener {
 	protected void onResume() {
 		super.onResume();
 		log.debug("setting context");
-		ApplicationContext.setContext(this);
+		
 	}
 	
 	
