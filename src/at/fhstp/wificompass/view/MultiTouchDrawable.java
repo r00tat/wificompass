@@ -516,10 +516,13 @@ public abstract class MultiTouchDrawable {
 			this.setAngle(angle);
 		}
 
-//		if (isDraggedOrPinched && this.hasSuperDrawable()) {
-//			PointF relativePosition = getRelativePositionToSuperobject();
+		if (isDraggedOrPinched && this.hasSuperDrawable()) {
+			PointF relativePosition = getRelativePositionToSuperobject();
+			// we do not want to use setRelativePosition, because this will overwrite the angle
 //			this.setRelativePosition(relativePosition.x, relativePosition.y);
-//		}
+			this.relX=relativePosition.x;
+			this.relY=relativePosition.y;
+		}
 
 		// Iterate through the subobjects and change their position
 		for (MultiTouchDrawable subobject : subDrawables) {
@@ -529,6 +532,10 @@ public abstract class MultiTouchDrawable {
 		}
 
 		return true;
+	}
+	
+	protected void recalculateSubDrawables(){
+		
 	}
 
 	protected PointF getAbsolutePositionOfSubobject(MultiTouchDrawable subobject) {
