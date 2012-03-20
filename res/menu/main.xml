@@ -30,5 +30,6 @@
         android:title="@string/about">
     </item>
     <!-- <item android:id="@+id/quitOption" android:title="@string/quit" android:icon="@android:drawable/ic_menu_close_clear_cancel"></item> -->
+    <item android:id="@+id/main_menu_step_calibrate" android:title="@string/main_menu_calibrate"></item>
 
 </menu>

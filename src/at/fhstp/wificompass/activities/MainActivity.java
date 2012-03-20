@@ -2,6 +2,8 @@ package at.fhstp.wificompass.activities;
 
 import java.sql.SQLException;
 
+import de.uvwxy.footpath.gui.Calibrator;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -188,6 +190,12 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			log.debug("starting preferences activity");
 			Intent prefsIntent=new Intent(this,PreferencesActivity.class);
 			startActivity(prefsIntent);
+			break;
+			
+		case R.id.main_menu_step_calibrate:
+			log.debug("calibrating sensors");
+			Intent calibrateIntent=new Intent(this,Calibrator.class);
+			startActivity(calibrateIntent);
 			break;
 			
 		default:

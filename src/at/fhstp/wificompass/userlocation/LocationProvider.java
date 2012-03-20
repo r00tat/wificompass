@@ -9,18 +9,20 @@ import at.fhstp.wificompass.model.Location;
 
 
 /**
- * @author Paul Woelfel
+ * @author Paul Woelfel (paul@woelfel.at)
  */
 public interface LocationProvider {
 	
 	/**
 	 * set the LocationService, which should be updated on location changes
+	 * this is a callback by LocationService
 	 * @param service update this service
 	 */
 	public void setLocationService(LocationService service);
 	
 	/**
 	 * remove the LocationService, which should be updated on location changes
+	 * this is a callback by LocationService
 	 * @param service service to update
 	 */
 	public void unsetLocationService(LocationService service);
@@ -29,30 +31,45 @@ public interface LocationProvider {
 	/**
 	 * return the Name of the Location Provider
 	 */
-	 java.lang.String getProviderName();
+	 public java.lang.String getProviderName();
 	 
 	 
 	 /**
 	  * get X coordinate
 	 * @return x coordinate
 	 */
-	float getLocationX();
+	 public float getLocationX();
 	 
 	 /**
 	  * get Y coordinate
 	 * @return y coordinate
 	 */
-	float getLocationY();
+	 public float getLocationY();
 
 	/**
 	 * get Z coordinate if applicable, otherwise zero
 	 * @return z coordinate
 	 */
-	float getLocationZ();
+	 public float getLocationZ();
 	
 	/**
 	 * get current Location of the user
 	 * @return current location
 	 */
-	Location getLocation();
+	 public Location getLocation();
+	
+	 
+	/**
+	 * starts the location provider
+	 */
+	public void start();
+	
+	
+	/**
+	 * stops the location provider
+	 */
+	public void stop();
+	
+
+	
 }

@@ -180,5 +180,13 @@
     <string name="project_site_dialog_add_known_ap_ssid">SSID</string>
     <string name="project_site_dialog_add_known_ap_bssid">BSSID</string>
     <string name="access_point_format">%1$s [%2$s]\n%3$dMHz %4$s\nPosition: %5$.2f/%6$.2f m</string>
+    <string name="main_menu_calibrate">calibrate sensors</string>
+    <string name="calibrator_label">Sensor Calibration</string>
+    <string name="calibrator_tv_peak">Set peak value: (current)</string>
+    <string name="calibrator_tv_filter">Set filter value: (current)</string>
+    <string name="calibrator_tv_step_timeout">Set step timout: (current)</string>
+    <string name="project_site_start_step_detect">start walking</string>
+    <string name="project_site_stop_step_detect">stop walking</string>
+    <string name="project_site_menu_set_north">set north</string>
 
 </resources>

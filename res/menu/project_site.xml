@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/project_site_menu_change_name" android:title="@string/project_site_menu_change_name"></item>
     <item android:id="@+id/project_site_menu_change_size" android:icon="@drawable/resize" android:title="@string/project_site_menu_change_size"></item><item android:id="@+id/project_site_menu_set_scale_of_map" android:title="@string/project_site_set_scale_of_map"></item><item android:id="@+id/project_site_menu_set_background" android:title="@string/project_site_menu_set_background" android:icon="@drawable/map"></item><item android:id="@+id/project_site_menu_save" android:icon="@android:drawable/ic_menu_save" android:title="@string/project_site_menu_save"></item>
+    <item android:id="@+id/project_site_menu_set_north" android:title="@string/project_site_menu_set_north"></item>
     
     
     

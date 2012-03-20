@@ -10,13 +10,8 @@ import java.util.Date;
 import android.content.Context;
 import at.fhstp.wificompass.model.Location;
 
-public class ManualLocationProvider implements LocationProvider {
+public class ManualLocationProvider extends LocationProviderImpl {
 	
-	protected Location loc;
-	
-	protected LocationService locationService;
-	
-	protected Context ctx;
 	
 	public ManualLocationProvider(Context ctx){
 		this(ctx,LocationServiceFactory.getLocationService());
@@ -24,53 +19,13 @@ public class ManualLocationProvider implements LocationProvider {
 	
 	
 	public ManualLocationProvider(Context ctx,LocationService locationService){
-		loc=new Location();
-		loc.setProvider(getProviderName());
-		loc.setAccurancy(0);
-		this.ctx=ctx;
-		locationService.registerProvider(this);
-	}
-	
-
-	@Override
-	public void setLocationService(LocationService service) {
-		locationService=service;
-	}
-
-	@Override
-	public void unsetLocationService(LocationService service) {
-		locationService=null;
-	}
-
-	@Override
-	public String getProviderName() {
-		return this.getClass().getSimpleName();
-	}
-
-	@Override
-	public float getLocationX() {
-		return loc.getX();
-	}
-
-	@Override
-	public float getLocationY() {
-		return loc.getY();
-	}
-
-	@Override
-	public float getLocationZ() {
-		return 0;
-	}
-
-	@Override
-	public Location getLocation() {
-		return loc;
+		super(ctx,locationService);
+		
 	}
 	
 	public void updateCurrentPosition(float x,float y){
-		loc.setX(x);
-		loc.setY(y);
-		loc.setTimestamp(new Date());
+		loc=new Location(getProviderName(),x,y,0,new Date());
+		if(locationService!=null)
 		locationService.updateLocation(loc);
 	}
 

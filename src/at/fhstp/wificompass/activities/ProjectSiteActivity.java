@@ -38,7 +38,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.exceptions.SiteNotFoundException;
@@ -51,10 +50,12 @@ import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.triangulation.LocalSignalStrengthGradientTriangulation;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
+import at.fhstp.wificompass.userlocation.StepDetectionProvider;
 import at.fhstp.wificompass.view.AccessPointDrawable;
 import at.fhstp.wificompass.view.MeasuringPointDrawable;
 import at.fhstp.wificompass.view.MultiTouchDrawable;
 import at.fhstp.wificompass.view.MultiTouchView;
+import at.fhstp.wificompass.view.NorthDrawable;
 import at.fhstp.wificompass.view.RefreshableView;
 import at.fhstp.wificompass.view.ScaleLineDrawable;
 import at.fhstp.wificompass.view.SiteMapDrawable;
@@ -108,6 +109,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected float scalerDistance;
 
 	protected TriangulationTask triangulationTask = null;
+	
+	protected StepDetectionProvider stepDetectionProvider = null;
+	
+	protected NorthDrawable northDrawable =null;
 
 	/*
 	 * (non-Javadoc)
@@ -133,6 +138,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			if (site == null) {
 				throw new SiteNotFoundException("The ProjectSite Id could not be found in the database!");
 			}
+			
+			MultiTouchDrawable.setGridSpacing(site.getGridSpacingX(), site.getGridSpacingY());
 
 			map = new SiteMapDrawable(this, this);
 
@@ -161,6 +168,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			} else {
 				user.setRelativePosition(map.getWidth() / 2, map.getHeight() / 2);
 			}
+			
+			stepDetectionProvider = new StepDetectionProvider(this);
 
 
 			initUI();
@@ -183,6 +192,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		((Button) findViewById(R.id.project_site_calculate_ap_positions_button)).setOnClickListener(this);
 
 		((Button) findViewById(R.id.project_site_add_known_ap)).setOnClickListener(this);
+		
+		((Button) findViewById(R.id.project_site_step_detect)).setOnClickListener(this);
 
 		multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
 		multiTouchView.setRearrangable(false);
@@ -215,6 +226,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		log.debug("setting context");
 		
 		multiTouchView.loadImages(this);
+//		stepDetectionProvider.start();
 	}
 
 	@Override
@@ -272,6 +284,20 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_add_known_ap:
 			showDialog(DIALOG_ADD_KNOWN_AP);
+			break;
+			
+		case R.id.project_site_step_detect:
+			
+			if(stepDetectionProvider.isRunning()){
+				//stop!
+				stepDetectionProvider.stop();
+				((Button)findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_start_step_detect);
+			}else {
+				// start
+				stepDetectionProvider.start();
+				((Button)findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
+			}
+			
 			break;
 		}
 	}
@@ -344,6 +370,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	}
 
 	protected void setScaleOfMap(float scale) {
+		site.setGridSpacingX(scalerDistance / scale);
+		site.setGridSpacingY(scalerDistance / scale);
 		MultiTouchDrawable.setGridSpacing(scalerDistance / scale, scalerDistance / scale);
 		multiTouchView.invalidate();
 	}
@@ -626,6 +654,23 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			return false;
 
+		case R.id.project_site_menu_set_north:
+			
+			if(northDrawable == null){
+				// create the icon the set the north
+				northDrawable=new NorthDrawable(this, map);
+				northDrawable.setRelativePosition(site.getWidth()/2, site.getHeight()/2);
+				
+			}else {
+				map.removeSubDrawable(northDrawable);
+				site.setNorth(northDrawable.getAngle()* 180.0f / (float) Math.PI);
+				northDrawable = null;
+			}
+			
+			multiTouchView.invalidate();
+			
+			return false;
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -641,6 +686,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected void onPause() {
 		super.onPause();
 		multiTouchView.unloadImages();
+		stepDetectionProvider.stop();
 		saveProjectSite();
 	}
 
