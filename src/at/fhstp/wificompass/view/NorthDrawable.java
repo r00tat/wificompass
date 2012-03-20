@@ -8,7 +8,6 @@ package at.fhstp.wificompass.view;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 
 /**
@@ -31,7 +30,8 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 		this.height = icon.getBitmap().getHeight();
 		this.setPivot(0.5f,0.5f);
 		
-//		okPopup=new OkDrawable(ctx,this);
+		okPopup=new OkDrawable(ctx,this);
+		okPopup.setRelativePosition(width/2, height/2);
 		
 	}
 
@@ -80,19 +80,6 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 		// save north to site
 		
 	}
-
-	/* (non-Javadoc)
-	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#setPos(float, float, float, float, float, int, boolean)
-	 */
-	@Override
-	protected boolean setPos(float centerX, float centerY, float scaleX, float scaleY, float angle, int flags, boolean isDraggedOrPinched) {
-		Logger.d("old: "+this.centerX+" "+this.centerY+" "+this.scaleX+" "+this.scaleY+" "+this.angle);
-		Logger.d("new: "+centerX+" "+centerY+" "+scaleX+" "+scaleY+" "+angle+" "+Integer.toBinaryString(flags)+" "+(isDraggedOrPinched?"t":"f"));
-		boolean ret= super.setPos(centerX, centerY, scaleX, scaleY, angle, flags, isDraggedOrPinched);
-		Logger.d("set: "+this.centerX+" "+this.centerY+" "+this.scaleX+" "+this.scaleY+" "+this.angle);
-		return ret;
-	}
-	
 	
 
 }

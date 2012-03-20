@@ -486,6 +486,8 @@ public abstract class MultiTouchDrawable {
 		float ws = (width / 2) * scaleX, hs = (height / 2) * scaleY;
 		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX + ws, newMaxY = centerY + hs;
 
+		float scaleXChange=1,scaleYChange=1,angleChange=0;
+		
 		// Min and max values need to be set when item is dragged or scaled
 		if ((flags & FLAG_FORCEXY) != 0 || this.isDragable() || (flags & FLAG_FORCESCALE) != 0 || this.isScalable()) {
 			this.minX = newMinX;
@@ -501,29 +503,29 @@ public abstract class MultiTouchDrawable {
 		}
 
 		if ((flags & FLAG_FORCESCALE) != 0 || this.isScalable()) {
+			scaleXChange=scaleX/this.scaleX;
+			scaleYChange=scaleY/this.scaleY;
 			this.scaleX = scaleX;
 			this.scaleY = scaleY;
 			this.setScale(scaleX, scaleY);
 		}
 
 		if ((flags & FLAG_FORCEROTATE) != 0 || this.isRotateable()) {
+			angleChange=angle-this.angle;
 			this.angle = angle;
 			this.setAngle(angle);
 		}
 
-		if (isDraggedOrPinched && this.hasSuperDrawable()) {
-			PointF relativePosition = getRelativePositionToSuperobject();
-			this.setRelativePosition(relativePosition.x, relativePosition.y);
-		}
+//		if (isDraggedOrPinched && this.hasSuperDrawable()) {
+//			PointF relativePosition = getRelativePositionToSuperobject();
+//			this.setRelativePosition(relativePosition.x, relativePosition.y);
+//		}
 
 		// Iterate through the subobjects and change their position
-		Iterator<MultiTouchDrawable> iterator = subDrawables.iterator();
-		while (iterator.hasNext()) {
-			MultiTouchDrawable subobject = iterator.next();
-
+		for (MultiTouchDrawable subobject : subDrawables) {
 			PointF absolutePosition = this.getAbsolutePositionOfSubobject(subobject);
-
-			subobject.setPos(absolutePosition.x, absolutePosition.y, 1, 1, 0, FLAG_FORCEXY, false);
+			
+			subobject.setPos(absolutePosition.x, absolutePosition.y, subobject.scaleX*scaleXChange, subobject.scaleY*scaleYChange, subobject.angle+angleChange, FLAG_FORCEXY, false);
 		}
 
 		return true;

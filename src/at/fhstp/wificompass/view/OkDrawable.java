@@ -15,7 +15,7 @@ import at.fhstp.wificompass.R;
 /**
  * @author Paul Woelfel (paul@woelfel.at)
  */
-public class OkDrawable extends MultiTouchDrawable implements Popup {
+public class OkDrawable extends MultiTouchDrawable {
 
 	protected BitmapDrawable icon;
 
@@ -86,12 +86,10 @@ public class OkDrawable extends MultiTouchDrawable implements Popup {
 		return false;
 	}
 
-	@Override
 	public void setActive(boolean isPopupActive) {
 		active = isPopupActive;
 	}
 
-	@Override
 	public boolean isActive() {
 		return active;
 	}
