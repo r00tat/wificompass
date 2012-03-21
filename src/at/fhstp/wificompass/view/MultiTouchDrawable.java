@@ -516,6 +516,12 @@ public abstract class MultiTouchDrawable {
 			scaleY = 1.0f;
 		}
 
+		// Reset the angle if the drawable is not rotatable (for the same reason
+		// as above)
+		if (!isRotateable()) {
+			angle = 0.0f;
+		}
+
 		float ws = (width / 2) * scaleX, hs = (height / 2) * scaleY;
 		float newMinX = centerX - ws, newMinY = centerY - hs, newMaxX = centerX
 				+ ws, newMaxY = centerY + hs;
@@ -588,13 +594,33 @@ public abstract class MultiTouchDrawable {
 
 		float newAngle = angle + angleBeforeRotate;
 
-		float newY = (float) (centerY + radius * Math.sin(newAngle));
 		float newX = (float) (centerX + radius * Math.cos(newAngle));
+		float newY = (float) (centerY + radius * Math.sin(newAngle));
 
 		// Move the drawable according to it's pivot point if one is set
 		if (subobject.isCustomPivotUsed()) {
-			newX -= subobject.getPivotXRelativeToCenter() * subobject.scaleX;
-			newY -= subobject.getPivotYRelativeToCenter() * subobject.scaleY;
+			if (subobject.angle == 0.0f) {
+				newX -= subobject.getPivotXRelativeToCenter()
+						* subobject.scaleX;
+				newY -= subobject.getPivotYRelativeToCenter()
+						* subobject.scaleY;
+			} else {
+				float absolutePivotX = subobject.getPivotXRelativeToCenter()
+						* subobject.scaleX;
+				float absolutePivotY = subobject.getPivotYRelativeToCenter()
+						* subobject.scaleY;
+
+				float pivotRadius = (float) Math.sqrt(Math.pow(absolutePivotX,
+						2) + Math.pow(absolutePivotY, 2));
+
+				float pivotAngleAfterRotation = subobject.angle
+						+ (float) Math.atan2(absolutePivotY, absolutePivotX);
+
+				newX -= (float) (pivotRadius * Math
+						.cos(pivotAngleAfterRotation));
+				newY -= (float) (pivotRadius * Math
+						.sin(pivotAngleAfterRotation));
+			}
 		}
 
 		return new PointF(newX, newY);
@@ -604,12 +630,32 @@ public abstract class MultiTouchDrawable {
 
 		float x = centerX;
 		float y = centerY;
-		
+
 		if (this.isCustomPivotUsed()) {
-			x += + getPivotXRelativeToCenter() * this.scaleX;
-			x += + getPivotYRelativeToCenter() * this.scaleY;
+			if (this.angle == 0.0f) {
+				x += this.getPivotXRelativeToCenter()
+						* this.scaleX;
+				y += this.getPivotYRelativeToCenter()
+						* this.scaleY;
+			} else {
+				float absolutePivotX = this.getPivotXRelativeToCenter()
+						* this.scaleX;
+				float absolutePivotY = this.getPivotYRelativeToCenter()
+						* this.scaleY;
+
+				float pivotRadius = (float) Math.sqrt(Math.pow(absolutePivotX,
+						2) + Math.pow(absolutePivotY, 2));
+
+				float pivotAngleAfterRotation = this.angle
+						+ (float) Math.atan2(absolutePivotY, absolutePivotX);
+
+				x += (float) (pivotRadius * Math
+						.cos(pivotAngleAfterRotation));
+				x += (float) (pivotRadius * Math
+						.sin(pivotAngleAfterRotation));
+			}
 		}
-				
+
 		float superAngle = superDrawable.angle;
 		float angleToCenter = (float) Math.atan2(y - superDrawable.centerY, x
 				- superDrawable.centerX);
