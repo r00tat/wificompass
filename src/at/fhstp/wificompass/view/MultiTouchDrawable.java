@@ -593,8 +593,8 @@ public abstract class MultiTouchDrawable {
 
 		// Move the drawable according to it's pivot point if one is set
 		if (subobject.isCustomPivotUsed()) {
-			newX -= subobject.getPivotXRelativeToCenter();
-			newY -= subobject.getPivotYRelativeToCenter();
+			newX -= subobject.getPivotXRelativeToCenter() * subobject.scaleX;
+			newY -= subobject.getPivotYRelativeToCenter() * subobject.scaleY;
 		}
 
 		return new PointF(newX, newY);
@@ -603,10 +603,10 @@ public abstract class MultiTouchDrawable {
 	protected PointF getRelativePositionToSuperobject() {
 
 		float x = (this.isCustomPivotUsed()) ? centerX
-				+ getPivotXRelativeToCenter() : centerX;
+				+ getPivotXRelativeToCenter() * this.scaleX : centerX;
 		float y = (this.isCustomPivotUsed()) ? centerY
-				+ getPivotYRelativeToCenter() : centerY;
-
+				+ getPivotYRelativeToCenter() * this.scaleY : centerY;
+		
 		float superAngle = superDrawable.angle;
 		float angleToCenter = (float) Math.atan2(y - superDrawable.centerY, x
 				- superDrawable.centerX);
@@ -624,7 +624,7 @@ public abstract class MultiTouchDrawable {
 				.getHeight() / 2);
 
 		PointF relativePosition = new PointF(newX, newY);// xBeforeRotate,
-															// yBeforeRotate);
+
 		return relativePosition;
 	}
 
