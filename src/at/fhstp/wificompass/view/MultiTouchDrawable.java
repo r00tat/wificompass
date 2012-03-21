@@ -602,11 +602,14 @@ public abstract class MultiTouchDrawable {
 
 	protected PointF getRelativePositionToSuperobject() {
 
-		float x = (this.isCustomPivotUsed()) ? centerX
-				+ getPivotXRelativeToCenter() * this.scaleX : centerX;
-		float y = (this.isCustomPivotUsed()) ? centerY
-				+ getPivotYRelativeToCenter() * this.scaleY : centerY;
+		float x = centerX;
+		float y = centerY;
 		
+		if (this.isCustomPivotUsed()) {
+			x += + getPivotXRelativeToCenter() * this.scaleX;
+			x += + getPivotYRelativeToCenter() * this.scaleY;
+		}
+				
 		float superAngle = superDrawable.angle;
 		float angleToCenter = (float) Math.atan2(y - superDrawable.centerY, x
 				- superDrawable.centerX);
