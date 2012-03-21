@@ -605,21 +605,11 @@ public abstract class MultiTouchDrawable {
 				newY -= subobject.getPivotYRelativeToCenter()
 						* subobject.scaleY;
 			} else {
-				float absolutePivotX = subobject.getPivotXRelativeToCenter()
-						* subobject.scaleX;
-				float absolutePivotY = subobject.getPivotYRelativeToCenter()
-						* subobject.scaleY;
+				PointF pivotPosition = subobject
+						.getPivotPointPositionConsideringScalingAndAngle();
 
-				float pivotRadius = (float) Math.sqrt(Math.pow(absolutePivotX,
-						2) + Math.pow(absolutePivotY, 2));
-
-				float pivotAngleAfterRotation = subobject.angle
-						+ (float) Math.atan2(absolutePivotY, absolutePivotX);
-
-				newX -= (float) (pivotRadius * Math
-						.cos(pivotAngleAfterRotation));
-				newY -= (float) (pivotRadius * Math
-						.sin(pivotAngleAfterRotation));
+				newX -= pivotPosition.x;
+				newY -= pivotPosition.y;
 			}
 		}
 
@@ -633,26 +623,14 @@ public abstract class MultiTouchDrawable {
 
 		if (this.isCustomPivotUsed()) {
 			if (this.angle == 0.0f) {
-				x += this.getPivotXRelativeToCenter()
-						* this.scaleX;
-				y += this.getPivotYRelativeToCenter()
-						* this.scaleY;
+				x += this.getPivotXRelativeToCenter() * this.scaleX;
+				y += this.getPivotYRelativeToCenter() * this.scaleY;
 			} else {
-				float absolutePivotX = this.getPivotXRelativeToCenter()
-						* this.scaleX;
-				float absolutePivotY = this.getPivotYRelativeToCenter()
-						* this.scaleY;
+				PointF pivotPosition = this
+						.getPivotPointPositionConsideringScalingAndAngle();
 
-				float pivotRadius = (float) Math.sqrt(Math.pow(absolutePivotX,
-						2) + Math.pow(absolutePivotY, 2));
-
-				float pivotAngleAfterRotation = this.angle
-						+ (float) Math.atan2(absolutePivotY, absolutePivotX);
-
-				x += (float) (pivotRadius * Math
-						.cos(pivotAngleAfterRotation));
-				x += (float) (pivotRadius * Math
-						.sin(pivotAngleAfterRotation));
+				x += pivotPosition.x;
+				y += pivotPosition.y;
 			}
 		}
 
@@ -671,10 +649,24 @@ public abstract class MultiTouchDrawable {
 				.getWidth() / 2);
 		float newY = (float) (radius * Math.sin(angle * -1) + superDrawable
 				.getHeight() / 2);
+		
+		return new PointF(newX, newY);
+	}
 
-		PointF relativePosition = new PointF(newX, newY);// xBeforeRotate,
+	public PointF getPivotPointPositionConsideringScalingAndAngle() {
+		float absolutePivotX = this.getPivotXRelativeToCenter() * this.scaleX;
+		float absolutePivotY = this.getPivotYRelativeToCenter() * this.scaleY;
 
-		return relativePosition;
+		float pivotRadius = (float) Math.sqrt(Math.pow(absolutePivotX, 2)
+				+ Math.pow(absolutePivotY, 2));
+
+		float pivotAngleAfterRotation = this.angle
+				+ (float) Math.atan2(absolutePivotY, absolutePivotX);
+
+		float x = (float) (pivotRadius * Math.cos(pivotAngleAfterRotation));
+		float y = (float) (pivotRadius * Math.sin(pivotAngleAfterRotation));
+
+		return new PointF(x, y);
 	}
 
 	public void recalculatePositions() {
