@@ -561,12 +561,6 @@ public abstract class MultiTouchDrawable {
 		for (MultiTouchDrawable subobject : subDrawables) {
 			PointF absolutePosition = this
 					.getAbsolutePositionOfSubobject(subobject);
-
-			if (subobject.getRelativeX() == 30.0f) {
-				Logger.d("Scale: " + subobject.scaleX + ", scaleXChange: "
-						+ scaleXChange);
-			}
-
 			subobject.setPos(absolutePosition.x, absolutePosition.y,
 					subobject.scaleX * scaleXChange, subobject.scaleY
 							* scaleYChange, subobject.angle + angleChange,
