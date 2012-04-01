@@ -19,8 +19,12 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 	protected BitmapDrawable icon;
 	
 	protected OkDrawable okPopup;
+	
+	protected TextPopupDrawable textPopup;
 
 	protected ProjectSite site;
+	
+	
 	/**
 	 * @param context
 	 * @param superDrawable
@@ -35,6 +39,13 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 		
 		okPopup=new OkDrawable(ctx,this);
 		okPopup.setRelativePosition(width/2, height/2);
+		
+		
+		textPopup=new TextPopupDrawable(ctx,this,ctx.getString(R.string.north_drawable_north_text, angle*180/Math.PI));
+		textPopup.setWidth(80);
+		textPopup.setActive(true);
+		textPopup.setPersistent(true);
+//		textPopup.setRelativePosition(10,0);
 		
 	}
 
@@ -87,6 +98,16 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 		}
 		site.setNorth(mapAngle);
 		this.deleteDrawable();
+	}
+
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#setAngle(float)
+	 */
+	@Override
+	public void setAngle(float angle) {
+		super.setAngle(angle);
+		if(textPopup!=null)
+		textPopup.setPopupText(ctx.getString(R.string.north_drawable_north_text, this.angle*180/Math.PI));
 	}
 	
 

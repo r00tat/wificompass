@@ -308,10 +308,14 @@ public class ProjectSite implements XMLSerializable {
 	}
 
 	/**
+	 * <p>Define the the angle to the north of the map and the magnetic north</p>
+	 * <p>The angle must be between 0 and 2*π</p>
 	 * @param north the north to set
 	 */
 	public void setNorth(float north) {
-		this.north = north;
+		this.north = (float) (north%(2*Math.PI));
+		if(this.north<0)
+			this.north+=2*Math.PI;
 	}
 
 }

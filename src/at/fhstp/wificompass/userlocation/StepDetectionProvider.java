@@ -51,13 +51,13 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 		
 		float curX=locationService.getLocation().getX(),curY=locationService.getLocation().getY();
 		
-		float angle=(float) (compDir-locationService.getRelativeNorth());
+		float angle=(float) ((compDir/ 180.0f * (float) Math.PI)-locationService.getRelativeNorth());
 		
-		float dx=(float) (Math.sin(angle/ 180.0f * (float) Math.PI)*step)*locationService.getGridSpacingX();
-		float dy=(float) (Math.cos(angle/ 180.0f * (float) Math.PI)*step)*locationService.getGridSpacingY();
+		float dx=(float) (Math.sin(angle)*step)*locationService.getGridSpacingX();
+		float dy=(float) (Math.cos(angle)*step)*locationService.getGridSpacingY();
 		
-		// TODO check calculations
-//		Logger.d("angle: "+angle+" sin: "+Math.sin(angle/ 180.0f * (float) Math.PI)+" cos: "+Math.cos(angle/ 180.0f * (float) Math.PI)+ "step: "+step+" gridSpacing: "+locationService.getGridSpacingX()+","+locationService.getGridSpacingY());;
+		
+//		Logger.d("angle: "+angle+" "+(angle*180f/Math.PI)+" sin: "+Math.sin(angle)+" cos: "+Math.cos(angle)+ "step: "+step+" gridSpacing: "+locationService.getGridSpacingX()+","+locationService.getGridSpacingY());
 		Logger.d("walked x: "+dx+" y:"+dy);
 		
 		loc=new Location(getProviderName(),curX+dx,curY-dy,0,null);

@@ -77,7 +77,8 @@ public interface LocationService {
 	
 	
 	/**
-	 * define in which angle the magnetic north is to the map
+	 * <p>define in which angle the magnetic north is to the map</p>
+	 * <p>The angle must be between 0 and 2*π.</p>
 	 * @param angle
 	 */
 	void setRelativeNorth(float angle);

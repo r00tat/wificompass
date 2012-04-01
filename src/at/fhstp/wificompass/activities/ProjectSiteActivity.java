@@ -700,7 +700,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				
 			}else {
 				map.removeSubDrawable(northDrawable);
-				site.setNorth(northDrawable.getAngle()* 180.0f / (float) Math.PI);
+				site.setNorth(northDrawable.getAngle());
 				LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
 				northDrawable = null;
 			}

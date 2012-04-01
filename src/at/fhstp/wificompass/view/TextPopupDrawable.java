@@ -14,7 +14,7 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import at.fhstp.wificompass.Logger;
 
-public class PopupDrawable extends MultiTouchDrawable implements Popup {
+public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 
 	protected static final int padding = 5;
 
@@ -23,23 +23,24 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 	protected TextPaint tp;
 
 	protected boolean isActive;
-	
+
 	protected StaticLayout layout;
 
+	protected boolean persistent = false;
 
-//	public PopupDrawable(Context ctx, String text) {
-//		super(ctx);
-//		init();
-//		setPopupText(text);
-//	}
+	// public PopupDrawable(Context ctx, String text) {
+	// super(ctx);
+	// init();
+	// setPopupText(text);
+	// }
 
-	public PopupDrawable(Context ctx, MultiTouchDrawable superDrawable, String text) {
+	public TextPopupDrawable(Context ctx, MultiTouchDrawable superDrawable, String text) {
 		super(ctx, superDrawable);
 		init();
 		setPopupText(text);
 	}
-	
-	public PopupDrawable(Context ctx, MultiTouchDrawable superDrawable) {
+
+	public TextPopupDrawable(Context ctx, MultiTouchDrawable superDrawable) {
 		super(ctx, superDrawable);
 		init();
 	}
@@ -56,12 +57,12 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 		tp.setColor(Color.BLACK);
 		tp.setTextSize(14);
 
-//		tv = new TextView(ctx);
-//		tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-//		tvLayout = new RelativeLayout(ctx);
-		
-		if(superDrawable!=null){
-			this.setRelativePosition(superDrawable.width / 2 , -10);
+		// tv = new TextView(ctx);
+		// tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		// tvLayout = new RelativeLayout(ctx);
+
+		if (superDrawable != null) {
+			this.setRelativePosition(superDrawable.width / 2, -10);
 		}
 
 	}
@@ -70,7 +71,7 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 	public void draw(Canvas canvas) {
 		if (isActive) {
 			canvas.save();
-			
+
 			canvas.translate(minX, minY);
 
 			Paint paint = new Paint();
@@ -92,7 +93,6 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 
 			canvas.translate(padding, padding);
 
-			
 			layout.draw(canvas);
 
 			// tv.draw(canvas);
@@ -141,8 +141,8 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 	 */
 	public void setPopupText(String popupText) {
 		this.popupText = popupText;
-		layout=new StaticLayout(popupText, tp, width - 2 * padding, Layout.Alignment.ALIGN_NORMAL, 1f, 0f, true);
-		this.height=layout.getHeight()+2*padding;
+		layout = new StaticLayout(popupText, tp, width - 2 * padding, Layout.Alignment.ALIGN_NORMAL, 1f, 0f, true);
+		this.height = layout.getHeight() + 2 * padding;
 	}
 
 	/*
@@ -154,18 +154,7 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 	public boolean onTouch(PointInfo pointinfo) {
 		if (!isActive)
 			return false;
-		Logger.d("Popup touched!");
-		if (pointinfo.isMultiTouch() == false && pointinfo.getNumTouchPoints() == 1
-		// pointinfo.getAction() == 0 &&
-
-		) {
-			Logger.d("disableing myself");
-			isActive = false;
-			return true;
-		}
-
 		return super.onTouch(pointinfo);
-
 	}
 
 	/*
@@ -178,14 +167,15 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 		if (!isActive)
 			return false;
 		else {
-			
+
 			return super.containsPoint(scrnX, scrnY);
 		}
 	}
 
 	@Override
 	public void setActive(boolean isPopupActive) {
-		isActive = isPopupActive;
+		if (!persistent)
+			isActive = isPopupActive;
 	}
 
 	@Override
@@ -193,13 +183,42 @@ public class PopupDrawable extends MultiTouchDrawable implements Popup {
 		return isActive;
 	}
 
-	
-	public int getWidth(){
+	public int getWidth() {
 		return width;
 	}
-	
-	public void setWidth(int width){
-		this.width=width;
+
+	public void setWidth(int width) {
+		this.width = width;
 		this.setPopupText(popupText);
+	}
+
+	/**
+	 * @return the persistent
+	 */
+	public boolean isPersistent() {
+		return persistent;
+	}
+
+	/**
+	 * @param persistent
+	 *            the persistent to set
+	 */
+	public void setPersistent(boolean persistent) {
+		this.persistent = persistent;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onSingleTouch(org.metalev.multitouch.controller.MultiTouchController.PointInfo)
+	 */
+	@Override
+	public boolean onSingleTouch(PointInfo pointinfo) {
+		if (!persistent) {
+			Logger.d("disableing myself");
+			isActive = false;
+			return true;
+		} else
+			return super.onSingleTouch(pointinfo);
 	}
 }

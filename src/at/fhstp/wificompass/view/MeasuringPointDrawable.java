@@ -28,7 +28,7 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 
 	protected static final int padding = 5;
 
-	protected PopupDrawable popup;
+	protected TextPopupDrawable popup;
 
 	protected boolean isPopupActive = false;
 
@@ -64,7 +64,7 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 			sb.append("\n");
 		}
 
-		popup = new PopupDrawable(ctx, this, sb.toString());
+		popup = new TextPopupDrawable(ctx, this, sb.toString());
 		popup.setWidth(400);
 
 		popup.setActive(false);

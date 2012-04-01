@@ -19,7 +19,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 
 	protected BitmapDrawable icon;
 
-	protected PopupDrawable popup;
+	protected TextPopupDrawable popup;
 
 	protected AccessPoint accessPoint;
 
@@ -61,7 +61,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 		if (accessPoint != null && accessPoint.getLocation() != null)
 			super.setRelativePosition(accessPoint.getLocation().getX(), accessPoint.getLocation().getY());
 
-		popup = new PopupDrawable(ctx, this, this.getPopupText());
+		popup = new TextPopupDrawable(ctx, this, this.getPopupText());
 		popup.setWidth(250);
 		popup.setActive(false);
 

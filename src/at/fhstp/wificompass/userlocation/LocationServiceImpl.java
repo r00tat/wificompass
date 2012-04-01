@@ -110,9 +110,14 @@ public class LocationServiceImpl implements LocationService {
 		return providers;
 	}
 
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.userlocation.LocationService#setRelativeNorth(float)
+	 */
 	@Override
 	public void setRelativeNorth(float angle) {
-		this.angle=angle;
+		this.angle = (float) (angle%(2*Math.PI));
+		if(this.angle<0)
+			this.angle+=2*Math.PI;
 	}
 
 	@Override

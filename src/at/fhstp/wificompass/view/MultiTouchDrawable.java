@@ -230,7 +230,14 @@ public abstract class MultiTouchDrawable {
 	 * @param angle
 	 */
 	public void setAngle(float angle) {
-		this.angle = angle;
+//		this.angle = angle;
+		// we only want positive angles, so calculation are easier
+		// angle must be in the range from 0 to 2*PI or in degrees 0° to 359° 
+		// to convert the angle from radiants to degrees use angle*180/Math.PI
+		this.angle =(float) (angle%(Math.PI*2));
+		if(this.angle<0)
+			this.angle+=Math.PI*2;
+		
 	}
 
 	/**
@@ -517,7 +524,7 @@ public abstract class MultiTouchDrawable {
 
 		if ((flags & FLAG_FORCEROTATE) != 0 || this.isRotateable()) {
 			angleChange = angle - this.angle;
-			this.angle = angle;
+//			this.angle = angle;
 			this.setAngle(angle);
 		}
 
