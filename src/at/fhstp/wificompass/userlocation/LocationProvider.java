@@ -71,5 +71,11 @@ public interface LocationProvider {
 	public void stop();
 	
 
+	/**
+	 * set a listener, which will be informed, if the location has changed
+	 * @param listener
+	 */
+	public void setLocationChangeListener(LocationChangeListener listener);
+	
 	
 }

@@ -18,6 +18,8 @@ public abstract class LocationProviderImpl implements LocationProvider {
 	
 	protected boolean running=false;
 	
+	protected LocationChangeListener listener=null;
+	
 	public LocationProviderImpl(Context ctx){
 		this(ctx,LocationServiceFactory.getLocationService());
 	}
@@ -91,6 +93,15 @@ public abstract class LocationProviderImpl implements LocationProvider {
 	 */
 	public boolean isRunning() {
 		return running;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.userlocation.LocationProvider#setLocationChangeListener(at.fhstp.wificompass.userlocation.LocationChangeListener)
+	 */
+	@Override
+	public void setLocationChangeListener(LocationChangeListener listener) {
+		this.listener=listener;
 	}
 
 }

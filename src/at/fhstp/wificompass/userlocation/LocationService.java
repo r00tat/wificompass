@@ -76,4 +76,35 @@ public interface LocationService {
 	List<LocationProvider> getLocationProviders();
 	
 	
+	/**
+	 * define in which angle the magnetic north is to the map
+	 * @param angle
+	 */
+	void setRelativeNorth(float angle);
+	
+	/**
+	 * @return angle of the direction to magnetic north
+	 */
+	float getRelativeNorth();
+	
+	/**
+	 * <p>set the grid spacing, defining one meter in the grid.<br />
+	 * The default value is 30 for x and y, meaning that one meter are 30 pixels.
+	 * </p> 
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void setGridSpacing(float x,float y);
+	
+	/**
+	 * @return the x grid spacing
+	 */
+	public float getGridSpacingX();
+	
+	/**
+	 * @return the y grid spacing
+	 */
+	public float getGridSpacingY();
+	
 }

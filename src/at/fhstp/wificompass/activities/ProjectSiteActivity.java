@@ -24,6 +24,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,6 +51,7 @@ import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.triangulation.LocalSignalStrengthGradientTriangulation;
+import at.fhstp.wificompass.userlocation.LocationChangeListener;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
 import at.fhstp.wificompass.userlocation.StepDetectionProvider;
 import at.fhstp.wificompass.view.AccessPointDrawable;
@@ -67,7 +70,7 @@ import at.woelfel.philip.filebrowser.FileBrowser;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
-public class ProjectSiteActivity extends Activity implements OnClickListener, WifiResultCallback, RefreshableView {
+public class ProjectSiteActivity extends Activity implements OnClickListener, WifiResultCallback, RefreshableView, LocationChangeListener {
 
 	protected Logger log = new Logger(ProjectSiteActivity.class);
 
@@ -77,6 +80,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4, DIALOG_SET_SCALE_OF_MAP = 5,
 			DIALOG_ADD_KNOWN_AP = 6;
+	
+	protected static final int MESSAGE_REFRESH=1;
 
 	protected static final int FILEBROWSER_REQUEST = 1;
 
@@ -113,6 +118,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected StepDetectionProvider stepDetectionProvider = null;
 	
 	protected NorthDrawable northDrawable =null;
+	
+	protected Handler hRefresh;
 
 	/*
 	 * (non-Javadoc)
@@ -169,8 +176,23 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				user.setRelativePosition(map.getWidth() / 2, map.getHeight() / 2);
 			}
 			
+			LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
+			LocationServiceFactory.getLocationService().setGridSpacing(site.getGridSpacingX(), site.getGridSpacingY());
 			stepDetectionProvider = new StepDetectionProvider(this);
+			stepDetectionProvider.setLocationChangeListener(this);
 
+			hRefresh = new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+					switch (msg.what) {
+					case MESSAGE_REFRESH:
+						/* Refresh UI */
+						if(multiTouchView!=null)
+							multiTouchView.invalidate();
+						break;
+					}
+				}
+			};
 
 			initUI();
 
@@ -372,6 +394,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected void setScaleOfMap(float scale) {
 		site.setGridSpacingX(scalerDistance / scale);
 		site.setGridSpacingY(scalerDistance / scale);
+		LocationServiceFactory.getLocationService().setGridSpacing(site.getGridSpacingX(), site.getGridSpacingY());
 		MultiTouchDrawable.setGridSpacing(scalerDistance / scale, scalerDistance / scale);
 		multiTouchView.invalidate();
 	}
@@ -658,12 +681,27 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			
 			if(northDrawable == null){
 				// create the icon the set the north
-				northDrawable=new NorthDrawable(this, map);
+				northDrawable=new NorthDrawable(this, map,site){
+
+					/* (non-Javadoc)
+					 * @see at.fhstp.wificompass.view.NorthDrawable#onOk()
+					 */
+					@Override
+					public void onOk() {
+						super.onOk();
+						northDrawable=null;
+						Toast.makeText(ctx, R.string.project_site_nort_set, Toast.LENGTH_SHORT).show();
+						saveProjectSite();
+					}
+					
+				};
 				northDrawable.setRelativePosition(site.getWidth()/2, site.getHeight()/2);
+				northDrawable.setAngle(map.getAngle()+site.getNorth());
 				
 			}else {
 				map.removeSubDrawable(northDrawable);
 				site.setNorth(northDrawable.getAngle()* 180.0f / (float) Math.PI);
+				LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
 				northDrawable = null;
 			}
 			
@@ -934,5 +972,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			progress.dismiss();
 			parent.setCalculatedAccessPoints(result);
 		}
+	}
+
+	@Override
+	public void locationChanged(Location loc) {
+		// info from StepDetectionProvider, that the location changed.
+		user.setRelativePosition(loc.getX(), loc.getY());
+		hRefresh.sendEmptyMessage(MESSAGE_REFRESH);
 	}
 }

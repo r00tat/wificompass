@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.R;
+import at.fhstp.wificompass.model.ProjectSite;
 
 /**
  * @author Paul Woelfel (paul@woelfel.at)
@@ -19,12 +20,14 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 	
 	protected OkDrawable okPopup;
 
+	protected ProjectSite site;
 	/**
 	 * @param context
 	 * @param superDrawable
 	 */
-	public NorthDrawable(Context context, MultiTouchDrawable superDrawable) {
+	public NorthDrawable(Context context, MultiTouchDrawable superDrawable,ProjectSite site) {
 		super(context, superDrawable);
+		this.site=site;
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.north);
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
@@ -78,7 +81,12 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 	@Override
 	public void onOk() {
 		// save north to site
-		
+		float mapAngle=angle;
+		if(superDrawable!=null){
+			mapAngle-=superDrawable.getAngle();
+		}
+		site.setNorth(mapAngle);
+		this.deleteDrawable();
 	}
 	
 

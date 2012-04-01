@@ -33,6 +33,13 @@ public class UserDrawable extends MultiTouchDrawable {
 		
 		// create a Location Provider to update the LocationService
 		locProvider=new ManualLocationProvider(ctx);
+//		locProvider.setLocationChangeListener(new LocationChangeListener() {
+//			
+//			@Override
+//			public void locationChanged(Location loc) {
+//				Logger.d("updated location to "+loc);
+//			}
+//		});
 	}
 	
 	@Override
@@ -42,19 +49,16 @@ public class UserDrawable extends MultiTouchDrawable {
 
 	@Override
 	public boolean isScalable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isRotateable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isDragable() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -63,14 +67,7 @@ public class UserDrawable extends MultiTouchDrawable {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#setRelativePosition(float, float)
-	 */
-	@Override
-	public void setRelativePosition(float relX, float relY) {
-		super.setRelativePosition(relX, relY);
-		locProvider.updateCurrentPosition(relX, relY);
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onSingleTouch(org.metalev.multitouch.controller.MultiTouchController.PointInfo)
@@ -79,6 +76,15 @@ public class UserDrawable extends MultiTouchDrawable {
 	public boolean onSingleTouch(PointInfo pointinfo) {
 		bringToFront();
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#onRelativePositionUpdate()
+	 */
+	@Override
+	protected void onRelativePositionUpdate() {
+		super.onRelativePositionUpdate();
+		locProvider.updateCurrentPosition(relX, relY);
 	}
 
 }

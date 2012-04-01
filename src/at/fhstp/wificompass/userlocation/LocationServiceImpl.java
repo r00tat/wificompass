@@ -22,6 +22,10 @@ public class LocationServiceImpl implements LocationService {
 	protected Vector<LocationProvider> providers;
 	
 	protected static final String TAG="LocationService";
+	
+	protected float angle=0f;
+	
+	protected float gridSpacingX=30f,gridSpacingY=30f;
 
 	/**
 	 * 
@@ -104,6 +108,32 @@ public class LocationServiceImpl implements LocationService {
 	@Override
 	public List<LocationProvider> getLocationProviders() {
 		return providers;
+	}
+
+	@Override
+	public void setRelativeNorth(float angle) {
+		this.angle=angle;
+	}
+
+	@Override
+	public float getRelativeNorth() {
+		return angle;
+	}
+
+	@Override
+	public void setGridSpacing(float x, float y) {
+		gridSpacingX=x;
+		gridSpacingY=y;
+	}
+
+	@Override
+	public float getGridSpacingX() {
+		return gridSpacingX;
+	}
+
+	@Override
+	public float getGridSpacingY() {
+		return gridSpacingY;
 	}
 
 }

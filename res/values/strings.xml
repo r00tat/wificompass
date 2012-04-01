@@ -188,5 +188,6 @@
     <string name="project_site_start_step_detect">start walking</string>
     <string name="project_site_stop_step_detect">stop walking</string>
     <string name="project_site_menu_set_north">set north</string>
+    <string name="project_site_nort_set">north set!</string>
 
 </resources>

@@ -7,6 +7,7 @@ package at.fhstp.wificompass.userlocation;
 
 import android.content.Context;
 import at.fhstp.wificompass.Logger;
+import at.fhstp.wificompass.model.Location;
 import de.uvwxy.footpath.core.StepDetection;
 import de.uvwxy.footpath.core.StepTrigger;
 
@@ -14,6 +15,9 @@ import de.uvwxy.footpath.core.StepTrigger;
 public class StepDetectionProvider extends LocationProviderImpl implements StepTrigger {
 	
 	float step=0.0f;
+	
+	public static final float FILTER_DEFAULT=0.3f,PEAK_DEFAULT=0.75f,STEP_DEFAULT=0.75f;
+	public static final int TIMEOUT_DEFAULT=666;
 
 	public final static String CALIB_DATA="SensorCalibration",PEAK="peak",TIMEOUT="timeout",FILTER="a",STEP="step";
 	
@@ -28,11 +32,11 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 		super(ctx,locationService);
 		
 		// this are the default values of footpath
-					double a = ctx.getSharedPreferences(CALIB_DATA,0).getFloat(FILTER, 0.3f);
-		double peak = ctx.getSharedPreferences(CALIB_DATA,0).getFloat(PEAK, 0.75f);
-		int step_timeout_ms = ctx.getSharedPreferences(CALIB_DATA,0).getInt(TIMEOUT, 666);
+					double a = ctx.getSharedPreferences(CALIB_DATA,0).getFloat(FILTER, FILTER_DEFAULT);
+		double peak = ctx.getSharedPreferences(CALIB_DATA,0).getFloat(PEAK, PEAK_DEFAULT);
+		int step_timeout_ms = ctx.getSharedPreferences(CALIB_DATA,0).getInt(TIMEOUT, TIMEOUT_DEFAULT);
 		
-		step = ctx.getSharedPreferences(CALIB_DATA,0).getInt(STEP, 666);
+		step = ctx.getSharedPreferences(CALIB_DATA,0).getFloat(STEP, STEP_DEFAULT);
 		
 		stepDetector=new StepDetection(ctx, this, a,peak,step_timeout_ms);
 //		stepDetector.load();
@@ -43,11 +47,25 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 	@Override
 	public void trigger(long now_ms, double compDir) {
 		// a step has been triggered
-//		loc=new Location(getProviderName(),x,y,0,new Date());
+		Logger.d("a step has been detected "+compDir+"-"+locationService.getRelativeNorth()+"="+(compDir-locationService.getRelativeNorth()));
 		
+		float curX=locationService.getLocation().getX(),curY=locationService.getLocation().getY();
 		
+		float angle=(float) (compDir-locationService.getRelativeNorth());
 		
-		Logger.d("a step has been detected "+compDir);
+		float dx=(float) (Math.sin(angle/ 180.0f * (float) Math.PI)*step)*locationService.getGridSpacingX();
+		float dy=(float) (Math.cos(angle/ 180.0f * (float) Math.PI)*step)*locationService.getGridSpacingY();
+		
+		// TODO check calculations
+//		Logger.d("angle: "+angle+" sin: "+Math.sin(angle/ 180.0f * (float) Math.PI)+" cos: "+Math.cos(angle/ 180.0f * (float) Math.PI)+ "step: "+step+" gridSpacing: "+locationService.getGridSpacingX()+","+locationService.getGridSpacingY());;
+		Logger.d("walked x: "+dx+" y:"+dy);
+		
+		loc=new Location(getProviderName(),curX+dx,curY-dy,0,null);
+
+		if(listener!=null){
+			listener.locationChanged(loc);
+		}
+		
 	}
 
 
