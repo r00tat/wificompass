@@ -47,7 +47,7 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 	@Override
 	public void trigger(long now_ms, double compDir) {
 		// a step has been triggered
-		Logger.d("a step has been detected "+compDir+"-"+locationService.getRelativeNorth()+"="+(compDir-locationService.getRelativeNorth()));
+//		Logger.d("a step has been detected "+compDir+"-"+locationService.getRelativeNorth()+"="+(compDir-locationService.getRelativeNorth()));
 		
 		float curX=locationService.getLocation().getX(),curY=locationService.getLocation().getY();
 		
@@ -58,7 +58,7 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 		
 		
 //		Logger.d("angle: "+angle+" "+(angle*180f/Math.PI)+" sin: "+Math.sin(angle)+" cos: "+Math.cos(angle)+ "step: "+step+" gridSpacing: "+locationService.getGridSpacingX()+","+locationService.getGridSpacingY());
-		Logger.d("walked x: "+dx+" y:"+dy);
+		Logger.d("walked a step dx: "+dx+" dy:"+dy);
 		
 		loc=new Location(getProviderName(),curX+dx,curY-dy,0,null);
 
