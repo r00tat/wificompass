@@ -31,7 +31,7 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.north);
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
-		this.setPivot(37.5f/70f, 37.5f/72f);
+		this.setPivot(0.5f, 0.5f);
 		
 		okPopup=new OkDrawable(ctx,this);
 		okPopup.setRelativePosition(width/2, height/2);
