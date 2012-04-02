@@ -45,6 +45,10 @@
 
 	<property name="key.store" value="key.store" />
 	<property name="key.alias" value="release-key" />
+  <!--<isset property="key.store.password" />
+  <isset property="key.alias.password" />-->
+	
+	
 
 
 
@@ -64,7 +68,7 @@
 
 	<import file="build-custom.xml" />
 
-	<property name="google.credentials" value="google-credentials.xml" />
+	<property name="file.credentials" value="credentials.xml" />
 
 
 	<target name="upload-nightly" depends="release, check-credentials">
@@ -72,7 +76,7 @@
 
 		<echo>uploading nightly build to google code...</echo>
 		<echo>Remember to delete the old nightly file, because overwrite is not possible!</echo>
-		<gcupload username="${googlecode.credentials.username}" password="${googlecode.credentials.password}" projectname="wificompass" filename="bin/wificompass-release.apk" targetfilename="wificompass-nightly.apk" summary="Nightly build of wificompass" labels="Featured, Type-Package, OpSys-Android" verbose="true" />
+		<gcupload username="${credentials.google.username}" password="${credentials.google.password}" projectname="wificompass" filename="bin/wificompass-release.apk" targetfilename="wificompass-nightly.apk" summary="Nightly build of wificompass" labels="Featured, Type-Package, OpSys-Android" verbose="true" />
 
 		<echo>done.</echo>
 	</target>
@@ -82,7 +86,7 @@
 
 		<echo>uploading nightly build to google code...</echo>
 		<echo>Remember to delete the old nightly file, because overwrite is not possible!</echo>
-		<gcupload username="${googlecode.credentials.username}" password="${googlecode.credentials.password}" projectname="wificompass" filename="bin/wificompass-release.apk" targetfilename="wificompass-r${svn.info.entry.revision}.apk" summary="build of wificompass, svn version ${svn.info.entry.revision}" labels="Featured, Type-Package, OpSys-Android" verbose="true" />
+		<gcupload username="${credentials.google.username}" password="${credentials.google.password}" projectname="wificompass" filename="bin/wificompass-release.apk" targetfilename="wificompass-r${svn.info.entry.revision}.apk" summary="build of wificompass, svn version ${svn.info.entry.revision}" labels="Featured, Type-Package, OpSys-Android" verbose="true" />
 
 		<echo>done.</echo>
 	</target>
@@ -93,7 +97,7 @@
 		<if>
 			<condition>
 				<not>
-					<available file="${google.credentials}" />
+					<available file="${file.credentials}" />
 				</not>
 			</condition>
 			<then>
@@ -103,20 +107,20 @@
 		</if>
 
 
-		<xmlproperty file="${google.credentials}" prefix="googlecode" collapseattributes="true" />
+		<xmlproperty file="${file.credentials}" collapseattributes="true" />
 
 		<!-- quick check on username and password -->
-		<fail message="googlecode username or password is missing. Make sure to fill in your credentials for google code in ${google.credentials}">
+		<fail message="googlecode username or password is missing. Make sure to fill in your credentials for google code in ${file.credentials}">
 			<condition>
 				<or>
 					<not>
-						<isset property="googlecode.credentials.username" />
+						<isset property="credentials.google.username" />
 					</not>
 					<not>
-						<isset property="googlecode.credentials.password" />
+						<isset property="credentials.google.password" />
 					</not>
-					<equals arg1="${googlecode.credentials.username}" arg2="" />
-					<equals arg1="${googlecode.credentials.password}" arg2="" />
+					<equals arg1="${credentials.google.username}" arg2="" />
+					<equals arg1="${credentials.google.password}" arg2="" />
 				</or>
 			</condition>
 		</fail>
@@ -125,17 +129,29 @@
 
 
 	<target name="create-credentials-file">
-		<echo file="${google.credentials}">
+		<echo file="${file.credentials}">
 			<![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 			<credentials>
-				<username>
-				</username>
-				<password>
-				</password>
+				<google>
+					<username></username>
+					<password></password>
+				</google>
+				<keystore>
+					<password></password>
+					<alias-password></alias-password>
+				</keystore>
 			</credentials>
+rd></alias-password>
+			</keystore>
 ]]></echo>
 
-		<fail message="googlecode username and password is missing. Make sure to fill in your credentials for google code in ${google.credentials}" />
+		<fail message="googlecode username and password is missing. Make sure to fill in your credentials for google code in ${file.credentials}" />
+	</target>
+	
+	
+	<target name="load-keypass-credentials" depends="check-credentials">
+		<property name="key.store.password" value="${credentials.keystore.password}"/>
+		<property name="key.alias.password" value="${credentials.keystore.alias-password}" />
 	</target>
 
 
@@ -178,6 +194,42 @@
 
 	<!-- now we use two lib dirs. one which will automatically included in android builds (libs) and one (lib) which holds ant tasks and sources aso  
 <property name="jar.libs.dir" value="lib" /> -->
+	
+	
+  <!-- This runs -package-release and -release-nosign first and then runs
+       only if release-sign is true (set in -release-check,
+       called by -release-no-sign)-->
+  <target name="release"
+              depends="-set-release-mode, -release-obfuscation-check, -package, load-keypass-credentials, -release-prompt-for-password, -release-nosign"
+              if="has.keystore"
+              description="Builds the application. The generated apk file must be signed before
+                          it is published.">
+
+      <!-- only create apk if *not* a library project -->
+      <do-only-if-not-library elseText="Library project: do not create apk..." >
+          <sequential>
+              <property name="out.unaligned.file" location="${out.absolute.dir}/${ant.project.name}-release-unaligned.apk" />
+
+              <!-- Signs the APK -->
+              <echo>Signing final apk...</echo>
+              <signjar
+                      jar="${out.packaged.file}"
+                      signedjar="${out.unaligned.file}"
+                      keystore="${key.store}"
+                      storepass="${key.store.password}"
+                      alias="${key.alias}"
+                      keypass="${key.alias.password}"
+                      verbose="${verbose}" />
+
+              <!-- Zip aligns the APK -->
+              <zipalign-helper in.package="${out.unaligned.file}"
+                                         out.package="${out.final.file}" />
+              <echo>Release Package: ${out.final.file}</echo>
+          </sequential>
+      </do-only-if-not-library>
+      <record-build-info />
+  </target>
+
 
 
 	<!-- Import the actual build file.
