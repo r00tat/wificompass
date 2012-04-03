@@ -14,10 +14,8 @@ public class UserDrawable extends MultiTouchDrawable {
 	
 	protected ManualLocationProvider locProvider;
 	
-//	public UserDrawable(Context ctx) {
-//		super(ctx);
-//		init();
-//	}
+	protected UserCompassDrawable compassIcon;
+
 	
 	public UserDrawable(Context ctx,MultiTouchDrawable superDrawable) {
 		super(ctx,superDrawable);
@@ -26,10 +24,14 @@ public class UserDrawable extends MultiTouchDrawable {
 
 	protected void init() {
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.user_icon);
-		this.setPivot(0.272727f, 0.7436f);
+		this.setPivot(0.5f,65f/69f);
 		
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
+		
+		compassIcon=new UserCompassDrawable(ctx, this);
+//		compassIcon.setRelativePosition(width/2,30+compassIcon.height/2);
+		compassIcon.setRelativePosition(10,10);
 		
 		// create a Location Provider to update the LocationService
 		locProvider=new ManualLocationProvider(ctx);
@@ -86,5 +88,15 @@ public class UserDrawable extends MultiTouchDrawable {
 		super.onRelativePositionUpdate();
 		locProvider.updateCurrentPosition(relX, relY);
 	}
+
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#draw(android.graphics.Canvas)
+	 */
+//	@Override
+//	public void draw(Canvas canvas) {
+//		// draw the compass icon first, then the user icon
+//		this.drawSubdrawables(canvas);
+//		this.drawFromDrawable(canvas);
+//	}
 
 }

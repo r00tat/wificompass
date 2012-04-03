@@ -37,7 +37,7 @@ public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 	public TextPopupDrawable(Context ctx, MultiTouchDrawable superDrawable, String text) {
 		super(ctx, superDrawable);
 		init();
-		setPopupText(text);
+		setText(text);
 	}
 
 	public TextPopupDrawable(Context ctx, MultiTouchDrawable superDrawable) {
@@ -131,7 +131,7 @@ public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 	/**
 	 * @return the popupText
 	 */
-	public String getPopupText() {
+	public String getText() {
 		return popupText;
 	}
 
@@ -139,9 +139,12 @@ public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 	 * @param popupText
 	 *            the popupText to set
 	 */
-	public void setPopupText(String popupText) {
-		this.popupText = popupText;
-		layout = new StaticLayout(popupText, tp, width - 2 * padding, Layout.Alignment.ALIGN_NORMAL, 1f, 0f, true);
+	public void setText(String popupText) {
+		if (popupText == null) {
+			this.popupText = "";
+		} else
+			this.popupText = popupText;
+		layout = new StaticLayout(this.popupText, tp, width - 2 * padding, Layout.Alignment.ALIGN_NORMAL, 1f, 0f, true);
 		this.height = layout.getHeight() + 2 * padding;
 	}
 
@@ -189,7 +192,7 @@ public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 
 	public void setWidth(int width) {
 		this.width = width;
-		this.setPopupText(popupText);
+		this.setText(popupText);
 	}
 
 	/**
@@ -221,4 +224,5 @@ public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 		} else
 			return super.onSingleTouch(pointinfo);
 	}
+
 }

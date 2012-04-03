@@ -115,7 +115,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	 */
 	public void setAccessPoint(AccessPoint accessPoint) {
 		this.accessPoint = accessPoint;
-		popup.setPopupText(getPopupText());
+		popup.setText(getPopupText());
 	}
 
 	/*
@@ -125,7 +125,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	 */
 	@Override
 	public boolean onSingleTouch(PointInfo pointinfo) {
-		popup.setPopupText(this.getPopupText());
+		popup.setText(this.getPopupText());
 		popup.setActive(!popup.isActive());
 		if (deletePopup != null)
 			deletePopup.setActive(popup.isActive());
@@ -184,7 +184,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 		
 		// update the location of the ap
 		accessPoint.setLocation(new Location(relX, relY));
-		popup.setPopupText(getPopupText());
+		popup.setText(getPopupText());
 	}
 
 }

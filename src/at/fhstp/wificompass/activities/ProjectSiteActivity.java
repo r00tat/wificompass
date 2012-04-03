@@ -220,8 +220,6 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 //		((Button) findViewById(R.id.project_site_add_known_ap)).setOnClickListener(this);
 
-		((Button) findViewById(R.id.project_site_add_known_ap)).setOnClickListener(this);
-
 		((Button) findViewById(R.id.project_site_step_detect)).setOnClickListener(this);
 
 		multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
@@ -255,6 +253,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		log.debug("setting context");
 
 		multiTouchView.loadImages(this);
+		map.load();
 		// stepDetectionProvider.start();
 	}
 
@@ -820,6 +819,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected void onPause() {
 		super.onPause();
 		multiTouchView.unloadImages();
+		map.unload();
 		stepDetectionProvider.stop();
 		saveProjectSite();
 	}

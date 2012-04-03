@@ -78,9 +78,11 @@ public abstract class MultiTouchDrawable {
 
 	protected int mUIMode = UI_MODE_ROTATE;
 
-	protected boolean firstLoad;
+	protected static boolean firstLoad= true;
 
-	protected int width, height, displayWidth, displayHeight;
+	protected int width, height;
+	
+	protected static int displayWidth=0, displayHeight=0;
 
 	protected float centerX, centerY;
 
@@ -102,7 +104,7 @@ public abstract class MultiTouchDrawable {
 	public MultiTouchDrawable(Context context, RefreshableView containingView) {
 		id = counter++;
 		this.ctx = context;
-		this.firstLoad = true;
+		
 		this.resources = context.getResources();
 		subDrawables = new ArrayList<MultiTouchDrawable>();
 		this.refresher = containingView;
@@ -122,7 +124,7 @@ public abstract class MultiTouchDrawable {
 		this.ctx = context;
 		this.superDrawable = superDrawable;
 
-		this.firstLoad = true;
+		
 		this.resources = context.getResources();
 		subDrawables = new ArrayList<MultiTouchDrawable>();
 
@@ -230,14 +232,14 @@ public abstract class MultiTouchDrawable {
 	 * @param angle
 	 */
 	public void setAngle(float angle) {
-//		this.angle = angle;
+		// this.angle = angle;
 		// we only want positive angles, so calculation are easier
-		// angle must be in the range from 0 to 2*PI or in degrees 0° to 359° 
+		// angle must be in the range from 0 to 2*PI or in degrees 0° to 359°
 		// to convert the angle from radiants to degrees use angle*180/Math.PI
-		this.angle =(float) (angle%(Math.PI*2));
-		if(this.angle<0)
-			this.angle+=Math.PI*2;
-		
+		this.angle = (float) (angle % (Math.PI * 2));
+		if (this.angle < 0)
+			this.angle += Math.PI * 2;
+
 	}
 
 	/**
@@ -409,37 +411,45 @@ public abstract class MultiTouchDrawable {
 		// The DisplayMetrics don't seem to always be updated on screen rotate,
 		// so we hard code a portrait
 		// screen orientation for the non-rotated screen here...
-		this.displayWidth = metrics.widthPixels;
-		this.displayHeight = metrics.heightPixels;
+		displayWidth = metrics.widthPixels;
+		displayHeight = metrics.heightPixels;
 
-		this.displayWidth = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.max(metrics.widthPixels,
+		displayWidth = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.max(metrics.widthPixels,
 				metrics.heightPixels) : Math.min(metrics.widthPixels, metrics.heightPixels);
-		this.displayHeight = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.min(metrics.widthPixels,
+		displayHeight = resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.min(metrics.widthPixels,
 				metrics.heightPixels) : Math.max(metrics.widthPixels, metrics.heightPixels);
 	}
 
 	/** Called by activity's onResume() method to load the images */
 	public void load() {
-		getMetrics();
-
-		float cx, cy, sx, sy;
-		if (firstLoad) {
-			cx = 0;
-			cy = 0;
-
-			float sc = 1;
-			sx = sy = sc;
-			firstLoad = false;
-		} else {
-			// Reuse position and scale information if it is available
-			// FIXME this doesn't actually work because the whole activity is
-			// torn down and re-created on rotate
-			cx = this.centerX;
-			cy = this.centerY;
-			sx = this.scaleX;
-			sy = this.scaleY;
+		if(firstLoad){
+			getMetrics();
+			firstLoad=false;
 		}
-		setPos(cx, cy, sx, sy, 0.0f, FLAG_FORCEALL, false);
+		
+		for(MultiTouchDrawable sub:subDrawables){
+			sub.load();
+		}
+			
+
+//		float cx, cy, sx, sy;
+//		if (firstLoad) {
+//			cx = 0;
+//			cy = 0;
+//
+//			float sc = 1;
+//			sx = sy = sc;
+//			firstLoad = false;
+//		} else {
+//			// Reuse position and scale information if it is available
+//			// FIXME this doesn't actually work because the whole activity is
+//			// torn down and re-created on rotate
+//			cx = this.centerX;
+//			cy = this.centerY;
+//			sx = this.scaleX;
+//			sy = this.scaleY;
+//		}
+//		setPos(cx, cy, sx, sy, 0.0f, FLAG_FORCEALL, false);
 	}
 
 	public void resetXY() {
@@ -459,7 +469,9 @@ public abstract class MultiTouchDrawable {
 	 * Called by activity's onPause() method to free memory used for loading the images
 	 */
 	public void unload() {
-
+		for(MultiTouchDrawable sub: subDrawables){
+			sub.unload();
+		}
 	}
 
 	/** Set the position and scale of an image in screen coordinates */
@@ -524,7 +536,7 @@ public abstract class MultiTouchDrawable {
 
 		if ((flags & FLAG_FORCEROTATE) != 0 || this.isRotateable()) {
 			angleChange = angle - this.angle;
-//			this.angle = angle;
+			// this.angle = angle;
 			this.setAngle(angle);
 		}
 
@@ -678,6 +690,13 @@ public abstract class MultiTouchDrawable {
 	}
 
 	public void draw(Canvas canvas) {
+
+		drawFromDrawable(canvas);
+		
+		this.drawSubdrawables(canvas);
+	}
+
+	protected void drawFromDrawable(Canvas canvas) {
 		// Logger.d("Drawing " + this.toString());
 		canvas.save();
 
@@ -694,11 +713,9 @@ public abstract class MultiTouchDrawable {
 			canvas.rotate(angle * 180.0f / (float) Math.PI);
 			canvas.translate(-centerX, -centerY);
 			d.draw(canvas);
-			canvas.restore();
 
 		}
-
-		this.drawSubdrawables(canvas);
+		canvas.restore();
 	}
 
 	public void drawSubdrawables(Canvas canvas) {

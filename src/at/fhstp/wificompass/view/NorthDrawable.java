@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.R;
+import at.fhstp.wificompass.ToolBox;
 import at.fhstp.wificompass.model.ProjectSite;
 
 /**
@@ -17,39 +18,38 @@ import at.fhstp.wificompass.model.ProjectSite;
 public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 
 	protected BitmapDrawable icon;
-	
+
 	protected OkDrawable okPopup;
-	
+
 	protected TextPopupDrawable textPopup;
 
 	protected ProjectSite site;
-	
-	
+
 	/**
 	 * @param context
 	 * @param superDrawable
 	 */
-	public NorthDrawable(Context context, MultiTouchDrawable superDrawable,ProjectSite site) {
+	public NorthDrawable(Context context, MultiTouchDrawable superDrawable, ProjectSite site) {
 		super(context, superDrawable);
-		this.site=site;
+		this.site = site;
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.north);
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
-		this.setPivot(0.5f, 0.5f);
 		
-		okPopup=new OkDrawable(ctx,this);
-		okPopup.setRelativePosition(width/2, height/2);
-		
-		
-		textPopup=new TextPopupDrawable(ctx,this,ctx.getString(R.string.north_drawable_north_text, angle*180/Math.PI));
+		okPopup = new OkDrawable(ctx, this);
+		okPopup.setRelativePosition(width / 2, height / 2);
+
+		textPopup = new TextPopupDrawable(ctx, this, ctx.getString(R.string.north_drawable_north_text, angle * 180 / Math.PI));
 		textPopup.setWidth(80);
 		textPopup.setActive(true);
 		textPopup.setPersistent(true);
-//		textPopup.setRelativePosition(10,0);
-		
+		// textPopup.setRelativePosition(10,0);
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#getDrawable()
 	 */
 	@Override
@@ -57,7 +57,9 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 		return icon;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#isScalable()
 	 */
 	@Override
@@ -65,7 +67,9 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#isRotateable()
 	 */
 	@Override
@@ -73,7 +77,9 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#isDragable()
 	 */
 	@Override
@@ -81,7 +87,9 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#isOnlyInSuper()
 	 */
 	@Override
@@ -92,23 +100,27 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 	@Override
 	public void onOk() {
 		// save north to site
-		float mapAngle=angle;
-		if(superDrawable!=null){
-			mapAngle-=superDrawable.getAngle();
+		float mapAngle = angle;
+		if (superDrawable != null) {
+			mapAngle -= superDrawable.getAngle();
 		}
 		site.setNorth(mapAngle);
 		this.deleteDrawable();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#setAngle(float)
 	 */
 	@Override
 	public void setAngle(float angle) {
 		super.setAngle(angle);
-		if(textPopup!=null)
-		textPopup.setPopupText(ctx.getString(R.string.north_drawable_north_text, this.angle*180/Math.PI));
+		if (textPopup != null) {
+
+			textPopup.setText(ctx.getString(R.string.north_drawable_north_text,
+					Math.toDegrees(ToolBox.normalizeAngle(this.angle - (superDrawable != null ? superDrawable.getAngle() : 0)))));
+		}
 	}
-	
 
 }

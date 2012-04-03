@@ -203,4 +203,5 @@
 	<string name="project_site_delete_failed">Could not delete Project Site: %1$s</string>
 	<string name="project_site_deleted">Project Site deleted!</string>
 	<string name="main_utils">Utils</string>
+	<string name="user_compass_degrees">%1$d°</string>
 </resources>
