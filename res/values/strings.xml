@@ -190,12 +190,17 @@
     <string name="project_site_menu_set_north">set north</string>
     <string name="project_site_nort_set">north set!</string>
     <string name="north_drawable_north_text">North: %1$.0f°</string>
+    <string name="project_site_menu_select_bssids">Select BSSIDs</string>
+    <string name="project_site_dialog_select_bssids_title">Select BSSIDs</string>
+    <string name="project_site_dialog_select_bssids_message">Select the BSSIDs that should be considered when calculating AP positions:</string>
+    <string name="select_all">Select all</string>
+    <string name="deselect_all">Deselect all</string>
     <string name="project_site_menu_delete">Delete Site</string>
     <string name="project_site_menu_settings">Settings</string>
     <string name="project_site_menu_view">Map</string>
-		<string name="project_site_menu_calculation">AP Calculation</string>
-		<string name="project_site_menu_project_site">Project Site</string>
-		<string name="project_site_delete_failed">Could not delete Project Site: %1$s</string>
-		<string name="project_site_deleted">Project Site deleted!</string>
-		<string name="main_utils">utils</string>
+	<string name="project_site_menu_calculation">AP Calculation</string>
+	<string name="project_site_menu_project_site">Project Site</string>
+	<string name="project_site_delete_failed">Could not delete Project Site: %1$s</string>
+	<string name="project_site_deleted">Project Site deleted!</string>
+	<string name="main_utils">Utils</string>
 </resources>

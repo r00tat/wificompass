@@ -6,6 +6,7 @@
 package at.fhstp.wificompass.activities;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -27,6 +28,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,6 +38,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,11 +48,13 @@ import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.exceptions.SiteNotFoundException;
 import at.fhstp.wificompass.exceptions.WifiException;
 import at.fhstp.wificompass.model.AccessPoint;
+import at.fhstp.wificompass.model.Bssid;
 import at.fhstp.wificompass.model.BssidResult;
 import at.fhstp.wificompass.model.Location;
 import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
+import at.fhstp.wificompass.model.helper.SelectBssdidsExpandableListAdapter;
 import at.fhstp.wificompass.triangulation.LocalSignalStrengthGradientTriangulation;
 import at.fhstp.wificompass.userlocation.LocationChangeListener;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
@@ -69,6 +74,7 @@ import at.woelfel.philip.filebrowser.FileBrowser;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.ForeignCollection;
 
 public class ProjectSiteActivity extends Activity implements OnClickListener, WifiResultCallback, RefreshableView, LocationChangeListener {
 
@@ -79,7 +85,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	// public static final int START_NEW = 1, START_LOAD = 2;
 
 	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4, DIALOG_SET_SCALE_OF_MAP = 5,
-			DIALOG_ADD_KNOWN_AP = 6;
+			DIALOG_ADD_KNOWN_AP = 6, DIALOG_SELECT_BSSIDS = 7;
 
 	protected static final int MESSAGE_REFRESH = 1;
 
@@ -214,6 +220,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 //		((Button) findViewById(R.id.project_site_add_known_ap)).setOnClickListener(this);
 
+		((Button) findViewById(R.id.project_site_add_known_ap)).setOnClickListener(this);
+
 		((Button) findViewById(R.id.project_site_step_detect)).setOnClickListener(this);
 
 		multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
@@ -266,6 +274,31 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				Toast.makeText(this, R.string.project_site_wifiscan_start_failed, Toast.LENGTH_LONG).show();
 			}
 
+			break;
+
+		case R.id.project_site_calculate_ap_positions_button:
+
+			final ProgressDialog triangulationProgress = new ProgressDialog(this);
+			triangulationProgress.setTitle(R.string.project_site_triangulation_progress_title);
+			triangulationProgress.setMessage(getString(R.string.project_site_triangulation_progress_message));
+			triangulationProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			triangulationProgress.setButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+					if (triangulationTask != null) {
+						triangulationTask.cancel(true);
+					}
+				}
+			});
+
+			triangulationTask = new TriangulationTask(this, triangulationProgress);
+
+			triangulationProgress.show();
+			triangulationTask.execute();
+			break;
+
+		case R.id.project_site_add_known_ap:
+			showDialog(DIALOG_ADD_KNOWN_AP);
 			break;
 
 		case R.id.project_site_step_detect:
@@ -583,6 +616,60 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			return addAPAlert.create();
 
+		case DIALOG_SELECT_BSSIDS:
+
+			AlertDialog.Builder selectBssidsDialog = new AlertDialog.Builder(this);
+
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+			View layout = inflater.inflate(R.layout.project_site_dialog_select_bssids,
+					(ViewGroup) findViewById(R.id.project_site_dialog_select_bssids_root_layout));
+			selectBssidsDialog.setView(layout);
+			selectBssidsDialog.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					// Ok.
+				}
+			});
+			selectBssidsDialog.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+				}
+			});
+
+			AlertDialog dialog = selectBssidsDialog.create();
+
+			ExpandableListView listView = (ExpandableListView) layout.findViewById(R.id.project_site_dialog_select_bssids_list_view);
+			SelectBssdidsExpandableListAdapter adapter = new SelectBssdidsExpandableListAdapter(dialog.getContext(), new ArrayList<String>(),
+					new ArrayList<ArrayList<Bssid>>());
+
+			// Set this blank adapter to the list view
+			listView.setAdapter(adapter);
+
+			ForeignCollection<WifiScanResult> scanResults = site.getScanResults();
+			ArrayList<Bssid> bssids = new ArrayList<Bssid>();
+
+			for (WifiScanResult scanResult : scanResults) {
+				ForeignCollection<BssidResult> bssidResults = scanResult.getBssids();
+
+				for (BssidResult bssidResult : bssidResults) {
+					Bssid bssid = new Bssid(bssidResult.getBssid(), bssidResult.getSsid());
+
+					boolean alreadyAdded = false;
+
+					for (Bssid tmpBssid : bssids) {
+						if (tmpBssid.getBssid().equals(bssid.getBssid()) && tmpBssid.getSsid().equals(bssid.getSsid()))
+							alreadyAdded = true;
+					}
+
+					if (!alreadyAdded) {
+						bssids.add(bssid);
+					}
+				}
+			}
+
+			adapter.addItems(bssids);
+
+			return dialog;
+
 		default:
 			return super.onCreateDialog(id);
 		}
@@ -671,6 +758,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			return false;
 
+		case R.id.project_site_menu_select_bssids:
+
+			this.showDialog(DIALOG_SELECT_BSSIDS);
+
+			return false;
+
 		case R.id.project_site_reset_zoom_button:
 			Logger.d("resetting Zoom");
 			multiTouchView.resetAllScale();
@@ -711,10 +804,6 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			showDialog(DIALOG_ADD_KNOWN_AP);
 			break;
 			
-		case R.id.project_site_menu_delete:
-			deleteProjectSite();
-			break;
-
 		default:
 			return super.onOptionsItemSelected(item);
 		}

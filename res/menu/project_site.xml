@@ -76,5 +76,9 @@
         android:icon="@drawable/wifi_blue"
         android:title="@string/project_site_add_known_ap">
     </item>
+    <item
+        android:id="@+id/project_site_menu_select_bssids"
+        android:title="@string/project_site_menu_select_bssids">
+    </item>
 
 </menu>
