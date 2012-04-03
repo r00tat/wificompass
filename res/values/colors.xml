@@ -6,6 +6,7 @@
     <color name="globalForeground">#ffcccccc</color>
     <color name="project_site_background">#ffcccccc</color>
     <color name="popup_text">#000</color>
-
+    <color name="lightgray">#ddd</color>
+		<color name="button_background">@color/lightgray</color>
     
 </resources>
