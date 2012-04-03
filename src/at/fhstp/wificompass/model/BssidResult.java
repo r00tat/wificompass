@@ -8,10 +8,11 @@ package at.fhstp.wificompass.model;
 import android.net.wifi.ScanResult;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = BssidResult.TABLE_NAME)
-public class BssidResult {
+public class BssidResult extends BaseDaoEnabled<BssidResult,Integer> {
 	protected static final String TABLE_NAME = "bssidresults";
 
 	@DatabaseField(generatedId = true)

@@ -16,10 +16,11 @@ import at.fhstp.wificompass.model.xml.XMLSettings;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = Project.TABLE_NAME)
-public class Project implements XMLSerializable {
+public class Project extends BaseDaoEnabled<Project, Integer>implements XMLSerializable {
 	public static final String TABLE_NAME="projects";
 
 	@DatabaseField(generatedId = true)

@@ -1,10 +1,11 @@
 package at.fhstp.wificompass.model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = AccessPoint.TABLE_NAME)
-public class AccessPoint {
+public class AccessPoint extends BaseDaoEnabled<AccessPoint, Integer> {
 	protected static final String TABLE_NAME="accesspoints";
 	
 	@DatabaseField(generatedId=true)

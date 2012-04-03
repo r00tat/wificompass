@@ -8,13 +8,14 @@ package at.fhstp.wificompass.model;
 import java.util.Date;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * @author Paul Woelfel
  */
 @DatabaseTable(tableName = Location.TABLE_NAME)
-public class Location {
+public class Location extends BaseDaoEnabled<Location,Integer>{
 	public static final String TABLE_NAME="locations";
 	
 	public static final String PROVIDER_NONE="defined";

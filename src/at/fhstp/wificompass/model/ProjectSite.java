@@ -20,10 +20,11 @@ import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = ProjectSite.TABLE_NAME)
-public class ProjectSite implements XMLSerializable {
+public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements XMLSerializable {
 
 	public static final String TABLE_NAME = "sites";
 

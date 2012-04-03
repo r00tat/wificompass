@@ -8,10 +8,11 @@ package at.fhstp.wificompass.model;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName=WifiScanResult.TABLE_NAME)
-public class WifiScanResult {
+public class WifiScanResult extends BaseDaoEnabled<WifiScanResult, Integer>{
 	public static final String TABLE_NAME="wifiscanresult";
 	
 	@DatabaseField(generatedId=true)

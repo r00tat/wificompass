@@ -8,10 +8,11 @@ package at.fhstp.wificompass.model;
 import android.hardware.SensorEvent;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "sensordata")
-public class SensorData {
+public class SensorData extends BaseDaoEnabled<SensorData,Integer>{
 	
 	@DatabaseField(generatedId = true)
 	protected int id;
