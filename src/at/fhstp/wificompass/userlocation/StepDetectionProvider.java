@@ -63,7 +63,7 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 		loc=new Location(getProviderName(),curX+dx,curY-dy,0,null);
 
 		if(listener!=null){
-			listener.locationChanged(loc);
+			listener.onLocationChange(loc);
 		}
 		
 	}

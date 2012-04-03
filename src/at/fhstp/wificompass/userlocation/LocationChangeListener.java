@@ -8,5 +8,5 @@ package at.fhstp.wificompass.userlocation;
 import at.fhstp.wificompass.model.Location;
 
 public interface LocationChangeListener {
-	public void locationChanged(Location loc);
+	public void onLocationChange(Location loc);
 }

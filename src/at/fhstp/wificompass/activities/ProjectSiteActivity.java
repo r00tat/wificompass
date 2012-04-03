@@ -975,7 +975,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	}
 
 	@Override
-	public void locationChanged(Location loc) {
+	public void onLocationChange(Location loc) {
 		// info from StepDetectionProvider, that the location changed.
 		user.setRelativePosition(loc.getX(), loc.getY());
 		hRefresh.sendEmptyMessage(MESSAGE_REFRESH);

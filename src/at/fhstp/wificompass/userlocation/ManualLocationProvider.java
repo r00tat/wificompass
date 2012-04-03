@@ -27,7 +27,7 @@ public class ManualLocationProvider extends LocationProviderImpl {
 			locationService.updateLocation(loc);
 
 		if (listener != null) {
-			listener.locationChanged(loc);
+			listener.onLocationChange(loc);
 		}
 	}
 
