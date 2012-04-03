@@ -80,8 +80,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4, DIALOG_SET_SCALE_OF_MAP = 5,
 			DIALOG_ADD_KNOWN_AP = 6;
-	
-	protected static final int MESSAGE_REFRESH=1;
+
+	protected static final int MESSAGE_REFRESH = 1;
 
 	protected static final int FILEBROWSER_REQUEST = 1;
 
@@ -114,11 +114,11 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected float scalerDistance;
 
 	protected TriangulationTask triangulationTask = null;
-	
+
 	protected StepDetectionProvider stepDetectionProvider = null;
-	
-	protected NorthDrawable northDrawable =null;
-	
+
+	protected NorthDrawable northDrawable = null;
+
 	protected Handler hRefresh;
 
 	/*
@@ -145,7 +145,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			if (site == null) {
 				throw new SiteNotFoundException("The ProjectSite Id could not be found in the database!");
 			}
-			
+
 			MultiTouchDrawable.setGridSpacing(site.getGridSpacingX(), site.getGridSpacingY());
 
 			map = new SiteMapDrawable(this, this);
@@ -167,7 +167,6 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				new MeasuringPointDrawable(this, map, wsr);
 			}
 
-			
 			user = new UserDrawable(this, map);
 
 			if (site.getLastLocation() != null) {
@@ -175,7 +174,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			} else {
 				user.setRelativePosition(map.getWidth() / 2, map.getHeight() / 2);
 			}
-			
+
 			LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
 			LocationServiceFactory.getLocationService().setGridSpacing(site.getGridSpacingX(), site.getGridSpacingY());
 			stepDetectionProvider = new StepDetectionProvider(this);
@@ -187,7 +186,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 					switch (msg.what) {
 					case MESSAGE_REFRESH:
 						/* Refresh UI */
-						if(multiTouchView!=null)
+						if (multiTouchView != null)
 							multiTouchView.invalidate();
 						break;
 					}
@@ -205,16 +204,16 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected void initUI() {
 
-		((Button) findViewById(R.id.project_site_reset_zoom_button)).setOnClickListener(this);
+//		((Button) findViewById(R.id.project_site_reset_zoom_button)).setOnClickListener(this);
 
-		((Button) findViewById(R.id.project_site_snap_user_button)).setOnClickListener(this);
+//		((Button) findViewById(R.id.project_site_snap_user_button)).setOnClickListener(this);
 
 		((Button) findViewById(R.id.project_site_wifiscan_button)).setOnClickListener(this);
 
-		((Button) findViewById(R.id.project_site_calculate_ap_positions_button)).setOnClickListener(this);
+//		((Button) findViewById(R.id.project_site_calculate_ap_positions_button)).setOnClickListener(this);
 
-		((Button) findViewById(R.id.project_site_add_known_ap)).setOnClickListener(this);
-		
+//		((Button) findViewById(R.id.project_site_add_known_ap)).setOnClickListener(this);
+
 		((Button) findViewById(R.id.project_site_step_detect)).setOnClickListener(this);
 
 		multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
@@ -246,9 +245,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected void onResume() {
 		super.onResume();
 		log.debug("setting context");
-		
+
 		multiTouchView.loadImages(this);
-//		stepDetectionProvider.start();
+		// stepDetectionProvider.start();
 	}
 
 	@Override
@@ -268,58 +267,19 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			}
 
 			break;
-		case R.id.project_site_reset_zoom_button:
-			Logger.d("resetting Zoom");
-			multiTouchView.resetAllScale();
-			multiTouchView.resetAllXY();
-			multiTouchView.resetAllAngle();
-			multiTouchView.recalculateDrawablePositions();
-			multiTouchView.invalidate();
-			break;
 
-		case R.id.project_site_snap_user_button:
-			Logger.d("Snapping user to grid");
-			user.snapPositionToGrid();
-			multiTouchView.invalidate();
-			break;
-
-		case R.id.project_site_calculate_ap_positions_button:
-
-			final ProgressDialog triangulationProgress = new ProgressDialog(this);
-			triangulationProgress.setTitle(R.string.project_site_triangulation_progress_title);
-			triangulationProgress.setMessage(getString(R.string.project_site_triangulation_progress_message));
-			triangulationProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			triangulationProgress.setButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-					if (triangulationTask != null) {
-						triangulationTask.cancel(true);
-					}
-				}
-			});
-
-			triangulationTask = new TriangulationTask(this, triangulationProgress);
-
-			triangulationProgress.show();
-			triangulationTask.execute();
-			break;
-
-		case R.id.project_site_add_known_ap:
-			showDialog(DIALOG_ADD_KNOWN_AP);
-			break;
-			
 		case R.id.project_site_step_detect:
-			
-			if(stepDetectionProvider.isRunning()){
-				//stop!
+
+			if (stepDetectionProvider.isRunning()) {
+				// stop!
 				stepDetectionProvider.stop();
-				((Button)findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_start_step_detect);
-			}else {
+				((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_start_step_detect);
+			} else {
 				// start
 				stepDetectionProvider.start();
-				((Button)findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
+				((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
 			}
-			
+
 			break;
 		}
 	}
@@ -678,41 +638,88 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			return false;
 
 		case R.id.project_site_menu_set_north:
-			
-			if(northDrawable == null){
-				// create the icon the set the north
-				northDrawable=new NorthDrawable(this, map,site){
 
-					/* (non-Javadoc)
+			if (northDrawable == null) {
+				// create the icon the set the north
+				northDrawable = new NorthDrawable(this, map, site) {
+
+					/*
+					 * (non-Javadoc)
+					 * 
 					 * @see at.fhstp.wificompass.view.NorthDrawable#onOk()
 					 */
 					@Override
 					public void onOk() {
 						super.onOk();
-						northDrawable=null;
+						northDrawable = null;
 						Toast.makeText(ctx, R.string.project_site_nort_set, Toast.LENGTH_SHORT).show();
 						saveProjectSite();
 					}
-					
+
 				};
-				northDrawable.setRelativePosition(site.getWidth()/2, site.getHeight()/2);
-				northDrawable.setAngle(map.getAngle()+site.getNorth());
-				
-			}else {
+				northDrawable.setRelativePosition(site.getWidth() / 2, site.getHeight() / 2);
+				northDrawable.setAngle(map.getAngle() + site.getNorth());
+
+			} else {
 				map.removeSubDrawable(northDrawable);
 				site.setNorth(northDrawable.getAngle());
 				LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
 				northDrawable = null;
 			}
-			
+
 			multiTouchView.invalidate();
-			
+
 			return false;
+
+		case R.id.project_site_reset_zoom_button:
+			Logger.d("resetting Zoom");
+			multiTouchView.resetAllScale();
+			multiTouchView.resetAllXY();
+			multiTouchView.resetAllAngle();
+			multiTouchView.recalculateDrawablePositions();
+			multiTouchView.invalidate();
+			break;
+
+		case R.id.project_site_snap_user_button:
+			Logger.d("Snapping user to grid");
+			user.snapPositionToGrid();
+			multiTouchView.invalidate();
+			break;
+
+		case R.id.project_site_calculate_ap_positions_button:
+
+			final ProgressDialog triangulationProgress = new ProgressDialog(this);
+			triangulationProgress.setTitle(R.string.project_site_triangulation_progress_title);
+			triangulationProgress.setMessage(getString(R.string.project_site_triangulation_progress_message));
+			triangulationProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			triangulationProgress.setButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+					if (triangulationTask != null) {
+						triangulationTask.cancel(true);
+					}
+				}
+			});
+
+			triangulationTask = new TriangulationTask(this, triangulationProgress);
+
+			triangulationProgress.show();
+			triangulationTask.execute();
+			break;
+
+		case R.id.project_site_add_known_ap:
+			showDialog(DIALOG_ADD_KNOWN_AP);
+			break;
 			
+		case R.id.project_site_menu_delete:
+			deleteProjectSite();
+			break;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 
+		return false;
 	}
 
 	/*
@@ -736,7 +743,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		try {
 
-			Location curLocation = LocationServiceFactory.getLocationService().getLocation(), lastLocation = site.getLastLocation();
+			Location curLocation = new Location(LocationServiceFactory.getLocationService().getLocation()), lastLocation = site.getLastLocation();
 
 			if (lastLocation == null || (curLocation.getX() != lastLocation.getX() && curLocation.getY() != lastLocation.getY())) {
 				site.setLastLocation(curLocation);
@@ -780,6 +787,27 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			Toast.makeText(this, R.string.project_site_save_failed, Toast.LENGTH_LONG).show();
 		}
 
+	}
+	
+	protected void deleteProjectSite(){
+		log.debug("saveing project site");
+
+		try {
+			int rows=site.delete();
+			
+			if(rows>0){
+				Toast.makeText(this, R.string.project_site_deleted, Toast.LENGTH_SHORT).show();
+			}else {
+				Logger.w("Tried to delete a project site, but it did not exist?!?");
+				
+			}
+			finish();
+			
+		} catch (SQLException e) {
+			log.error("could not delete project site", e);
+			Toast.makeText(this, getString(R.string.project_site_delete_failed,e.getMessage()), Toast.LENGTH_LONG).show();
+		}
+		
 	}
 
 	@Override

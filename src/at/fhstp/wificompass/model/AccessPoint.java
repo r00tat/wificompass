@@ -1,5 +1,7 @@
 package at.fhstp.wificompass.model;
 
+import java.sql.SQLException;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
@@ -23,7 +25,7 @@ public class AccessPoint extends BaseDaoEnabled<AccessPoint, Integer> {
 	@DatabaseField
 	protected int frequency;
 	
-	@DatabaseField(foreign = true,foreignAutoRefresh = true)
+	@DatabaseField(foreign = true,foreignAutoRefresh = true, foreignAutoCreate = true)
 	protected Location location;
 	
 	@DatabaseField(foreign = true,foreignAutoRefresh = true)
@@ -161,5 +163,14 @@ public class AccessPoint extends BaseDaoEnabled<AccessPoint, Integer> {
 	 */
 	public void setSsid(String ssid) {
 		this.ssid = ssid;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.j256.ormlite.misc.BaseDaoEnabled#delete()
+	 */
+	@Override
+	public int delete() throws SQLException {
+		if(location!=null&&location.getId()!=0) location.delete();
+		return super.delete();
 	}
 }

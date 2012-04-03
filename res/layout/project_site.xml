@@ -5,44 +5,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TableLayout
+    <LinearLayout
         android:id="@+id/project_site_button_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" >
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
 
-        <TableRow>
+<!--         <TableRow> -->
 
-            <Button
-                android:id="@+id/project_site_reset_zoom_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/project_site_reset_zoom" />
+<!--             <Button -->
+<!--                 android:id="@+id/project_site_reset_zoom_button" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="center" -->
+<!--                 android:text="@string/project_site_reset_zoom" /> -->
 
-            <Button
-                android:id="@+id/project_site_snap_user_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/project_site_snap_user" />
+<!--             <Button -->
+<!--                 android:id="@+id/project_site_snap_user_button" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="center" -->
+<!--                 android:text="@string/project_site_snap_user" /> -->
 
-            <Button
-                android:id="@+id/project_site_add_known_ap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/project_site_add_known_ap" />
-        </TableRow>
+<!--             <Button -->
+<!--                 android:id="@+id/project_site_add_known_ap" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="center" -->
+<!--                 android:text="@string/project_site_add_known_ap" /> -->
+<!--         </TableRow> -->
 
-        <TableRow>
+<!--         <TableRow> -->
 
-            <Button
-                android:id="@+id/project_site_calculate_ap_positions_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/project_site_calculate_ap_positions" />
+<!--             <Button -->
+<!--                 android:id="@+id/project_site_calculate_ap_positions_button" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_gravity="center" -->
+<!--                 android:text="@string/project_site_calculate_ap_positions" /> -->
 
             <Button
                 android:id="@+id/project_site_wifiscan_button"
@@ -55,8 +56,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/project_site_start_step_detect" />
-        </TableRow>
-    </TableLayout>
+<!--         </TableRow> -->
+    </LinearLayout>
 
     <at.fhstp.wificompass.view.MultiTouchView
         android:id="@+id/project_site_resultview"

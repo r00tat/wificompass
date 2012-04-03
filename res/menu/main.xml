@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:id="@+id/main_new_project_option" android:title="@string/newProjectText"></item>
-
     <item
-        android:id="@+id/main_wifi_scan"
-        android:title="@string/main_wifi_scan">
+        android:id="@+id/main_new_project_option"
+        android:title="@string/newProjectText">
     </item>
-
     <item
-        android:id="@+id/main_sensors_option"
-        android:title="@string/sensors_test_label">
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="@string/main_utils">
+        <menu>
+            <item
+                android:id="@+id/main_menu_step_calibrate"
+                android:title="@string/main_menu_calibrate">
+            </item>
+            <item
+                android:id="@+id/main_sensors_option"
+                android:title="@string/sensors_test_label">
+            </item>
+            <item
+                android:id="@+id/main_wifi_scan"
+                android:title="@string/main_wifi_scan">
+            </item>
+            <item
+                android:id="@+id/main_export_option"
+                android:title="@string/main_export_db_label">
+            </item>
+        </menu>
     </item>
-
-    <item
-        android:id="@+id/main_export_option"
-        android:title="@string/main_export_db_label">
-    </item>
-
     <item
         android:id="@+id/main_settings_option"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/main_settings_option">
     </item>
-
     <item
         android:id="@+id/aboutOption"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/about">
     </item>
     <!-- <item android:id="@+id/quitOption" android:title="@string/quit" android:icon="@android:drawable/ic_menu_close_clear_cancel"></item> -->
-    <item android:id="@+id/main_menu_step_calibrate" android:title="@string/main_menu_calibrate"></item>
 
 </menu>

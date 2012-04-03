@@ -251,7 +251,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 		log.debug("Delete project");
 
 		try {
-			int rows = dao.delete(project);
+			int rows = project.delete();
 			if (rows == 1) {
 				project = null;
 				Toast.makeText(this, R.string.project_delete_success, Toast.LENGTH_LONG).show();

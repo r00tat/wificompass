@@ -5,6 +5,8 @@
  */
 package at.fhstp.wificompass.model;
 
+import java.sql.SQLException;
+
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
@@ -24,7 +26,7 @@ public class WifiScanResult extends BaseDaoEnabled<WifiScanResult, Integer>{
 	@ForeignCollectionField
 	protected ForeignCollection<BssidResult> bssids;
 	
-	@DatabaseField(foreign = true,foreignAutoRefresh = true)
+	@DatabaseField(foreign = true,foreignAutoRefresh = true, foreignAutoCreate = true)
 	protected Location location;
 	
 	@DatabaseField(foreign=true,foreignAutoRefresh=true)
@@ -124,6 +126,17 @@ public class WifiScanResult extends BaseDaoEnabled<WifiScanResult, Integer>{
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"("+id+") "+timestamp+(location!=null?" "+location.toString():"");
+	}
+
+	/* (non-Javadoc)
+	 * @see com.j256.ormlite.misc.BaseDaoEnabled#delete()
+	 */
+	@Override
+	public int delete() throws SQLException {
+		for(BssidResult br: bssids){
+			br.delete();
+		}
+		return super.delete();
 	}
 
 }

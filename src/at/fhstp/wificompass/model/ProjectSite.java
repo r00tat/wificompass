@@ -7,6 +7,7 @@ package at.fhstp.wificompass.model;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlSerializer;
@@ -73,7 +74,7 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	@ForeignCollectionField
 	protected ForeignCollection<WifiScanResult> scanResults;
 
-	@DatabaseField(foreign = true, foreignAutoRefresh = true)
+	@DatabaseField(foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true)
 	protected Location lastLocation;
 
 	protected static final String XMLTAG = "location", XMLTITLE = "title";
@@ -318,5 +319,24 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 		if(this.north<0)
 			this.north+=2*Math.PI;
 	}
+
+	
+	/* (non-Javadoc)
+	 * @see com.j256.ormlite.misc.BaseDaoEnabled#delete()
+	 */
+	@Override
+	public int delete() throws SQLException {
+		if(lastLocation!=null&&lastLocation.getId()!=0) lastLocation.delete();
+		for(AccessPoint ap: accessPoints){
+			ap.delete();
+		}
+		for(WifiScanResult sr: scanResults){
+			sr.delete();
+		}
+		return super.delete();
+	}
+
+	
+	
 
 }

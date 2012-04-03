@@ -6,6 +6,7 @@
 package at.fhstp.wificompass.model;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlSerializer;
@@ -138,6 +139,17 @@ public class Project extends BaseDaoEnabled<Project, Integer>implements XMLSeria
 	@Override
 	public String toString() {
 		return "Project("+id+"): "+name;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.j256.ormlite.misc.BaseDaoEnabled#delete()
+	 */
+	@Override
+	public int delete() throws SQLException {
+		for(ProjectSite site: sites){
+			site.delete();
+		}
+		return super.delete();
 	}
 
 }

@@ -5,6 +5,8 @@
  */
 package at.fhstp.wificompass.model;
 
+import java.sql.SQLException;
+
 import android.net.wifi.ScanResult;
 
 import com.j256.ormlite.field.DatabaseField;
@@ -171,6 +173,14 @@ public class BssidResult extends BaseDaoEnabled<BssidResult,Integer> {
 	@Override
 	public String toString() {
 		return ssid + " " + bssid + " " + level + "dBm " + frequency + "MHz " + capabilities;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.j256.ormlite.misc.BaseDaoEnabled#delete()
+	 */
+	@Override
+	public int delete() throws SQLException {
+		return super.delete();
 	}
 
 }
