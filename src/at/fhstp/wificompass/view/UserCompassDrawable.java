@@ -194,7 +194,8 @@ public class UserCompassDrawable extends MultiTouchDrawable implements SensorEve
 				
 				if (Math.abs(angle - newAngle) > minAngleChange) {
 					this.setAngle(newAngle);
-					popup.setAngle(-newAngle);
+					// we do not have to set the angle, the angle of the popup is always 0.
+//					popup.setAngle(-newAngle);
 					popupAngle=(int)azimuth;
 					popup.setText(ctx.getString(R.string.user_compass_degrees, popupAngle));
 					refresher.invalidate();
