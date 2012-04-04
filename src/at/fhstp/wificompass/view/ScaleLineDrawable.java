@@ -5,52 +5,58 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import at.fhstp.wificompass.Logger;
 
 public class ScaleLineDrawable extends MultiTouchDrawable {
 
 	protected ScaleSliderDrawable slider1;
+
 	protected ScaleSliderDrawable slider2;
-	protected float slider1RelX;
-	protected float slider1RelY;
-	protected float slider2RelX;
-	protected float slider2RelY;
-	
-	public ScaleLineDrawable(Context context, MultiTouchDrawable superDrawable) {
+
+	// protected float slider1.getRelativeX();
+	//
+	// protected float slider1.getRelativeY();
+	//
+	// protected float slider2.getRelativeX();
+	//
+	// protected float slider2.getRelativeY();
+
+	protected OkDrawable okDrawable;
+
+	public ScaleLineDrawable(Context context, MultiTouchDrawable superDrawable, OkCallback okCallback) {
 		super(context, superDrawable);
-		init();
+		slider1 = new ScaleSliderDrawable(ctx, this, 1);
+		slider2 = new ScaleSliderDrawable(ctx, this, 2);
+
+		okDrawable = new OkDrawable(ctx, this, okCallback);
+		this.setRelativePosition(0, 0);
 	}
-	
+
 	protected void init() {
-		slider1 = new ScaleSliderDrawable(this.ctx, this.getSuperDrawable(), this, 1);
-		slider2 = new ScaleSliderDrawable(this.ctx, this.getSuperDrawable(), this, 2);
+
 	}
-	
-	public void setSliderPosition(int id, float relX, float relY) {
-		if (id == 1) {
-			this.slider1RelX = relX;
-			this.slider1RelY = relY;
+
+	public void onSliderMove(int id) {
+
+		if (okDrawable != null) {
+			okDrawable.setRelativePosition((slider1.getRelativeX() + slider2.getRelativeX()) / 2,
+					(slider1.getRelativeY() + slider2.getRelativeY()) / 2);
 		}
-		else if (id == 2) {
-			this.slider2RelX = relX;
-			this.slider2RelY = relY;
-		}
-		
-		Logger.d("Slider position was set: slider1(" + slider1RelX + ", " + slider1RelY + "), slider2(" + slider2RelX + ", " + slider2RelY + ")"); 
+
+		// Logger.d("Slider position was set: slider1(" + slider1.getRelativeX() + ", " + slider1.getRelativeY() + "), slider2(" + slider2.getRelativeX() + ", " + slider2.getRelativeY() + ")");
 	}
-	
+
 	public float getSliderDistance() {
-		return (float) Math.sqrt(Math.pow(slider2RelX - slider1RelX, 2) + Math.pow(slider2RelY - slider1RelY, 2));
+		return (float) Math.sqrt(Math.pow(slider2.getRelativeX() - slider1.getRelativeX(), 2)
+				+ Math.pow(slider2.getRelativeY() - slider1.getRelativeY(), 2));
 	}
-	
+
 	public void removeScaleSliders() {
-		this.getSuperDrawable().removeSubDrawable(slider1);
-		this.getSuperDrawable().removeSubDrawable(slider2);
+		this.removeSubDrawable(slider1);
+		this.removeSubDrawable(slider2);
 	}
-	
+
 	@Override
 	public Drawable getDrawable() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -61,46 +67,53 @@ public class ScaleLineDrawable extends MultiTouchDrawable {
 		float dy = (maxY + minY) / 2;
 
 		canvas.translate(dx, dy);
-		canvas.rotate(this.getSuperDrawable().getAngle() * 180.0f / (float) Math.PI);
-		
-		
+		canvas.rotate((float) Math.toDegrees(this.getAngle()));
+
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(3);
 		paint.setColor(Color.rgb(255, 0, 0));
-		
-		float scaleX = this.getSuperDrawable().getScaleX();
-		float scaleY = this.getSuperDrawable().getScaleY();
-		
-		canvas.drawLine(slider1RelX*scaleX, slider1RelY*scaleY, slider2RelX*scaleX, slider2RelY*scaleY, paint);
-		
+
+		float scaleX = this.getScaleX();
+		float scaleY = this.getScaleY();
+
+		canvas.drawLine(slider1.getRelativeX() * scaleX, slider1.getRelativeY() * scaleY, slider2.getRelativeX() * scaleX, slider2.getRelativeY()
+				* scaleY, paint);
+
 		canvas.restore();
 
 		this.drawSubdrawables(canvas);
 	}
-	
+
 	@Override
 	public boolean isScalable() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isRotateable() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isDragable() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isOnlyInSuper() {
-		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public ScaleSliderDrawable getSlider(int id) {
+		switch (id) {
+		case 1:
+			return slider1;
+		case 2:
+			return slider2;
+		default:
+			return null;
+		}
 	}
 
 }

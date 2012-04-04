@@ -20,6 +20,8 @@ public class OkDrawable extends MultiTouchDrawable {
 	protected BitmapDrawable icon;
 
 	protected boolean active = true;
+	
+	protected OkCallback callback;
 
 	/**
 	 * @param context
@@ -27,12 +29,26 @@ public class OkDrawable extends MultiTouchDrawable {
 	 */
 	public OkDrawable(Context context, MultiTouchDrawable superDrawable) {
 		super(context, superDrawable);
+		init();
+	}
+	
+	/**
+	 * @param context
+	 * @param superDrawable
+	 */
+	public OkDrawable(Context context, MultiTouchDrawable superDrawable,OkCallback okCallback) {
+		super(context, superDrawable);
+		callback=okCallback;
+		init();
+	}
+
+	protected void init(){
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.tick);
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
-		this.setPivot(0.5f, 0.5f);
+//		this.setPivot(0.5f, 0.5f); // -> default
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -103,7 +119,10 @@ public class OkDrawable extends MultiTouchDrawable {
 		if(!active)
 		return super.onSingleTouch(pointinfo);
 		else {
-			if(superDrawable !=null && superDrawable instanceof OkCallback){
+			if(callback!=null){
+				callback.onOk();
+				return true;
+			}else if(superDrawable !=null && superDrawable instanceof OkCallback){
 				((OkCallback)superDrawable).onOk();
 				return true;
 			}else {

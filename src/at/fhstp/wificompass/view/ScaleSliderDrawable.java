@@ -9,11 +9,9 @@ import at.fhstp.wificompass.R;
 public class ScaleSliderDrawable extends MultiTouchDrawable {
 
 	protected int id;
-	protected ScaleLineDrawable line;
 	
-	public ScaleSliderDrawable(Context context, MultiTouchDrawable superDrawable, ScaleLineDrawable line, int id) {
+	public ScaleSliderDrawable(Context context, MultiTouchDrawable superDrawable, int id) {
 		super(context, superDrawable);
-		this.line = line;
 		this.id = id;
 		init();
 	}
@@ -43,7 +41,8 @@ public class ScaleSliderDrawable extends MultiTouchDrawable {
 	}
 	
 	protected void forwardRelativePositionToScaleLine() {
-		line.setSliderPosition(this.id, this.getRelativeX(), this.getRelativeY());
+		if(superDrawable instanceof ScaleLineDrawable)
+			((ScaleLineDrawable)superDrawable).onSliderMove(id);
 	}
 	
 	@Override
@@ -53,25 +52,21 @@ public class ScaleSliderDrawable extends MultiTouchDrawable {
 
 	@Override
 	public boolean isScalable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isRotateable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isDragable() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isOnlyInSuper() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

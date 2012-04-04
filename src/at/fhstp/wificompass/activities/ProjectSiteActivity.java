@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -64,6 +65,7 @@ import at.fhstp.wificompass.view.MeasuringPointDrawable;
 import at.fhstp.wificompass.view.MultiTouchDrawable;
 import at.fhstp.wificompass.view.MultiTouchView;
 import at.fhstp.wificompass.view.NorthDrawable;
+import at.fhstp.wificompass.view.OkCallback;
 import at.fhstp.wificompass.view.RefreshableView;
 import at.fhstp.wificompass.view.ScaleLineDrawable;
 import at.fhstp.wificompass.view.SiteMapDrawable;
@@ -384,11 +386,13 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	}
 
 	protected void setScaleOfMap(float scale) {
-		site.setGridSpacingX(scalerDistance / scale);
-		site.setGridSpacingY(scalerDistance / scale);
+		float mapScale=scalerDistance / scale;
+		site.setGridSpacingX(mapScale);
+		site.setGridSpacingY(mapScale);
 		LocationServiceFactory.getLocationService().setGridSpacing(site.getGridSpacingX(), site.getGridSpacingY());
-		MultiTouchDrawable.setGridSpacing(scalerDistance / scale, scalerDistance / scale);
+		MultiTouchDrawable.setGridSpacing(mapScale,mapScale);
 		multiTouchView.invalidate();
+		Toast.makeText(this, getString(R.string.project_site_mapscale_changed, mapScale), Toast.LENGTH_SHORT).show();
 	}
 
 	/*
@@ -566,6 +570,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			// Set an EditText view to get user input
 			final EditText scaleInput = new EditText(this);
 			scaleInput.setSingleLine(true);
+			scaleInput.setRawInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 			scaleOfMapDialog.setView(scaleInput);
 
 			scaleOfMapDialog.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
@@ -575,7 +580,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 						float value = Float.parseFloat(scaleInput.getText().toString());
 						setScaleOfMap(value);
 					} catch (NumberFormatException nfe) {
-
+						Logger.w("Wrong number format format!");
+						Toast.makeText(context, getString(R.string.not_a_number,scaleInput.getText()), Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
@@ -709,16 +715,18 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		case R.id.project_site_menu_set_scale_of_map:
 
 			if (scaler == null) {
-				scaler = new ScaleLineDrawable(context, map);
+				scaler = new ScaleLineDrawable(context, map,new OkCallback() {
+					
+					@Override
+					public void onOk() {
+						onMapScaleSelected();
+					}
+				});
+				scaler.getSlider(1).setRelativePosition(user.getRelativeX()-80, user.getRelativeY());
+				scaler.getSlider(2).setRelativePosition(user.getRelativeX()+80, user.getRelativeY());
 				multiTouchView.invalidate();
 			} else {
-				this.scalerDistance = scaler.getSliderDistance();
-				scaler.removeScaleSliders();
-				map.removeSubDrawable(scaler);
-				scaler = null;
-				multiTouchView.invalidate();
-
-				this.showDialog(DIALOG_SET_SCALE_OF_MAP);
+				onMapScaleSelected();
 			}
 
 			return false;
@@ -808,6 +816,15 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		}
 
 		return false;
+	}
+	
+	protected void onMapScaleSelected(){
+		scalerDistance = scaler.getSliderDistance();
+		scaler.removeScaleSliders();
+		map.removeSubDrawable(scaler);
+		scaler = null;
+		invalidate();
+		showDialog(DIALOG_SET_SCALE_OF_MAP);
 	}
 
 	/*

@@ -710,7 +710,7 @@ public abstract class MultiTouchDrawable {
 			d.setBounds((int) minX, (int) minY, (int) maxX, (int) maxY);
 			// canvas.translate(dx, dy);
 			canvas.translate(centerX, centerY);
-			canvas.rotate(angle * 180.0f / (float) Math.PI);
+			canvas.rotate((float) Math.toDegrees(angle));
 			canvas.translate(-centerX, -centerY);
 			d.draw(canvas);
 

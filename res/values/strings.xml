@@ -81,7 +81,7 @@
     <string name="sensors_gyroscope_format">x: %1$f\ny: %2$f\nz: %3$f</string>
     <string name="export_db_info_text">You can export the database, import or drop the database by pressing the button.</string>
     <string name="export_db_button_text">export projects to SD card</string>
-    <string name="export_db_message_text">nothing to do&#8230;</string>
+    <string name="export_db_message_text">nothing to do…</string>
     <string name="export_db_save_start_message">Saving database backup under %1$s.\ncopying…</string>
     <string name="app_package">at.fhstp.wificompass</string>
     <string name="export_db_save_finished_message"> done!</string>
@@ -128,7 +128,7 @@
     <string name="project_site_start_scan">Scan here!</string>
     <string name="project_site_wifiscan_start_failed">Failed to start a wifi scan!</string>
     <string name="project_site_dialog_scanning_title">WiFi Scan</string>
-    <string name="project_site_dialog_scanning_message">scanning for WiFi networks&#8230;</string>
+    <string name="project_site_dialog_scanning_message">scanning for WiFi networks…</string>
     <string name="project_site_wifiscan_failed">The Wifi Scan encountered an error: %1$s</string>
     <string name="project_site_wifiscan_finished">WiFi scan finished!\n%1$s</string>
     <string name="project_site_snap_user">Snap user to grid</string>
@@ -150,8 +150,8 @@
     <string name="export_db_import_failed">Database import failed:\n%1$s</string>
     <string name="export_db_importing">importing %1$s</string>
     <string name="export_db_importing_done"> done.</string>
-    <string name="export_db_starting_import">starting import&#8230;\n</string>
-    <string name="export_db_progress_title">importing projects &#8230;</string>
+    <string name="export_db_starting_import">starting import…\n</string>
+    <string name="export_db_progress_title">importing projects …</string>
     <string name="export_db_progress_message">processing data, please wait!</string>
     <string name="export_db_import_interrupted">import interrupted!</string>
     <string name="project_site_set_scale_of_map">Set scale of map</string>
@@ -172,8 +172,8 @@
     <string name="export_db_dialog_overwrite_file_title">Overwriting existing file</string>
     <string name="export_db_dialog_overwrite_file_message">The file %1$s already exists.\nAre you sure you want to overwrite that file?</string>
     <string name="export_db_export_canceled"> canceled.</string>
-    <string name="empty"/>
-    <string name="blank"> </string>
+    <string name="empty" />
+    <string name="blank"></string>
     <string name="project_site_add_known_ap">add known AP</string>
     <string name="project_site_dialog_add_known_ap_title">Add known AP</string>
     <string name="project_site_dialog_add_known_ap_message">Enter the SSID and BSSID of the known Access Point:</string>
@@ -198,10 +198,13 @@
     <string name="project_site_menu_delete">Delete Site</string>
     <string name="project_site_menu_settings">Settings</string>
     <string name="project_site_menu_view">Map</string>
-	<string name="project_site_menu_calculation">AP Calculation</string>
-	<string name="project_site_menu_project_site">Project Site</string>
-	<string name="project_site_delete_failed">Could not delete Project Site: %1$s</string>
-	<string name="project_site_deleted">Project Site deleted!</string>
-	<string name="main_utils">Utils</string>
-	<string name="user_compass_degrees">%1$d°</string>
+    <string name="project_site_menu_calculation">AP Calculation</string>
+    <string name="project_site_menu_project_site">Project Site</string>
+    <string name="project_site_delete_failed">Could not delete Project Site: %1$s</string>
+    <string name="project_site_deleted">Project Site deleted!</string>
+    <string name="main_utils">Utils</string>
+    <string name="user_compass_degrees">%1$d°</string>
+    <string name="project_site_mapscale_changed">Scale of map changed: 1m is now %1$.2f pixels.</string>
+    <string name="not_a_number">The value you entered (%1$s) is not a valid number!</string>
+
 </resources>
