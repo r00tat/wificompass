@@ -8,7 +8,8 @@
     <TextView
         android:id="@+id/calibrator_tvPeak"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:text="@string/calibrator_tv_peak">
+        android:layout_height="wrap_content"
+        android:text="@string/calibrator_tv_peak" >
     </TextView>
 
     <SeekBar
@@ -22,21 +23,23 @@
     <TextView
         android:id="@+id/calibrator_tvFilter"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:text="@string/calibrator_tv_filter">
+        android:layout_height="wrap_content"
+        android:text="@string/calibrator_tv_filter" >
     </TextView>
 
     <SeekBar
         android:id="@+id/calibrator_sbFilter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:max="100"
+        android:max="75"
         android:progress="60" >
     </SeekBar>
 
     <TextView
         android:id="@+id/calibrator_tvTimeout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:text="@string/calibrator_tv_step_timeout">
+        android:layout_height="wrap_content"
+        android:text="@string/calibrator_tv_step_timeout" >
     </TextView>
 
     <SeekBar
@@ -47,10 +50,26 @@
         android:progress="500" >
     </SeekBar>
 
+    <TextView
+        android:id="@+id/calibrator_tv_step_size"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/calibrator_tv_step_size" >
+    </TextView>
+
+    <SeekBar
+        android:id="@+id/calibrator_step_size"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:max="150"
+        android:progress="70" >
+    </SeekBar>
+
     <SurfaceView
         android:id="@+id/calibrator_svHistory"
         android:layout_width="fill_parent"
-        android:layout_height="256dp" >
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp" >
     </SurfaceView>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.SurfaceView;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -22,7 +23,6 @@ import de.uvwxy.footpath.core.StepTrigger;
  * 
  */
 public class Calibrator extends Activity implements StepTrigger {
-	
 
 	private StepDetection stepDetection;
 
@@ -41,29 +41,35 @@ public class Calibrator extends Activity implements StepTrigger {
 
 	SeekBar sbTimeout = null;
 
+	SeekBar sbStepSize = null;
+
 	float peak; // threshold for step detection
 
-	float a; // value for low pass filter
+	float filter; // value for low pass filter
 
 	int step_timeout_ms; // distance in ms between each step
+
+	float stepSize;
 
 	OnSeekBarChangeListener sbListener = new OnSeekBarChangeListener() {
 
 		@Override
-		public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
-			if (arg0.equals(sbPeak)) {
-				peak = sbPeak.getProgress() / 10.0f;
-				stepDetection.setPeak(peak);
-				tvPeak.setText("Set peak value: (" + peak + ")");
-			} else if (arg0.equals(sbFilter)) {
-				a = sbFilter.getProgress() / 100.0f;
-				stepDetection.setA(a);
-				tvFilter.setText("Set filter value: (" + a + ")");
-			} else if (arg0.equals(sbTimeout)) {
-				step_timeout_ms = sbTimeout.getProgress();
-				stepDetection.setStep_timeout_ms(step_timeout_ms);
-				tvTimeout.setText("Set step timeout: (" + step_timeout_ms + ")");
+		public void onProgressChanged(SeekBar sb, int arg1, boolean arg2) {
+			switch (sb.getId()) {
+			case R.id.calibrator_sbPeak:
+				setProgressValue(sb.getId(), sbPeak.getProgress() / 10.0f);
+				break;
+			case R.id.calibrator_sbFilter:
+				setProgressValue(sb.getId(), sbFilter.getProgress() / 100.0f);
+				break;
+			case R.id.calibrator_sbTimeout:
+				setProgressValue(sb.getId(), sbTimeout.getProgress());
+				break;
+			case R.id.calibrator_step_size:
+				setProgressValue(sb.getId(), sbStepSize.getProgress() / 100.0f);
+				break;
 			}
+
 		}
 
 		@Override
@@ -77,27 +83,64 @@ public class Calibrator extends Activity implements StepTrigger {
 	};
 
 	private void loadSettings() {
-		a = getSharedPreferences(StepDetectionProvider.CALIB_DATA, 0).getFloat(StepDetectionProvider.FILTER, StepDetectionProvider.FILTER_DEFAULT);
+		filter = getSharedPreferences(StepDetectionProvider.CALIB_DATA, 0).getFloat(StepDetectionProvider.FILTER,
+				StepDetectionProvider.FILTER_DEFAULT);
 		peak = getSharedPreferences(StepDetectionProvider.CALIB_DATA, 0).getFloat(StepDetectionProvider.PEAK, StepDetectionProvider.PEAK_DEFAULT);
-		step_timeout_ms = getSharedPreferences(StepDetectionProvider.CALIB_DATA, 0).getInt(StepDetectionProvider.TIMEOUT, StepDetectionProvider.TIMEOUT_DEFAULT);
+		step_timeout_ms = getSharedPreferences(StepDetectionProvider.CALIB_DATA, 0).getInt(StepDetectionProvider.TIMEOUT,
+				StepDetectionProvider.TIMEOUT_DEFAULT);
+		stepSize = getSharedPreferences(StepDetectionProvider.CALIB_DATA, 0).getFloat(StepDetectionProvider.STEP, StepDetectionProvider.STEP_DEFAULT);
 
 		// Update GUI elements
-		sbPeak.setProgress((int) (peak * 10));
-		sbFilter.setProgress((int) (a * 100));
-		sbTimeout.setProgress(step_timeout_ms);
+		setProgressValue(R.id.calibrator_sbPeak, peak);
+		setProgressValue(R.id.calibrator_sbFilter, filter);
+		setProgressValue(R.id.calibrator_sbTimeout, step_timeout_ms);
+		setProgressValue(R.id.calibrator_step_size, stepSize);
+	}
 
-		tvPeak.setText("Set peak value: (" + peak + ")");
-		tvFilter.setText("Set filter value: (" + a + ")");
-		tvTimeout.setText("Set step timeout: (" + step_timeout_ms + ")");
+	protected boolean setProgressValue(int id, float value) {
+		boolean ret = true;
+		switch (id) {
+		case R.id.calibrator_sbPeak:
+			peak = value;
+			stepDetection.setPeak(peak);
+			sbPeak.setProgress((int) (value * 10));
+			tvPeak.setText(getString(R.string.calibrator_peak_text, value));
+			break;
+		case R.id.calibrator_sbFilter:
+			filter = value;
+			stepDetection.setA(filter);
+			sbFilter.setProgress((int) (value * 100));
+			tvFilter.setText(getString(R.string.calibrator_filter_text, value));
+			break;
+		case R.id.calibrator_sbTimeout:
+			step_timeout_ms = (int) value;
+			stepDetection.setStep_timeout_ms(step_timeout_ms);
+			tvTimeout.setText(getString(R.string.calibrator_step_timeout_text, (int) value));
+			break;
+		case R.id.calibrator_step_size:
+			stepSize = value;
+
+			((TextView) (findViewById(R.id.calibrator_tv_step_size))).setText(getString(R.string.calibrator_step_size_text, value));
+			break;
+		default:
+			ret = false;
+			break;
+		}
+		if (ret) {
+			saveSettings();
+		}
+
+		return ret;
 	}
 
 	private void saveSettings() {
 		// Save current values to settings
 		SharedPreferences settings = getSharedPreferences(StepDetectionProvider.CALIB_DATA, 0);
 		SharedPreferences.Editor editor = settings.edit();
-		editor.putFloat("a", a);
-		editor.putFloat("peak", peak);
-		editor.putInt("timeout", step_timeout_ms);
+		editor.putFloat(StepDetectionProvider.FILTER, filter);
+		editor.putFloat(StepDetectionProvider.PEAK, peak);
+		editor.putInt(StepDetectionProvider.TIMEOUT, step_timeout_ms);
+		editor.putFloat(StepDetectionProvider.STEP, stepSize);
 		// Apply changes
 		editor.commit();
 	}
@@ -124,7 +167,22 @@ public class Calibrator extends Activity implements StepTrigger {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// Load settings after creation of GUI-elements, to set their values
+		initLogic();
 		initUI();
+
+	}
+	
+	protected void initLogic(){
+		stepDetection = new StepDetection(this, this, filter, peak, step_timeout_ms);
+		
+		long samples_per_second = 1000 / stepDetection.INTERVAL_MS;
+		int history_in_seconds = 4;
+		int samples_per_history = (int) (history_in_seconds * samples_per_second);
+
+		// create PaintBox (-24.0 to 24.0, 100 entries)
+		svHistory = new PaintBoxHistory(this, 48.0, samples_per_history, history_in_seconds);
 
 	}
 
@@ -138,28 +196,27 @@ public class Calibrator extends Activity implements StepTrigger {
 		sbPeak = (SeekBar) findViewById(R.id.calibrator_sbPeak);
 		sbFilter = (SeekBar) findViewById(R.id.calibrator_sbFilter);
 		sbTimeout = (SeekBar) findViewById(R.id.calibrator_sbTimeout);
+		sbStepSize = (SeekBar) findViewById(R.id.calibrator_step_size);
 
-		// Load settings after creation of GUI-elements, to set their values
-		loadSettings();
-		stepDetection = new StepDetection(this, this, a, peak, step_timeout_ms);
 		// Add OnSeekBarChangeListener after creation of step detection, because object is used
 		sbPeak.setOnSeekBarChangeListener(sbListener);
 		sbFilter.setOnSeekBarChangeListener(sbListener);
 		sbTimeout.setOnSeekBarChangeListener(sbListener);
+		sbStepSize.setOnSeekBarChangeListener(sbListener);
 
 		LinearLayout linLayout = (LinearLayout) findViewById(R.id.calibrator_LinearLayout01); // get pointer to layout
 		SurfaceView svOld = (SurfaceView) findViewById(R.id.calibrator_svHistory); // get SurfaceView defined in xml
 		LayoutParams lpHistory = svOld.getLayoutParams(); // get its layout params
 
-		long samples_per_second = 1000 / stepDetection.INTERVAL_MS;
-		int history_in_seconds = 4;
-		int samples_per_history = (int) (history_in_seconds * samples_per_second);
-
-		// create PaintBox (-24.0 to 24.0, 100 entries)
-		svHistory = new PaintBoxHistory(this, 48.0, samples_per_history, history_in_seconds);
+		
 
 		linLayout.removeView(svOld); // and remove surface view from layout
+		if(svHistory.getParent()!=null && svHistory.getParent() instanceof ViewGroup){
+			((ViewGroup)svHistory.getParent()).removeView(svHistory);
+		}
 		linLayout.addView(svHistory, lpHistory); // add surface view clone to layout
+
+		loadSettings();
 	}
 
 	@Override

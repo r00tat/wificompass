@@ -68,12 +68,12 @@ public class UserCompassDrawable extends MultiTouchDrawable implements SensorEve
 		compass = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-		popup = new TextPopupDrawable(ctx, this);
+		popup = new TextPopupDrawable(ctx, this.superDrawable);
 		popup.setText("0°");
 		popup.setActive(true);
 		popup.setPersistent(true);
 		popup.setWidth(40);
-//		popup.setRelativePosition(40,0);
+		popup.setRelativePosition(60,0);
 
 	}
 

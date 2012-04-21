@@ -206,5 +206,10 @@
     <string name="user_compass_degrees">%1$d°</string>
     <string name="project_site_mapscale_changed">Scale of map changed: 1m is now %1$.2f pixels.</string>
     <string name="not_a_number">The value you entered (%1$s) is not a valid number!</string>
+    <string name="calibrator_tv_step_size">step size (m)</string>
+    <string name="calibrator_step_size_text">step size: %1$.2fm</string>
+    <string name="calibrator_peak_text">Set peak value: %1$.2f</string>
+    <string name="calibrator_filter_text">Set filter value: %1$.2f</string>
+    <string name="calibrator_step_timeout_text">Set step timout: %1$d</string>
 
 </resources>
