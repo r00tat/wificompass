@@ -56,7 +56,7 @@ import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.model.helper.SelectBssdidsExpandableListAdapter;
-import at.fhstp.wificompass.triangulation.LocalSignalStrengthGradientTriangulation;
+import at.fhstp.wificompass.triangulation.WeightedCentroidTriangulation;
 import at.fhstp.wificompass.userlocation.LocationChangeListener;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
 import at.fhstp.wificompass.userlocation.StepDetectionProvider;
@@ -1097,8 +1097,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		@Override
 		protected Vector<AccessPointDrawable> doInBackground(Void... params) {
-			LocalSignalStrengthGradientTriangulation tri = new LocalSignalStrengthGradientTriangulation(context, site, progress);
-			return tri.calculateAllAndGetDrawables();
+			WeightedCentroidTriangulation wc = new WeightedCentroidTriangulation(context, site, progress);
+			return wc.calculateAllAndGetDrawables();
 		}
 
 		@Override

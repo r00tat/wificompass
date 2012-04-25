@@ -3,6 +3,7 @@ package at.fhstp.wificompass.triangulation;
 import java.util.Iterator;
 import java.util.Vector;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.PointF;
 import at.fhstp.wificompass.model.AccessPoint;
@@ -10,10 +11,15 @@ import at.fhstp.wificompass.model.ProjectSite;
 
 public class WeightedCentroidTriangulation extends AccessPointTriangulation {
 
-	protected static float g = 3.12f;
+	protected static float g = 1.3f;
 
 	public WeightedCentroidTriangulation(Context context, ProjectSite projectSite) {
 		super(context, projectSite);
+	}
+	
+	public WeightedCentroidTriangulation(Context context,
+			ProjectSite projectSite, ProgressDialog progressDialog) {
+		super(context, projectSite, progressDialog);
 	}
 
 	@Override

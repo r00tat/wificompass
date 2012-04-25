@@ -18,8 +18,8 @@ public class LocalSignalStrengthGradientTriangulation extends
 	 * Half the size of the square (in meters) in which measurement points are
 	 * considered to have similar attenuation
 	 */
-	protected static float windowSize = 3;
-	protected static float g = 2.0f;
+	protected static float windowSize = 2;
+	protected static float g = -0.4f;
 
 	public LocalSignalStrengthGradientTriangulation(Context context,
 			ProjectSite projectSite) {
@@ -38,8 +38,7 @@ public class LocalSignalStrengthGradientTriangulation extends
 		Vector<GradientArrow> arrows = new Vector<GradientArrow>();
 		Vector<MeasurementDataSet> data = new Vector<MeasurementDataSet>();
 
-		if (// (ap.getBssid().equalsIgnoreCase("00:1c:10:9a:1d:e8")) &&
-		originalData.size() > 3) {
+		if (originalData.size() > 3) {
 
 			float sumRssi = 0;
 
