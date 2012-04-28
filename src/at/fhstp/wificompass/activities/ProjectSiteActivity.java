@@ -9,6 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -89,9 +93,14 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4, DIALOG_SET_SCALE_OF_MAP = 5,
 			DIALOG_ADD_KNOWN_AP = 6, DIALOG_SELECT_BSSIDS = 7;
 
-	protected static final int MESSAGE_REFRESH = 1;
+	protected static final int MESSAGE_REFRESH = 1, MESSAGE_START_WIFISCAN=2;
 
 	protected static final int FILEBROWSER_REQUEST = 1;
+	
+	/**
+	 * how often should we start a wifi scan
+	 */
+	protected static final int SCHEDULER_TIME = 3;
 
 	protected MultiTouchView multiTouchView;
 
@@ -127,7 +136,14 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected NorthDrawable northDrawable = null;
 
-	protected Handler hRefresh;
+	protected Handler messageHandler;
+	
+	protected final ScheduledExecutorService scheduler =
+		     Executors.newScheduledThreadPool(1);
+	
+	protected Runnable wifiRunnable;
+	
+	protected ScheduledFuture<?> scheduledTask = null;
 
 	/*
 	 * (non-Javadoc)
@@ -188,7 +204,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			stepDetectionProvider = new StepDetectionProvider(this);
 			stepDetectionProvider.setLocationChangeListener(this);
 
-			hRefresh = new Handler() {
+			messageHandler = new Handler() {
 				@Override
 				public void handleMessage(Message msg) {
 					switch (msg.what) {
@@ -197,8 +213,20 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 						if (multiTouchView != null)
 							multiTouchView.invalidate();
 						break;
+					case MESSAGE_START_WIFISCAN:
+						// start a wifiscan
+						startWifiBackgroundScan();
 					}
 				}
+			};
+			
+			wifiRunnable= new Runnable(){
+
+				@Override
+				public void run() {
+					messageHandler.sendEmptyMessage(MESSAGE_START_WIFISCAN);
+				}
+				
 			};
 
 			initUI();
@@ -209,6 +237,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			this.finish();
 		}
 	}
+
 
 	protected void initUI() {
 
@@ -247,6 +276,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			OpenHelperManager.releaseHelper();
 			databaseHelper = null;
 		}
+		WifiScanner.stopScanning(this);
 	}
 
 	@Override
@@ -266,8 +296,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		case R.id.project_site_wifiscan_button:
 			Logger.d("start a wifiscan");
 			try {
-				wifiBroadcastReceiver = WifiScanner.startScan(this, this);
-				ignoreWifiResults = false;
+				startWifiScan();
 				showDialog(DIALOG_SCANNING);
 
 			} catch (WifiException e) {
@@ -307,11 +336,18 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			if (stepDetectionProvider.isRunning()) {
 				// stop!
 				stepDetectionProvider.stop();
+				if(scheduledTask!=null){
+					scheduledTask.cancel(false);
+					scheduledTask=null;
+				}
+				stopWifiScan();
 				((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_start_step_detect);
 			} else {
 				// start
 				stepDetectionProvider.start();
+				scheduledTask=scheduler.scheduleWithFixedDelay(wifiRunnable,0, SCHEDULER_TIME, TimeUnit.SECONDS);
 				((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
+				
 			}
 
 			break;
@@ -917,7 +953,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	}
 
 	@Override
-	public void scanFinished(WifiScanResult wr) {
+	public void onScanFinished(WifiScanResult wr) {
 		hideWifiScanDialog();
 		if (!ignoreWifiResults) {
 			try {
@@ -946,17 +982,23 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				multiTouchView.invalidate();
 
 				Toast.makeText(this, this.getString(R.string.project_site_wifiscan_finished, sb.toString()), Toast.LENGTH_SHORT).show();
+				
+//				if(stepDetectionProvider.isRunning()){
+//					// we are walking and finished a scan, why don't we start a new one
+//					startWifiBackgroundScan();
+//					
+//				}
 
 			} catch (SQLException e) {
 				Logger.e("could not update wifiscanresult!", e);
 				Toast.makeText(this, this.getString(R.string.project_site_wifiscan_failed, e.getMessage()), Toast.LENGTH_LONG).show();
-			}
+			} 
 
 		}
 	}
 
 	@Override
-	public void scanFailed(Exception ex) {
+	public void onScanFailed(Exception ex) {
 		hideWifiScanDialog();
 		if (!ignoreWifiResults) {
 
@@ -965,6 +1007,22 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		}
 
+	}
+	
+	protected void startWifiScan() throws WifiException{
+		log.debug("starting WiFi Scan");
+		wifiBroadcastReceiver = WifiScanner.startScan(this, this);
+		ignoreWifiResults = false;
+	}
+	
+	protected void startWifiBackgroundScan(){
+		try {
+			startWifiScan();
+//			Toast.makeText(this, R.string.project_site_wifiscan_started, Toast.LENGTH_SHORT).show();
+		} catch (WifiException e) {
+			Logger.e("could not start wifi scan!", e);
+			Toast.makeText(this, R.string.project_site_wifiscan_start_failed, Toast.LENGTH_LONG).show();
+		}
 	}
 
 	/**
@@ -1112,6 +1170,6 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	public void onLocationChange(Location loc) {
 		// info from StepDetectionProvider, that the location changed.
 		user.setRelativePosition(loc.getX(), loc.getY());
-		hRefresh.sendEmptyMessage(MESSAGE_REFRESH);
+		messageHandler.sendEmptyMessage(MESSAGE_REFRESH);
 	}
 }

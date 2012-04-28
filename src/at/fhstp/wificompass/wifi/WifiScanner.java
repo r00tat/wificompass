@@ -43,7 +43,7 @@ public class WifiScanner {
 		
 		WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
-		Logger.d( "button clicked, trying to start a wifi scan");
+//		Logger.d( "trying to start a wifi scan");
 
 		if (!wm.isWifiEnabled()) {
 			
@@ -51,7 +51,7 @@ public class WifiScanner {
 			Logger.d( "WiFi is disabled, trying to enable it");
 			wm.setWifiEnabled(true);
 			try {
-				Thread.sleep(200);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 
 			}
@@ -70,7 +70,7 @@ public class WifiScanner {
 			throw new WifiException("WIFI not enabled!");
 		}
 		
-			Logger.d( "WiFi is enabled");
+//			Logger.d( "WiFi is enabled");
 
 			IntentFilter i = new IntentFilter();
 			i.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
@@ -122,10 +122,10 @@ public class WifiScanner {
 						
 						scanResultDao.refresh(wifiScanResult);
 						
-						resultCallback.scanFinished(wifiScanResult);
+						resultCallback.onScanFinished(wifiScanResult);
 						
 					} catch (SQLException e) {
-						resultCallback.scanFailed(e);
+						resultCallback.onScanFailed(e);
 					} finally {
 						if(databaseHelper!=null)
 							OpenHelperManager.releaseHelper();
@@ -145,7 +145,7 @@ public class WifiScanner {
 			
 			receivers.add(wifiScanReceiver);
 
-			Logger.d( "starting scan");
+			Logger.d( "starting Wifi Scan");
 			// Now you can call this and it should execute the broadcastReceiver's onReceive()
 			wm.startScan();
 

@@ -185,8 +185,8 @@
     <string name="calibrator_tv_peak">Set peak value: (current)</string>
     <string name="calibrator_tv_filter">Set filter value: (current)</string>
     <string name="calibrator_tv_step_timeout">Set step timout: (current)</string>
-    <string name="project_site_start_step_detect">Start Walking</string>
-    <string name="project_site_stop_step_detect">Stop Walking</string>
+    <string name="project_site_start_step_detect">Start Walking &amp; Scanning</string>
+    <string name="project_site_stop_step_detect">Stop Walking &amp; Scanning</string>
     <string name="project_site_menu_set_north">set north</string>
     <string name="project_site_nort_set">north set!</string>
     <string name="north_drawable_north_text">North: %1$.0f°</string>
@@ -211,5 +211,6 @@
     <string name="calibrator_peak_text">Set peak value: %1$.2f</string>
     <string name="calibrator_filter_text">Set filter value: %1$.2f</string>
     <string name="calibrator_step_timeout_text">Set step timout: %1$d</string>
+    <string name="project_site_wifiscan_started">WiFi Scan started!</string>
 
 </resources>
