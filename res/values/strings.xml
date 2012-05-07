@@ -17,7 +17,7 @@
     <string name="wifi_scan">Quick scan</string>
     <string name="newProjectText">Create a new project</string>
     <string name="loadProject">Load project</string>
-    <string name="mainInfoText">Welcome to Wi-Fi Compass! \nPlease create a new project or load an existing project.</string>
+    <string name="main_info_text">Welcome to Wi-Fi Compass! \Create a project or use Quick Scan.</string>
     <string name="aboutText">About this app…</string>
     <string name="untitled">Untitled</string>
     <string name="filebrowser_parent_dir">Parent directory</string>
@@ -212,5 +212,10 @@
     <string name="calibrator_filter_text">Set filter value: %1$.2f</string>
     <string name="calibrator_step_timeout_text">Set step timout: %1$d</string>
     <string name="project_site_wifiscan_started">WiFi Scan started!</string>
+    <string name="main_quickscan_button">Quick Scan!</string>
+    <string name="quickscan_project_name">Quick Scan %s</string>
+    <string name="quickscan_project_site_name">Quick Scan Site %s</string>
+    <string name="main_quickscan_failed">Failed to start the Quick Scan: \n%s</string>
+    
 
 </resources>

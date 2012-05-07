@@ -1,8 +1,8 @@
 package at.fhstp.wificompass.activities;
 
 import java.sql.SQLException;
-
-import de.uvwxy.footpath.gui.Calibrator;
+import java.text.DateFormat;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,10 +19,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
+import at.fhstp.wificompass.model.Project;
+import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.model.helper.ProjectListAdapter;
+
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+
+import de.uvwxy.footpath.gui.Calibrator;
 
 public class MainActivity extends Activity implements OnClickListener, OnItemClickListener {
 
@@ -72,6 +79,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 
 		running = false;
 		((Button) findViewById(R.id.new_project_button)).setOnClickListener(this);
+		((Button) findViewById(R.id.main_quickscan_button)).setOnClickListener(this);
 //		((Button) findViewById(R.id.load_project_button)).setOnClickListener(this);
 //		((Button) findViewById(R.id.sample_scan_button)).setOnClickListener(this);
 //		Button about_button = ((Button) findViewById(R.id.aboutButton));
@@ -88,6 +96,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 		} catch (SQLException e) {
 			log.error("could not load project list", e);
 		}
+		
 		
 	}
 
@@ -117,6 +126,32 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 //			Intent aboutIntent = new Intent(this, AboutActivity.class);
 //			startActivity(aboutIntent);
 //			break;
+			
+		case R.id.main_quickscan_button:
+			log.debug("Quick Scan!");
+			try {
+				databaseHelper=OpenHelperManager.getHelper(this,DatabaseHelper.class);
+				Project p=new Project(getString(R.string.quickscan_project_name,DateFormat.getDateInstance(DateFormat.SHORT).format(new Date())));
+				databaseHelper.getDao(Project.class).create(p);
+				
+				ProjectSite ps=new ProjectSite(p);
+				ps.setTitle(getString(R.string.quickscan_project_site_name,DateFormat.getDateInstance(DateFormat.LONG).format(new Date())));
+				databaseHelper.getDao(ProjectSite.class).create(ps);
+				
+				OpenHelperManager.releaseHelper();
+				databaseHelper=null;
+				
+				
+				Intent psIntent=new Intent(this,ProjectSiteActivity.class);
+				psIntent.putExtra(ProjectSiteActivity.SITE_KEY,ps.getId());
+				startActivity(psIntent);
+				
+			} catch (SQLException e) {
+				log.error("could not create quick scan project", e);
+				Toast.makeText(this, getString(R.string.main_quickscan_failed,e.getMessage()), Toast.LENGTH_LONG).show();
+			}
+			
+			break;
 		default:
 			log.warn("could not identify sender = " + v.getId());
 			break;

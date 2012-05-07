@@ -157,8 +157,9 @@ public class WifiScanner {
 	public static void stopScanning(Context ctx){
 		// we don't stop scanning, we just unregister all Broadcast Intent Receivers
 		
-		for(Iterator<BroadcastReceiver> it=receivers.iterator();it.hasNext();){
-			ctx.unregisterReceiver(it.next());
+		if(receivers!=null)
+		for(BroadcastReceiver rcvr: receivers){
+			ctx.unregisterReceiver(rcvr);
 		}
 		receivers=new Vector<BroadcastReceiver>();
 		
