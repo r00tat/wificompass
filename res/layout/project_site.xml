@@ -1,68 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayout1"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/project_site_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <LinearLayout
-        android:id="@+id/project_site_button_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
-
-<!--         <TableRow> -->
-
-<!--             <Button -->
-<!--                 android:id="@+id/project_site_reset_zoom_button" -->
-<!--                 android:layout_width="wrap_content" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:layout_gravity="center" -->
-<!--                 android:text="@string/project_site_reset_zoom" /> -->
-
-<!--             <Button -->
-<!--                 android:id="@+id/project_site_snap_user_button" -->
-<!--                 android:layout_width="wrap_content" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:layout_gravity="center" -->
-<!--                 android:text="@string/project_site_snap_user" /> -->
-
-<!--             <Button -->
-<!--                 android:id="@+id/project_site_add_known_ap" -->
-<!--                 android:layout_width="wrap_content" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:layout_gravity="center" -->
-<!--                 android:text="@string/project_site_add_known_ap" /> -->
-<!--         </TableRow> -->
-
-<!--         <TableRow> -->
-
-<!--             <Button -->
-<!--                 android:id="@+id/project_site_calculate_ap_positions_button" -->
-<!--                 android:layout_width="wrap_content" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:layout_gravity="center" -->
-<!--                 android:text="@string/project_site_calculate_ap_positions" /> -->
-
-            <Button
-                android:id="@+id/project_site_wifiscan_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/project_site_start_scan" />
-
-              <Button
-                android:id="@+id/project_site_step_detect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/project_site_start_step_detect" />
-<!--         </TableRow> -->
-    </LinearLayout>
 
     <at.fhstp.wificompass.view.MultiTouchView
         android:id="@+id/project_site_resultview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/project_site_background" />
+        android:background="@color/project_site_background"
+         
+        />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/project_site_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal" android:padding="5dp">
+
+        <Button
+            android:id="@+id/project_site_start_wifiscan_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/project_site_start_scan" android:layout_marginRight="5dp"/>
+
+        <Button
+            android:id="@+id/project_site_step_detect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/project_site_start_step_detect" android:layout_marginLeft="5dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -245,7 +245,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 //		((Button) findViewById(R.id.project_site_snap_user_button)).setOnClickListener(this);
 
-		((Button) findViewById(R.id.project_site_wifiscan_button)).setOnClickListener(this);
+		((Button) findViewById(R.id.project_site_start_wifiscan_button)).setOnClickListener(this);
 
 //		((Button) findViewById(R.id.project_site_calculate_ap_positions_button)).setOnClickListener(this);
 
@@ -293,7 +293,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	public void onClick(View v) {
 		switch (v.getId()) {
 
-		case R.id.project_site_wifiscan_button:
+		case R.id.project_site_start_wifiscan_button:
 			Logger.d("start a wifiscan");
 			try {
 				startWifiScan();
