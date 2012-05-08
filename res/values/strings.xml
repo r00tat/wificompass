@@ -17,7 +17,7 @@
     <string name="wifi_scan">Quick scan</string>
     <string name="newProjectText">Create a new project</string>
     <string name="loadProject">Load project</string>
-    <string name="main_info_text">Welcome to Wi-Fi Compass! \Create a project or use Quick Scan.</string>
+    <string name="main_info_text">Welcome to Wi-Fi Compass! \nCreate a project or use Quick Scan.</string>
     <string name="aboutText">About this app…</string>
     <string name="untitled">Untitled</string>
     <string name="filebrowser_parent_dir">Parent directory</string>

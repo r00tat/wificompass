@@ -14,6 +14,7 @@ import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.AccessPoint;
 import at.fhstp.wificompass.model.BssidResult;
+import at.fhstp.wificompass.model.BssidSelection;
 import at.fhstp.wificompass.model.Location;
 import at.fhstp.wificompass.model.Project;
 import at.fhstp.wificompass.model.ProjectSite;
@@ -34,11 +35,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public static final String DATABASE_NAME = "wificompass.db";
 
 	// any time you make changes to your database objects, you may have to increase the database version
-	private static final int DATABASE_VERSION = 19;
+	private static final int DATABASE_VERSION = 20;
 
 	protected Context context;
 
-	protected static final Class<?>[] ormClasses = { Project.class, ProjectSite.class, WifiScanResult.class, BssidResult.class, SensorData.class, AccessPoint.class,Location.class };
+	protected static final Class<?>[] ormClasses = { Project.class, ProjectSite.class, WifiScanResult.class, BssidResult.class, SensorData.class, AccessPoint.class,Location.class,BssidSelection.class };
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -103,9 +104,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 					psDao.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `north` FLOAT DEFAULT 0;");
 					
 					
+					
+				case 19:
+					
+					Logger.i("Upgrading database to version 20");
+					TableUtils.createTable(getConnectionSource(), BssidSelection.class);
+
+					
+					
 					// do not break on versions before, only last version should use break;
 					break;
-				
+					
 				default:
 					log.warn("There are not instrunctions to handle a upgrade from this version, recreateing database!");
 					recreateDatabase();
