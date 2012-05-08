@@ -670,11 +670,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			
 			selectBssidsDialog.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					ArrayList<Bssid> bssids = adapter.getSelectedBssids();
-					
-					for (Bssid b : bssids) {
-						Logger.d("Bssid: " + b.getBssid() + " (" + b.getSsid() + ")");
-					}
+					site.setUnselectedBssids(context, adapter.getSelectedBssids(false));
 				}
 			});
 			selectBssidsDialog.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
@@ -732,6 +728,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 					}
 
 					if (!alreadyAdded) {
+						bssid.setSelected(site.isBssidSelected(bssid.getBssid()));
 						bssids.add(bssid);
 					}
 				}

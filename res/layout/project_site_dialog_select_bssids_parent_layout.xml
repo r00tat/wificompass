@@ -17,13 +17,10 @@
         android:id="@+id/project_site_dialog_select_bssids_parent_all_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_toLeftOf="@id/project_site_dialog_select_bssids_parent_all_checkbox"
         android:gravity="right|center_vertical"
         android:text="@string/general_all"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    
+        android:textAppearance="?android:attr/textAppearanceMedium" android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/project_site_dialog_select_bssids_parent_text"
@@ -31,6 +28,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/project_site_dialog_select_bssids_parent_all_text"
         android:gravity="left|center_vertical"
         android:paddingLeft="40dp"
         android:textAppearance="?android:attr/textAppearanceLarge"

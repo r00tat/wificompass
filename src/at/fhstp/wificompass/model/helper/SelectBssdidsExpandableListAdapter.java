@@ -248,15 +248,15 @@ public class SelectBssdidsExpandableListAdapter extends
 		return allSelected;
 	}
 	
-	public ArrayList<Bssid> getSelectedBssids() {
-		ArrayList<Bssid> selectedBssids = new ArrayList<Bssid>();
+	public ArrayList<String> getSelectedBssids(boolean selected) {
+		ArrayList<String> selectedBssids = new ArrayList<String>();
 		
 		for (String g : groups) {
 			ArrayList<Bssid> children = getChildrenByGroup(groups.indexOf(g));
 			
 			for (Bssid b : children) {
-				if (b.isSelected())
-					selectedBssids.add(b);
+				if (b.isSelected() == selected)
+					selectedBssids.add(b.getBssid());
 			}
 		}
 		

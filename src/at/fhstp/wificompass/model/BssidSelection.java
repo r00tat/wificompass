@@ -24,7 +24,7 @@ public class BssidSelection extends BaseDaoEnabled<BssidSelection, Integer>{
 	protected String bssid;
 	
 	@DatabaseField 
-	protected boolean active=true;
+	protected boolean active=false;
 	
 	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	protected ProjectSite projectSite;

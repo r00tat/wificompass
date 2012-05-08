@@ -60,34 +60,39 @@ public abstract class AccessPointTriangulation {
 		measurementData = new HashMap<AccessPoint, Vector<MeasurementDataSet>>();
 		accessPoints = new HashMap<String, AccessPoint>();
 
+		// Walk through all measuring points
 		for (Iterator<WifiScanResult> it = projectSite.getScanResults()
 				.iterator(); it.hasNext();) {
 			WifiScanResult result = it.next();
 
+			// Walk through all captured BSSIDs within the measuring point
 			for (Iterator<BssidResult> itb = result.getBssids().iterator(); itb
 					.hasNext();) {
 				BssidResult bssidResult = itb.next();
 
-				Vector<MeasurementDataSet> measurements;
+				// Only calculate the BSSID location if the BSSID is selected
+				if (projectSite.isBssidSelected(context, bssidResult.getBssid())) {
+					Vector<MeasurementDataSet> measurements;
 
-				if (!accessPoints.containsKey(bssidResult.getBssid()))
-					accessPoints.put(bssidResult.getBssid(), new AccessPoint(
-							bssidResult));
+					if (!accessPoints.containsKey(bssidResult.getBssid()))
+						accessPoints.put(bssidResult.getBssid(), new AccessPoint(
+								bssidResult));
 
-				if (!measurementData.containsKey(accessPoints.get(bssidResult
-						.getBssid()))) {
-					measurements = new Vector<MeasurementDataSet>();
-					measurementData.put(
-							accessPoints.get(bssidResult.getBssid()),
-							measurements);
-				} else {
-					measurements = measurementData.get(accessPoints
-							.get(bssidResult.getBssid()));
+					if (!measurementData.containsKey(accessPoints.get(bssidResult
+							.getBssid()))) {
+						measurements = new Vector<MeasurementDataSet>();
+						measurementData.put(
+								accessPoints.get(bssidResult.getBssid()),
+								measurements);
+					} else {
+						measurements = measurementData.get(accessPoints
+								.get(bssidResult.getBssid()));
+					}
+
+					Location loc = result.getLocation();
+					measurements.add(new MeasurementDataSet(loc.getX(), loc.getY(),
+							bssidResult.getLevel()));
 				}
-
-				Location loc = result.getLocation();
-				measurements.add(new MeasurementDataSet(loc.getX(), loc.getY(),
-						bssidResult.getLevel()));
 			}
 		}
 	}

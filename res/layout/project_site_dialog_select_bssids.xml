@@ -14,21 +14,21 @@
 
     <LinearLayout
         android:id="@+id/project_site_dialog_select_bssids_button_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" >
 
         <Button
             android:id="@+id/project_site_dialog_select_bssids_select_all_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/select_all" />
+            android:text="@string/select_all" android:layout_weight="1" android:layout_margin="5dp"/>
 
         <Button
             android:id="@+id/project_site_dialog_select_bssids_deselect_all_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/deselect_all" />
+            android:text="@string/deselect_all" android:layout_weight="1" android:layout_margin="5dp"/>
     </LinearLayout>
 
 </RelativeLayout>
