@@ -9,21 +9,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.interfaces.XMLSerializable;
-import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.model.xml.XMLSettings;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
@@ -81,8 +75,8 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	@ForeignCollectionField
 	protected ForeignCollection<WifiScanResult> scanResults;
 	
-	@ForeignCollectionField
-	protected ForeignCollection<BssidSelection> selectedBssids;
+	@DatabaseField(dataType=DataType.SERIALIZABLE,columnName="selectedBssids2")
+	protected ArrayList<String> unselectedBssids;
 
 
 	@DatabaseField(foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true)
@@ -116,6 +110,7 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 		}
 		width = 0;
 		height = 0;
+		unselectedBssids=new ArrayList<String>();
 	}
 
 	/**
@@ -346,150 +341,26 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 			sr.delete();
 		}
 		
-		for(BssidSelection bs:selectedBssids){
-			bs.delete();
-		}
 		return super.delete();
 	}
 
 	
 	public boolean isBssidSelected(String bssid){
-		if(selectedBssids!=null){
-			for (BssidSelection bs:selectedBssids){
-				if(bs.getBssid().equals(bssid)){
-					return bs.isActive();
-				}
-			}
-			
-			// bssid is not found
-			
-		}
+		if(unselectedBssids!=null){
+			return !unselectedBssids.contains(bssid);
+		}else 
+			return true;
+	}
+	
 
-		//by default all are enabled
-		return true;
-	}
 	
-	public BssidSelection getBssidSelection(String bssid){
-		if(selectedBssids!=null){
-			for (BssidSelection bs:selectedBssids){
-				if(bs.getBssid().equals(bssid)){
-					return bs;
-				}
-			}
-			// bssid is not found
-		}
-		return null;
-	}
-	
-	public BssidSelection getBssidSelection(Context ctx,String bssid){
-		DatabaseHelper dbHelper=OpenHelperManager.getHelper(ctx, DatabaseHelper.class);
-		try {
-			Dao<BssidSelection,Integer> selectionDao=dbHelper.getDao(BssidSelection.class);
-			List<BssidSelection> found=selectionDao.queryForMatchingArgs(new BssidSelection(this,bssid,false));
-			
-			if(!found.isEmpty()){
-				return found.get(0);
-			}
-			
-		} catch (SQLException e) {
-			Logger.e("sql exception while searching for bssidselections", e);
-		} finally {
-			OpenHelperManager.releaseHelper();
-		}
-		
-		return null;
-	}
-	
-	public boolean isBssidSelected(Context ctx, String bssid){
-		
-		DatabaseHelper dbHelper=OpenHelperManager.getHelper(ctx, DatabaseHelper.class);
-		try {
-			Dao<BssidSelection,Integer> selectionDao=dbHelper.getDao(BssidSelection.class);
-			List<BssidSelection> found=selectionDao.queryForMatching(new BssidSelection(this,bssid,false));
-			
-			if(!found.isEmpty()){
-				return true;
-			}
-			
-		} catch (SQLException e) {
-			Logger.e("sql exception while searching for bssidselections", e);
-		} finally {
-			OpenHelperManager.releaseHelper();
-		}
-		
-		//by default all are enabled
-		return true;
-	}
-	
-	public void setBssidSelected(Context ctx,String bssid,boolean active){
-		DatabaseHelper dbHelper=OpenHelperManager.getHelper(ctx, DatabaseHelper.class);
-		try {
-			Dao<BssidSelection,Integer> selectionDao=dbHelper.getDao(BssidSelection.class);
-			
-			boolean found=false;
-			for(BssidSelection bs: selectedBssids){
-			
-			if(bs.getBssid().equals(bssid)){
-				if(active){
-					bs.delete();
-				}else {
-					// should already be inactive
-//					bs.setActive(false);
-//					bs.update();
-				}
-				found=true;
-				break;
-			}
-			}
-			if(!found&&!active){
-				selectionDao.create(new BssidSelection(this,bssid,active));
-				this.refresh();
-			}
-			
-			
-		} catch (SQLException e) {
-			Logger.e("sql exception during searching for bssidselections", e);
-		} finally {
-			OpenHelperManager.releaseHelper();
-		}
-		
-		
-	}
-	
-	public void setUnselectedBssids(Context ctx,List<String> bssids){
-		DatabaseHelper dbHelper=OpenHelperManager.getHelper(ctx, DatabaseHelper.class);
-		try {
-			Dao<BssidSelection,Integer> selectionDao=dbHelper.getDao(BssidSelection.class);
-			
-			ArrayList<String> current=new ArrayList<String>();
-			
-			for(BssidSelection bs: selectedBssids){
-				if(!bssids.contains(bs.getBssid())){
-					// was unselected, but is now selected
-					bs.delete();
-				}else {
-					current.add(bs.getBssid());
-				}
-			}
-			
-			for(String toUnselect:bssids){
-				if(!current.contains(toUnselect)){
-					selectionDao.create(new BssidSelection(this,toUnselect,false));
-				}
-			}
-			
-
-		} catch (SQLException e) {
-			Logger.e("sql exception during unselecting bssids", e);
-		} finally {
-			OpenHelperManager.releaseHelper();
-		}
-		
+	public void setUnselectedBssids(ArrayList<String> bssids){
+		this.unselectedBssids=bssids;
 	}
 
 
-	public ForeignCollection<BssidSelection> getSelectedBssids() {
-		return selectedBssids;
+	public ArrayList<String> getSelectedBssids() {
+		return unselectedBssids;
 	}
 
 }

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:title="@string/project_site_menu_calculation">
-        <menu>
-            <item
-                android:id="@+id/project_site_calculate_ap_positions_button"
-                android:title="@string/project_site_calculate_ap_positions">
-            </item>
-        </menu>
+    <item
+        android:id="@+id/project_site_calculate_ap_positions_option"
+        android:title="@string/project_site_calculate_ap_positions">
     </item>
     <item
         android:icon="@android:drawable/ic_menu_edit"

@@ -71,7 +71,7 @@ public abstract class AccessPointTriangulation {
 				BssidResult bssidResult = itb.next();
 
 				// Only calculate the BSSID location if the BSSID is selected
-				if (projectSite.isBssidSelected(context, bssidResult.getBssid())) {
+				if (projectSite.isBssidSelected(bssidResult.getBssid())) {
 					Vector<MeasurementDataSet> measurements;
 
 					if (!accessPoints.containsKey(bssidResult.getBssid()))

@@ -35,11 +35,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public static final String DATABASE_NAME = "wificompass.db";
 
 	// any time you make changes to your database objects, you may have to increase the database version
-	private static final int DATABASE_VERSION = 20;
+	private static final int DATABASE_VERSION = 23;
 
 	protected Context context;
 
-	protected static final Class<?>[] ormClasses = { Project.class, ProjectSite.class, WifiScanResult.class, BssidResult.class, SensorData.class, AccessPoint.class,Location.class,BssidSelection.class };
+	protected static final Class<?>[] ormClasses = { Project.class, ProjectSite.class, WifiScanResult.class, BssidResult.class, SensorData.class, AccessPoint.class,Location.class };
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -108,8 +108,26 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				case 19:
 					
 					Logger.i("Upgrading database to version 20");
-					TableUtils.createTable(getConnectionSource(), BssidSelection.class);
+//					TableUtils.createTable(getConnectionSource(), BssidSelection.class);
 
+				case 20:
+					// we've got BssidSelection
+					Logger.i("Upgrading database to version 21");
+					if(oldVersion>=20){
+						TableUtils.dropTable(getConnectionSource(), BssidSelection.class,true);
+
+					}
+					
+				case 21:
+					Dao<ProjectSite,Integer> psDao21=DaoManager.createDao(getConnectionSource(),ProjectSite.class);
+					psDao21.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `selectedBssids` BLOB DEFAULT '';");
+					
+				case 22:
+					if(oldVersion>=21){
+						Dao<ProjectSite,Integer> psDao22=DaoManager.createDao(getConnectionSource(),ProjectSite.class);
+						psDao22.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `selectedBssids2` BLOB;");
+						
+					}
 					
 					
 					// do not break on versions before, only last version should use break;

@@ -306,26 +306,26 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			break;
 
-		case R.id.project_site_calculate_ap_positions_button:
-
-			final ProgressDialog triangulationProgress = new ProgressDialog(this);
-			triangulationProgress.setTitle(R.string.project_site_triangulation_progress_title);
-			triangulationProgress.setMessage(getString(R.string.project_site_triangulation_progress_message));
-			triangulationProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			triangulationProgress.setButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-					if (triangulationTask != null) {
-						triangulationTask.cancel(true);
-					}
-				}
-			});
-
-			triangulationTask = new TriangulationTask(this, triangulationProgress);
-
-			triangulationProgress.show();
-			triangulationTask.execute();
-			break;
+//		case R.id.project_site_calculate_ap_positions_button:
+//
+//			final ProgressDialog triangulationProgress = new ProgressDialog(this);
+//			triangulationProgress.setTitle(R.string.project_site_triangulation_progress_title);
+//			triangulationProgress.setMessage(getString(R.string.project_site_triangulation_progress_message));
+//			triangulationProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//			triangulationProgress.setButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int whichButton) {
+//					// Canceled.
+//					if (triangulationTask != null) {
+//						triangulationTask.cancel(true);
+//					}
+//				}
+//			});
+//
+//			triangulationTask = new TriangulationTask(this, triangulationProgress);
+//
+//			triangulationProgress.show();
+//			triangulationTask.execute();
+//			break;
 
 		case R.id.project_site_add_known_ap:
 			showDialog(DIALOG_ADD_KNOWN_AP);
@@ -670,7 +670,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			
 			selectBssidsDialog.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					site.setUnselectedBssids(context, adapter.getSelectedBssids(false));
+					site.setUnselectedBssids(adapter.getSelectedBssids(false));
+					try {
+						site.update();
+					} catch (SQLException e) {
+						Logger.e("Could not update project site",e);
+					}
 				}
 			});
 			selectBssidsDialog.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
@@ -757,6 +762,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		Logger.d("id: "+item.getItemId()+" != "+R.id.project_site_calculate_ap_positions_option);
+		
 		switch (item.getItemId()) {
 		case R.id.project_site_menu_change_name:
 			showDialog(DIALOG_TITLE);
@@ -849,7 +857,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			multiTouchView.invalidate();
 			break;
 
-		case R.id.project_site_calculate_ap_positions_button:
+		case R.id.project_site_calculate_ap_positions_option:
 
 			final ProgressDialog triangulationProgress = new ProgressDialog(this);
 			triangulationProgress.setTitle(R.string.project_site_triangulation_progress_title);
