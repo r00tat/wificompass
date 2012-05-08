@@ -80,7 +80,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 		Logger.d("Database Helper onUpgrade");
 		if (oldVersion < newVersion) {
-			Logger.i("Database outdated, updateing from "+oldVersion+" to "+newVersion+". Datbase should be "+DATABASE_VERSION);
+			Logger.i("Database outdated, updateing from "+oldVersion+" to "+newVersion+". Database should be "+DATABASE_VERSION);
 			try {
 				switch(oldVersion){
 				

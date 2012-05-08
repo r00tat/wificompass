@@ -176,9 +176,9 @@ public class SelectBssdidsExpandableListAdapter extends
 		});
 		
 		TextView tvAll = (TextView) convertView
-				.findViewById(R.id.project_site_dialog_select_bssids_parent_text_all);
+				.findViewById(R.id.project_site_dialog_select_bssids_parent_all_text);
 		CheckBox cbAll = (CheckBox) convertView
-				.findViewById(R.id.project_site_dialog_select_bssids_parent_checkbox_all);
+				.findViewById(R.id.project_site_dialog_select_bssids_parent_all_checkbox);
 		
 		if (areAllChildrenSelected(groupPosition)) {
 			cbAll.setChecked(true);
