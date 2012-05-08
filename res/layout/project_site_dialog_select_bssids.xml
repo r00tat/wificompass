@@ -9,7 +9,7 @@
         android:id="@+id/project_site_dialog_select_bssids_list_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/project_site_dialog_select_bssids_button_layout" >
+        android:layout_above="@+id/project_site_dialog_select_bssids_button_layout" android:clickable="true">
     </ExpandableListView>
 
     <LinearLayout

@@ -216,6 +216,7 @@
     <string name="quickscan_project_name">Quick Scan %s</string>
     <string name="quickscan_project_site_name">Quick Scan Site %s</string>
     <string name="main_quickscan_failed">Failed to start the Quick Scan: \n%s</string>
+    <string name="general_all">All</string>
     
 
 </resources>

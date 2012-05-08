@@ -665,9 +665,16 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			View layout = inflater.inflate(R.layout.project_site_dialog_select_bssids,
 					(ViewGroup) findViewById(R.id.project_site_dialog_select_bssids_root_layout));
 			selectBssidsDialog.setView(layout);
+			
+			final SelectBssdidsExpandableListAdapter adapter = new SelectBssdidsExpandableListAdapter();
+			
 			selectBssidsDialog.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					// Ok.
+					ArrayList<Bssid> bssids = adapter.getSelectedBssids();
+					
+					for (Bssid b : bssids) {
+						Logger.d("Bssid: " + b.getBssid() + " (" + b.getSsid() + ")");
+					}
 				}
 			});
 			selectBssidsDialog.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
@@ -679,8 +686,31 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			AlertDialog dialog = selectBssidsDialog.create();
 
 			ExpandableListView listView = (ExpandableListView) layout.findViewById(R.id.project_site_dialog_select_bssids_list_view);
-			SelectBssdidsExpandableListAdapter adapter = new SelectBssdidsExpandableListAdapter(dialog.getContext(), new ArrayList<String>(),
+			adapter.initialize(dialog.getContext(), new ArrayList<String>(),
 					new ArrayList<ArrayList<Bssid>>());
+			
+			Button selectAll = (Button) layout.findViewById(R.id.project_site_dialog_select_bssids_select_all_button);
+			Button deselectAll = (Button) layout.findViewById(R.id.project_site_dialog_select_bssids_deselect_all_button);
+			
+			OnClickListener selectAllListener = new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					boolean state = true;
+					
+					if (v.getId() == R.id.project_site_dialog_select_bssids_select_all_button)
+						state = true;
+					else
+						state = false;
+					
+					
+					adapter.selectAllChildren(state);
+				}
+				
+			};
+			
+			selectAll.setOnClickListener(selectAllListener);
+			deselectAll.setOnClickListener(selectAllListener);
 
 			// Set this blank adapter to the list view
 			listView.setAdapter(adapter);

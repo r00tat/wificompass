@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/project_site_dialog_select_bssids_parent_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/project_site_dialog_select_bssids_parent_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge" android:layout_marginLeft="40dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="40dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
 
-</LinearLayout>
+    <CheckBox
+        android:id="@+id/project_site_dialog_select_bssids_parent_checkbox_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="right|center_vertical"
+        android:gravity="right|center_vertical" />
+
+    <TextView
+        android:id="@+id/project_site_dialog_select_bssids_parent_text_all"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/project_site_dialog_select_bssids_parent_checkbox_all"
+        android:gravity="right|center_vertical"
+        android:text="@string/general_all"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

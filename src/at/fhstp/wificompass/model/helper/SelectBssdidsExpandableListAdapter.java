@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import at.fhstp.wificompass.R;
@@ -22,13 +24,21 @@ public class SelectBssdidsExpandableListAdapter extends
 
 	private ArrayList<ArrayList<Bssid>> children;
 
+	public SelectBssdidsExpandableListAdapter() {
+	}
+	
 	public SelectBssdidsExpandableListAdapter(Context context,
+			ArrayList<String> groups, ArrayList<ArrayList<Bssid>> children) {
+		initialize(context, groups, children);
+	}
+
+	public void initialize(Context context,
 			ArrayList<String> groups, ArrayList<ArrayList<Bssid>> children) {
 		this.context = context;
 		this.groups = groups;
 		this.children = children;
 	}
-
+	
 	/**
 	 * Adds a BSSID to the list. The SSID string is taken as the group that
 	 * categorizes the BSSIDs.
@@ -110,6 +120,12 @@ public class SelectBssdidsExpandableListAdapter extends
 		return children.get(groupPosition).size();
 	}
 
+	public ArrayList<Bssid> getChildrenByGroup(int groupPosition) {
+		String group = (String) getGroup(groupPosition);
+		int index = groups.indexOf(group);
+		return children.get(index);
+	}
+	
 	@Override
 	public Object getGroup(int groupPosition) {
 		return groups.get(groupPosition);
@@ -142,6 +158,48 @@ public class SelectBssdidsExpandableListAdapter extends
 		TextView tv = (TextView) convertView
 				.findViewById(R.id.project_site_dialog_select_bssids_parent_text);
 		tv.setText(group);
+		
+		final ExpandableListView parentList = (ExpandableListView)parent;
+		final int groupPositionList = groupPosition;
+		final boolean isExpandedList = isExpanded;
+		tv.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (!isExpandedList) {
+					parentList.expandGroup(groupPositionList);
+				} else {
+					parentList.collapseGroup(groupPositionList);
+				}
+			}
+			
+		});
+		
+		TextView tvAll = (TextView) convertView
+				.findViewById(R.id.project_site_dialog_select_bssids_parent_text_all);
+		CheckBox cbAll = (CheckBox) convertView
+				.findViewById(R.id.project_site_dialog_select_bssids_parent_checkbox_all);
+		
+		if (areAllChildrenSelected(groupPosition)) {
+			cbAll.setChecked(true);
+		} else {
+			cbAll.setChecked(false);
+		}
+			
+		
+		final boolean allSelected = cbAll.isChecked();
+		
+		OnClickListener selectAllListener = new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				selectAllChildrenOfGroup(groupPositionList, allSelected, parentList);
+			}
+		};
+		
+		cbAll.setOnClickListener(selectAllListener);
+		tvAll.setOnClickListener(selectAllListener);
+		
 		return convertView;
 	}
 
@@ -154,5 +212,54 @@ public class SelectBssdidsExpandableListAdapter extends
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
+	
+	public void selectAllChildrenOfGroup(int groupPosition, boolean selected, ExpandableListView parentList) {
+		ArrayList<Bssid> children = getChildrenByGroup(groupPosition);
+		
+		for (Bssid b : children) {
+			b.setSelected(!selected);
+		}
+		
+		this.notifyDataSetChanged();
+	}
 
+	public void selectAllChildren(boolean state) {
+		for (String g : groups) {
+			ArrayList<Bssid> children = getChildrenByGroup(groups.indexOf(g));
+			
+			for (Bssid b : children) {
+				b.setSelected(state);
+			}
+		}
+
+		this.notifyDataSetChanged();
+	}
+	
+	public boolean areAllChildrenSelected(int groupPosition) {
+		boolean allSelected = true;
+		
+		ArrayList<Bssid> children = getChildrenByGroup(groupPosition);
+		
+		for (Bssid b : children) {
+			if (!b.isSelected())
+				allSelected = false;
+		}
+		
+		return allSelected;
+	}
+	
+	public ArrayList<Bssid> getSelectedBssids() {
+		ArrayList<Bssid> selectedBssids = new ArrayList<Bssid>();
+		
+		for (String g : groups) {
+			ArrayList<Bssid> children = getChildrenByGroup(groups.indexOf(g));
+			
+			for (Bssid b : children) {
+				if (b.isSelected())
+					selectedBssids.add(b);
+			}
+		}
+		
+		return selectedBssids;
+	}
 }

@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal" android:paddingLeft="40dp">
 
     <ImageView
         android:id="@+id/project_site_dialog_select_bssids_checkbox_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/checkbox_on_background" />
+        android:src="@android:drawable/checkbox_on_background" android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/project_site_dialog_select_bssids_child_text"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_height="40dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" android:layout_gravity="left|center_vertical" android:gravity="left|center_vertical"/>
 
 </LinearLayout>
