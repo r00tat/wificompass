@@ -15,14 +15,29 @@ import at.fhstp.wificompass.model.helper.DatabaseHelper;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class AccessPointDrawable extends MultiTouchDrawable {
 
 	protected BitmapDrawable icon;
 
+	/**
+	 * @uml.property  name="popup"
+	 * @uml.associationEnd  
+	 */
 	protected TextPopupDrawable popup;
 
+	/**
+	 * @uml.property  name="accessPoint"
+	 * @uml.associationEnd  
+	 */
 	protected AccessPoint accessPoint;
 
+	/**
+	 * @uml.property  name="deletePopup"
+	 * @uml.associationEnd  
+	 */
 	protected DeleteDrawable deletePopup;
 
 	public AccessPointDrawable(Context ctx, AccessPoint accessPoint) {
@@ -103,15 +118,16 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	}
 
 	/**
-	 * @return the accessPoint
+	 * @return  the accessPoint
+	 * @uml.property  name="accessPoint"
 	 */
 	public AccessPoint getAccessPoint() {
 		return accessPoint;
 	}
 
 	/**
-	 * @param accessPoint
-	 *            the accessPoint to set
+	 * @param accessPoint  the accessPoint to set
+	 * @uml.property  name="accessPoint"
 	 */
 	public void setAccessPoint(AccessPoint accessPoint) {
 		this.accessPoint = accessPoint;

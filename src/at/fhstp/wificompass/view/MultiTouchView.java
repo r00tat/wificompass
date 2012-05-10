@@ -26,9 +26,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import at.fhstp.wificompass.Logger;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class MultiTouchView extends View implements
 		MultiTouchObjectCanvas<MultiTouchDrawable> {
-	private static final int UI_MODE_ROTATE = 1, UI_MODE_ANISOTROPIC_SCALE = 2;
+	private static final int UI_MODE_ROTATE = 1;
+
+	private static final int UI_MODE_ANISOTROPIC_SCALE = 2;
 
 	private int mUIMode = UI_MODE_ROTATE;
 
@@ -36,11 +41,19 @@ public class MultiTouchView extends View implements
 
 	// --
 
+	/**
+	 * @uml.property  name="multiTouchController"
+	 * @uml.associationEnd  
+	 */
 	private MultiTouchController<MultiTouchDrawable> multiTouchController = new MultiTouchController<MultiTouchDrawable>(
 			this);
 
 	// --
 
+	/**
+	 * @uml.property  name="currTouchPoint"
+	 * @uml.associationEnd  
+	 */
 	private PointInfo currTouchPoint = new PointInfo();
 
 	private boolean mShowDebugInfo = false;
@@ -49,6 +62,9 @@ public class MultiTouchView extends View implements
 
 	private Paint mLinePaintTouchPointCircle = new Paint();
 
+	/**
+	 * @uml.property  name="rearrangable"
+	 */
 	public boolean rearrangable = true;
 
 	// ---------------------------------------------------------------------------------------------------
@@ -272,15 +288,16 @@ public class MultiTouchView extends View implements
 	}
 
 	/**
-	 * @return the rearrangable
+	 * @return  the rearrangable
+	 * @uml.property  name="rearrangable"
 	 */
 	public boolean isRearrangable() {
 		return rearrangable;
 	}
 
 	/**
-	 * @param rearrangable
-	 *            the rearrangable to set
+	 * @param rearrangable  the rearrangable to set
+	 * @uml.property  name="rearrangable"
 	 */
 	public void setRearrangable(boolean rearrangable) {
 		this.rearrangable = rearrangable;

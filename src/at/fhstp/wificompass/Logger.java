@@ -14,50 +14,22 @@ import android.util.Log;
 
 //TODO: comments and documentation
 /**
- * <p>
- * Logging class to allow easy logging.
- * 
- * </p>
- * <p>
- * The output could be formated with the log format and with the date format. <br />
- * Each variable must be prepended with a % sign. Following modifiers are available:<br />
- * <ul>
- * <li><b>d</b>: Date, uses the dateFormat and a SimpleDateFormat to format the Date</li>
- * <li><b>p</b>: Package of the calling class</li>
- * <li><b>c</b>: short class name</li>
- * <li><b>C</b>: full class name</li>
- * <li><b>f</b>: file name</li>
- * <li><b>m</b>: method</li>
- * <li><b>l</b>: line number</li>
- * <li><b>M</b>: log message, sent to debug/warn etc.</li>
- * </ul>
- * </p>
- * <p>
- * The default format string is "<i>.%m:%l: %M</i>". A debug message would look like this: <br/>
- * <i>
- * 
- * <pre>
- * 12-12 13:10:41.420: D/APLocActivity(31028): at.fhstp.aploc.activities.MainActivity.init[53]: display: 1280x800 orientation:0
- * </pre>
- * 
- * </i>
- * 
- * </p>
- * 
- * @author Paul Woelfel (paul@woelfel.at)
- * @see java.text.SimpleDateFormat, android.util.Log
+ * <p> Logging class to allow easy logging. </p> <p> The output could be formated with the log format and with the date format. <br /> Each variable must be prepended with a % sign. Following modifiers are available:<br /> <ul> <li><b>d</b>: Date, uses the dateFormat and a SimpleDateFormat to format the Date</li> <li><b>p</b>: Package of the calling class</li> <li><b>c</b>: short class name</li> <li><b>C</b>: full class name</li> <li><b>f</b>: file name</li> <li><b>m</b>: method</li> <li><b>l</b>: line number</li> <li><b>M</b>: log message, sent to debug/warn etc.</li> </ul> </p> <p> The default format string is "<i>.%m:%l: %M</i>". A debug message would look like this: <br/> <i> <pre> 12-12 13:10:41.420: D/APLocActivity(31028): at.fhstp.aploc.activities.MainActivity.init[53]: display: 1280x800 orientation:0 </pre> </i> </p>
+ * @author  Paul Woelfel (paul@woelfel.at)
+ * @see  java.text.SimpleDateFormat, android.util.Log
  */
 public class Logger {
 
 	/**
 	 * the log format to use for all messages
+	 * @uml.property  name="logFormat"
 	 */
 	protected static String logFormat = ".%m:%l: %M";
 
 	/**
 	 * date format to format dates
-	 * 
-	 * @see java.text.SimpleDateFormat
+	 * @see  java.text.SimpleDateFormat
+	 * @uml.property  name="dateFormat"
 	 */
 	protected static String dateFormat = "yyyy.MM.dd HH:mm:ss.S";
 
@@ -71,7 +43,9 @@ public class Logger {
 	 */
 	protected static int loglevel=Log.DEBUG;
 	
-	public static final String PREFS_NAME="LOGPREFS",PREFS_LEVEL="LOGLEVEL";
+	public static final String PREFS_NAME="LOGPREFS";
+
+	public static final String PREFS_LEVEL="LOGLEVEL";
 
 	/**
 	 * default constructor, sets tag to <i>"Logger"</i>
@@ -618,8 +592,8 @@ public class Logger {
 
 	/**
 	 * get the log format
-	 * 
-	 * @return logFormat
+	 * @return  logFormat
+	 * @uml.property  name="logFormat"
 	 */
 	public static String getLogFormat() {
 		return logFormat;
@@ -627,9 +601,8 @@ public class Logger {
 
 	/**
 	 * set the log format
-	 * 
-	 * @param logFormat
-	 *            new log format
+	 * @param logFormat  new log format
+	 * @uml.property  name="logFormat"
 	 */
 	public static void setLogFormat(String logFormat) {
 		Logger.logFormat = logFormat;
@@ -637,8 +610,8 @@ public class Logger {
 
 	/**
 	 * get the current date format
-	 * 
-	 * @return date format
+	 * @return  date format
+	 * @uml.property  name="dateFormat"
 	 */
 	public static String getDateFormat() {
 		return dateFormat;
@@ -646,9 +619,8 @@ public class Logger {
 
 	/**
 	 * set the date format
-	 * 
-	 * @param dateFormat
-	 *            new date format
+	 * @param dateFormat  new date format
+	 * @uml.property  name="dateFormat"
 	 */
 	public static void setDateFormat(String dateFormat) {
 		Logger.dateFormat = dateFormat;

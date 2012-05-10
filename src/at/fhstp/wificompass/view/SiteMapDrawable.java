@@ -16,8 +16,14 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class SiteMapDrawable extends MultiTouchDrawable {
 
+	/**
+	 * @uml.property  name="backgroundImage"
+	 */
 	protected Bitmap backgroundImage;
 
 	public SiteMapDrawable(Context ctx,RefreshableView refresher) {
@@ -166,15 +172,16 @@ public class SiteMapDrawable extends MultiTouchDrawable {
 	}
 
 	/**
-	 * @return the backgroundImage
+	 * @return  the backgroundImage
+	 * @uml.property  name="backgroundImage"
 	 */
 	public Bitmap getBackgroundImage() {
 		return backgroundImage;
 	}
 
 	/**
-	 * @param backgroundImage
-	 *            the backgroundImage to set
+	 * @param backgroundImage  the backgroundImage to set
+	 * @uml.property  name="backgroundImage"
 	 */
 	public void setBackgroundImage(Bitmap backgroundImage) {
 		this.backgroundImage = backgroundImage;

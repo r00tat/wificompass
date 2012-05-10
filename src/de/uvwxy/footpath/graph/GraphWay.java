@@ -4,14 +4,21 @@ import java.util.LinkedList;
 
 /**
  * A class to maintain a way with given parameters found in OSM/XML data.
- * 
- * @author Paul Smith
- *
+ * @author  Paul Smith
  */
 public class GraphWay {
 	// all nodes on this path ( ref0 -> ref1 -> ref2  -> ...)
+	/**
+	 * @uml.property  name="refs"
+	 */
 	private LinkedList<Integer> refs;
+	/**
+	 * @uml.property  name="id"
+	 */
 	private int id;
+	/**
+	 * @uml.property  name="wheelchair"
+	 */
 	private short wheelchair;
 
 	// >0 := number correct steps given
@@ -21,7 +28,13 @@ public class GraphWay {
 	private int numSteps = 0;	
 	
 	// Float.MAX_VALUE == undefined!
+	/**
+	 * @uml.property  name="level"
+	 */
 	private float level;
+	/**
+	 * @uml.property  name="isIndoor"
+	 */
 	private boolean isIndoor;
 	
 	/**
@@ -49,14 +62,26 @@ public class GraphWay {
 		this.level = level;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="refs"
+	 */
 	public LinkedList<Integer> getRefs() {
 		return refs;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="id"
+	 */
 	public int getId() {
 		return id;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="wheelchair"
+	 */
 	public short getWheelchair() {
 		return wheelchair;
 	}
@@ -65,22 +90,42 @@ public class GraphWay {
 		return numSteps;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="level"
+	 */
 	public float getLevel(){
 		return level;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="isIndoor"
+	 */
 	public boolean isIndoor(){
 		return isIndoor;
 	}
 	
+	/**
+	 * @param refs
+	 * @uml.property  name="refs"
+	 */
 	public void setRefs(LinkedList<Integer> refs) {
 		this.refs = refs;
 	}
 	
+	/**
+	 * @param id
+	 * @uml.property  name="id"
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 	
+	/**
+	 * @param wheelchair
+	 * @uml.property  name="wheelchair"
+	 */
 	public void setWheelchair(short wheelchair) {
 		this.wheelchair = wheelchair;
 	}
@@ -89,10 +134,18 @@ public class GraphWay {
 		this.numSteps = numSteps;
 	}
 	
+	/**
+	 * @param level
+	 * @uml.property  name="level"
+	 */
 	public void setLevel(float level){
 		this.level = level;
 	}
 	
+	/**
+	 * @param isIndoor
+	 * @uml.property  name="isIndoor"
+	 */
 	public void setIndoor(boolean isIndoor){
 		this.isIndoor = isIndoor;
 	}

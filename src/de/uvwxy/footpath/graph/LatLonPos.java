@@ -1,17 +1,23 @@
 package de.uvwxy.footpath.graph;
 
 /**
- * A class to maintain a coordinate consisting of latitude and longitude, with
- * a given level.
- *  
- * @author Paul Smith
- *
+ * A class to maintain a coordinate consisting of latitude and longitude, with a given level.
+ * @author  Paul Smith
  */
 public class LatLonPos {
+	/**
+	 * @uml.property  name="lat"
+	 */
 	private double lat;
+	/**
+	 * @uml.property  name="lon"
+	 */
 	private double lon;
 	
 	// Float.MAX_VALUE == undefined!
+	/**
+	 * @uml.property  name="level"
+	 */
 	private float level; 
 	
 	// planet radius in meters
@@ -42,26 +48,50 @@ public class LatLonPos {
 		this.level = level;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="lat"
+	 */
 	public double getLat() {
 		return lat;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="lon"
+	 */
 	public double getLon() {
 		return lon;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="level"
+	 */
 	public float getLevel() {
 		return level;
 	}
 	
+	/**
+	 * @param lat
+	 * @uml.property  name="lat"
+	 */
 	public void setLat(double lat) {
 		this.lat = lat;
 	}
 	
+	/**
+	 * @param lon
+	 * @uml.property  name="lon"
+	 */
 	public void setLon(double lon) {
 		this.lon = lon;
 	}
 	
+	/**
+	 * @param level
+	 * @uml.property  name="level"
+	 */
 	public void setLevel(float level) {
 		this.level = level;
 	}

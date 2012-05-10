@@ -14,6 +14,9 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import at.fhstp.wificompass.Logger;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 
 	protected static final int padding = 5;
@@ -22,10 +25,16 @@ public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 
 	protected TextPaint tp;
 
+	/**
+	 * @uml.property  name="isActive"
+	 */
 	protected boolean isActive;
 
 	protected StaticLayout layout;
 
+	/**
+	 * @uml.property  name="persistent"
+	 */
 	protected boolean persistent = false;
 
 	// public PopupDrawable(Context ctx, String text) {
@@ -175,12 +184,20 @@ public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 		}
 	}
 
+	/**
+	 * @param isPopupActive
+	 * @uml.property  name="isActive"
+	 */
 	@Override
 	public void setActive(boolean isPopupActive) {
 		if (!persistent)
 			isActive = isPopupActive;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="isActive"
+	 */
 	@Override
 	public boolean isActive() {
 		return isActive;
@@ -196,15 +213,16 @@ public class TextPopupDrawable extends MultiTouchDrawable implements Popup {
 	}
 
 	/**
-	 * @return the persistent
+	 * @return  the persistent
+	 * @uml.property  name="persistent"
 	 */
 	public boolean isPersistent() {
 		return persistent;
 	}
 
 	/**
-	 * @param persistent
-	 *            the persistent to set
+	 * @param persistent  the persistent to set
+	 * @uml.property  name="persistent"
 	 */
 	public void setPersistent(boolean persistent) {
 		this.persistent = persistent;

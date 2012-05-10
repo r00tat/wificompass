@@ -14,10 +14,16 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.R;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class DeleteDrawable extends MultiTouchDrawable implements Popup{
 	
 	protected BitmapDrawable icon; 
 	
+	/**
+	 * @uml.property  name="isActive"
+	 */
 	protected boolean isActive=false;
 	
 	protected String elementName;
@@ -99,11 +105,19 @@ public class DeleteDrawable extends MultiTouchDrawable implements Popup{
 		return true;
 	}
 
+	/**
+	 * @param isPopupActive
+	 * @uml.property  name="isActive"
+	 */
 	@Override
 	public void setActive(boolean isPopupActive) {
 		this.isActive=isPopupActive;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="isActive"
+	 */
 	@Override
 	public boolean isActive() {
 		return isActive;

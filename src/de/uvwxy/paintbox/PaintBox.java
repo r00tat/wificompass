@@ -6,16 +6,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 /**
- * A class managing the creation of a canvas to draw on.
- * 
- * Usage:
- * 
- * 	Create a class which overrides onDraw. Once the surface is created onDraw()
- * 	is called in an infinite loop from a PaintThread. Destroying the surface
- * 	stops the background thread calling onDraw().
- * 
- * @author Paul Smith
- * 
+ * A class managing the creation of a canvas to draw on. Usage: Create a class which overrides onDraw. Once the surface is created onDraw() is called in an infinite loop from a PaintThread. Destroying the surface stops the background thread calling onDraw().
+ * @author  Paul Smith
  */
 public abstract class PaintBox extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -46,6 +38,10 @@ public abstract class PaintBox extends SurfaceView implements SurfaceHolder.Call
 	@Override
 	protected abstract void onDraw(Canvas canvas);
 
+	/**
+	 * @uml.property  name="pThread"
+	 * @uml.associationEnd  
+	 */
 	PaintThread pThread;
 
 	public PaintBox(Context context) {

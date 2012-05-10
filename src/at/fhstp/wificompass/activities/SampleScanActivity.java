@@ -29,11 +29,18 @@ import android.widget.TextView;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class SampleScanActivity extends Activity implements OnClickListener {
 	protected boolean running;
 
 	protected static final String logTag = "APLocActivity";
 	
+	/**
+	 * @uml.property  name="log"
+	 * @uml.associationEnd  
+	 */
 	protected static Logger log=new Logger(logTag);
 
 	protected BroadcastReceiver wifiScanReceiver = null;

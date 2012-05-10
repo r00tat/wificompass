@@ -27,8 +27,15 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
+	/**
+	 * @uml.property  name="log"
+	 * @uml.associationEnd  
+	 */
 	protected static final Logger log = new Logger(DatabaseHelper.class);
 
 	// name of the database file for your application -- change to something appropriate for your app

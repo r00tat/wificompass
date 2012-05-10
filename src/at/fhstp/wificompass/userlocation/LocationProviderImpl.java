@@ -8,16 +8,34 @@ package at.fhstp.wificompass.userlocation;
 import android.content.Context;
 import at.fhstp.wificompass.model.Location;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public abstract class LocationProviderImpl implements LocationProvider {
 
+	/**
+	 * @uml.property  name="loc"
+	 * @uml.associationEnd  
+	 */
 	protected Location loc;
 	
+	/**
+	 * @uml.property  name="locationService"
+	 * @uml.associationEnd  
+	 */
 	protected LocationService locationService;
 	
 	protected Context ctx;
 	
+	/**
+	 * @uml.property  name="running"
+	 */
 	protected boolean running=false;
 	
+	/**
+	 * @uml.property  name="listener"
+	 * @uml.associationEnd  
+	 */
 	protected LocationChangeListener listener=null;
 	
 	public LocationProviderImpl(Context ctx){
@@ -34,6 +52,10 @@ public abstract class LocationProviderImpl implements LocationProvider {
 	}
 	
 
+	/**
+	 * @param service
+	 * @uml.property  name="locationService"
+	 */
 	@Override
 	public void setLocationService(LocationService service) {
 		locationService=service;
@@ -89,7 +111,8 @@ public abstract class LocationProviderImpl implements LocationProvider {
 
 
 	/**
-	 * @return the running
+	 * @return  the running
+	 * @uml.property  name="running"
 	 */
 	public boolean isRunning() {
 		return running;

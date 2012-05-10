@@ -13,18 +13,17 @@ import android.util.Log;
 import de.uvwxy.footpath.ToolBox;
 
 /**
- * This class is fed with data from the Accelerometer and Compass sensors. If a step is detected on the acc
- * data it calls the trigger function on its interface StepTrigger, with the given direction.
- * 
- * Usage:
- * Create an object: stepDetection = new StepDetection(this, this, a, peak, step_timeout_ms);
- * @author Paul Smith
- *
+ * This class is fed with data from the Accelerometer and Compass sensors. If a step is detected on the acc data it calls the trigger function on its interface StepTrigger, with the given direction. Usage: Create an object: stepDetection = new StepDetection(this, this, a, peak, step_timeout_ms);
+ * @author  Paul Smith
  */
 public class StepDetection {
 	public final long INTERVAL_MS = 1000/30;
 	
 	// Hold an interface to notify the outside world of detected steps
+	/**
+	 * @uml.property  name="st"
+	 * @uml.associationEnd  
+	 */
 	private StepTrigger st;
 	// Context needed to get access to sensor service
 	private Context context;
@@ -38,8 +37,19 @@ public class StepDetection {
 	private double[] values_history = new double[vhSize];
 	private int vhPointer = 0;
 	
+	private static final int WINDOW = 5;
+	
+	/**
+	 * @uml.property  name="a"
+	 */
 	private double a;
+	/**
+	 * @uml.property  name="peak"
+	 */
 	private double peak;
+	/**
+	 * @uml.property  name="step_timeout_ms"
+	 */
 	private int step_timeout_ms;
 	private long last_step_ts = 0;
 //	private double old_z = 0.0;
@@ -84,26 +94,50 @@ public class StepDetection {
 		}
 	};
 	
+	/**
+	 * @return
+	 * @uml.property  name="a"
+	 */
 	public double getA() {
 		return a;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="peak"
+	 */
 	public double getPeak() {
 		return peak;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="step_timeout_ms"
+	 */
 	public int getStep_timeout_ms() {
 		return step_timeout_ms;
 	}
 
+	/**
+	 * @param a
+	 * @uml.property  name="a"
+	 */
 	public void setA(double a) {
 		this.a = a;
 	}
 
+	/**
+	 * @param peak
+	 * @uml.property  name="peak"
+	 */
 	public void setPeak(double peak) {
 		this.peak = peak;
 	}
 
+	/**
+	 * @param stepTimeoutMs
+	 * @uml.property  name="step_timeout_ms"
+	 */
 	public void setStep_timeout_ms(int stepTimeoutMs) {
 		step_timeout_ms = stepTimeoutMs;
 	}
@@ -202,21 +236,14 @@ public class StepDetection {
 	}
 	
 	private boolean checkForStep(double peakSize) {
-		// Add value to values_history
-
-		int lookahead = 5;
-		double diff = peakSize;
 		
-		
-		for( int t = 1; t <= lookahead; t++){
-			if((values_history[(vhPointer - 1 - t + vhSize + vhSize) % vhSize] - 
-					values_history[(vhPointer - 1 + vhSize) % vhSize]
-			                   > diff)){
-				Log.i("FOOTPATH", "Detected step with t = " + t + ", diff = " + diff + " < " + (values_history[(vhPointer - 1 - t + vhSize + vhSize) % vhSize] - 
-						values_history[(vhPointer - 1 + vhSize) % vhSize]));
-				return true;
-			}
-		}
+for (int t = 1; t <= WINDOW; t++) {
+	if ((values_history[(vhPointer - 1 - t + vhSize + vhSize) % vhSize] - values_history[(vhPointer - 1 + vhSize) % vhSize] > peakSize)) {
+		Log.i("FOOTPATH", "Detected step with t = " + t + ", diff = " + peakSize + " < "
+				+ (values_history[(vhPointer - 1 - t + vhSize + vhSize) % vhSize] - values_history[(vhPointer - 1 + vhSize) % vhSize]));
+		return true;
+	}
+}
 		return false;
 	}
 	

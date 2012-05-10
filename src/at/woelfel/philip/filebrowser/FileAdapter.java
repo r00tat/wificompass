@@ -16,7 +16,7 @@ import android.widget.TextView;
 import at.fhstp.wificompass.R;
 
 /**
- * @author Philip Woelfel philp@woelfel.at
+ * @author  Philip Woelfel philp@woelfel.at
  */
 public class FileAdapter extends BaseAdapter {
 
@@ -26,6 +26,9 @@ public class FileAdapter extends BaseAdapter {
 
 	protected File parent;
 
+	/**
+	 * @uml.property  name="currentDir"
+	 */
 	protected File currentDir;
 
 	protected int hideMode;
@@ -144,15 +147,16 @@ public class FileAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * @return the currentDir
+	 * @return  the currentDir
+	 * @uml.property  name="currentDir"
 	 */
 	public File getCurrentDir() {
 		return currentDir;
 	}
 
 	/**
-	 * @param currentDir
-	 *            the currentDir to set
+	 * @param currentDir  the currentDir to set
+	 * @uml.property  name="currentDir"
 	 */
 	public void setCurrentDir(File currentDir) {
 		this.currentDir = currentDir;

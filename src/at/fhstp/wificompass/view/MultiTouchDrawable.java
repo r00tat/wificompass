@@ -23,8 +23,7 @@ import at.fhstp.wificompass.Logger;
 
 /**
  * Abstract Class for drawable objects for the MultiTouchView
- * 
- * @author Paul Woelfel (paul@woelfel.at)
+ * @author  Paul Woelfel (paul@woelfel.at)
  */
 public abstract class MultiTouchDrawable {
 
@@ -35,36 +34,65 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * unique numeric id
+	 * @uml.property  name="id"
 	 */
 	protected int id;
 
 	/**
 	 * current angle of drawable
+	 * @uml.property  name="angle"
 	 */
 	protected float angle = 0;
 
 	/**
 	 * x and y scale factors
+	 * @uml.property  name="scaleX"
 	 */
-	protected float scaleX = 1.0f, scaleY = 1.0f;
+	protected float scaleX = 1.0f;
+
+	/**
+	 * x and y scale factors
+	 * @uml.property  name="scaleY"
+	 */
+	protected float scaleY = 1.0f;
 
 	/**
 	 * relative x and y position
 	 */
-	protected float relX = 0, relY = 0;
+	protected float relX = 0;
+
+	/**
+	 * relative x and y position
+	 */
+	protected float relY = 0;
 
 	/**
 	 * The pivot point needed for rotation (value between 0 and 1), default center
+	 * @uml.property  name="pivotX"
 	 */
-	protected float pivotX = 0.5f, pivotY = 0.5f;
+	protected float pivotX = 0.5f;
+
+	/**
+	 * The pivot point needed for rotation (value between 0 and 1), default center
+	 * @uml.property  name="pivotY"
+	 */
+	protected float pivotY = 0.5f;
 
 	/**
 	 * Super drawable
+	 * @uml.property  name="superDrawable"
+	 * @uml.associationEnd  
 	 */
 	protected MultiTouchDrawable superDrawable = null;
 
+	/**
+	 * @uml.property  name="gridSpacingX"
+	 */
 	protected static float gridSpacingX = 30;
 
+	/**
+	 * @uml.property  name="gridSpacingY"
+	 */
 	protected static float gridSpacingY = 30;
 
 	/**
@@ -72,28 +100,79 @@ public abstract class MultiTouchDrawable {
 	 */
 	protected Context ctx;
 
-	protected static final int UI_MODE_ROTATE = 1, UI_MODE_ANISOTROPIC_SCALE = 2;
+	protected static final int UI_MODE_ROTATE = 1;
 
-	protected static final int FLAG_FORCEXY = 1, FLAG_FORCESCALE = 2, FLAG_FORCEROTATE = 4, FLAG_FORCEALL = 7;
+	protected static final int UI_MODE_ANISOTROPIC_SCALE = 2;
+
+	protected static final int FLAG_FORCEXY = 1;
+
+	protected static final int FLAG_FORCESCALE = 2;
+
+	protected static final int FLAG_FORCEROTATE = 4;
+
+	protected static final int FLAG_FORCEALL = 7;
 
 	protected int mUIMode = UI_MODE_ROTATE;
 
 	protected static boolean firstLoad= true;
 
-	protected int width, height;
+	/**
+	 * @uml.property  name="width"
+	 */
+	protected int width;
+
+	/**
+	 * @uml.property  name="height"
+	 */
+	protected int height;
 	
-	protected static int displayWidth=0, displayHeight=0;
+	protected static int displayWidth=0;
 
-	protected float centerX, centerY;
+	protected static int displayHeight=0;
 
-	protected float minX, maxX, minY, maxY;
+	/**
+	 * @uml.property  name="centerX"
+	 */
+	protected float centerX;
+
+	/**
+	 * @uml.property  name="centerY"
+	 */
+	protected float centerY;
+
+	/**
+	 * @uml.property  name="minX"
+	 */
+	protected float minX;
+
+	/**
+	 * @uml.property  name="maxX"
+	 */
+	protected float maxX;
+
+	/**
+	 * @uml.property  name="minY"
+	 */
+	protected float minY;
+
+	/**
+	 * @uml.property  name="maxY"
+	 */
+	protected float maxY;
 
 	protected static final float SCREEN_MARGIN = 0;
 
 	protected Resources resources;
 
+	/**
+	 * @uml.property  name="subDrawables"
+	 */
 	protected ArrayList<MultiTouchDrawable> subDrawables;
 
+	/**
+	 * @uml.property  name="refresher"
+	 * @uml.associationEnd  
+	 */
 	protected RefreshableView refresher;
 
 	/**
@@ -146,8 +225,8 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * get the width in pixel of the Drawable
-	 * 
-	 * @return width in pixel
+	 * @return  width in pixel
+	 * @uml.property  name="width"
 	 */
 	public int getWidth() {
 		return this.width;
@@ -155,8 +234,8 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * get the height in pixel of the Drawable
-	 * 
-	 * @return height in pixel
+	 * @return  height in pixel
+	 * @uml.property  name="height"
 	 */
 	public int getHeight() {
 		return this.height;
@@ -164,8 +243,8 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * get an unique ID of one instance
-	 * 
-	 * @return id
+	 * @return  id
+	 * @uml.property  name="id"
 	 */
 	public String getId() {
 		return this.getClass().getName() + ":" + id;
@@ -228,8 +307,8 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * set Angle of the Drawable
-	 * 
-	 * @param angle
+	 * @param  angle
+	 * @uml.property  name="angle"
 	 */
 	public void setAngle(float angle) {
 		// this.angle = angle;
@@ -324,8 +403,8 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * Returns the the x coordinate of the pivot point
-	 * 
-	 * @return The x coordinate of the pivot point
+	 * @return  The x coordinate of the pivot point
+	 * @uml.property  name="pivotX"
 	 */
 	public float getPivotX() {
 		return this.pivotX;
@@ -333,8 +412,8 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * Returns the the y coordinate of the pivot point
-	 * 
-	 * @return The y coordinate of the pivot point
+	 * @return  The y coordinate of the pivot point
+	 * @uml.property  name="pivotY"
 	 */
 	public float getPivotY() {
 		return this.pivotY;
@@ -397,8 +476,8 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * get the super Drawable
-	 * 
-	 * @return MultiTouchDrawable if existent, otherwise null
+	 * @return  MultiTouchDrawable if existent, otherwise null
+	 * @uml.property  name="superDrawable"
 	 */
 	public MultiTouchDrawable getSuperDrawable() {
 		return superDrawable;
@@ -725,70 +804,106 @@ public abstract class MultiTouchDrawable {
 		}
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="centerX"
+	 */
 	public float getCenterX() {
 		return centerX;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="centerY"
+	 */
 	public float getCenterY() {
 		return centerY;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="scaleX"
+	 */
 	public float getScaleX() {
 		return scaleX;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="scaleY"
+	 */
 	public float getScaleY() {
 		return scaleY;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="angle"
+	 */
 	public float getAngle() {
 		return angle;
 	}
 
 	// FIXME: these need to be updated for rotation
+	/**
+	 * @return
+	 * @uml.property  name="minX"
+	 */
 	public float getMinX() {
 		return minX;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="maxX"
+	 */
 	public float getMaxX() {
 		return maxX;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="minY"
+	 */
 	public float getMinY() {
 		return minY;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="maxY"
+	 */
 	public float getMaxY() {
 		return maxY;
 	}
 
 	/**
-	 * @param centerX
-	 *            the centerX to set
+	 * @param centerX  the centerX to set
+	 * @uml.property  name="centerX"
 	 */
 	public void setCenterX(float centerX) {
 		this.centerX = centerX;
 	}
 
 	/**
-	 * @param centerY
-	 *            the centerY to set
+	 * @param centerY  the centerY to set
+	 * @uml.property  name="centerY"
 	 */
 	public void setCenterY(float centerY) {
 		this.centerY = centerY;
 	}
 
 	/**
-	 * @param scaleX
-	 *            the scaleX to set
+	 * @param scaleX  the scaleX to set
+	 * @uml.property  name="scaleX"
 	 */
 	public void setScaleX(float scaleX) {
 		this.scaleX = scaleX;
 	}
 
 	/**
-	 * @param scaleY
-	 *            the scaleY to set
+	 * @param scaleY  the scaleY to set
+	 * @uml.property  name="scaleY"
 	 */
 	public void setScaleY(float scaleY) {
 		this.scaleY = scaleY;
@@ -837,7 +952,8 @@ public abstract class MultiTouchDrawable {
 	}
 
 	/**
-	 * @return the subDrawables
+	 * @return  the subDrawables
+	 * @uml.property  name="subDrawables"
 	 */
 	public ArrayList<MultiTouchDrawable> getSubDrawables() {
 		return subDrawables;
@@ -913,8 +1029,8 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * Returns the grid spacing in x direction. If, for example, grid spacing is 10, then 10 pixels of the map are one meter in reality.
-	 * 
-	 * @return The grid spacing in <b>x</b> direction
+	 * @return  The grid spacing in <b>x</b> direction
+	 * @uml.property  name="gridSpacingX"
 	 */
 	public static float getGridSpacingX() {
 		return gridSpacingX;
@@ -922,8 +1038,8 @@ public abstract class MultiTouchDrawable {
 
 	/**
 	 * Returns the grid spacing in y direction. If, for example, grid spacing is 10, then 10 pixels of the map are one meter in reality.
-	 * 
-	 * @return The grid spacing in <b>y</b> direction
+	 * @return  The grid spacing in <b>y</b> direction
+	 * @uml.property  name="gridSpacingY"
 	 */
 	public static float getGridSpacingY() {
 		return gridSpacingY;

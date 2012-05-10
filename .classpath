@@ -16,5 +16,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/wificompass/lib/ormlite-core-4.31-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

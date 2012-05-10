@@ -13,16 +13,28 @@ import at.fhstp.wificompass.ToolBox;
 import at.fhstp.wificompass.model.ProjectSite;
 
 /**
- * @author Paul Woelfel (paul@woelfel.at)
+ * @author  Paul Woelfel (paul@woelfel.at)
  */
 public class NorthDrawable extends MultiTouchDrawable implements OkCallback {
 
 	protected BitmapDrawable icon;
 
+	/**
+	 * @uml.property  name="okPopup"
+	 * @uml.associationEnd  
+	 */
 	protected OkDrawable okPopup;
 
+	/**
+	 * @uml.property  name="textPopup"
+	 * @uml.associationEnd  
+	 */
 	protected TextPopupDrawable textPopup;
 
+	/**
+	 * @uml.property  name="site"
+	 * @uml.associationEnd  
+	 */
 	protected ProjectSite site;
 
 	/**

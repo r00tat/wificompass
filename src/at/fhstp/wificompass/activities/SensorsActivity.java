@@ -39,13 +39,22 @@ import com.jjoe64.graphview.GraphView.GraphViewSeries;
 import com.jjoe64.graphview.GraphView.LegendAlign;
 import com.jjoe64.graphview.LineGraphView;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class SensorsActivity extends Activity implements SensorEventListener, OnClickListener, OnSeekBarChangeListener {
 
+	/**
+	 * @uml.property  name="log"
+	 * @uml.associationEnd  
+	 */
 	protected static final Logger log = new Logger(SensorsActivity.class);
 
 	protected SensorManager sensorManager;
 
-	protected Sensor accelerometer, gyroscope;
+	protected Sensor accelerometer;
+
+	protected Sensor gyroscope;
 
 //	protected float[] gravity;
 //
@@ -55,6 +64,10 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 	protected final float alpha = 0.8f;
 
+	/**
+	 * @uml.property  name="databaseHelper"
+	 * @uml.associationEnd  
+	 */
 	protected DatabaseHelper databaseHelper = null;
 
 	protected Dao<SensorData, Integer> sensorDataDao;
@@ -63,12 +76,16 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 
 	protected GraphView graphView = null;
 
-	protected long startTime = 0L, lastUpdate = 0L;
+	protected long startTime = 0L;
+
+	protected long lastUpdate = 0L;
 
 	
 	protected static final int[] COLORS = { Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.WHITE };
 
-	protected int updateInterval = 5000,valueLimit=500;
+	protected int updateInterval = 5000;
+
+	protected int valueLimit=500;
 	
 	protected static final float LEGEND_WITH=200f;
 	

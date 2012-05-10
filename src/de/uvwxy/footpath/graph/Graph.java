@@ -11,19 +11,22 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.content.res.XmlResourceParser;
 
 /**
- * This class is used to create a graph from XML files stored in the directory
- * res/xml. Data from multiple files/layers can be joined into a single map/graph
- * with the function mergeNodes(). After graph creation use functions implemented
- * in this class to find routes, nodes, etc. 
- * 
- * @author Paul Smith
- *
+ * This class is used to create a graph from XML files stored in the directory res/xml. Data from multiple files/layers can be joined into a single map/graph with the function mergeNodes(). After graph creation use functions implemented in this class to find routes, nodes, etc. 
+ * @author  Paul Smith
  */
 public class Graph {
 	public LinkedList<GraphNode> nodes;
 	public LinkedList<GraphEdge> edges;
 	
+	/**
+	 * @uml.property  name="array_nodes_by_id"
+	 * @uml.associationEnd  multiplicity="(0 -1)"
+	 */
 	private GraphNode[] array_nodes_by_id;
+	/**
+	 * @uml.property  name="array_nodes_by_name"
+	 * @uml.associationEnd  multiplicity="(0 -1)"
+	 */
 	private GraphNode[] array_nodes_by_name;
 	
 	public Graph(){

@@ -15,12 +15,19 @@ import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.model.WifiScanResult;
 import at.fhstp.wificompass.view.AccessPointDrawable;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public abstract class AccessPointTriangulation {
 
 	/** The current context. Is required for creating AccessPointDrawables */
 	protected Context context;
 
-	/** The project site. This is where the measurement data is located */
+	/**
+	 * The project site. This is where the measurement data is located
+	 * @uml.property  name="projectSite"
+	 * @uml.associationEnd  
+	 */
 	protected ProjectSite projectSite;
 
 	/** The hash map that links access points to measurement data */

@@ -17,7 +17,7 @@ import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.ToolBox;
 
 /**
- * @author Paul Woelfel (paul@woelfel.at)
+ * @author  Paul Woelfel (paul@woelfel.at)
  */
 public class UserCompassDrawable extends MultiTouchDrawable implements SensorEventListener {
 
@@ -25,7 +25,9 @@ public class UserCompassDrawable extends MultiTouchDrawable implements SensorEve
 
 	protected SensorManager sensorManager;
 
-	protected Sensor compass, accelerometer;
+	protected Sensor compass;
+
+	protected Sensor accelerometer;
 
 	float[] inR = new float[16];
 
@@ -37,6 +39,10 @@ public class UserCompassDrawable extends MultiTouchDrawable implements SensorEve
 
 	float[] orientVals = new float[3];
 
+	/**
+	 * @uml.property  name="popup"
+	 * @uml.associationEnd  
+	 */
 	protected TextPopupDrawable popup;
 	
 	int popupAngle=0;
@@ -52,7 +58,14 @@ public class UserCompassDrawable extends MultiTouchDrawable implements SensorEve
 	 * Only change the angle, if the compass changes more than minAngleChange degrees. Per default 3°.
 	 * </p>
 	 */
-	protected static final float minAngleChange = (float) Math.toRadians(3d), minAngleChangeForPopup = (float) Math.toRadians(1);
+	protected static final float minAngleChange = (float) Math.toRadians(3d);
+
+	/**
+	 * <p>
+	 * Only change the angle, if the compass changes more than minAngleChange degrees. Per default 3°.
+	 * </p>
+	 */
+	protected static final float minAngleChangeForPopup = (float) Math.toRadians(1);
 
 	/**
 	 * @param context

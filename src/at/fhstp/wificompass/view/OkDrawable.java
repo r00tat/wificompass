@@ -13,14 +13,21 @@ import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.R;
 
 /**
- * @author Paul Woelfel (paul@woelfel.at)
+ * @author  Paul Woelfel (paul@woelfel.at)
  */
 public class OkDrawable extends MultiTouchDrawable {
 
 	protected BitmapDrawable icon;
 
+	/**
+	 * @uml.property  name="active"
+	 */
 	protected boolean active = true;
 	
+	/**
+	 * @uml.property  name="callback"
+	 * @uml.associationEnd  
+	 */
 	protected OkCallback callback;
 
 	/**
@@ -102,10 +109,18 @@ public class OkDrawable extends MultiTouchDrawable {
 		return false;
 	}
 
+	/**
+	 * @param isPopupActive
+	 * @uml.property  name="active"
+	 */
 	public void setActive(boolean isPopupActive) {
 		active = isPopupActive;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="active"
+	 */
 	public boolean isActive() {
 		return active;
 	}

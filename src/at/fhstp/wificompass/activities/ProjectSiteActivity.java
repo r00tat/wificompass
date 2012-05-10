@@ -82,18 +82,40 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class ProjectSiteActivity extends Activity implements OnClickListener, WifiResultCallback, RefreshableView, LocationChangeListener {
 
+	/**
+	 * @uml.property  name="log"
+	 * @uml.associationEnd  
+	 */
 	protected Logger log = new Logger(ProjectSiteActivity.class);
 
-	public static final String SITE_KEY = "SITE", PROJECT_KEY = "PROJECT";
+	public static final String SITE_KEY = "SITE";
+
+	public static final String PROJECT_KEY = "PROJECT";
 
 	// public static final int START_NEW = 1, START_LOAD = 2;
 
-	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4, DIALOG_SET_SCALE_OF_MAP = 5,
-			DIALOG_ADD_KNOWN_AP = 6, DIALOG_SELECT_BSSIDS = 7;
+	protected static final int DIALOG_TITLE = 1;
 
-	protected static final int MESSAGE_REFRESH = 1, MESSAGE_START_WIFISCAN=2;
+	protected static final int DIALOG_SCANNING = 2;
+
+	protected static final int DIALOG_CHANGE_SIZE = 3;
+
+	protected static final int DIALOG_SET_BACKGROUND = 4;
+
+	protected static final int DIALOG_SET_SCALE_OF_MAP = 5;
+
+	protected static final int DIALOG_ADD_KNOWN_AP = 6;
+
+	protected static final int DIALOG_SELECT_BSSIDS = 7;
+
+	protected static final int MESSAGE_REFRESH = 1;
+
+	protected static final int MESSAGE_START_WIFISCAN=2;
 
 	protected static final int FILEBROWSER_REQUEST = 1;
 	
@@ -102,12 +124,28 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	 */
 	protected static final int SCHEDULER_TIME = 3;
 
+	/**
+	 * @uml.property  name="multiTouchView"
+	 * @uml.associationEnd  
+	 */
 	protected MultiTouchView multiTouchView;
 
+	/**
+	 * @uml.property  name="map"
+	 * @uml.associationEnd  
+	 */
 	protected SiteMapDrawable map;
 
+	/**
+	 * @uml.property  name="site"
+	 * @uml.associationEnd  
+	 */
 	protected ProjectSite site;
 
+	/**
+	 * @uml.property  name="databaseHelper"
+	 * @uml.associationEnd  
+	 */
 	protected DatabaseHelper databaseHelper = null;
 
 	protected Dao<ProjectSite, Integer> projectSiteDao = null;
@@ -120,8 +158,16 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected BroadcastReceiver wifiBroadcastReceiver;
 
+	/**
+	 * @uml.property  name="user"
+	 * @uml.associationEnd  
+	 */
 	protected UserDrawable user;
 
+	/**
+	 * @uml.property  name="scaler"
+	 * @uml.associationEnd  
+	 */
 	protected ScaleLineDrawable scaler = null;
 
 	protected final Context context = this;
@@ -130,10 +176,22 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected float scalerDistance;
 
+	/**
+	 * @uml.property  name="triangulationTask"
+	 * @uml.associationEnd  
+	 */
 	protected TriangulationTask triangulationTask = null;
 
+	/**
+	 * @uml.property  name="stepDetectionProvider"
+	 * @uml.associationEnd  
+	 */
 	protected StepDetectionProvider stepDetectionProvider = null;
 
+	/**
+	 * @uml.property  name="northDrawable"
+	 * @uml.associationEnd  
+	 */
 	protected NorthDrawable northDrawable = null;
 
 	protected Handler messageHandler;
@@ -1177,8 +1235,15 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		}
 	}
 
+	/**
+	 * @author  Paul Woelfel (paul@woelfel.at)
+	 */
 	protected class TriangulationTask extends AsyncTask<Void, Integer, Vector<AccessPointDrawable>> {
 
+		/**
+		 * @uml.property  name="parent"
+		 * @uml.associationEnd  
+		 */
 		private final ProjectSiteActivity parent;
 
 		private final ProgressDialog progress;

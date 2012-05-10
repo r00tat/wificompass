@@ -18,16 +18,31 @@ import at.fhstp.wificompass.model.helper.DatabaseHelper;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class MeasuringPointDrawable extends MultiTouchDrawable {
 
 	protected static BitmapDrawable icon;
 
+	/**
+	 * @uml.property  name="scanResult"
+	 * @uml.associationEnd  
+	 */
 	protected WifiScanResult scanResult;
 
+	/**
+	 * @uml.property  name="deletePopup"
+	 * @uml.associationEnd  
+	 */
 	protected DeleteDrawable deletePopup;
 
 	protected static final int padding = 5;
 
+	/**
+	 * @uml.property  name="popup"
+	 * @uml.associationEnd  
+	 */
 	protected TextPopupDrawable popup;
 
 	protected boolean isPopupActive = false;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="eml2" size="1058,534" id="" metadata="uml2-1.0" initialized="true" scrolledY="-5" tag="1000" key="32303037303533312D313030302077696669636F6D706173732F66726967">
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.userlocation" location="225,155" size="207,60" id="at.fhstp.wificompass.userlocation"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass" location="286,354" size="141,60" id="at.fhstp.wificompass"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.activities" location="386,354" size="190,60" id="at.fhstp.wificompass.activities"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.exceptions" location="486,354" size="199,60" id="at.fhstp.wificompass.exceptions"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.interfaces" location="586,354" size="195,60" id="at.fhstp.wificompass.interfaces"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.model" location="686,354" size="176,60" id="at.fhstp.wificompass.model"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.model.helper" location="786,354" size="211,60" id="at.fhstp.wificompass.model.helper"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.model.xml" location="886,354" size="197,60" id="at.fhstp.wificompass.model.xml"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.triangulation" location="986,354" size="211,60" id="at.fhstp.wificompass.triangulation"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.view" size="167,60" id="at.fhstp.wificompass.view"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.fhstp.wificompass.wifi" location="100,0" size="162,60" id="at.fhstp.wificompass.wifi"/>
+  <children xsi:type="editmodel:PackageEditModel" name="at.woelfel.philip.filebrowser" location="200,0" size="178,60" id="at.woelfel.philip.filebrowser"/>
+  <children xsi:type="editmodel:PackageEditModel" name="de.uvwxy.footpath" location="300,0" size="130,60" id="de.uvwxy.footpath"/>
+  <children xsi:type="editmodel:PackageEditModel" name="de.uvwxy.footpath.core" location="400,0" size="154,60" id="de.uvwxy.footpath.core"/>
+  <children xsi:type="editmodel:PackageEditModel" name="de.uvwxy.footpath.graph" location="500,0" size="163,60" id="de.uvwxy.footpath.graph"/>
+  <children xsi:type="editmodel:PackageEditModel" name="de.uvwxy.footpath.gui" location="600,0" size="149,60" id="de.uvwxy.footpath.gui"/>
+  <children xsi:type="editmodel:PackageEditModel" name="de.uvwxy.paintbox" location="700,0" size="131,60" id="de.uvwxy.paintbox"/>
+  <children xsi:type="editmodel:PackageEditModel" name="org.metalev.multitouch.controller" location="800,0" size="207,60" id="org.metalev.multitouch.controller"/>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=1;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

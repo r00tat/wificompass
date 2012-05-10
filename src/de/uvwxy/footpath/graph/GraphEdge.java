@@ -2,17 +2,35 @@ package de.uvwxy.footpath.graph;
 
 /**
  * A class to maintain an edge in the graph.
- * 
- * @author Paul Smith
- *
+ * @author  Paul Smith
  */
 public class GraphEdge {
+	/**
+	 * @uml.property  name="node0"
+	 * @uml.associationEnd  
+	 */
 	private GraphNode node0;
+	/**
+	 * @uml.property  name="node1"
+	 * @uml.associationEnd  
+	 */
 	private GraphNode node1;
+	/**
+	 * @uml.property  name="len"
+	 */
 	private double len;
 	private double bearing;
+	/**
+	 * @uml.property  name="wheelchair"
+	 */
 	private short wheelchair;
+	/**
+	 * @uml.property  name="isStairs"
+	 */
 	private boolean isStairs = false;
+	/**
+	 * @uml.property  name="isElevator"
+	 */
 	private boolean isElevator = false;
 	
 	// >0 := number correct steps given
@@ -21,7 +39,13 @@ public class GraphEdge {
 	// -2 := elevator
 	private int numSteps = 0;
 	
+	/**
+	 * @uml.property  name="level"
+	 */
 	private float level;
+	/**
+	 * @uml.property  name="isIndoor"
+	 */
 	private boolean isIndoor;
 	
 	/**
@@ -61,26 +85,50 @@ public class GraphEdge {
 		return bearing;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="node0"
+	 */
 	public GraphNode getNode0() {
 		return node0;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="node1"
+	 */
 	public GraphNode getNode1() {
 		return node1;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="len"
+	 */
 	public double getLen() {
 		return len;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="wheelchair"
+	 */
 	public short getWheelchair() {
 		return wheelchair;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="isStairs"
+	 */
 	public boolean isStairs(){
 		return isStairs;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="isElevator"
+	 */
 	public boolean isElevator(){
 		return isElevator;
 	}
@@ -89,10 +137,18 @@ public class GraphEdge {
 		return numSteps;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="level"
+	 */
 	public float getLevel() {
 		return level;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="isIndoor"
+	 */
 	public boolean isIndoor(){
 		return isIndoor;
 	}
@@ -101,26 +157,50 @@ public class GraphEdge {
 		this.bearing = compDir;
 	}
 	
+	/**
+	 * @param node0
+	 * @uml.property  name="node0"
+	 */
 	public void setNode0(GraphNode node0) {
 		this.node0 = node0;
 	}
 	
+	/**
+	 * @param node1
+	 * @uml.property  name="node1"
+	 */
 	public void setNode1(GraphNode node1) {
 		this.node1 = node1;
 	}
 	
+	/**
+	 * @param len
+	 * @uml.property  name="len"
+	 */
 	public void setLen(double len) {
 		this.len = len;
 	}
 	
+	/**
+	 * @param wheelchair
+	 * @uml.property  name="wheelchair"
+	 */
 	public void setWheelchair(short wheelchair) {
 		this.wheelchair = wheelchair;
 	}
 	
+	/**
+	 * @param isStairs
+	 * @uml.property  name="isStairs"
+	 */
 	public void setStairs(boolean isStairs) {
 		this.isStairs = isStairs;
 	}
 	
+	/**
+	 * @param isElevator
+	 * @uml.property  name="isElevator"
+	 */
 	public void setElevator(boolean isElevator) {
 		this.isElevator = isElevator;
 	}
@@ -131,6 +211,10 @@ public class GraphEdge {
 			this.setWheelchair((short)-1);//if steps, NO wheelchair
 	}
 	
+	/**
+	 * @param level
+	 * @uml.property  name="level"
+	 */
 	public void setLevel(float level) {
 		this.level = level;
 	}

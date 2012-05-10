@@ -6,10 +6,21 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class ScaleLineDrawable extends MultiTouchDrawable {
 
+	/**
+	 * @uml.property  name="slider1"
+	 * @uml.associationEnd  
+	 */
 	protected ScaleSliderDrawable slider1;
 
+	/**
+	 * @uml.property  name="slider2"
+	 * @uml.associationEnd  
+	 */
 	protected ScaleSliderDrawable slider2;
 
 	// protected float slider1.getRelativeX();
@@ -20,6 +31,10 @@ public class ScaleLineDrawable extends MultiTouchDrawable {
 	//
 	// protected float slider2.getRelativeY();
 
+	/**
+	 * @uml.property  name="okDrawable"
+	 * @uml.associationEnd  
+	 */
 	protected OkDrawable okDrawable;
 
 	public ScaleLineDrawable(Context context, MultiTouchDrawable superDrawable, OkCallback okCallback) {

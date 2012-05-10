@@ -5,12 +5,14 @@ import android.view.SurfaceHolder;
 
 /**
  * A class to create a thread to repaint the graphics.
- * 
- * @author Paul Smith
- * 
+ * @author  Paul Smith
  */
 class PaintThread extends Thread {
 	private SurfaceHolder surfaceHolder;
+	/**
+	 * @uml.property  name="pBox"
+	 * @uml.associationEnd  
+	 */
 	private PaintBox pBox;
 	private boolean bRunning = false;
 

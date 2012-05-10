@@ -25,53 +25,96 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 @DatabaseTable(tableName = ProjectSite.TABLE_NAME)
 public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements XMLSerializable {
 
 	public static final String TABLE_NAME = "sites";
 
+	/**
+	 * @uml.property  name="id"
+	 */
 	@DatabaseField(generatedId = true)
 	protected int id;
 
+	/**
+	 * @uml.property  name="title"
+	 */
 	@DatabaseField
 	protected String title;
 
+	/**
+	 * @uml.property  name="description"
+	 */
 	@DatabaseField
 	protected String description;
 
 	@DatabaseField(dataType = DataType.BYTE_ARRAY)
 	protected byte[] background;
 
+	/**
+	 * @uml.property  name="backgroundBitmap"
+	 */
 	protected Bitmap backgroundBitmap;
 
+	/**
+	 * @uml.property  name="width"
+	 */
 	@DatabaseField
 	protected int width;
 
+	/**
+	 * @uml.property  name="height"
+	 */
 	@DatabaseField
 	protected int height;
 
 	@DatabaseField(dataType = DataType.BYTE_ARRAY)
 	protected byte[] image;
 
+	/**
+	 * @uml.property  name="imageBitmap"
+	 */
 	protected Bitmap imageBitmap;
 
 	protected static final int quality = 100;
 
+	/**
+	 * @uml.property  name="project"
+	 * @uml.associationEnd  
+	 */
 	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	protected Project project;
 	
+	/**
+	 * @uml.property  name="gridSpacingX"
+	 */
 	@DatabaseField
 	protected float gridSpacingX=30;
 	
+	/**
+	 * @uml.property  name="gridSpacingY"
+	 */
 	@DatabaseField
 	protected float gridSpacingY=30;
 	
+	/**
+	 * @uml.property  name="north"
+	 */
 	@DatabaseField
 	protected float north=0;
 
+	/**
+	 * @uml.property  name="accessPoints"
+	 */
 	@ForeignCollectionField
 	protected ForeignCollection<AccessPoint> accessPoints;
 
+	/**
+	 * @uml.property  name="scanResults"
+	 */
 	@ForeignCollectionField
 	protected ForeignCollection<WifiScanResult> scanResults;
 	
@@ -79,10 +122,16 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	protected ArrayList<String> unselectedBssids;
 
 
+	/**
+	 * @uml.property  name="lastLocation"
+	 * @uml.associationEnd  
+	 */
 	@DatabaseField(foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true)
 	protected Location lastLocation;
 
-	protected static final String XMLTAG = "location", XMLTITLE = "title";
+	protected static final String XMLTAG = "location";
+
+	protected static final String XMLTITLE = "title";
 
 	public static final String UNTITLED = "untitled";
 
@@ -154,22 +203,42 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	public void deserialize(Element e) {
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="title"
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/**
+	 * @param title
+	 * @uml.property  name="title"
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="description"
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * @param description
+	 * @uml.property  name="description"
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="backgroundBitmap"
+	 */
 	public Bitmap getBackgroundBitmap() {
 		if (backgroundBitmap == null && background != null) {
 			backgroundBitmap = BitmapFactory.decodeByteArray(background, 0, background.length);
@@ -177,6 +246,11 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 		return backgroundBitmap;
 	}
 
+	/**
+	 * @param backgroundBitmap
+	 * @return
+	 * @uml.property  name="backgroundBitmap"
+	 */
 	public boolean setBackgroundBitmap(Bitmap backgroundBitmap) {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -188,6 +262,10 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 		return false;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="imageBitmap"
+	 */
 	public Bitmap getImageBitmap() {
 		if (imageBitmap == null && image != null) {
 			imageBitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
@@ -195,6 +273,11 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 		return imageBitmap;
 	}
 
+	/**
+	 * @param imageBitmap
+	 * @return
+	 * @uml.property  name="imageBitmap"
+	 */
 	public boolean setImageBitmap(Bitmap imageBitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		if (imageBitmap.compress(Bitmap.CompressFormat.PNG, quality, baos)) {
@@ -205,41 +288,57 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 		return false;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="project"
+	 */
 	public Project getProject() {
 		return project;
 	}
 
+	/**
+	 * @param project
+	 * @uml.property  name="project"
+	 */
 	public void setProject(Project project) {
 		this.project = project;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="id"
+	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @return the accessPoints
+	 * @return  the accessPoints
+	 * @uml.property  name="accessPoints"
 	 */
 	public ForeignCollection<AccessPoint> getAccessPoints() {
 		return accessPoints;
 	}
 
 	/**
-	 * @return the scanResults
+	 * @return  the scanResults
+	 * @uml.property  name="scanResults"
 	 */
 	public ForeignCollection<WifiScanResult> getScanResults() {
 		return scanResults;
 	}
 
 	/**
-	 * @return the width
+	 * @return  the width
+	 * @uml.property  name="width"
 	 */
 	public int getWidth() {
 		return width;
 	}
 
 	/**
-	 * @return the height
+	 * @return  the height
+	 * @uml.property  name="height"
 	 */
 	public int getHeight() {
 		return height;
@@ -257,15 +356,16 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	}
 
 	/**
-	 * @return the last known Location
+	 * @return  the last known Location
+	 * @uml.property  name="lastLocation"
 	 */
 	public Location getLastLocation() {
 		return lastLocation;
 	}
 
 	/**
-	 * @param lastLocation
-	 *            the lastLocation to set
+	 * @param lastLocation  the lastLocation to set
+	 * @uml.property  name="lastLocation"
 	 */
 	public void setLastLocation(Location lastLocation) {
 		this.lastLocation = lastLocation;
@@ -282,44 +382,49 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	}
 
 	/**
-	 * @return the gridSpacingX
+	 * @return  the gridSpacingX
+	 * @uml.property  name="gridSpacingX"
 	 */
 	public float getGridSpacingX() {
 		return gridSpacingX;
 	}
 
 	/**
-	 * @param gridSpacingX the gridSpacingX to set
+	 * @param gridSpacingX  the gridSpacingX to set
+	 * @uml.property  name="gridSpacingX"
 	 */
 	public void setGridSpacingX(float gridSpacingX) {
 		this.gridSpacingX = gridSpacingX;
 	}
 
 	/**
-	 * @return the gridSpacingY
+	 * @return  the gridSpacingY
+	 * @uml.property  name="gridSpacingY"
 	 */
 	public float getGridSpacingY() {
 		return gridSpacingY;
 	}
 
 	/**
-	 * @param gridSpacingY the gridSpacingY to set
+	 * @param gridSpacingY  the gridSpacingY to set
+	 * @uml.property  name="gridSpacingY"
 	 */
 	public void setGridSpacingY(float gridSpacingY) {
 		this.gridSpacingY = gridSpacingY;
 	}
 
 	/**
-	 * @return the north
+	 * @return  the north
+	 * @uml.property  name="north"
 	 */
 	public float getNorth() {
 		return north;
 	}
 
 	/**
-	 * <p>Define the the angle to the north of the map and the magnetic north</p>
-	 * <p>The angle must be between 0 and 2*π</p>
-	 * @param north the north to set
+	 * <p>Define the the angle to the north of the map and the magnetic north</p> <p>The angle must be between 0 and 2*π</p>
+	 * @param north  the north to set
+	 * @uml.property  name="north"
 	 */
 	public void setNorth(float north) {
 		this.north = (float) (north%(2*Math.PI));
@@ -354,6 +459,10 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	
 
 	
+	/**
+	 * @param bssids
+	 * @uml.property  name="unselectedBssids"
+	 */
 	public void setUnselectedBssids(ArrayList<String> bssids){
 		this.unselectedBssids=bssids;
 	}

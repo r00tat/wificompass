@@ -20,16 +20,31 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class ProjectSiteListAdapter extends BaseAdapter {
 
 	protected Context context;
 
+	/**
+	 * @uml.property  name="sites"
+	 * @uml.associationEnd  multiplicity="(0 -1)"
+	 */
 	protected ProjectSite[] sites;
 
+	/**
+	 * @uml.property  name="databaseHelper"
+	 * @uml.associationEnd  
+	 */
 	protected DatabaseHelper databaseHelper = null;
 
 	protected Dao<ProjectSite, Integer> dao;
 
+	/**
+	 * @uml.property  name="project"
+	 * @uml.associationEnd  
+	 */
 	protected Project project;
 
 	public ProjectSiteListAdapter(Context ctx, Project p) throws SQLException {

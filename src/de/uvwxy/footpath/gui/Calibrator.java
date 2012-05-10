@@ -18,14 +18,20 @@ import de.uvwxy.footpath.core.StepTrigger;
 
 /**
  * This Activity is used to calibrate the parameters concerning step detection
- * 
- * @author Paul Smith
- * 
+ * @author  Paul Smith
  */
 public class Calibrator extends Activity implements StepTrigger {
 
+	/**
+	 * @uml.property  name="stepDetection"
+	 * @uml.associationEnd  
+	 */
 	private StepDetection stepDetection;
 
+	/**
+	 * @uml.property  name="svHistory"
+	 * @uml.associationEnd  
+	 */
 	PaintBoxHistory svHistory;
 
 	// GUI

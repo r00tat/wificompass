@@ -12,7 +12,7 @@ import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * @author Paul Woelfel
+ * @author  Paul Woelfel
  */
 @DatabaseTable(tableName = Location.TABLE_NAME)
 public class Location extends BaseDaoEnabled<Location,Integer>{
@@ -20,26 +20,47 @@ public class Location extends BaseDaoEnabled<Location,Integer>{
 	
 	public static final String PROVIDER_NONE="defined";
 	
+	/**
+	 * @uml.property  name="id"
+	 */
 	@DatabaseField(generatedId=true)
 	protected int id;
 	
+	/**
+	 * @uml.property  name="x"
+	 */
 	@DatabaseField
 	protected float x;
 	
+	/**
+	 * @uml.property  name="y"
+	 */
 	@DatabaseField
 	protected float y;
 	
 //	protected float z;
 	
+	/**
+	 * @uml.property  name="accurancy"
+	 */
 	@DatabaseField
 	protected float accurancy;
 	
+	/**
+	 * @uml.property  name="provider"
+	 */
 	@DatabaseField
 	protected String provider;
 	
 	
+	/**
+	 * @uml.property  name="timestamp"
+	 */
 	protected Date timestamp;
 	
+	/**
+	 * @uml.property  name="timestampmilis"
+	 */
 	@DatabaseField
 	protected long timestampmilis;
 	
@@ -86,39 +107,75 @@ public class Location extends BaseDaoEnabled<Location,Integer>{
 		timestampmilis=copy.timestampmilis;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="x"
+	 */
 	public float getX() {
 		return x;
 	}
 
+	/**
+	 * @param x
+	 * @uml.property  name="x"
+	 */
 	public void setX(float x) {
 		this.x = x;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="y"
+	 */
 	public float getY() {
 		return y;
 	}
 
+	/**
+	 * @param y
+	 * @uml.property  name="y"
+	 */
 	public void setY(float y) {
 		this.y = y;
 	}
 
 
+	/**
+	 * @return
+	 * @uml.property  name="accurancy"
+	 */
 	public float getAccurancy() {
 		return accurancy;
 	}
 
+	/**
+	 * @param accurancy
+	 * @uml.property  name="accurancy"
+	 */
 	public void setAccurancy(float accurancy) {
 		this.accurancy = accurancy;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="provider"
+	 */
 	public String getProvider() {
 		return provider;
 	}
 
+	/**
+	 * @param provider
+	 * @uml.property  name="provider"
+	 */
 	public void setProvider(String provider) {
 		this.provider = provider;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="timestamp"
+	 */
 	public Date getTimestamp() {
 		if(timestamp==null){
 			timestamp=new Date(timestampmilis);
@@ -126,13 +183,18 @@ public class Location extends BaseDaoEnabled<Location,Integer>{
 		return timestamp;
 	}
 
+	/**
+	 * @param timestamp
+	 * @uml.property  name="timestamp"
+	 */
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 		timestampmilis=timestamp.getTime();
 	}
 
 	/**
-	 * @return the timestampmilis
+	 * @return  the timestampmilis
+	 * @uml.property  name="timestampmilis"
 	 */
 	public long getTimestampmilis() {
 		return timestampmilis;
@@ -147,7 +209,8 @@ public class Location extends BaseDaoEnabled<Location,Integer>{
 	}
 
 	/**
-	 * @return the id
+	 * @return  the id
+	 * @uml.property  name="id"
 	 */
 	public int getId() {
 		return id;

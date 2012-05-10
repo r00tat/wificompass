@@ -21,7 +21,7 @@ import android.widget.TextView;
 import at.fhstp.wificompass.R;
 
 /**
- * @author Philip Woelfel (philip@woelfel.at) modified by Paul Woelfel (paul@woelfel.at)
+ * @author  Philip Woelfel (philip@woelfel.at) modified by Paul Woelfel (paul@woelfel.at)
  */
 public class FileBrowser extends Activity implements OnItemClickListener, OnClickListener {
 	public static final int MODE_SAVE = 0;
@@ -30,15 +30,32 @@ public class FileBrowser extends Activity implements OnItemClickListener, OnClic
 
 	private static final int DIALOG_FILENAME = 0;
 
-	public static final int HIDE_NONE = 0, HIDE_DIRS = 1, HIDE_FILES = 2, HIDE_ALL_SYSTEM = 3;
+	public static final int HIDE_NONE = 0;
 
-	public static final String EXTRA_MODE = "FileBrowserMode", EXTRA_PATH = "path", EXTRA_HIDE_SYSTEM_FILES = "hide_system_files",
-			EXTRA_ALLOWED_EXTENSIONS = "allowed_extensions",EXTRA_DEFAULT_EXTENSION="default_extension";
+	public static final int HIDE_DIRS = 1;
+
+	public static final int HIDE_FILES = 2;
+
+	public static final int HIDE_ALL_SYSTEM = 3;
+
+	public static final String EXTRA_MODE = "FileBrowserMode";
+
+	public static final String EXTRA_PATH = "path";
+
+	public static final String EXTRA_HIDE_SYSTEM_FILES = "hide_system_files";
+
+	public static final String EXTRA_ALLOWED_EXTENSIONS = "allowed_extensions";
+
+	public static final String EXTRA_DEFAULT_EXTENSION="default_extension";
 
 	protected static final int DIALOG_DIRECTORY = 1;
 
 	protected static final String TAG = "FileBrowser";
 
+	/**
+	 * @uml.property  name="adap"
+	 * @uml.associationEnd  
+	 */
 	protected FileAdapter adap;
 
 	protected ListView lv;
@@ -50,7 +67,9 @@ public class FileBrowser extends Activity implements OnItemClickListener, OnClic
 	// private ArrayList<Integer> colors;
 	protected int mode;
 
-	protected String extensions,defaultExtension;
+	protected String extensions;
+
+	protected String defaultExtension;
 	
 	protected int hideMode;
 

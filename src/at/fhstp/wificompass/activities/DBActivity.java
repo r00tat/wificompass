@@ -42,14 +42,33 @@ import at.woelfel.philip.filebrowser.FileBrowser;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class DBActivity extends Activity implements OnClickListener {
 
+	/**
+	 * @uml.property  name="log"
+	 * @uml.associationEnd  
+	 */
 	protected static final Logger log = new Logger(SensorsActivity.class);
 
-	protected static final int FILEBROWSER_REQUEST = 12345, FILEBROWSER_IMPORT = 12346, REFRESH = 123, DIALOG_DROP_DB = 1, DIALOG_OVERWRITE_FILE = 2;
+	protected static final int FILEBROWSER_REQUEST = 12345;
+
+	protected static final int FILEBROWSER_IMPORT = 12346;
+
+	protected static final int REFRESH = 123;
+
+	protected static final int DIALOG_DROP_DB = 1;
+
+	protected static final int DIALOG_OVERWRITE_FILE = 2;
 
 	protected static final String DIALOG_OVERWRITE_FILE_NAME = "filename";
 
+	/**
+	 * @uml.property  name="databaseHelper"
+	 * @uml.associationEnd  
+	 */
 	protected DatabaseHelper databaseHelper = null;
 
 	protected TextView statusView = null;

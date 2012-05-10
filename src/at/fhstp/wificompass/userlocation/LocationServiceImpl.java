@@ -13,10 +13,14 @@ import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.model.Location;
 
 /**
- * @author Paul Woelfel
+ * @author  Paul Woelfel
  */
 public class LocationServiceImpl implements LocationService {
 
+	/**
+	 * @uml.property  name="pos"
+	 * @uml.associationEnd  
+	 */
 	protected Location pos;
 
 	protected Vector<LocationProvider> providers;
@@ -25,7 +29,20 @@ public class LocationServiceImpl implements LocationService {
 	
 	protected float angle=0f;
 	
-	protected float gridSpacingX=30f,gridSpacingY=30f;
+	/**
+	 * @uml.property  name="gridSpacingX"
+	 */
+	protected float gridSpacingX=30f;
+
+	/**
+	 * @uml.property  name="gridSpacingY"
+	 */
+	protected float gridSpacingY=30f;
+	
+	static {
+		// register as LocationService
+		LocationServiceFactory.setLocationService(new LocationServiceImpl());
+	}
 
 	/**
 	 * 
@@ -131,11 +148,19 @@ public class LocationServiceImpl implements LocationService {
 		gridSpacingY=y;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="gridSpacingX"
+	 */
 	@Override
 	public float getGridSpacingX() {
 		return gridSpacingX;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="gridSpacingY"
+	 */
 	@Override
 	public float getGridSpacingY() {
 		return gridSpacingY;

@@ -20,10 +20,21 @@ import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.Project;
 import at.fhstp.wificompass.model.helper.ProjectListAdapter;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class ProjectListActivity extends Activity implements OnItemClickListener {
 	
+	/**
+	 * @uml.property  name="log"
+	 * @uml.associationEnd  
+	 */
 	protected static final Logger log=new Logger(ProjectListAdapter.class);
 	
+	/**
+	 * @uml.property  name="adapter"
+	 * @uml.associationEnd  
+	 */
 	protected ProjectListAdapter adapter;
 	
 	public static final String PROJ_KEY="project_id";

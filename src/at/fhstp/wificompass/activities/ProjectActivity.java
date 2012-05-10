@@ -33,18 +33,39 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class ProjectActivity extends Activity implements OnClickListener, OnItemClickListener {
 
-	protected static final int REQ_SAVE = 1, REQ_LOAD = 2;
+	protected static final int REQ_SAVE = 1;
 
-	public static final String START_MODE = "START_MODE", PROJ_KEY = "PROJECT";
+	protected static final int REQ_LOAD = 2;
 
-	public static final int START_NEW = 1, START_LOAD = 2;
+	public static final String START_MODE = "START_MODE";
 
+	public static final String PROJ_KEY = "PROJECT";
+
+	public static final int START_NEW = 1;
+
+	public static final int START_LOAD = 2;
+
+	/**
+	 * @uml.property  name="project"
+	 * @uml.associationEnd  
+	 */
 	protected Project project;
 
+	/**
+	 * @uml.property  name="databaseHelper"
+	 * @uml.associationEnd  
+	 */
 	protected DatabaseHelper databaseHelper = null;
 
+	/**
+	 * @uml.property  name="log"
+	 * @uml.associationEnd  
+	 */
 	protected static Logger log = new Logger(ProjectActivity.class);
 
 	protected Dao<Project, Integer> dao;

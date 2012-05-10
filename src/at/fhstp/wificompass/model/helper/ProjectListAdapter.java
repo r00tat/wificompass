@@ -19,12 +19,19 @@ import at.fhstp.wificompass.model.Project;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class ProjectListAdapter extends BaseAdapter {
 	
 	protected Context context;
 	
 	protected List<Project> projects;
 	
+	/**
+	 * @uml.property  name="databaseHelper"
+	 * @uml.associationEnd  
+	 */
 	protected DatabaseHelper databaseHelper = null;
 	
 	public ProjectListAdapter(Context context) throws SQLException{

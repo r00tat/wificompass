@@ -9,6 +9,9 @@ import java.util.List;
 
 import at.fhstp.wificompass.model.Location;
 
+/**
+ * @author   Paul Woelfel (paul@woelfel.at)
+ */
 public interface LocationService {
 
 	/**
@@ -77,14 +80,15 @@ public interface LocationService {
 	
 	
 	/**
-	 * <p>define in which angle the magnetic north is to the map</p>
-	 * <p>The angle must be between 0 and 2*π.</p>
-	 * @param angle
+	 * <p>define in which angle the magnetic north is to the map</p> <p>The angle must be between 0 and 2*π.</p>
+	 * @param  angle
+	 * @uml.property  name="relativeNorth"
 	 */
 	void setRelativeNorth(float angle);
 	
 	/**
-	 * @return angle of the direction to magnetic north
+	 * @return   angle of the direction to magnetic north
+	 * @uml.property  name="relativeNorth"
 	 */
 	float getRelativeNorth();
 	

@@ -12,15 +12,34 @@ import de.uvwxy.footpath.core.StepDetection;
 import de.uvwxy.footpath.core.StepTrigger;
 
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class StepDetectionProvider extends LocationProviderImpl implements StepTrigger {
 	
 	float step=0.0f;
 	
-	public static final float FILTER_DEFAULT=0.3f,PEAK_DEFAULT=0.75f,STEP_DEFAULT=0.75f;
+	public static final float FILTER_DEFAULT=0.3f;
+
+	public static final float PEAK_DEFAULT=0.75f;
+
+	public static final float STEP_DEFAULT=0.75f;
 	public static final int TIMEOUT_DEFAULT=666;
 
-	public final static String CALIB_DATA="SensorCalibration",PEAK="peak",TIMEOUT="timeout",FILTER="a",STEP="step";
+	public final static String CALIB_DATA="SensorCalibration";
+
+	public final static String PEAK="peak";
+
+	public final static String TIMEOUT="timeout";
+
+	public final static String FILTER="a";
+
+	public final static String STEP="step";
 	
+	/**
+	 * @uml.property  name="stepDetector"
+	 * @uml.associationEnd  
+	 */
 	protected StepDetection stepDetector;
 	
 	public StepDetectionProvider(Context ctx){
@@ -47,18 +66,15 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 	@Override
 	public void trigger(long now_ms, double compDir) {
 		// a step has been triggered
-//		Logger.d("a step has been detected "+compDir+"-"+locationService.getRelativeNorth()+"="+(compDir-locationService.getRelativeNorth()));
-		
+	
 		float curX=locationService.getLocation().getX(),curY=locationService.getLocation().getY();
 		
-		float angle=(float) ((compDir/ 180.0f * (float) Math.PI)-locationService.getRelativeNorth());
+		float angle=(float) (Math.toRadians(compDir)-locationService.getRelativeNorth());
 		
 		float dx=(float) (Math.sin(angle)*step)*locationService.getGridSpacingX();
 		float dy=(float) (Math.cos(angle)*step)*locationService.getGridSpacingY();
 		
-		
-//		Logger.d("angle: "+angle+" "+(angle*180f/Math.PI)+" sin: "+Math.sin(angle)+" cos: "+Math.cos(angle)+ "step: "+step+" gridSpacing: "+locationService.getGridSpacingX()+","+locationService.getGridSpacingY());
-		Logger.d("walked a step dx: "+dx+" dy:"+dy);
+				Logger.d("walked a step dx: "+dx+" dy:"+dy);
 		
 		loc=new Location(getProviderName(),curX+dx,curY-dy,0,null);
 

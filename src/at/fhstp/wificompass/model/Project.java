@@ -20,27 +20,53 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 @DatabaseTable(tableName = Project.TABLE_NAME)
 public class Project extends BaseDaoEnabled<Project, Integer>implements XMLSerializable {
 	public static final String TABLE_NAME="projects";
 
+	/**
+	 * @uml.property  name="id"
+	 */
 	@DatabaseField(generatedId = true)
 	protected int id;
 
+	/**
+	 * @uml.property  name="name"
+	 */
 	@DatabaseField
 	protected String name;
 
+	/**
+	 * @uml.property  name="description"
+	 */
 	@DatabaseField
 	protected String description;
 
 //	@DatabaseField
 //	protected String path;
 
+	/**
+	 * @uml.property  name="sites"
+	 */
 	@ForeignCollectionField
 	protected ForeignCollection<ProjectSite> sites;
 
-	protected static final String XMLTAG = "project", XMLNAME = "name", XMLPATH = "path", XMLSITES = "sites", XMLDESCRIPTION = "description";
+	protected static final String XMLTAG = "project";
+
+	protected static final String XMLNAME = "name";
+
+	protected static final String XMLPATH = "path";
+
+	protected static final String XMLSITES = "sites";
+
+	protected static final String XMLDESCRIPTION = "description";
 	
+	/**
+	 * @uml.property  name="fIELD_ID"
+	 */
 	public static final String FIELD_ID="id";
 	
 	public static final String untitled="untitled";
@@ -70,18 +96,34 @@ public class Project extends BaseDaoEnabled<Project, Integer>implements XMLSeria
 		
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="name"
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 * @uml.property  name="name"
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="description"
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * @param description
+	 * @uml.property  name="description"
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -115,19 +157,25 @@ public class Project extends BaseDaoEnabled<Project, Integer>implements XMLSeria
 
 	}
 
+	/**
+	 * @return
+	 * @uml.property  name="id"
+	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @return the sites
+	 * @return  the sites
+	 * @uml.property  name="sites"
 	 */
 	public ForeignCollection<ProjectSite> getSites() {
 		return sites;
 	}
 
 	/**
-	 * @return the fieldId
+	 * @return  the fieldId
+	 * @uml.property  name="fIELD_ID"
 	 */
 	public static String getFieldId() {
 		return FIELD_ID;

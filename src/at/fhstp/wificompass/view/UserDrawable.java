@@ -8,12 +8,23 @@ import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.userlocation.ManualLocationProvider;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class UserDrawable extends MultiTouchDrawable {
 
 	protected static BitmapDrawable icon;
 	
+	/**
+	 * @uml.property  name="locProvider"
+	 * @uml.associationEnd  
+	 */
 	protected ManualLocationProvider locProvider;
 	
+	/**
+	 * @uml.property  name="compassIcon"
+	 * @uml.associationEnd  
+	 */
 	protected UserCompassDrawable compassIcon;
 
 	

@@ -31,19 +31,34 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import de.uvwxy.footpath.gui.Calibrator;
 
+/**
+ * @author  Paul Woelfel (paul@woelfel.at)
+ */
 public class MainActivity extends Activity implements OnClickListener, OnItemClickListener {
 
 	protected boolean running;
 
 	protected static final String logTag = "MainActivity";
 	
+	/**
+	 * @uml.property  name="log"
+	 * @uml.associationEnd  
+	 */
 	protected static final Logger log=new Logger(logTag);
 	
 	protected static final int REQ_PROJECT_LIST=3;
 	
+	/**
+	 * @uml.property  name="databaseHelper"
+	 * @uml.associationEnd  
+	 */
 	protected DatabaseHelper databaseHelper = null;
 
 	
+	/**
+	 * @uml.property  name="adapter"
+	 * @uml.associationEnd  
+	 */
 	protected ProjectListAdapter adapter;
 	
 

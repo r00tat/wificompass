@@ -6,6 +6,7 @@
 package at.fhstp.wificompass.model.xml;
 
 public class XMLSettings {
-	public static final String XMLNS="http://www.fhstp.ac.at/wificompass",XMLSHORTNS="wifi";
+	public static final String XMLNS="http://www.fhstp.ac.at/wificompass";
+	public static final String XMLSHORTNS="wifi";
 	
 }

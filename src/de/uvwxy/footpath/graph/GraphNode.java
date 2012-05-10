@@ -5,17 +5,33 @@ import java.util.LinkedList;
 
 /**
  * A class to maintain a node with given parameters found in OSM/XML data.
- * 
- * @author Paul Smith
- *
+ * @author  Paul Smith
  */
 public class GraphNode {
+	/**
+	 * @uml.property  name="lon"
+	 */
 	private double lon;
+	/**
+	 * @uml.property  name="lat"
+	 */
 	private double lat;
+	/**
+	 * @uml.property  name="name"
+	 */
 	private String name;
 	private boolean isInDoors;
+	/**
+	 * @uml.property  name="isDoor"
+	 */
 	private boolean isDoor;
+	/**
+	 * @uml.property  name="level"
+	 */
 	private float level;
+	/**
+	 * @uml.property  name="id"
+	 */
 	private int id;
 	private String merge_id;
 	private int numSteps = 0;
@@ -69,14 +85,26 @@ public class GraphNode {
 		return ret;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="lon"
+	 */
 	public double getLon() {
 		return lon;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="lat"
+	 */
 	public double getLat() {
 		return lat;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="name"
+	 */
 	public String getName() {
 		return name;
 	}
@@ -85,14 +113,26 @@ public class GraphNode {
 		return isInDoors;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="isDoor"
+	 */
 	public boolean isDoor() {
 		return isDoor;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="level"
+	 */
 	public float getLevel() {
 		return level;
 	}
 	
+	/**
+	 * @return
+	 * @uml.property  name="id"
+	 */
 	public int getId() {
 		return id;
 	}
@@ -109,14 +149,26 @@ public class GraphNode {
 		return loc_edges;
 	}
 	
+	/**
+	 * @param lon
+	 * @uml.property  name="lon"
+	 */
 	public void setLon(double lon) {
 		this.lon = lon;
 	}
 	
+	/**
+	 * @param lat
+	 * @uml.property  name="lat"
+	 */
 	public void setLat(double lat) {
 		this.lat = lat;
 	}
 	
+	/**
+	 * @param name
+	 * @uml.property  name="name"
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -125,14 +177,26 @@ public class GraphNode {
 		this.isInDoors = indoors;
 	}
 	
+	/**
+	 * @param door
+	 * @uml.property  name="isDoor"
+	 */
 	public void setDoor(boolean door){
 		this.isDoor = door;
 	}
 	
+	/**
+	 * @param level
+	 * @uml.property  name="level"
+	 */
 	public void setLevel(float level) {
 		this.level = level;
 	}
 	
+	/**
+	 * @param id
+	 * @uml.property  name="id"
+	 */
 	public void setId(int id){
 		this.id = id;
 	}

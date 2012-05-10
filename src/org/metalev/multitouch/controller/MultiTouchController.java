@@ -56,8 +56,7 @@ import android.view.MotionEvent;
 
 /**
  * A class that simplifies the implementation of multitouch in applications. Subclass this and read the fields here as needed in subclasses.
- * 
- * @author Luke Hutchison
+ * @author  Luke Hutchison
  */
 public class MultiTouchController<T> {
 
@@ -90,16 +89,43 @@ public class MultiTouchController<T> {
 
 	// ----------------------------------------------------------------------------------------------------------------------
 
+	/**
+	 * @uml.property  name="objectCanvas"
+	 * @uml.associationEnd  
+	 */
 	MultiTouchObjectCanvas<T> objectCanvas;
 
-	/** The current touch point */
+	/**
+	 * The current touch point
+	 * @uml.property  name="mCurrPt"
+	 * @uml.associationEnd  
+	 */
 	private PointInfo mCurrPt;
 
-	/** The previous touch point */
+	/**
+	 * The previous touch point
+	 * @uml.property  name="mPrevPt"
+	 * @uml.associationEnd  
+	 */
 	private PointInfo mPrevPt;
 
 	/** Fields extracted from mCurrPt */
-	private float mCurrPtX, mCurrPtY, mCurrPtDiam, mCurrPtWidth, mCurrPtHeight, mCurrPtAng;
+	private float mCurrPtX;
+
+	/** Fields extracted from mCurrPt */
+	private float mCurrPtY;
+
+	/** Fields extracted from mCurrPt */
+	private float mCurrPtDiam;
+
+	/** Fields extracted from mCurrPt */
+	private float mCurrPtWidth;
+
+	/** Fields extracted from mCurrPt */
+	private float mCurrPtHeight;
+
+	/** Fields extracted from mCurrPt */
+	private float mCurrPtAng;
 
 	/**
 	 * Extract fields from mCurrPt, respecting the update* fields of mCurrPt. This just avoids code duplication. I hate that Java doesn't support
@@ -118,26 +144,45 @@ public class MultiTouchController<T> {
 
 	// ----------------------------------------------------------------------------------------------------------------------
 
-	/** Whether to handle single-touch events/drags before multi-touch is initiated or not; if not, they are handled by subclasses */
+	/**
+	 * Whether to handle single-touch events/drags before multi-touch is initiated or not; if not, they are handled by subclasses
+	 * @uml.property  name="handleSingleTouchEvents"
+	 */
 	private boolean handleSingleTouchEvents;
 
 	/** The object being dragged/stretched */
 	private T selectedObject = null;
 
-	/** Current position and scale of the dragged object */
+	/**
+	 * Current position and scale of the dragged object
+	 * @uml.property  name="mCurrXform"
+	 * @uml.associationEnd  
+	 */
 	private PositionAndScale mCurrXform = new PositionAndScale();
 
 	/** Drag/pinch start time and time to ignore spurious events until (to smooth over event noise) */
-	private long mSettleStartTime, mSettleEndTime;
+	private long mSettleStartTime;
+
+	/** Drag/pinch start time and time to ignore spurious events until (to smooth over event noise) */
+	private long mSettleEndTime;
 
 	/** Conversion from object coords to screen coords */
-	private float startPosX, startPosY;
+	private float startPosX;
+
+	/** Conversion from object coords to screen coords */
+	private float startPosY;
 
 	/** Conversion between scale and width, and object angle and start pinch angle */
-	private float startScaleOverPinchDiam, startAngleMinusPinchAngle;
+	private float startScaleOverPinchDiam;
+
+	/** Conversion between scale and width, and object angle and start pinch angle */
+	private float startAngleMinusPinchAngle;
 
 	/** Conversion between X scale and width, and Y scale and height */
-	private float startScaleXOverPinchWidth, startScaleYOverPinchHeight;
+	private float startScaleXOverPinchWidth;
+
+	/** Conversion between X scale and width, and Y scale and height */
+	private float startScaleYOverPinchHeight;
 
 	// ----------------------------------------------------------------------------------------------------------------------
 
@@ -172,6 +217,7 @@ public class MultiTouchController<T> {
 
 	/**
 	 * Whether to handle single-touch events/drags before multi-touch is initiated or not; if not, they are handled by subclasses. Default: true
+	 * @uml.property  name="handleSingleTouchEvents"
 	 */
 	protected void setHandleSingleTouchEvents(boolean handleSingleTouchEvents) {
 		this.handleSingleTouchEvents = handleSingleTouchEvents;
@@ -179,6 +225,7 @@ public class MultiTouchController<T> {
 
 	/**
 	 * Whether to handle single-touch events/drags before multi-touch is initiated or not; if not, they are handled by subclasses. Default: true
+	 * @uml.property  name="handleSingleTouchEvents"
 	 */
 	protected boolean getHandleSingleTouchEvents() {
 		return handleSingleTouchEvents;
@@ -462,29 +509,64 @@ public class MultiTouchController<T> {
 
 	// ------------------------------------------------------------------------------------
 
-	/** A class that packages up all MotionEvent information with all derived multitouch information (if available) */
+	/**
+	 * A class that packages up all MotionEvent information with all derived multitouch information (if available)
+	 */
 	public static class PointInfo {
 		// Multitouch information
 		private int numPoints;
+		/**
+		 * @uml.property  name="xs"
+		 */
 		private float[] xs = new float[MAX_TOUCH_POINTS];
+		/**
+		 * @uml.property  name="ys"
+		 */
 		private float[] ys = new float[MAX_TOUCH_POINTS];
+		/**
+		 * @uml.property  name="pressures"
+		 */
 		private float[] pressures = new float[MAX_TOUCH_POINTS];
+		/**
+		 * @uml.property  name="pointerIds"
+		 */
 		private int[] pointerIds = new int[MAX_TOUCH_POINTS];
 
 		// Midpoint of pinch operations
-		private float xMid, yMid, pressureMid;
+		private float xMid;
+		private float yMid;
+		private float pressureMid;
 
 		// Width/diameter/angle of pinch operations
-		private float dx, dy, diameter, diameterSq, angle;
+		private float dx;
+		private float dy;
+		private float diameter;
+		private float diameterSq;
+		private float angle;
 
 		// Whether or not there is at least one finger down (isDown) and/or at least two fingers down (isMultiTouch)
-		private boolean isDown, isMultiTouch;
+		/**
+		 * @uml.property  name="isDown"
+		 */
+		private boolean isDown;
+		/**
+		 * @uml.property  name="isMultiTouch"
+		 */
+		private boolean isMultiTouch;
 
 		// Whether or not these fields have already been calculated, for caching purposes
-		private boolean diameterSqIsCalculated, diameterIsCalculated, angleIsCalculated;
+		private boolean diameterSqIsCalculated;
+		private boolean diameterIsCalculated;
+		private boolean angleIsCalculated;
 
 		// Event action code and event time
+		/**
+		 * @uml.property  name="action"
+		 */
 		private int action;
+		/**
+		 * @uml.property  name="eventTime"
+		 */
 		private long eventTime;
 
 		// -------------------------------------------------------------------------------------------------------------------------------------------
@@ -555,7 +637,10 @@ public class MultiTouchController<T> {
 
 		// -------------------------------------------------------------------------------------------------------------------------------------------
 
-		/** True if number of touch points >= 2. */
+		/**
+		 * True if number of touch points >= 2.
+		 * @uml.property  name="isMultiTouch"
+		 */
 		public boolean isMultiTouch() {
 			return isMultiTouch;
 		}
@@ -640,7 +725,10 @@ public class MultiTouchController<T> {
 			return xMid;
 		}
 
-		/** Return the array of X coords -- only the first getNumTouchPoints() of these is defined. */
+		/**
+		 * Return the array of X coords -- only the first getNumTouchPoints() of these is defined.
+		 * @uml.property  name="xs"
+		 */
 		public float[] getXs() {
 			return xs;
 		}
@@ -650,16 +738,17 @@ public class MultiTouchController<T> {
 			return yMid;
 		}
 
-		/** Return the array of Y coords -- only the first getNumTouchPoints() of these is defined. */
+		/**
+		 * Return the array of Y coords -- only the first getNumTouchPoints() of these is defined.
+		 * @uml.property  name="ys"
+		 */
 		public float[] getYs() {
 			return ys;
 		}
 
 		/**
-		 * Return the array of pointer ids -- only the first getNumTouchPoints() of these is defined. These don't have to be all the numbers from 0 to
-		 * getNumTouchPoints()-1 inclusive, numbers can be skipped if a finger is lifted and the touch sensor is capable of detecting that that
-		 * particular touch point is no longer down. Note that a lot of sensors do not have this capability: when finger 1 is lifted up finger 2
-		 * becomes the new finger 1.  However in theory these IDs can correct for that.  Convert back to indices using MotionEvent.findPointerIndex().
+		 * Return the array of pointer ids -- only the first getNumTouchPoints() of these is defined. These don't have to be all the numbers from 0 to getNumTouchPoints()-1 inclusive, numbers can be skipped if a finger is lifted and the touch sensor is capable of detecting that that particular touch point is no longer down. Note that a lot of sensors do not have this capability: when finger 1 is lifted up finger 2 becomes the new finger 1.  However in theory these IDs can correct for that.  Convert back to indices using MotionEvent.findPointerIndex().
+		 * @uml.property  name="pointerIds"
 		 */
 		public int[] getPointerIds() {
 			return pointerIds;
@@ -670,21 +759,36 @@ public class MultiTouchController<T> {
 			return pressureMid;
 		}
 
-		/** Return the array of pressures -- only the first getNumTouchPoints() of these is defined. */
+		/**
+		 * Return the array of pressures -- only the first getNumTouchPoints() of these is defined.
+		 * @uml.property  name="pressures"
+		 */
 		public float[] getPressures() {
 			return pressures;
 		}
 
 		// -------------------------------------------------------------------------------------------------------------------------------------------
 
+		/**
+		 * @return
+		 * @uml.property  name="isDown"
+		 */
 		public boolean isDown() {
 			return isDown;
 		}
 
+		/**
+		 * @return
+		 * @uml.property  name="action"
+		 */
 		public int getAction() {
 			return action;
 		}
 
+		/**
+		 * @return
+		 * @uml.property  name="eventTime"
+		 */
 		public long getEventTime() {
 			return eventTime;
 		}
@@ -696,8 +800,27 @@ public class MultiTouchController<T> {
 	 * A class that is used to store scroll offsets and scale information for objects that are managed by the multitouch controller
 	 */
 	public static class PositionAndScale {
-		private float xOff, yOff, scale, scaleX, scaleY, angle;
-		private boolean updateScale, updateScaleXY, updateAngle;
+		private float xOff;
+		private float yOff;
+		/**
+		 * @uml.property  name="scale"
+		 */
+		private float scale;
+		/**
+		 * @uml.property  name="scaleX"
+		 */
+		private float scaleX;
+		/**
+		 * @uml.property  name="scaleY"
+		 */
+		private float scaleY;
+		/**
+		 * @uml.property  name="angle"
+		 */
+		private float angle;
+		private boolean updateScale;
+		private boolean updateScaleXY;
+		private boolean updateAngle;
 
 		/**
 		 * Set position and optionally scale, anisotropic scale, and/or angle. Where if the corresponding "update" flag is set to false, the field's
@@ -737,20 +860,34 @@ public class MultiTouchController<T> {
 			return yOff;
 		}
 
+		/**
+		 * @return
+		 * @uml.property  name="scale"
+		 */
 		public float getScale() {
 			return !updateScale ? 1.0f : scale;
 		}
 
-		/** Included in case you want to support anisotropic scaling */
+		/**
+		 * Included in case you want to support anisotropic scaling
+		 * @uml.property  name="scaleX"
+		 */
 		public float getScaleX() {
 			return !updateScaleXY ? 1.0f : scaleX;
 		}
 
-		/** Included in case you want to support anisotropic scaling */
+		/**
+		 * Included in case you want to support anisotropic scaling
+		 * @uml.property  name="scaleY"
+		 */
 		public float getScaleY() {
 			return !updateScaleXY ? 1.0f : scaleY;
 		}
 
+		/**
+		 * @return
+		 * @uml.property  name="angle"
+		 */
 		public float getAngle() {
 			return !updateAngle ? 0.0f : angle;
 		}
