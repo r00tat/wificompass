@@ -42,7 +42,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public static final String DATABASE_NAME = "wificompass.db";
 
 	// any time you make changes to your database objects, you may have to increase the database version
-	private static final int DATABASE_VERSION = 23;
+	private static final int DATABASE_VERSION = 25;
 
 	protected Context context;
 
@@ -126,15 +126,23 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 					}
 					
 				case 21:
-					Dao<ProjectSite,Integer> psDao21=DaoManager.createDao(getConnectionSource(),ProjectSite.class);
-					psDao21.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `selectedBssids` BLOB DEFAULT '';");
+//					Dao<ProjectSite,Integer> psDao21=DaoManager.createDao(getConnectionSource(),ProjectSite.class);
+//					psDao21.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `selectedBssids` BLOB;");
 					
 				case 22:
-					if(oldVersion>=21){
-						Dao<ProjectSite,Integer> psDao22=DaoManager.createDao(getConnectionSource(),ProjectSite.class);
-						psDao22.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `selectedBssids2` BLOB;");
-						
-					}
+					
+//					Dao<ProjectSite,Integer> psDao22=DaoManager.createDao(getConnectionSource(),ProjectSite.class);
+//					psDao22.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `selectedBssids2` BLOB;");
+					
+					
+				case 23:
+					Dao<ProjectSite,Integer> psDao23=DaoManager.createDao(getConnectionSource(),ProjectSite.class);
+					psDao23.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `triangulationAlgorithm` ");
+					
+				case 24:
+					
+					Dao<ProjectSite,Integer> psDao22=DaoManager.createDao(getConnectionSource(),ProjectSite.class);
+					psDao22.executeRaw("ALTER TABLE `"+ProjectSite.TABLE_NAME+"` ADD COLUMN `unselectedBssids` BLOB;");
 					
 					
 					// do not break on versions before, only last version should use break;

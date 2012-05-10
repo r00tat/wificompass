@@ -21,10 +21,10 @@ public class LocationServiceFactory {
 	}
 	
 	public static LocationService getLocationService() {
-//		if(ls==null){
+		if(ls==null){
 //			throw new LocationServiceException("no location service defined!");
-//			ls=new LocationServiceImpl();
-//		}
+			ls=new LocationServiceImpl();
+		}
 		return ls;
 	}
 }

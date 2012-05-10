@@ -118,8 +118,11 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	@ForeignCollectionField
 	protected ForeignCollection<WifiScanResult> scanResults;
 	
-	@DatabaseField(dataType=DataType.SERIALIZABLE,columnName="selectedBssids2")
+	@DatabaseField(dataType=DataType.SERIALIZABLE,columnName="unselectedBssids")
 	protected ArrayList<String> unselectedBssids;
+	
+	@DatabaseField
+	protected int triangulationAlgorithm=0;
 
 
 	/**
@@ -167,6 +170,7 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	 * 
 	 * @param copy
 	 */
+	@SuppressWarnings("unchecked")
 	public ProjectSite(ProjectSite copy) {
 		title = copy.title;
 		description = copy.description;
@@ -187,6 +191,8 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 			lastLocation = null;
 		width=copy.width;
 		height=copy.height;
+		unselectedBssids=(ArrayList<String>) copy.unselectedBssids.clone();
+		triangulationAlgorithm=copy.triangulationAlgorithm;
 				
 	}
 
@@ -470,6 +476,20 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 
 	public ArrayList<String> getSelectedBssids() {
 		return unselectedBssids;
+	}
+
+	/**
+	 * @return the triangulationAlgorithm
+	 */
+	public int getTriangulationAlgorithm() {
+		return triangulationAlgorithm;
+	}
+
+	/**
+	 * @param triangulationAlgorithm the triangulationAlgorithm to set
+	 */
+	public void setTriangulationAlgorithm(int triangulationAlgorithm) {
+		this.triangulationAlgorithm = triangulationAlgorithm;
 	}
 
 }
