@@ -86,8 +86,8 @@
     <string name="app_package">at.fhstp.wificompass</string>
     <string name="export_db_save_finished_message"> done!</string>
     <string name="export_db_save_failed_message">backup failed! %1$s</string>
-    <string name="export_db_label">export DB</string>
-    <string name="main_export_db_label">backup &amp; restore</string>
+    <string name="export_db_label">Export DB</string>
+    <string name="main_export_db_label">Backup &amp; Restore</string>
     <string name="sensors_scan_label">read sensor data</string>
     <string name="sensors_graphview_title">Sensor Data</string>
     <string name="export_db_import_button_text">import database</string>
@@ -180,11 +180,11 @@
     <string name="project_site_dialog_add_known_ap_ssid">SSID</string>
     <string name="project_site_dialog_add_known_ap_bssid">BSSID</string>
     <string name="access_point_format">%1$s [%2$s]\n%3$dMHz %4$s\nPosition: %5$.2f/%6$.2f m</string>
-    <string name="main_menu_calibrate">calibrate sensors</string>
+    <string name="main_menu_calibrate">Calibrate Sensors</string>
     <string name="calibrator_label">Sensor Calibration</string>
-    <string name="calibrator_tv_peak">Set peak value: (current)</string>
-    <string name="calibrator_tv_filter">Set filter value: (current)</string>
-    <string name="calibrator_tv_step_timeout">Set step timout: (current)</string>
+    <string name="calibrator_tv_peak">Peak: </string>
+    <string name="calibrator_tv_filter">Filter: </string>
+    <string name="calibrator_tv_step_timeout">Step Timeout: </string>
     <string name="project_site_start_step_detect">Start Walking &amp; Scanning</string>
     <string name="project_site_stop_step_detect">Stop Walking &amp; Scanning</string>
     <string name="project_site_menu_set_north">set north</string>
@@ -206,17 +206,26 @@
     <string name="user_compass_degrees">%1$d°</string>
     <string name="project_site_mapscale_changed">Scale of map changed: 1m is now %1$.2f pixels.</string>
     <string name="not_a_number">The value you entered (%1$s) is not a valid number!</string>
-    <string name="calibrator_tv_step_size">step size (m)</string>
-    <string name="calibrator_step_size_text">step size: %1$.2fm</string>
-    <string name="calibrator_peak_text">Set peak value: %1$.2f</string>
-    <string name="calibrator_filter_text">Set filter value: %1$.2f</string>
-    <string name="calibrator_step_timeout_text">Set step timout: %1$d</string>
+    <string name="calibrator_tv_step_size">Step Size (m)</string>
+    <string name="calibrator_step_size_text">Step Size: %1$.2fm</string>
+    <string name="calibrator_peak_text">Peak: %1$.2fm/s^2</string>
+    <string name="calibrator_filter_text">Filter: %1$.2f</string>
+    <string name="calibrator_step_timeout_text">Step Timeout: %1$dms</string>
     <string name="project_site_wifiscan_started">WiFi Scan started!</string>
     <string name="main_quickscan_button">Quick Scan!</string>
     <string name="quickscan_project_name">Quick Scan %s</string>
     <string name="quickscan_project_site_name">Quick Scan Site %s</string>
     <string name="main_quickscan_failed">Failed to start the Quick Scan: \n%s</string>
     <string name="general_all">All</string>
-    
-
+    <string name="calibrator_start_auto_calibration">Start Auto Calibration!</string>
+    <string name="calibrator_stop_auto_calibration">Stop Auto Calibration!</string>
+    <string name="calibrator_auto_config_title">Calibration Auto Config finished!</string>
+    <string name="calibrator_auto_config_message">Analyzation of steps and sensor values finished. %8$d combinations have the best results.\nThe best result was:\nScore: %1$d %2$.0f%%\nSteps correct detected: %5$d\nSteps not detected: %6$d\nSteps false detected: %7$d\nFilter: %3$.2f\nPeak: %4$.2fm/s^2\nTimeout: %9$dms</string>
+		<string name="calibrator_auto_config_info_title">Sensor Auto Calibration</string>
+    <string name="calibrator_auto_config_info_message">Sensor Auto Calibration will be started. All sensor data will be log for analysis.\nTouch the Sensor Data area, where the red, green and blue graphs are, every time you make a step.</string>
+		<string name="calibrator_auto_config_progress_title">Auto Configuration of Sensor Parameters</string>
+		<string name="calibrator_auto_config_progress_message">Searching for the best peak and filter values. This may take a while...</string>
+		<string name="calibrator_analyze_data">Analyze Data</string>
+		<string name="calibrator_auto_config_setting_title">Auto Calibration Settings</string>
+		<string name="calibrator_auto_config_setting_message">How much tolerance (ms) is allowed between a detcted step and the ones you told the application. \nIf you do not know, what value should be used, leave the default value.\n\nWindow Size: %1$dms</string>
 </resources>

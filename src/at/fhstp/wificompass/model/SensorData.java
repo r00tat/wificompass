@@ -94,6 +94,25 @@ public class SensorData extends BaseDaoEnabled<SensorData,Integer>{
 	public SensorData(){
 		
 	}
+	
+	public SensorData(String sensorName,int sensorType){
+		this.sensorName=sensorName;
+		this.sensorType=sensorType;
+		this.timestamp=System.currentTimeMillis();
+		// this is only a empty sensor
+		// used in auto calibration to save a step
+	}
+	
+	public SensorData(String sensorName,int sensorType,float value0, float value1,float value2,float value3){
+		this.sensorName=sensorName;
+		this.sensorType=sensorType;
+		this.value0=value0;
+		this.value1=value1;
+		this.value2=value2;
+		this.value3=value3;
+		this.timestamp=System.currentTimeMillis();
+		calculateNormalized();
+	}
 
 	public SensorData(SensorEvent event){
 		sensorName=event.sensor.getName();
@@ -110,10 +129,18 @@ public class SensorData extends BaseDaoEnabled<SensorData,Integer>{
 		if (event.values.length >= 4)
 			value3=(event.values[3]);
 		
-		normalizedValue=(value0<0?value0*-1:value0)+(value1<0?value1*-1:value1)+(value2<0?value2*-1:value2)+(value3<0?value3*-1:value3);
+		calculateNormalized();
 		length=event.values.length;
 		
 		
+	}
+
+	/**
+	 * 
+	 */
+	protected void calculateNormalized() {
+		
+		normalizedValue=(value0<0?value0*-1:value0)+(value1<0?value1*-1:value1)+(value2<0?value2*-1:value2)+(value3<0?value3*-1:value3);
 	}
 
 	/**

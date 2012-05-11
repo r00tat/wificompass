@@ -150,10 +150,14 @@ public class StepDetection {
 		this.step_timeout_ms = step_timeout_ms;
 	}
 	
+	public void load(){
+		load(SensorManager.SENSOR_DELAY_FASTEST);
+	}
+	
 	/**
 	 * Enable step detection
 	 */
-	public void load(){
+	public void load(int sensorDelay){
 		
 		if(timer==null){
 		// Sensors
@@ -164,7 +168,7 @@ public class StepDetection {
 			// Register only compass and accelerometer
 			if (lSensor.get(i).getType() == Sensor.TYPE_ACCELEROMETER
 					|| lSensor.get(i).getType() == Sensor.TYPE_ORIENTATION) {
-				sm.registerListener(mySensorEventListener, lSensor.get(i), SensorManager.SENSOR_DELAY_FASTEST);
+				sm.registerListener(mySensorEventListener, lSensor.get(i), sensorDelay);
 			}
 		}
 		

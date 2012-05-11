@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import at.fhstp.wificompass.CalibratorActivity;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.Project;
@@ -29,7 +30,6 @@ import at.fhstp.wificompass.model.helper.ProjectListAdapter;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
-import de.uvwxy.footpath.gui.Calibrator;
 
 /**
  * @author  Paul Woelfel (paul@woelfel.at)
@@ -220,12 +220,12 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			
 			break;
 			
-		case R.id.main_sensors_option:
-			log.debug("starting sensors test activity");
-			Intent sensorsIntent=new Intent(this,SensorsActivity.class);
-			startActivity(sensorsIntent);
-			
-			break;
+//		case R.id.main_sensors_option:
+//			log.debug("starting sensors test activity");
+//			Intent sensorsIntent=new Intent(this,SensorsActivity.class);
+//			startActivity(sensorsIntent);
+//			
+//			break;
 			
 			
 		case R.id.main_export_option:
@@ -244,7 +244,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			
 		case R.id.main_menu_step_calibrate:
 			log.debug("calibrating sensors");
-			Intent calibrateIntent=new Intent(this,Calibrator.class);
+			Intent calibrateIntent=new Intent(this,CalibratorActivity.class);
 			startActivity(calibrateIntent);
 			break;
 			

@@ -5,79 +5,128 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:stretchColumns="1,3" android:padding="5dp">
-
-        <TableRow android:layout_width="match_parent">
-            
-    <TextView
-        android:id="@+id/calibrator_tvPeak"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/calibrator_tv_peak" android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
-    </TextView>
-
-    <SeekBar
-        android:id="@+id/calibrator_sbPeak"
+    <LinearLayout
+        android:id="@+id/calibrator_llh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="18" android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
-    </SeekBar>
+         >
 
-    
-    <TextView
-        android:id="@+id/calibrator_tvFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/calibrator_tv_filter" android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
-    </TextView>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:stretchColumns="1,3" android:layout_weight="1">
 
-    <SeekBar
-        android:id="@+id/calibrator_sbFilter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="75"
-        android:progress="60" android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
-    </SeekBar>
-</TableRow>
+            <TableRow android:layout_width="match_parent" >
 
-<TableRow android:layout_width="match_parent" >
+                <TextView
+                    android:id="@+id/calibrator_tvPeak"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/calibrator_tv_peak" >
+                </TextView>
 
-    <TextView
-        android:id="@+id/calibrator_tvTimeout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/calibrator_tv_step_timeout" android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
-    </TextView>
+                <SeekBar
+                    android:id="@+id/calibrator_sbPeak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:max="40"
+                    android:progress="5" >
+                </SeekBar>
 
-    <SeekBar
-        android:id="@+id/calibrator_sbTimeout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="1000"
-        android:progress="500" android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
-    </SeekBar>
+                <TextView
+                    android:id="@+id/calibrator_tvFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/calibrator_tv_filter" >
+                </TextView>
 
-    <TextView
-        android:id="@+id/calibrator_tv_step_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/calibrator_tv_step_size" android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
-    </TextView>
+                <SeekBar
+                    android:id="@+id/calibrator_sbFilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:max="75"
+                    android:progress="60" >
+                </SeekBar>
+            </TableRow>
 
-    <SeekBar
-        android:id="@+id/calibrator_step_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="150"
-        android:progress="70" android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
-    </SeekBar>
-    
-    </TableRow>
-    
-    </TableLayout>
+            <TableRow android:layout_width="match_parent" >
+
+                <TextView
+                    android:id="@+id/calibrator_tvTimeout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/calibrator_tv_step_timeout" >
+                </TextView>
+
+                <SeekBar
+                    android:id="@+id/calibrator_sbTimeout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:max="600"
+                    android:progress="333" >
+                </SeekBar>
+
+                <TextView
+                    android:id="@+id/calibrator_tv_step_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/calibrator_tv_step_size" >
+                </TextView>
+
+                <SeekBar
+                    android:id="@+id/calibrator_step_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:max="150"
+                    android:progress="70" >
+                </SeekBar>
+            </TableRow>
+        </TableLayout>
+
+       <LinearLayout
+           android:id="@+id/calibrator_layout_buttons"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:orientation="vertical" >
+
+        <ToggleButton
+            android:id="@+id/calibrator_auto_calibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="@string/calibrator_start_auto_calibration"
+            android:textOff="@string/calibrator_start_auto_calibration"
+            android:textOn="@string/calibrator_stop_auto_calibration" />
+
+        <Button
+            android:id="@+id/calibrator_analyze_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/calibrator_analyze_data" />
+    </LinearLayout>
+    </LinearLayout>
 
     <SurfaceView
         android:id="@+id/calibrator_svHistory"

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="triangulation" size="1058,815" id="at.fhstp.wificompass.triangulation" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D313030302077696669636F6D706173732F66726967">
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.1/@sourceConnections.0 //@children.2/@sourceConnections.0" name="AccessPointTriangulation" location="225,60" size="173,121" id="at.fhstp.wificompass.triangulation/AccessPointTriangulation">
-    <children xsi:type="editmodel:CompartmentEditModel"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="150,72">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.1/@sourceConnections.0 //@children.2/@sourceConnections.0" name="AccessPointTriangulation" location="225,60" size="187,121" id="at.fhstp.wificompass.triangulation/AccessPointTriangulation">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="164,72">
       <children xsi:type="editmodel:MethodEditModel" name="AccessPointTriangulation" id="at.fhstp.wificompass.triangulation/AccessPointTriangulation#AccessPointTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="AccessPointTriangulation" id="at.fhstp.wificompass.triangulation/AccessPointTriangulation#AccessPointTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="calculateAccessPointPosition" id="at.fhstp.wificompass.triangulation/AccessPointTriangulation#calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="calculateAllAndGetDrawables" id="at.fhstp.wificompass.triangulation/AccessPointTriangulation#calculateAllAndGetDrawables()"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="LocalSignalStrengthGradientTriangulation" location="30,240" size="247,416" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation" runTimeClassModel="areAllMeasurementsCollinear(Ljava.util.Vector;),g,at.fhstp.wificompass.triangulation.LocalSignalStrengthGradientTriangulation.GradientArrow,calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;),arePointsCollinear(Landroid.graphics.PointF;Landroid.graphics.PointF;Landroid.graphics.PointF;),roundToGridSpacing(F),getMeasurementDataWithinWindow(Ljava.util.Vector;Lat.fhstp.wificompass.triangulation.MeasurementDataSet;F),wrapAngleTo2Pi(F),windowSize,LocalSignalStrengthGradientTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;),LocalSignalStrengthGradientTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;)">
-    <children xsi:type="editmodel:CompartmentEditModel" size="90,36">
+  <children xsi:type="editmodel:ClassEditModel" name="LocalSignalStrengthGradientTriangulation" location="30,240" size="267,416" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation" runTimeClassModel="areAllMeasurementsCollinear(Ljava.util.Vector;),g,at.fhstp.wificompass.triangulation.LocalSignalStrengthGradientTriangulation.GradientArrow,calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;),arePointsCollinear(Landroid.graphics.PointF;Landroid.graphics.PointF;Landroid.graphics.PointF;),roundToGridSpacing(F),getMeasurementDataWithinWindow(Ljava.util.Vector;Lat.fhstp.wificompass.triangulation.MeasurementDataSet;F),wrapAngleTo2Pi(F),windowSize,LocalSignalStrengthGradientTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;),LocalSignalStrengthGradientTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="99,36">
       <children xsi:type="editmodel:AttributeEditModel" name="g" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation#g"/>
       <children xsi:type="editmodel:AttributeEditModel" name="windowSize" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation#windowSize"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="197,144">
+    <children xsi:type="editmodel:CompartmentEditModel" size="222,144">
       <children xsi:type="editmodel:MethodEditModel" name="LocalSignalStrengthGradientTriangulation" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation#LocalSignalStrengthGradientTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="LocalSignalStrengthGradientTriangulation" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation#LocalSignalStrengthGradientTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="areAllMeasurementsCollinear" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation#areAllMeasurementsCollinear(Ljava.util.Vector;)"/>
@@ -26,16 +26,16 @@
       <children xsi:type="editmodel:MethodEditModel" name="roundToGridSpacing" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation#roundToGridSpacing(F)"/>
       <children xsi:type="editmodel:MethodEditModel" name="wrapAngleTo2Pi" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation#wrapAngleTo2Pi(F)"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="113,177">
-      <children xsi:type="editmodel:ClassEditModel" name="GradientArrow" size="113,175" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation$GradientArrow" runTimeClassModel="GradientArrow(),weight,GradientArrow(FFFFF),directionY,directionX,y,x">
-        <children xsi:type="editmodel:CompartmentEditModel" size="84,90">
+    <children xsi:type="editmodel:CompartmentEditModel" size="120,177">
+      <children xsi:type="editmodel:ClassEditModel" name="GradientArrow" size="120,175" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation$GradientArrow" runTimeClassModel="GradientArrow(),weight,GradientArrow(FFFFF),directionY,directionX,y,x">
+        <children xsi:type="editmodel:CompartmentEditModel" size="91,90">
           <children xsi:type="editmodel:AttributeEditModel" name="directionX" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation$GradientArrow#directionX"/>
           <children xsi:type="editmodel:AttributeEditModel" name="directionY" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation$GradientArrow#directionY"/>
           <children xsi:type="editmodel:AttributeEditModel" name="weight" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation$GradientArrow#weight"/>
           <children xsi:type="editmodel:AttributeEditModel" name="x" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation$GradientArrow#x"/>
           <children xsi:type="editmodel:AttributeEditModel" name="y" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation$GradientArrow#y"/>
         </children>
-        <children xsi:type="editmodel:CompartmentEditModel" size="86,36">
+        <children xsi:type="editmodel:CompartmentEditModel" size="94,36">
           <children xsi:type="editmodel:MethodEditModel" name="GradientArrow" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation$GradientArrow#GradientArrow()"/>
           <children xsi:type="editmodel:MethodEditModel" name="GradientArrow" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation$GradientArrow#GradientArrow(FFFFF)"/>
         </children>
@@ -44,37 +44,37 @@
       </children>
     </children>
     <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="at.fhstp.wificompass.triangulation/AccessPointTriangulation&lt;-at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation" source="//@children.1" target="//@children.0" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:AssociationEndEditModel" location="220,0" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="25,121"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="230,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="35,121"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation-Standard::Call->at.fhstp.wificompass.triangulation/MeasurementDataSet*at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation-Soyatec::Access->at.fhstp.wificompass.triangulation/MeasurementDataSet*at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation-Standard::Instantiate->at.fhstp.wificompass.triangulation/MeasurementDataSet*at.fhstp.wificompass.triangulation/LocalSignalStrengthGradientTriangulation-Soyatec::Import->at.fhstp.wificompass.triangulation/MeasurementDataSet" source="//@children.1" target="//@children.3" targetEnd="//@children.1/@sourceConnections.1/@children.2" label="//@children.1/@sourceConnections.1/@children.0" sourceEnd="//@children.1/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Access, Call, Import, Instantiate»" size="144,11" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="247,290" attachSource="true"/>
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Access, Call, Import, Instantiate»" size="158,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="267,290" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,125"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPackageMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true" showAssociationMember="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="WeightedCentroidTriangulation" location="330,240" size="192,103" id="at.fhstp.wificompass.triangulation/WeightedCentroidTriangulation">
-    <children xsi:type="editmodel:CompartmentEditModel"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="152,54">
+  <children xsi:type="editmodel:ClassEditModel" name="WeightedCentroidTriangulation" location="330,240" size="209,103" id="at.fhstp.wificompass.triangulation/WeightedCentroidTriangulation">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="171,54">
       <children xsi:type="editmodel:MethodEditModel" name="WeightedCentroidTriangulation" id="at.fhstp.wificompass.triangulation/WeightedCentroidTriangulation#WeightedCentroidTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="WeightedCentroidTriangulation" id="at.fhstp.wificompass.triangulation/WeightedCentroidTriangulation#WeightedCentroidTriangulation(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="calculateAccessPointPosition" id="at.fhstp.wificompass.triangulation/WeightedCentroidTriangulation#calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;)"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="at.fhstp.wificompass.triangulation/AccessPointTriangulation&lt;-at.fhstp.wificompass.triangulation/WeightedCentroidTriangulation" source="//@children.2" target="//@children.0" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:AssociationEndEditModel" location="33,0" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="138,121"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="40,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,121"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.triangulation/WeightedCentroidTriangulation-Standard::Call->at.fhstp.wificompass.triangulation/MeasurementDataSet*at.fhstp.wificompass.triangulation/WeightedCentroidTriangulation-Standard::Instantiate->at.fhstp.wificompass.triangulation/MeasurementDataSet*at.fhstp.wificompass.triangulation/WeightedCentroidTriangulation-Soyatec::Import->at.fhstp.wificompass.triangulation/MeasurementDataSet" source="//@children.2" target="//@children.3" targetEnd="//@children.2/@sourceConnections.1/@children.2" label="//@children.2/@sourceConnections.1/@children.0" sourceEnd="//@children.2/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="107,11" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="155,103" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="35,0"/>
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="119,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="164,103" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="44,0"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.1/@sourceConnections.1 //@children.2/@sourceConnections.1" name="MeasurementDataSet" location="450,405" size="146,265" id="at.fhstp.wificompass.triangulation/MeasurementDataSet" runTimeClassModel="MeasurementDataSet(),getMinimumValue(Ljava.util.Vector;I),getMaximumValue(Ljava.util.Vector;I),getPointF(),vALUE_X,vALUE_Y,rssi,MeasurementDataSet(FFF),getSum(Ljava.util.Vector;I),y,vALUE_RSSI,x">
-    <children xsi:type="editmodel:CompartmentEditModel" size="90,108">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.1/@sourceConnections.1 //@children.2/@sourceConnections.1" name="MeasurementDataSet" location="450,405" size="154,265" id="at.fhstp.wificompass.triangulation/MeasurementDataSet" runTimeClassModel="MeasurementDataSet(),getMinimumValue(Ljava.util.Vector;I),getMaximumValue(Ljava.util.Vector;I),getPointF(),vALUE_X,vALUE_Y,rssi,MeasurementDataSet(FFF),getSum(Ljava.util.Vector;I),y,vALUE_RSSI,x">
+    <children xsi:type="editmodel:CompartmentEditModel" size="100,108">
       <children xsi:type="editmodel:AttributeEditModel" name="rssi" id="at.fhstp.wificompass.triangulation/MeasurementDataSet#rssi"/>
       <children xsi:type="editmodel:AttributeEditModel" name="vALUE_RSSI" id="at.fhstp.wificompass.triangulation/MeasurementDataSet#vALUE_RSSI"/>
       <children xsi:type="editmodel:AttributeEditModel" name="vALUE_X" id="at.fhstp.wificompass.triangulation/MeasurementDataSet#vALUE_X"/>
@@ -82,7 +82,7 @@
       <children xsi:type="editmodel:AttributeEditModel" name="x" id="at.fhstp.wificompass.triangulation/MeasurementDataSet#x"/>
       <children xsi:type="editmodel:AttributeEditModel" name="y" id="at.fhstp.wificompass.triangulation/MeasurementDataSet#y"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="116,108">
+    <children xsi:type="editmodel:CompartmentEditModel" size="129,108">
       <children xsi:type="editmodel:MethodEditModel" name="MeasurementDataSet" id="at.fhstp.wificompass.triangulation/MeasurementDataSet#MeasurementDataSet(FFF)"/>
       <children xsi:type="editmodel:MethodEditModel" name="MeasurementDataSet" id="at.fhstp.wificompass.triangulation/MeasurementDataSet#MeasurementDataSet()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getMinimumValue" id="at.fhstp.wificompass.triangulation/MeasurementDataSet#getMinimumValue(Ljava.util.Vector;I)"/>

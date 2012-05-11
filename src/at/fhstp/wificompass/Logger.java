@@ -92,12 +92,21 @@ public class Logger {
 	}
 
 	/**
+	 * is VERBOSE enabled (TRACE==VERBOSE)
+	 * 
+	 * @return true if VERBOSE or higher is enabled
+	 */
+	public static boolean isTraceEnabled(){
+		return loglevel <= Log.VERBOSE;
+	}
+	
+	/**
 	 * is VERBOSE enabled
 	 * 
 	 * @return true if VERBOSE or higher is enabled
 	 */
 	public static boolean isVerboseEnabled() {
-		return loglevel >= Log.VERBOSE;
+		return loglevel <= Log.VERBOSE;
 	}
 
 	/**
@@ -106,7 +115,7 @@ public class Logger {
 	 * @return true if DEBUG or higher is enabled
 	 */
 	public static boolean isDebugEnabled() {
-		return loglevel >= Log.DEBUG;
+		return loglevel <= Log.DEBUG;
 	}
 
 	/**
@@ -115,7 +124,7 @@ public class Logger {
 	 * @return true if INFO or higher is enabled
 	 */
 	public static boolean isInfoEnabled() {
-		return loglevel >= Log.INFO;
+		return loglevel <= Log.INFO;
 	}
 
 	/**
@@ -124,7 +133,7 @@ public class Logger {
 	 * @return true if WARN or higher is enabled
 	 */
 	public static boolean isWarnEnabled() {
-		return loglevel >= Log.WARN;
+		return loglevel <= Log.WARN;
 	}
 
 	/**
@@ -133,7 +142,7 @@ public class Logger {
 	 * @return true if ERROR or higher is enabled
 	 */
 	public static boolean isErrorEnabled() {
-		return loglevel >= Log.ERROR;
+		return loglevel <= Log.ERROR;
 	}
 
 	/**
@@ -142,7 +151,7 @@ public class Logger {
 	 * @return true if ASSERT or higher is enabled (always true)
 	 */
 	public static boolean isAssertEnabled() {
-		return loglevel >= Log.ASSERT;
+		return loglevel <= Log.ASSERT;
 	}
 
 	/**
@@ -254,6 +263,51 @@ public class Logger {
 	public static void v(String msg, Throwable tr) {
 		logMessage(Log.VERBOSE, null, msg, tr);
 	}
+	
+	/**
+	 * verbose log message
+	 * 
+	 * @param msg
+	 *            log message
+	 */
+	public void trace(String msg) {
+		logMessage(Log.VERBOSE, tag, msg, null);
+	}
+
+	/**
+	 * verbose log message
+	 * 
+	 * @param msg
+	 *            log message
+	 */
+	public static void t(String msg) {
+		logMessage(Log.VERBOSE, null, msg, null);
+	}
+
+	/**
+	 * verbose log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
+	 */
+	public void trace(String msg, Throwable tr) {
+		logMessage(Log.VERBOSE, tag, msg, tr);
+	}
+
+	/**
+	 * verbose log message
+	 * 
+	 * @param msg
+	 *            log message
+	 * @param tr
+	 *            Throwable to log
+	 */
+	public static void t(String msg, Throwable tr) {
+		logMessage(Log.VERBOSE, null, msg, tr);
+	}
+	
 
 	/**
 	 * info log message

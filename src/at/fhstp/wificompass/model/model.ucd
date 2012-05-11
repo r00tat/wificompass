@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="model" size="2073,3063" id="at.fhstp.wificompass.model" metadata="uml2-1.0" initialized="true" scrolledX="766" scrolledY="687" tag="1000" key="32303037303533312D313030302077696669636F6D706173732F66726967">
-  <children xsi:type="editmodel:ClassEditModel" name="Bssid" location="240,2688" size="123,175" id="at.fhstp.wificompass.model/Bssid" runTimeClassModel="bssid,Bssid(Ljava.lang.String;Ljava.lang.String;),isSelected,ssid,capabilities,frequency,Bssid(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;IZ)">
-    <children xsi:type="editmodel:CompartmentEditModel" size="100,90">
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="model" size="1882,3063" id="at.fhstp.wificompass.model" metadata="uml2-1.0" initialized="true" scrolledX="766" scrolledY="687" tag="1000" key="32303037303533312D313030302077696669636F6D706173732F66726967">
+  <children xsi:type="editmodel:ClassEditModel" name="Bssid" location="240,2688" size="134,175" id="at.fhstp.wificompass.model/Bssid" runTimeClassModel="bssid,Bssid(Ljava.lang.String;Ljava.lang.String;),isSelected,ssid,capabilities,frequency,Bssid(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;IZ)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="111,90">
       <children xsi:type="editmodel:AttributeEditModel" name="bssid" id="at.fhstp.wificompass.model/Bssid#bssid"/>
       <children xsi:type="editmodel:AttributeEditModel" name="capabilities" id="at.fhstp.wificompass.model/Bssid#capabilities"/>
       <children xsi:type="editmodel:AttributeEditModel" name="frequency" id="at.fhstp.wificompass.model/Bssid#frequency"/>
       <children xsi:type="editmodel:AttributeEditModel" name="isSelected" id="at.fhstp.wificompass.model/Bssid#isSelected"/>
       <children xsi:type="editmodel:AttributeEditModel" name="ssid" id="at.fhstp.wificompass.model/Bssid#ssid"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="51,36">
+    <children xsi:type="editmodel:CompartmentEditModel" size="53,36">
       <children xsi:type="editmodel:MethodEditModel" name="Bssid" id="at.fhstp.wificompass.model/Bssid#Bssid(Ljava.lang.String;Ljava.lang.String;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="Bssid" id="at.fhstp.wificompass.model/Bssid#Bssid(Ljava.lang.String;Ljava.lang.String;Ljava.lang.String;IZ)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="SensorData" location="50,2688" size="153,355" id="at.fhstp.wificompass.model/SensorData" runTimeClassModel="fIELD_TIMESTAMP,normalizedValue,fIELD_NAME,value3,value1,toString(),value2,id,timestamp,SensorData(Landroid.hardware.SensorEvent;),value0,fIELD_TYPE,sensorType,length,accuracy,sensorName,SensorData()">
-    <children xsi:type="editmodel:CompartmentEditModel" size="130,252">
+  <children xsi:type="editmodel:ClassEditModel" name="SensorData" location="50,2688" size="169,391" id="at.fhstp.wificompass.model/SensorData" runTimeClassModel="fIELD_TIMESTAMP,normalizedValue,fIELD_NAME,SensorData(Ljava.lang.String;IFFFF),value3,value1,toString(),value2,id,timestamp,SensorData(Landroid.hardware.SensorEvent;),value0,fIELD_TYPE,sensorType,length,SensorData(Ljava.lang.String;I),accuracy,sensorName,SensorData()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="146,252">
       <children xsi:type="editmodel:AttributeEditModel" name="accuracy" id="at.fhstp.wificompass.model/SensorData#accuracy"/>
       <children xsi:type="editmodel:AttributeEditModel" name="fIELD_NAME" id="at.fhstp.wificompass.model/SensorData#fIELD_NAME"/>
       <children xsi:type="editmodel:AttributeEditModel" name="fIELD_TIMESTAMP" id="at.fhstp.wificompass.model/SensorData#fIELD_TIMESTAMP"/>
@@ -32,20 +32,22 @@
       <children xsi:type="editmodel:AttributeEditModel" name="value2" id="at.fhstp.wificompass.model/SensorData#value2"/>
       <children xsi:type="editmodel:AttributeEditModel" name="value3" id="at.fhstp.wificompass.model/SensorData#value3"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="76,54">
+    <children xsi:type="editmodel:CompartmentEditModel" size="83,90">
       <children xsi:type="editmodel:MethodEditModel" name="SensorData" id="at.fhstp.wificompass.model/SensorData#SensorData(Landroid.hardware.SensorEvent;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="SensorData" id="at.fhstp.wificompass.model/SensorData#SensorData()"/>
       <children xsi:type="editmodel:MethodEditModel" name="toString" id="at.fhstp.wificompass.model/SensorData#toString()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="SensorData" id="at.fhstp.wificompass.model/SensorData#SensorData(Ljava.lang.String;IFFFF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="SensorData" id="at.fhstp.wificompass.model/SensorData#SensorData(Ljava.lang.String;I)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.10/@sourceConnections.3" name="ProjectSiteActivity" location="585,660" size="153,258" id="at.fhstp.wificompass.activities/ProjectSiteActivity" runTimeClassModel="onCreateOptionsMenu(Landroid.view.Menu;),onScanFinished(Lat.fhstp.wificompass.model.WifiScanResult;),pROJECT_KEY,onOptionsItemSelected(Landroid.view.MenuItem;),onScanFailed(Ljava.lang.Exception;),onConfigurationChanged(Landroid.content.res.Configuration;),onLocationChange(Lat.fhstp.wificompass.model.Location;),onWindowFocusChanged(Z),onClick(Landroid.view.View;),invalidate(),sITE_KEY">
-    <children xsi:type="editmodel:CompartmentEditModel" size="113,36">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.10/@sourceConnections.3" name="ProjectSiteActivity" location="585,660" size="170,259" id="at.fhstp.wificompass.activities/ProjectSiteActivity" runTimeClassModel="onCreateOptionsMenu(Landroid.view.Menu;),onScanFinished(Lat.fhstp.wificompass.model.WifiScanResult;),pROJECT_KEY,onOptionsItemSelected(Landroid.view.MenuItem;),onScanFailed(Ljava.lang.Exception;),onConfigurationChanged(Landroid.content.res.Configuration;),onLocationChange(Lat.fhstp.wificompass.model.Location;),onWindowFocusChanged(Z),onClick(Landroid.view.View;),invalidate(),sITE_KEY">
+    <children xsi:type="editmodel:CompartmentEditModel" size="126,36">
       <children xsi:type="editmodel:AttributeEditModel" name="pROJECT_KEY" id="at.fhstp.wificompass.activities/ProjectSiteActivity#pROJECT_KEY"/>
       <children xsi:type="editmodel:AttributeEditModel" name="sITE_KEY" id="at.fhstp.wificompass.activities/ProjectSiteActivity#sITE_KEY"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="130,162">
+    <children xsi:type="editmodel:CompartmentEditModel" size="147,162">
       <children xsi:type="editmodel:MethodEditModel" name="invalidate" id="at.fhstp.wificompass.activities/ProjectSiteActivity#invalidate()"/>
       <children xsi:type="editmodel:MethodEditModel" name="onClick" id="at.fhstp.wificompass.activities/ProjectSiteActivity#onClick(Landroid.view.View;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="onConfigurationChanged" id="at.fhstp.wificompass.activities/ProjectSiteActivity#onConfigurationChanged(Landroid.content.res.Configuration;)"/>
@@ -59,14 +61,14 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.3 //@children.10/@sourceConnections.1 //@children.4/@sourceConnections.0" name="WifiScanResult" location="1130,1567" size="204,211" id="at.fhstp.wificompass.model/WifiScanResult" runTimeClassModel="id,timestamp,delete(),WifiScanResult(),WifiScanResult(JLat.fhstp.wificompass.model.Location;Lat.fhstp.wificompass.model.ProjectSite;),tABLE_NAME,WifiScanResult(Lat.fhstp.wificompass.model.WifiScanResult;),bssids,toString()">
-    <children xsi:type="editmodel:CompartmentEditModel" size="181,72">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.3 //@children.10/@sourceConnections.1 //@children.4/@sourceConnections.0" name="WifiScanResult" location="1130,1567" size="223,211" id="at.fhstp.wificompass.model/WifiScanResult" runTimeClassModel="id,timestamp,delete(),WifiScanResult(),WifiScanResult(JLat.fhstp.wificompass.model.Location;Lat.fhstp.wificompass.model.ProjectSite;),tABLE_NAME,WifiScanResult(Lat.fhstp.wificompass.model.WifiScanResult;),bssids,toString()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="200,72">
       <children xsi:type="editmodel:AttributeEditModel" name="bssids" id="at.fhstp.wificompass.model/WifiScanResult#bssids"/>
       <children xsi:type="editmodel:AttributeEditModel" name="id" id="at.fhstp.wificompass.model/WifiScanResult#id"/>
       <children xsi:type="editmodel:AttributeEditModel" name="tABLE_NAME" id="at.fhstp.wificompass.model/WifiScanResult#tABLE_NAME"/>
       <children xsi:type="editmodel:AttributeEditModel" name="timestamp" id="at.fhstp.wificompass.model/WifiScanResult#timestamp"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="90,90">
+    <children xsi:type="editmodel:CompartmentEditModel" size="97,90">
       <children xsi:type="editmodel:MethodEditModel" name="WifiScanResult" id="at.fhstp.wificompass.model/WifiScanResult#WifiScanResult()"/>
       <children xsi:type="editmodel:MethodEditModel" name="WifiScanResult" id="at.fhstp.wificompass.model/WifiScanResult#WifiScanResult(JLat.fhstp.wificompass.model.Location;Lat.fhstp.wificompass.model.ProjectSite;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="WifiScanResult" id="at.fhstp.wificompass.model/WifiScanResult#WifiScanResult(Lat.fhstp.wificompass.model.WifiScanResult;)"/>
@@ -76,8 +78,8 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="BssidResult" location="810,1650" size="118,265" id="at.fhstp.wificompass.model/BssidResult" runTimeClassModel="id,BssidResult(),bssid,delete(),level,BssidResult(Landroid.net.wifi.ScanResult;Lat.fhstp.wificompass.model.WifiScanResult;),BssidResult(Landroid.net.wifi.ScanResult;),ssid,BssidResult(Lat.fhstp.wificompass.model.BssidResult;),capabilities,frequency,toString()">
-    <children xsi:type="editmodel:CompartmentEditModel" size="95,108">
+  <children xsi:type="editmodel:ClassEditModel" name="BssidResult" location="810,1650" size="126,265" id="at.fhstp.wificompass.model/BssidResult" runTimeClassModel="id,BssidResult(),bssid,delete(),level,BssidResult(Landroid.net.wifi.ScanResult;Lat.fhstp.wificompass.model.WifiScanResult;),BssidResult(Landroid.net.wifi.ScanResult;),ssid,BssidResult(Lat.fhstp.wificompass.model.BssidResult;),capabilities,frequency,toString()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,108">
       <children xsi:type="editmodel:AttributeEditModel" name="bssid" id="at.fhstp.wificompass.model/BssidResult#bssid"/>
       <children xsi:type="editmodel:AttributeEditModel" name="capabilities" id="at.fhstp.wificompass.model/BssidResult#capabilities"/>
       <children xsi:type="editmodel:AttributeEditModel" name="frequency" id="at.fhstp.wificompass.model/BssidResult#frequency"/>
@@ -85,7 +87,7 @@
       <children xsi:type="editmodel:AttributeEditModel" name="level" id="at.fhstp.wificompass.model/BssidResult#level"/>
       <children xsi:type="editmodel:AttributeEditModel" name="ssid" id="at.fhstp.wificompass.model/BssidResult#ssid"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="77,108">
+    <children xsi:type="editmodel:CompartmentEditModel" size="82,108">
       <children xsi:type="editmodel:MethodEditModel" name="BssidResult" id="at.fhstp.wificompass.model/BssidResult#BssidResult(Landroid.net.wifi.ScanResult;Lat.fhstp.wificompass.model.WifiScanResult;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="BssidResult" id="at.fhstp.wificompass.model/BssidResult#BssidResult()"/>
       <children xsi:type="editmodel:MethodEditModel" name="BssidResult" id="at.fhstp.wificompass.model/BssidResult#BssidResult(Landroid.net.wifi.ScanResult;)"/>
@@ -95,17 +97,17 @@
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/WifiScanResult@scanResult+at.fhstp.wificompass.model/BssidResult@" source="//@children.4" target="//@children.3" targetEnd="//@children.4/@sourceConnections.0/@children.2" label="//@children.4/@sourceConnections.0/@children.0" sourceEnd="//@children.4/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="118,63" id="at.fhstp.wificompass.model/WifiScanResult@scanResult+at.fhstp.wificompass.model/BssidResult@|at.fhstp.wificompass.model/BssidResult#" attachSource="true"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="126,63" id="at.fhstp.wificompass.model/WifiScanResult@scanResult+at.fhstp.wificompass.model/BssidResult@|at.fhstp.wificompass.model/BssidResult#" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="scanResult" location="0,146" id="at.fhstp.wificompass.model/WifiScanResult@scanResult+at.fhstp.wificompass.model/BssidResult@|at.fhstp.wificompass.model/WifiScanResult#scanResult" multiplicityLabel="//@children.4/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.4/@sourceConnections.0/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # scanResult" location="1066,1695" size="57,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1107,1720" size="16,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" # scanResult" location="1060,1694" size="63,12" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1105,1720" size="18,12" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.0" name="Location" location="1320,930" size="148,319" id="at.fhstp.wificompass.model/Location" runTimeClassModel="timestampmilis,tABLE_NAME,provider,Location(),toString(),timestamp,id,Location(FFF),Location(Ljava.lang.String;FFFLjava.util.Date;),accurancy,Location(Lat.fhstp.wificompass.model.Location;),pROVIDER_NONE,Location(FF),y,x">
-    <children xsi:type="editmodel:CompartmentEditModel" size="125,162">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.0" name="Location" location="1320,930" size="163,319" id="at.fhstp.wificompass.model/Location" runTimeClassModel="timestampmilis,tABLE_NAME,provider,Location(),toString(),timestamp,id,Location(FFF),Location(Ljava.lang.String;FFFLjava.util.Date;),accurancy,Location(Lat.fhstp.wificompass.model.Location;),pROVIDER_NONE,Location(FF),y,x">
+    <children xsi:type="editmodel:CompartmentEditModel" size="140,162">
       <children xsi:type="editmodel:AttributeEditModel" name="accurancy" id="at.fhstp.wificompass.model/Location#accurancy"/>
       <children xsi:type="editmodel:AttributeEditModel" name="id" id="at.fhstp.wificompass.model/Location#id"/>
       <children xsi:type="editmodel:AttributeEditModel" name="pROVIDER_NONE" id="at.fhstp.wificompass.model/Location#pROVIDER_NONE"/>
@@ -116,7 +118,7 @@
       <children xsi:type="editmodel:AttributeEditModel" name="x" id="at.fhstp.wificompass.model/Location#x"/>
       <children xsi:type="editmodel:AttributeEditModel" name="y" id="at.fhstp.wificompass.model/Location#y"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="63,108">
+    <children xsi:type="editmodel:CompartmentEditModel" size="68,108">
       <children xsi:type="editmodel:MethodEditModel" name="Location" id="at.fhstp.wificompass.model/Location#Location(FF)"/>
       <children xsi:type="editmodel:MethodEditModel" name="Location" id="at.fhstp.wificompass.model/Location#Location()"/>
       <children xsi:type="editmodel:MethodEditModel" name="Location" id="at.fhstp.wificompass.model/Location#Location(Lat.fhstp.wificompass.model.Location;)"/>
@@ -126,47 +128,47 @@
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/Location@loc+at.fhstp.wificompass.userlocation/LocationProviderImpl@" source="//@children.5" target="//@children.9" targetEnd="//@children.5/@sourceConnections.0/@children.2" label="//@children.5/@sourceConnections.0/@children.0" sourceEnd="//@children.5/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="loc" location="148,10" id="at.fhstp.wificompass.model/Location@loc+at.fhstp.wificompass.userlocation/LocationProviderImpl@|at.fhstp.wificompass.model/Location#loc" attachSource="true" multiplicityLabel="//@children.5/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.5/@sourceConnections.0/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # loc" location="1475,947" size="23,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1475,922" size="16,11" anchorKind="FirstPart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="loc" location="163,10" id="at.fhstp.wificompass.model/Location@loc+at.fhstp.wificompass.userlocation/LocationProviderImpl@|at.fhstp.wificompass.model/Location#loc" attachSource="true" multiplicityLabel="//@children.5/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.5/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # loc" location="1490,947" size="25,12" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1490,921" size="18,12" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="10,276" id="at.fhstp.wificompass.model/Location@loc+at.fhstp.wificompass.userlocation/LocationProviderImpl@|at.fhstp.wificompass.userlocation/LocationProviderImpl#"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="10,277" id="at.fhstp.wificompass.model/Location@loc+at.fhstp.wificompass.userlocation/LocationProviderImpl@|at.fhstp.wificompass.userlocation/LocationProviderImpl#"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/Location@pos+at.fhstp.wificompass.userlocation/LocationServiceImpl@" source="//@children.5" target="//@children.8" targetEnd="//@children.5/@sourceConnections.1/@children.2" label="//@children.5/@sourceConnections.1/@children.0" sourceEnd="//@children.5/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="pos" location="148,309" id="at.fhstp.wificompass.model/Location@pos+at.fhstp.wificompass.userlocation/LocationServiceImpl@|at.fhstp.wificompass.model/Location#pos" attachSource="true" multiplicityLabel="//@children.5/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.5/@sourceConnections.1/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # pos" location="1475,1221" size="26,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1475,1246" size="16,11" anchorKind="FirstPart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="pos" location="163,309" id="at.fhstp.wificompass.model/Location@pos+at.fhstp.wificompass.userlocation/LocationServiceImpl@|at.fhstp.wificompass.model/Location#pos" attachSource="true" multiplicityLabel="//@children.5/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.5/@sourceConnections.1/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # pos" location="1490,1220" size="29,12" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1490,1246" size="18,12" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" location="10,0" id="at.fhstp.wificompass.model/Location@pos+at.fhstp.wificompass.userlocation/LocationServiceImpl@|at.fhstp.wificompass.userlocation/LocationServiceImpl#"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/Location@lastLocation+at.fhstp.wificompass.model/ProjectSite@" source="//@children.5" target="//@children.10" targetEnd="//@children.5/@sourceConnections.2/@children.2" label="//@children.5/@sourceConnections.2/@children.0" sourceEnd="//@children.5/@sourceConnections.2/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="lastLocation" location="0,167" id="at.fhstp.wificompass.model/Location@lastLocation+at.fhstp.wificompass.model/ProjectSite@|at.fhstp.wificompass.model/Location#lastLocation" attachSource="true" multiplicityLabel="//@children.5/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.5/@sourceConnections.2/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # lastLocation" location="1252,1079" size="61,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1297,1104" size="16,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" # lastLocation" location="1245,1078" size="68,12" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1295,1104" size="18,12" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="241,152" id="at.fhstp.wificompass.model/Location@lastLocation+at.fhstp.wificompass.model/ProjectSite@|at.fhstp.wificompass.model/ProjectSite#"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="265,152" id="at.fhstp.wificompass.model/Location@lastLocation+at.fhstp.wificompass.model/ProjectSite@|at.fhstp.wificompass.model/ProjectSite#"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/WifiScanResult@" source="//@children.5" target="//@children.3" targetEnd="//@children.5/@sourceConnections.3/@children.2" label="//@children.5/@sourceConnections.3/@children.0" sourceEnd="//@children.5/@sourceConnections.3/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="location" location="6,319" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/WifiScanResult@|at.fhstp.wificompass.model/Location#location" attachSource="true" multiplicityLabel="//@children.5/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.5/@sourceConnections.3/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # location" location="1333,1256" size="43,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1303,1256" size="16,11" anchorKind="FirstPart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="location" location="16,319" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/WifiScanResult@|at.fhstp.wificompass.model/Location#location" attachSource="true" multiplicityLabel="//@children.5/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.5/@sourceConnections.3/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # location" location="1343,1256" size="48,12" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1311,1256" size="18,12" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="196,0" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/WifiScanResult@|at.fhstp.wificompass.model/WifiScanResult#"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="206,0" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/WifiScanResult@|at.fhstp.wificompass.model/WifiScanResult#"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.10/@sourceConnections.2" name="BssidSelection" location="630,1089" size="130,175" id="at.fhstp.wificompass.model/BssidSelection" runTimeClassModel="id,bssid,BssidSelection(Lat.fhstp.wificompass.model.BssidSelection;),BssidSelection(Lat.fhstp.wificompass.model.ProjectSite;Ljava.lang.String;Z),tABLE_NAME,active,BssidSelection()">
-    <children xsi:type="editmodel:CompartmentEditModel" size="107,72">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.10/@sourceConnections.2" name="BssidSelection" location="630,1089" size="143,175" id="at.fhstp.wificompass.model/BssidSelection" runTimeClassModel="id,bssid,BssidSelection(Lat.fhstp.wificompass.model.BssidSelection;),BssidSelection(Lat.fhstp.wificompass.model.ProjectSite;Ljava.lang.String;Z),tABLE_NAME,active,BssidSelection()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="120,72">
       <children xsi:type="editmodel:AttributeEditModel" name="active" id="at.fhstp.wificompass.model/BssidSelection#active"/>
       <children xsi:type="editmodel:AttributeEditModel" name="bssid" id="at.fhstp.wificompass.model/BssidSelection#bssid"/>
       <children xsi:type="editmodel:AttributeEditModel" name="id" id="at.fhstp.wificompass.model/BssidSelection#id"/>
       <children xsi:type="editmodel:AttributeEditModel" name="tABLE_NAME" id="at.fhstp.wificompass.model/BssidSelection#tABLE_NAME"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="89,54">
+    <children xsi:type="editmodel:CompartmentEditModel" size="96,54">
       <children xsi:type="editmodel:MethodEditModel" name="BssidSelection" id="at.fhstp.wificompass.model/BssidSelection#BssidSelection()"/>
       <children xsi:type="editmodel:MethodEditModel" name="BssidSelection" id="at.fhstp.wificompass.model/BssidSelection#BssidSelection(Lat.fhstp.wificompass.model.ProjectSite;Ljava.lang.String;Z)"/>
       <children xsi:type="editmodel:MethodEditModel" name="BssidSelection" id="at.fhstp.wificompass.model/BssidSelection#BssidSelection(Lat.fhstp.wificompass.model.BssidSelection;)"/>
@@ -174,8 +176,8 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="AccessPoint" location="1260,585" size="122,247" id="at.fhstp.wificompass.model/AccessPoint" runTimeClassModel="id,bssid,delete(),AccessPoint(),AccessPoint(Lat.fhstp.wificompass.model.BssidResult;),ssid,capabilities,frequency,AccessPoint(Lat.fhstp.wificompass.model.AccessPoint;),calculated,toString()">
-    <children xsi:type="editmodel:CompartmentEditModel" size="99,108">
+  <children xsi:type="editmodel:ClassEditModel" name="AccessPoint" location="1260,585" size="133,247" id="at.fhstp.wificompass.model/AccessPoint" runTimeClassModel="id,bssid,delete(),AccessPoint(),AccessPoint(Lat.fhstp.wificompass.model.BssidResult;),ssid,capabilities,frequency,AccessPoint(Lat.fhstp.wificompass.model.AccessPoint;),calculated,toString()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="110,108">
       <children xsi:type="editmodel:AttributeEditModel" name="bssid" id="at.fhstp.wificompass.model/AccessPoint#bssid"/>
       <children xsi:type="editmodel:AttributeEditModel" name="calculated" id="at.fhstp.wificompass.model/AccessPoint#calculated"/>
       <children xsi:type="editmodel:AttributeEditModel" name="capabilities" id="at.fhstp.wificompass.model/AccessPoint#capabilities"/>
@@ -183,7 +185,7 @@
       <children xsi:type="editmodel:AttributeEditModel" name="id" id="at.fhstp.wificompass.model/AccessPoint#id"/>
       <children xsi:type="editmodel:AttributeEditModel" name="ssid" id="at.fhstp.wificompass.model/AccessPoint#ssid"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="80,90">
+    <children xsi:type="editmodel:CompartmentEditModel" size="85,90">
       <children xsi:type="editmodel:MethodEditModel" name="AccessPoint" id="at.fhstp.wificompass.model/AccessPoint#AccessPoint()"/>
       <children xsi:type="editmodel:MethodEditModel" name="AccessPoint" id="at.fhstp.wificompass.model/AccessPoint#AccessPoint(Lat.fhstp.wificompass.model.BssidResult;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="AccessPoint" id="at.fhstp.wificompass.model/AccessPoint#AccessPoint(Lat.fhstp.wificompass.model.AccessPoint;)"/>
@@ -192,29 +194,29 @@
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/AccessPoint@" source="//@children.7" target="//@children.5" targetEnd="//@children.7/@sourceConnections.0/@children.2" label="//@children.7/@sourceConnections.0/@children.0" sourceEnd="//@children.7/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="90,247" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/AccessPoint@|at.fhstp.wificompass.model/AccessPoint#" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="location" location="30,0" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/AccessPoint@|at.fhstp.wificompass.model/Location#location" multiplicityLabel="//@children.7/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.7/@sourceConnections.0/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # location" location="1357,912" size="43,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1327,912" size="16,11" anchorKind="LastPart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="96,247" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/AccessPoint@|at.fhstp.wificompass.model/AccessPoint#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="location" location="36,0" id="at.fhstp.wificompass.model/Location@location+at.fhstp.wificompass.model/AccessPoint@|at.fhstp.wificompass.model/Location#location" multiplicityLabel="//@children.7/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.7/@sourceConnections.0/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # location" location="1363,911" size="48,12" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1331,911" size="18,12" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite@projectSite+at.fhstp.wificompass.model/AccessPoint@" source="//@children.7" target="//@children.10" targetEnd="//@children.7/@sourceConnections.1/@children.2" label="//@children.7/@sourceConnections.1/@children.0" sourceEnd="//@children.7/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="10,247" id="at.fhstp.wificompass.model/ProjectSite@projectSite+at.fhstp.wificompass.model/AccessPoint@|at.fhstp.wificompass.model/AccessPoint#" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="projectSite" location="241,10" id="at.fhstp.wificompass.model/ProjectSite@projectSite+at.fhstp.wificompass.model/AccessPoint@|at.fhstp.wificompass.model/ProjectSite#projectSite" multiplicityLabel="//@children.7/@sourceConnections.1/@children.2/@children.1" roleLabel="//@children.7/@sourceConnections.1/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # projectSite" location="1131,962" size="55,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1131,937" size="16,11" anchorKind="LastPart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="projectSite" location="265,10" id="at.fhstp.wificompass.model/ProjectSite@projectSite+at.fhstp.wificompass.model/AccessPoint@|at.fhstp.wificompass.model/ProjectSite#projectSite" multiplicityLabel="//@children.7/@sourceConnections.1/@children.2/@children.1" roleLabel="//@children.7/@sourceConnections.1/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # projectSite" location="1155,962" size="61,12" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1155,936" size="18,12" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.1" name="LocationServiceImpl" location="1530,1290" size="161,294" id="at.fhstp.wificompass.userlocation/LocationServiceImpl" runTimeClassModel="gridSpacingX,setGridSpacing(FF),gridSpacingY,getLocation(),registerProvider(Lat.fhstp.wificompass.userlocation.LocationProvider;),LocationServiceImpl(),unregisterProvider(Lat.fhstp.wificompass.userlocation.LocationProvider;),getRelativeNorth(),registerProvider(Ljava.lang.String;),updateLocation(Lat.fhstp.wificompass.model.Location;Z),updateLocation(Lat.fhstp.wificompass.model.Location;),setRelativeNorth(F),getLocationProviders()">
-    <children xsi:type="editmodel:CompartmentEditModel" size="97,36">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.1" name="LocationServiceImpl" location="1530,1290" size="175,295" id="at.fhstp.wificompass.userlocation/LocationServiceImpl" runTimeClassModel="gridSpacingX,setGridSpacing(FF),gridSpacingY,getLocation(),registerProvider(Lat.fhstp.wificompass.userlocation.LocationProvider;),LocationServiceImpl(),unregisterProvider(Lat.fhstp.wificompass.userlocation.LocationProvider;),getRelativeNorth(),registerProvider(Ljava.lang.String;),updateLocation(Lat.fhstp.wificompass.model.Location;Z),updateLocation(Lat.fhstp.wificompass.model.Location;),setRelativeNorth(F),getLocationProviders()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="107,36">
       <children xsi:type="editmodel:AttributeEditModel" name="gridSpacingX" id="at.fhstp.wificompass.userlocation/LocationServiceImpl#gridSpacingX"/>
       <children xsi:type="editmodel:AttributeEditModel" name="gridSpacingY" id="at.fhstp.wificompass.userlocation/LocationServiceImpl#gridSpacingY"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="115,198">
+    <children xsi:type="editmodel:CompartmentEditModel" size="126,198">
       <children xsi:type="editmodel:MethodEditModel" name="LocationServiceImpl" id="at.fhstp.wificompass.userlocation/LocationServiceImpl#LocationServiceImpl()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getLocation" id="at.fhstp.wificompass.userlocation/LocationServiceImpl#getLocation()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getLocationProviders" id="at.fhstp.wificompass.userlocation/LocationServiceImpl#getLocationProviders()"/>
@@ -230,11 +232,11 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.0" name="LocationProviderImpl" location="1545,592" size="163,276" id="at.fhstp.wificompass.userlocation/LocationProviderImpl" runTimeClassModel="LocationProviderImpl(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.LocationService;),stop(),getProviderName(),getLocationY(),LocationProviderImpl(Landroid.content.Context;),getLocationZ(),start(),getLocation(),getLocationX(),setLocationChangeListener(Lat.fhstp.wificompass.userlocation.LocationChangeListener;),running,unsetLocationService(Lat.fhstp.wificompass.userlocation.LocationService;)">
-    <children xsi:type="editmodel:CompartmentEditModel" size="87,18">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.0" name="LocationProviderImpl" location="1545,592" size="179,277" id="at.fhstp.wificompass.userlocation/LocationProviderImpl" runTimeClassModel="LocationProviderImpl(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.LocationService;),stop(),getProviderName(),getLocationY(),LocationProviderImpl(Landroid.content.Context;),getLocationZ(),start(),getLocation(),getLocationX(),setLocationChangeListener(Lat.fhstp.wificompass.userlocation.LocationChangeListener;),running,unsetLocationService(Lat.fhstp.wificompass.userlocation.LocationService;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="98,18">
       <children xsi:type="editmodel:AttributeEditModel" name="running" id="at.fhstp.wificompass.userlocation/LocationProviderImpl#running"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="140,198">
+    <children xsi:type="editmodel:CompartmentEditModel" size="156,198">
       <children xsi:type="editmodel:MethodEditModel" name="LocationProviderImpl" id="at.fhstp.wificompass.userlocation/LocationProviderImpl#LocationProviderImpl(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.LocationService;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="LocationProviderImpl" id="at.fhstp.wificompass.userlocation/LocationProviderImpl#LocationProviderImpl(Landroid.content.Context;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="getLocation" id="at.fhstp.wificompass.userlocation/LocationProviderImpl#getLocation()"/>
@@ -250,8 +252,8 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.1 //@children.5/@sourceConnections.2" name="ProjectSite" location="883,945" size="241,589" id="at.fhstp.wificompass.model/ProjectSite" runTimeClassModel="delete(),ProjectSite(Lat.fhstp.wificompass.model.Project;Ljava.lang.String;),tABLE_NAME,imageBitmap,isBssidSelected(Ljava.lang.String;),north,uNTITLED,serialize(Lorg.xmlpull.v1.XmlSerializer;),toString(),getSelectedBssids(),id,title,ProjectSite(Lat.fhstp.wificompass.model.ProjectSite;),height,setTriangulationAlgorithm(I),description,accessPoints,triangulationAlgorithm,gridSpacingX,ProjectSite(),width,gridSpacingY,scanResults,deserialize(Lorg.w3c.dom.Element;),getTriangulationAlgorithm(),setSize(II),ProjectSite(Ljava.lang.String;),unselectedBssids,backgroundBitmap,ProjectSite(Lat.fhstp.wificompass.model.Project;)">
-    <children xsi:type="editmodel:CompartmentEditModel" size="218,288">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.1 //@children.5/@sourceConnections.2" name="ProjectSite" location="883,945" size="265,589" id="at.fhstp.wificompass.model/ProjectSite" runTimeClassModel="delete(),ProjectSite(Lat.fhstp.wificompass.model.Project;Ljava.lang.String;),tABLE_NAME,imageBitmap,isBssidSelected(Ljava.lang.String;),north,uNTITLED,serialize(Lorg.xmlpull.v1.XmlSerializer;),toString(),getSelectedBssids(),id,title,ProjectSite(Lat.fhstp.wificompass.model.ProjectSite;),height,setTriangulationAlgorithm(I),description,accessPoints,triangulationAlgorithm,gridSpacingX,ProjectSite(),width,gridSpacingY,scanResults,deserialize(Lorg.w3c.dom.Element;),getTriangulationAlgorithm(),setSize(II),ProjectSite(Ljava.lang.String;),unselectedBssids,backgroundBitmap,ProjectSite(Lat.fhstp.wificompass.model.Project;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="242,288">
       <children xsi:type="editmodel:AttributeEditModel" name="accessPoints" id="at.fhstp.wificompass.model/ProjectSite#accessPoints"/>
       <children xsi:type="editmodel:AttributeEditModel" name="backgroundBitmap" id="at.fhstp.wificompass.model/ProjectSite#backgroundBitmap"/>
       <children xsi:type="editmodel:AttributeEditModel" name="description" id="at.fhstp.wificompass.model/ProjectSite#description"/>
@@ -269,7 +271,7 @@
       <children xsi:type="editmodel:AttributeEditModel" name="width" id="at.fhstp.wificompass.model/ProjectSite#width"/>
       <children xsi:type="editmodel:AttributeEditModel" name="triangulationAlgorithm" id="at.fhstp.wificompass.model/ProjectSite#triangulationAlgorithm"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="131,252">
+    <children xsi:type="editmodel:CompartmentEditModel" size="146,252">
       <children xsi:type="editmodel:MethodEditModel" name="ProjectSite" id="at.fhstp.wificompass.model/ProjectSite#ProjectSite(Lat.fhstp.wificompass.model.ProjectSite;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="ProjectSite" id="at.fhstp.wificompass.model/ProjectSite#ProjectSite(Ljava.lang.String;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="ProjectSite" id="at.fhstp.wificompass.model/ProjectSite#ProjectSite()"/>
@@ -287,41 +289,41 @@
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/Project@project+at.fhstp.wificompass.model/ProjectSite@" source="//@children.10" target="//@children.11" targetEnd="//@children.10/@sourceConnections.0/@children.2" label="//@children.10/@sourceConnections.0/@children.0" sourceEnd="//@children.10/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="74,0" id="at.fhstp.wificompass.model/Project@project+at.fhstp.wificompass.model/ProjectSite@|at.fhstp.wificompass.model/ProjectSite#" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="project" location="117,319" id="at.fhstp.wificompass.model/Project@project+at.fhstp.wificompass.model/ProjectSite@|at.fhstp.wificompass.model/Project#project" multiplicityLabel="//@children.10/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.10/@sourceConnections.0/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # project" location="964,896" size="39,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="934,896" size="16,11" anchorKind="LastPart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="83,0" id="at.fhstp.wificompass.model/Project@project+at.fhstp.wificompass.model/ProjectSite@|at.fhstp.wificompass.model/ProjectSite#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="project" location="126,319" id="at.fhstp.wificompass.model/Project@project+at.fhstp.wificompass.model/ProjectSite@|at.fhstp.wificompass.model/Project#project" multiplicityLabel="//@children.10/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.10/@sourceConnections.0/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # project" location="973,896" size="43,12" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="941,896" size="18,12" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite@projectLocation+at.fhstp.wificompass.model/WifiScanResult@" source="//@children.10" target="//@children.3" targetEnd="//@children.10/@sourceConnections.1/@children.2" label="//@children.10/@sourceConnections.1/@children.0" sourceEnd="//@children.10/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="projectLocation" location="241,579" id="at.fhstp.wificompass.model/ProjectSite@projectLocation+at.fhstp.wificompass.model/WifiScanResult@|at.fhstp.wificompass.model/ProjectSite#projectLocation" attachSource="true" multiplicityLabel="//@children.10/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.10/@sourceConnections.1/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # projectLocation" location="1131,1506" size="74,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1131,1531" size="16,11" anchorKind="FirstPart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="projectLocation" location="255,549" id="at.fhstp.wificompass.model/ProjectSite@projectLocation+at.fhstp.wificompass.model/WifiScanResult@|at.fhstp.wificompass.model/ProjectSite#projectLocation" attachSource="true" multiplicityLabel="//@children.10/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.10/@sourceConnections.1/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # projectLocation" location="1155,1475" size="83,12" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1155,1501" size="18,12" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="10,0" id="at.fhstp.wificompass.model/ProjectSite@projectLocation+at.fhstp.wificompass.model/WifiScanResult@|at.fhstp.wificompass.model/WifiScanResult#"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="8,0" id="at.fhstp.wificompass.model/ProjectSite@projectLocation+at.fhstp.wificompass.model/WifiScanResult@|at.fhstp.wificompass.model/WifiScanResult#"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite@projectSite+at.fhstp.wificompass.model/BssidSelection@" source="//@children.10" target="//@children.6" targetEnd="//@children.10/@sourceConnections.2/@children.2" label="//@children.10/@sourceConnections.2/@children.0" sourceEnd="//@children.10/@sourceConnections.2/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="projectSite" location="0,231" id="at.fhstp.wificompass.model/ProjectSite@projectSite+at.fhstp.wificompass.model/BssidSelection@|at.fhstp.wificompass.model/ProjectSite#projectSite" attachSource="true" multiplicityLabel="//@children.10/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.10/@sourceConnections.2/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # projectSite" location="821,1158" size="55,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="860,1183" size="16,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" # projectSite" location="815,1157" size="61,12" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="858,1183" size="18,12" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="130,87" id="at.fhstp.wificompass.model/ProjectSite@projectSite+at.fhstp.wificompass.model/BssidSelection@|at.fhstp.wificompass.model/BssidSelection#"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="143,87" id="at.fhstp.wificompass.model/ProjectSite@projectSite+at.fhstp.wificompass.model/BssidSelection@|at.fhstp.wificompass.model/BssidSelection#"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite@site+at.fhstp.wificompass.activities/ProjectSiteActivity@" source="//@children.10" target="//@children.2" targetEnd="//@children.10/@sourceConnections.3/@children.2" label="//@children.10/@sourceConnections.3/@children.0" sourceEnd="//@children.10/@sourceConnections.3/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="site" location="10,0" id="at.fhstp.wificompass.model/ProjectSite@site+at.fhstp.wificompass.activities/ProjectSiteActivity@|at.fhstp.wificompass.model/ProjectSite#site" attachSource="true" multiplicityLabel="//@children.10/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.10/@sourceConnections.3/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # site" location="900,927" size="26,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="870,927" size="16,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" # site" location="900,926" size="28,12" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="868,926" size="18,12" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="153,248" id="at.fhstp.wificompass.model/ProjectSite@site+at.fhstp.wificompass.activities/ProjectSiteActivity@|at.fhstp.wificompass.activities/ProjectSiteActivity#"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="170,249" id="at.fhstp.wificompass.model/ProjectSite@site+at.fhstp.wificompass.activities/ProjectSiteActivity@|at.fhstp.wificompass.activities/ProjectSiteActivity#"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.10/@sourceConnections.0" name="Project" location="840,570" size="193,319" id="at.fhstp.wificompass.model/Project" runTimeClassModel="fIELD_ID,sites,Project(Ljava.lang.String;Ljava.lang.String;),delete(),tABLE_NAME,deserialize(Lorg.w3c.dom.Element;),untitled,serialize(Lorg.xmlpull.v1.XmlSerializer;),Project(),toString(),id,Project(Lat.fhstp.wificompass.model.Project;),getFieldId(),description,name,Project(Ljava.lang.String;)">
-    <children xsi:type="editmodel:CompartmentEditModel" size="170,126">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.10/@sourceConnections.0" name="Project" location="840,570" size="211,319" id="at.fhstp.wificompass.model/Project" runTimeClassModel="fIELD_ID,sites,Project(Ljava.lang.String;Ljava.lang.String;),delete(),tABLE_NAME,deserialize(Lorg.w3c.dom.Element;),untitled,serialize(Lorg.xmlpull.v1.XmlSerializer;),Project(),toString(),id,Project(Lat.fhstp.wificompass.model.Project;),getFieldId(),description,name,Project(Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="188,126">
       <children xsi:type="editmodel:AttributeEditModel" name="description" id="at.fhstp.wificompass.model/Project#description"/>
       <children xsi:type="editmodel:AttributeEditModel" name="fIELD_ID" id="at.fhstp.wificompass.model/Project#fIELD_ID"/>
       <children xsi:type="editmodel:AttributeEditModel" name="id" id="at.fhstp.wificompass.model/Project#id"/>
@@ -330,7 +332,7 @@
       <children xsi:type="editmodel:AttributeEditModel" name="tABLE_NAME" id="at.fhstp.wificompass.model/Project#tABLE_NAME"/>
       <children xsi:type="editmodel:AttributeEditModel" name="untitled" id="at.fhstp.wificompass.model/Project#untitled"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="72,144">
+    <children xsi:type="editmodel:CompartmentEditModel" size="77,144">
       <children xsi:type="editmodel:MethodEditModel" name="Project" id="at.fhstp.wificompass.model/Project#Project(Lat.fhstp.wificompass.model.Project;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="Project" id="at.fhstp.wificompass.model/Project#Project()"/>
       <children xsi:type="editmodel:MethodEditModel" name="Project" id="at.fhstp.wificompass.model/Project#Project(Ljava.lang.String;)"/>

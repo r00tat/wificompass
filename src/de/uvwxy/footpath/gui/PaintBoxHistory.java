@@ -12,7 +12,7 @@ import de.uvwxy.paintbox.PaintBox;
  * @author Paul Smith
  *
  */
-class PaintBoxHistory extends PaintBox {
+public class PaintBoxHistory extends PaintBox {
 	//private Context context;
 
 	private int historySize;

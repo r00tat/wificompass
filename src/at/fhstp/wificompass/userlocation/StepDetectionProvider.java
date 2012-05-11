@@ -8,7 +8,6 @@ package at.fhstp.wificompass.userlocation;
 import android.content.Context;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.model.Location;
-import de.uvwxy.footpath.core.StepDetection;
 import de.uvwxy.footpath.core.StepTrigger;
 
 

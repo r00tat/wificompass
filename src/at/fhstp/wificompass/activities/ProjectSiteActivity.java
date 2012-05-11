@@ -1236,7 +1236,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	}
 
 	/**
-	 * @author  Paul Woelfel (paul@woelfel.at)
+	 * @author  Thomas Konrad (is101503@fhstp.ac.at)
 	 */
 	protected class TriangulationTask extends AsyncTask<Void, Integer, Vector<AccessPointDrawable>> {
 

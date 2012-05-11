@@ -33,12 +33,12 @@
         <children xsi:type="editmodel:LabelEditModel" name="0..1" location="627,588" size="16,10" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/AccessPoint-Standard::Call->at.fhstp.wificompass.model/Location*at.fhstp.wificompass.model/AccessPoint-Standard::Instantiate->at.fhstp.wificompass.model/Location*at.fhstp.wificompass.model/AccessPoint-Soyatec::Import->at.fhstp.wificompass.model/Location" source="//@children.0" target="//@children.4" targetEnd="//@children.0/@sourceConnections.2/@children.2" label="//@children.0/@sourceConnections.2/@children.0" sourceEnd="//@children.0/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/AccessPoint->Standard::Call" source="//@children.0" target="//@children.4" targetEnd="//@children.0/@sourceConnections.2/@children.2" label="//@children.0/@sourceConnections.2/@children.0" sourceEnd="//@children.0/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="100,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,251" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="148,10"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/AccessPoint-Standard::Call->at.fhstp.wificompass.model/BssidResult*at.fhstp.wificompass.model/AccessPoint-Soyatec::Import->at.fhstp.wificompass.model/BssidResult" source="//@children.0" target="//@children.2" targetEnd="//@children.0/@sourceConnections.3/@children.2" label="//@children.0/@sourceConnections.3/@children.0" sourceEnd="//@children.0/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/AccessPoint->Standard::Call" source="//@children.0" target="//@children.2" targetEnd="//@children.0/@sourceConnections.3/@children.2" label="//@children.0/@sourceConnections.3/@children.0" sourceEnd="//@children.0/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="5,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="130,275"/>
@@ -195,7 +195,7 @@
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,280" id="at.fhstp.wificompass.model/Project@project+at.fhstp.wificompass.model/ProjectSite@|at.fhstp.wificompass.model/ProjectSite#"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/Project-Standard::Call->at.fhstp.wificompass.model/ProjectSite*at.fhstp.wificompass.model/Project-Soyatec::Import->at.fhstp.wificompass.model/ProjectSite" source="//@children.5" target="//@children.6" targetEnd="//@children.5/@sourceConnections.1/@children.2" label="//@children.5/@sourceConnections.1/@children.0" sourceEnd="//@children.5/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/Project->Standard::Call" source="//@children.5" target="//@children.6" targetEnd="//@children.5/@sourceConnections.1/@children.2" label="//@children.5/@sourceConnections.1/@children.0" sourceEnd="//@children.5/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="187,193" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,304"/>
@@ -243,7 +243,7 @@
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" location="10,221" id="at.fhstp.wificompass.model/ProjectSite@projectLocation+at.fhstp.wificompass.model/WifiScanResult@|at.fhstp.wificompass.model/WifiScanResult#"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite-Standard::Call->at.fhstp.wificompass.model/WifiScanResult*at.fhstp.wificompass.model/ProjectSite-Soyatec::Import->at.fhstp.wificompass.model/WifiScanResult" source="//@children.6" target="//@children.8" targetEnd="//@children.6/@sourceConnections.1/@children.2" label="//@children.6/@sourceConnections.1/@children.0" sourceEnd="//@children.6/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite->Standard::Call" source="//@children.6" target="//@children.8" targetEnd="//@children.6/@sourceConnections.1/@children.2" label="//@children.6/@sourceConnections.1/@children.0" sourceEnd="//@children.6/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="215,0" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,216"/>
@@ -253,12 +253,12 @@
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,300" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="187,173"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite-Standard::Call->at.fhstp.wificompass.model/Location*at.fhstp.wificompass.model/ProjectSite-Standard::Instantiate->at.fhstp.wificompass.model/Location*at.fhstp.wificompass.model/ProjectSite-Soyatec::Import->at.fhstp.wificompass.model/Location" source="//@children.6" target="//@children.4" targetEnd="//@children.6/@sourceConnections.3/@children.2" label="//@children.6/@sourceConnections.3/@children.0" sourceEnd="//@children.6/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite->Standard::Call" source="//@children.6" target="//@children.4" targetEnd="//@children.6/@sourceConnections.3/@children.2" label="//@children.6/@sourceConnections.3/@children.0" sourceEnd="//@children.6/@sourceConnections.3/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="100,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="230,508" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,36"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite-Standard::Call->at.fhstp.wificompass.model/AccessPoint*at.fhstp.wificompass.model/ProjectSite-Soyatec::Import->at.fhstp.wificompass.model/AccessPoint" source="//@children.6" target="//@children.0" targetEnd="//@children.6/@sourceConnections.4/@children.2" label="//@children.6/@sourceConnections.4/@children.0" sourceEnd="//@children.6/@sourceConnections.4/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/ProjectSite->Standard::Call" source="//@children.6" target="//@children.0" targetEnd="//@children.6/@sourceConnections.4/@children.2" label="//@children.6/@sourceConnections.4/@children.0" sourceEnd="//@children.6/@sourceConnections.4/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="230,346" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,132"/>
@@ -283,7 +283,7 @@
       <children xsi:type="editmodel:AttributeEditModel" name="value3" id="at.fhstp.wificompass.model/SensorData#value3"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="71,54">
-      <children xsi:type="editmodel:MethodEditModel" name="SensorData" id="at.fhstp.wificompass.model/SensorData#SensorData()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="SensorData" id="at.fhstp.wificompass.model/SensorData#SensorData(Ljava.lang.String;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="SensorData" id="at.fhstp.wificompass.model/SensorData#SensorData(Landroid.hardware.SensorEvent;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="toString" id="at.fhstp.wificompass.model/SensorData#toString()"/>
     </children>
@@ -305,7 +305,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="toString" id="at.fhstp.wificompass.model/WifiScanResult#toString()"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel"/>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/WifiScanResult-Standard::Call->at.fhstp.wificompass.model/BssidResult*at.fhstp.wificompass.model/WifiScanResult-Soyatec::Import->at.fhstp.wificompass.model/BssidResult" source="//@children.8" target="//@children.2" targetEnd="//@children.8/@sourceConnections.0/@children.2" label="//@children.8/@sourceConnections.0/@children.0" sourceEnd="//@children.8/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/WifiScanResult->Standard::Call" source="//@children.8" target="//@children.2" targetEnd="//@children.8/@sourceConnections.0/@children.2" label="//@children.8/@sourceConnections.0/@children.0" sourceEnd="//@children.8/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import»" size="55,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="197,98" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,75"/>
@@ -315,7 +315,7 @@
       <children xsi:type="editmodel:AssociationEndEditModel" location="30,221" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="230,37"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/WifiScanResult-Standard::Call->at.fhstp.wificompass.model/Location*at.fhstp.wificompass.model/WifiScanResult-Standard::Instantiate->at.fhstp.wificompass.model/Location*at.fhstp.wificompass.model/WifiScanResult-Soyatec::Import->at.fhstp.wificompass.model/Location" source="//@children.8" target="//@children.4" targetEnd="//@children.8/@sourceConnections.2/@children.2" label="//@children.8/@sourceConnections.2/@children.0" sourceEnd="//@children.8/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.model/WifiScanResult->Standard::Call" source="//@children.8" target="//@children.4" targetEnd="//@children.8/@sourceConnections.2/@children.2" label="//@children.8/@sourceConnections.2/@children.0" sourceEnd="//@children.8/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Call, Import, Instantiate»" size="100,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="192,221" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="0,17"/>

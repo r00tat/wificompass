@@ -13,10 +13,10 @@
                 android:id="@+id/main_menu_step_calibrate"
                 android:title="@string/main_menu_calibrate">
             </item>
-            <item
-                android:id="@+id/main_sensors_option"
-                android:title="@string/sensors_test_label">
-            </item>
+<!--             <item -->
+<!--                 android:id="@+id/main_sensors_option" -->
+<!--                 android:title="@string/sensors_test_label"> -->
+<!--             </item> -->
             <item
                 android:id="@+id/main_wifi_scan"
                 android:title="@string/main_wifi_scan">
