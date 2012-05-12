@@ -39,9 +39,9 @@ public class Logger {
 	protected String tag;
 
 	/**
-	 * loglevel current active. By default set to DEBUG
+	 * loglevel current active. By default set to WARN
 	 */
-	protected static int loglevel=Log.DEBUG;
+	protected static int loglevel=Log.WARN;
 	
 	public static final String PREFS_NAME="LOGPREFS";
 
@@ -151,7 +151,7 @@ public class Logger {
 	 * @return true if ASSERT or higher is enabled (always true)
 	 */
 	public static boolean isAssertEnabled() {
-		return loglevel <= Log.ASSERT;
+		return true;
 	}
 
 	/**

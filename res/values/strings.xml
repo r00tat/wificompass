@@ -232,4 +232,6 @@
 		<string name="calibrator_auto_config_setting_message">How much tolerance (ms) is allowed between a detcted step and the ones you told the application. \nIf you do not know, what value should be used, leave the default value.\n\nWindow Size: %1$dms</string>
 		<string name="main_start_auto_calibration_title">Sensor Auto Calibration</string>
 		<string name="main_start_auto_calibration_message">This Application uses the Accelerometer to track your movement. To improve step detection, this should be calibrated to you and your device.\nIf you want to calibrate this later user Menu -> Utils -> Sensor Calibration.\n\nDo you want to start Sensor Calibration?</string>
+		<string name="calibrator_graph_toggle_on">Hide Graph</string>
+		<string name="calibrator_graph_toggle_off">Show Graph</string>
 </resources>

@@ -3,6 +3,10 @@ package at.fhstp.wificompass.activities;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,13 +19,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -34,12 +35,11 @@ import at.fhstp.wificompass.userlocation.StepDetection;
 import at.fhstp.wificompass.userlocation.StepDetectionProvider;
 import at.fhstp.wificompass.userlocation.StepDetector;
 import at.fhstp.wificompass.userlocation.StepTrigger;
+import at.fhstp.wificompass.view.PaintBoxHistory;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
-
-import de.uvwxy.footpath.gui.PaintBoxHistory;
 
 /**
  * <p>
@@ -88,13 +88,21 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	float stepSize;
 
-	protected boolean calibrating = false;
+	protected boolean calibrating = false, showSensor = true;
 
 	protected DatabaseHelper databaseHelper;
 
 	protected Dao<SensorData, Integer> sensorDao;
 
 	protected AutoCalibrateTask calibrateTask;
+
+	protected final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+	protected Runnable runnable;
+
+	protected ScheduledFuture<?> scheduledTask = null;
+
+	
 
 	public static final String ACCELOREMETER_STRING = "acc", STEP_STRING = "step";
 
@@ -108,13 +116,18 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	// step timeout from 100ms to 500ms in 25ms steps
 	public static final int TIMEOUT_MIN = 200, TIMEOUT_MAX = 500, TIMEOUT_INTERVAL = 50;
-	
-	public static final int STEP_DETECTED_REWARD=1,STEP_FALSE_DETECTED_PUNISH=-2,STEP_NOT_DETECTED_PUNISH=-1;
+
+	public static final int STEP_DETECTED_REWARD = 1, STEP_FALSE_DETECTED_PUNISH = -2, STEP_NOT_DETECTED_PUNISH = -1;
 
 	protected int windowSize = 500;
 
 	public static final String BUNDLE_SCORE = "score", BUNDLE_PCT = "percantage", BUNDLE_FILTER = "filter", BUNDLE_PEAK = "peak",
-			BUNDLE_FOUND = "found", BUNDLE_NOTFOUND = "notfound", BUNDLE_FALSEFOUND = "falsefound", BUNDLE_ALLFOUND = "allfound",BUNDLE_TIMEOUT="timeout";
+			BUNDLE_FOUND = "found", BUNDLE_NOTFOUND = "notfound", BUNDLE_FALSEFOUND = "falsefound", BUNDLE_ALLFOUND = "allfound",
+			BUNDLE_TIMEOUT = "timeout";
+
+	
+
+	protected static final int SCHEDULER_TIME = 25;
 
 	OnSeekBarChangeListener sbListener = new OnSeekBarChangeListener() {
 
@@ -147,6 +160,120 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	};
 
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		// Load settings after creation of GUI-elements, to set their values
+		initLogic();
+		initUI();
+
+
+		runnable = new Runnable() {
+
+			@Override
+			public void run() {
+				if(showSensor)
+					svHistory.getMessageHandler().sendEmptyMessage(PaintBoxHistory.MESSAGE_REFRESH_HISTORY);
+			}
+
+		};
+	}
+
+	protected void initLogic() {
+		stepDetection = new StepDetection(this, this, filter, peak, step_timeout_ms);
+
+		// create PaintBox (-24.0 to 24.0, 100 entries)
+
+		databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+		try {
+			sensorDao = databaseHelper.getDao(SensorData.class);
+		} catch (SQLException e) {
+			Logger.e("could not initialize dao for sensorData", e);
+		}
+	}
+
+	protected void initUI() {
+		setContentView(R.layout.calibrator);
+
+		tvPeak = (TextView) findViewById(R.id.calibrator_tvPeak);
+		tvFilter = (TextView) findViewById(R.id.calibrator_tvFilter);
+		tvTimeout = (TextView) findViewById(R.id.calibrator_tvTimeout);
+
+		sbPeak = (SeekBar) findViewById(R.id.calibrator_sbPeak);
+		sbFilter = (SeekBar) findViewById(R.id.calibrator_sbFilter);
+		sbTimeout = (SeekBar) findViewById(R.id.calibrator_sbTimeout);
+		sbStepSize = (SeekBar) findViewById(R.id.calibrator_step_size);
+
+		// Add OnSeekBarChangeListener after creation of step detection, because object is used
+		sbPeak.setOnSeekBarChangeListener(sbListener);
+		sbFilter.setOnSeekBarChangeListener(sbListener);
+		sbTimeout.setOnSeekBarChangeListener(sbListener);
+		sbStepSize.setOnSeekBarChangeListener(sbListener);
+
+		svHistory = (PaintBoxHistory) findViewById(R.id.calibrator_history_paintbox);
+		if (svHistory == null) {
+			Logger.e("svHistory must not be null!?!?!?!");
+		} else {
+			svHistory.setOnClickListener(this);
+		}
+
+		if (!showSensor) {
+			((ViewGroup) findViewById(R.id.calibrator_LinearLayout01)).removeView(svHistory); // remove surface view
+		}
+
+		ToggleButton autoScanning = (ToggleButton) findViewById(R.id.calibrator_auto_calibrate);
+		autoScanning.setOnClickListener(this);
+		autoScanning.setChecked(calibrating);
+
+//		((ToggleButton) findViewById(R.id.calibrator_toggle_graph)).setOnClickListener(this);
+//		((ToggleButton) findViewById(R.id.calibrator_toggle_graph)).setChecked(showSensor);
+
+		((Button) findViewById(R.id.calibrator_analyze_data)).setOnClickListener(this);
+
+		loadSettings();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		saveSettings();
+		if(scheduledTask!=null){
+			scheduledTask.cancel(false);
+			scheduledTask = null;
+		}
+		stepDetection.unload();
+	}
+
+	@Override
+	public void onDestroy() {
+		OpenHelperManager.releaseHelper();
+		super.onDestroy();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		loadSettings();
+//		if(showSensor)
+			scheduledTask = scheduler.scheduleWithFixedDelay(runnable, 0, SCHEDULER_TIME, TimeUnit.MILLISECONDS);
+		
+		stepDetection.load(SensorManager.SENSOR_DELAY_FASTEST);
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onConfigurationChanged(android.content.res.Configuration)
+	 */
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		initUI();
+	}
+
 	private void loadSettings() {
 		filter = getSharedPreferences(StepDetectionProvider.CALIB_DATA, 0).getFloat(StepDetectionProvider.FILTER,
 				StepDetectionProvider.FILTER_DEFAULT);
@@ -169,23 +296,24 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			peak = value;
 			stepDetection.setPeak(peak);
 			sbPeak.setProgress((int) (value * 10));
-			tvPeak.setText(getString(R.string.calibrator_peak_text, value,StepDetectionProvider.PEAK_DEFAULT));
+			tvPeak.setText(getString(R.string.calibrator_peak_text, value, StepDetectionProvider.PEAK_DEFAULT));
 			break;
 		case R.id.calibrator_sbFilter:
 			filter = value;
 			stepDetection.setA(filter);
 			sbFilter.setProgress((int) (value * 100));
-			tvFilter.setText(getString(R.string.calibrator_filter_text, value,StepDetectionProvider.FILTER_DEFAULT));
+			tvFilter.setText(getString(R.string.calibrator_filter_text, value, StepDetectionProvider.FILTER_DEFAULT));
 			break;
 		case R.id.calibrator_sbTimeout:
 			step_timeout_ms = (int) value;
 			stepDetection.setStep_timeout_ms(step_timeout_ms);
-			tvTimeout.setText(getString(R.string.calibrator_step_timeout_text, (int) value,StepDetectionProvider.TIMEOUT_DEFAULT));
+			tvTimeout.setText(getString(R.string.calibrator_step_timeout_text, (int) value, StepDetectionProvider.TIMEOUT_DEFAULT));
 			break;
 		case R.id.calibrator_step_size:
 			stepSize = value;
 
-			((TextView) (findViewById(R.id.calibrator_tv_step_size))).setText(getString(R.string.calibrator_step_size_text, value,StepDetectionProvider.STEP_DEFAULT));
+			((TextView) (findViewById(R.id.calibrator_tv_step_size))).setText(getString(R.string.calibrator_step_size_text, value,
+					StepDetectionProvider.STEP_DEFAULT));
 			break;
 		default:
 			ret = false;
@@ -228,111 +356,14 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	@Override
 	public void onTimerElapsed(long nowMs, double[] acc, double[] comp) {
-		svHistory.addTriple(nowMs, acc);
+//		if (showSensor)
+			svHistory.addTriple(nowMs, acc);
 	}
 
 	@Override
 	public void onStepDetected(long nowMs, double compDir) {
-		if (!calibrating)
+		if (!calibrating )
 			svHistory.addStepTS(nowMs);
-	}
-
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// Load settings after creation of GUI-elements, to set their values
-		initLogic();
-		initUI();
-
-	}
-
-	protected void initLogic() {
-		stepDetection = new StepDetection(this, this, filter, peak, step_timeout_ms);
-
-		long samples_per_second = 1000 / StepDetection.INTERVAL_MS;
-		int history_in_seconds = 4;
-		int samples_per_history = (int) (history_in_seconds * samples_per_second);
-
-		// create PaintBox (-24.0 to 24.0, 100 entries)
-		svHistory = new PaintBoxHistory(this, 48.0, samples_per_history, history_in_seconds);
-
-		databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
-		try {
-			sensorDao = databaseHelper.getDao(SensorData.class);
-		} catch (SQLException e) {
-			Logger.e("could not initialize dao for sensorData", e);
-		}
-	}
-
-	protected void initUI() {
-		setContentView(R.layout.calibrator);
-
-		tvPeak = (TextView) findViewById(R.id.calibrator_tvPeak);
-		tvFilter = (TextView) findViewById(R.id.calibrator_tvFilter);
-		tvTimeout = (TextView) findViewById(R.id.calibrator_tvTimeout);
-
-		sbPeak = (SeekBar) findViewById(R.id.calibrator_sbPeak);
-		sbFilter = (SeekBar) findViewById(R.id.calibrator_sbFilter);
-		sbTimeout = (SeekBar) findViewById(R.id.calibrator_sbTimeout);
-		sbStepSize = (SeekBar) findViewById(R.id.calibrator_step_size);
-
-		// Add OnSeekBarChangeListener after creation of step detection, because object is used
-		sbPeak.setOnSeekBarChangeListener(sbListener);
-		sbFilter.setOnSeekBarChangeListener(sbListener);
-		sbTimeout.setOnSeekBarChangeListener(sbListener);
-		sbStepSize.setOnSeekBarChangeListener(sbListener);
-
-		LinearLayout linLayout = (LinearLayout) findViewById(R.id.calibrator_LinearLayout01); // get pointer to layout
-		SurfaceView svOld = (SurfaceView) findViewById(R.id.calibrator_svHistory); // get SurfaceView defined in xml
-		LayoutParams lpHistory = svOld.getLayoutParams(); // get its layout params
-
-		linLayout.removeView(svOld); // and remove surface view from layout
-		if (svHistory.getParent() != null && svHistory.getParent() instanceof ViewGroup) {
-			((ViewGroup) svHistory.getParent()).removeView(svHistory);
-		}
-		linLayout.addView(svHistory, lpHistory); // add surface view clone to layout
-		svHistory.setOnClickListener(this);
-
-		ToggleButton autoScanning = (ToggleButton) findViewById(R.id.calibrator_auto_calibrate);
-		autoScanning.setOnClickListener(this);
-		autoScanning.setChecked(calibrating);
-
-		((Button) findViewById(R.id.calibrator_analyze_data)).setOnClickListener(this);
-
-		loadSettings();
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		saveSettings();
-		stepDetection.unload();
-	}
-
-	@Override
-	public void onDestroy() {
-		OpenHelperManager.releaseHelper();
-		super.onDestroy();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		loadSettings();
-		stepDetection.load(SensorManager.SENSOR_DELAY_FASTEST);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onConfigurationChanged(android.content.res.Configuration)
-	 */
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		initUI();
 	}
 
 	/*
@@ -390,6 +421,21 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		case R.id.calibrator_analyze_data:
 			showCalibrationDialog();
 			break;
+
+//		case R.id.calibrator_toggle_graph:
+//			LinearLayout linLayout = (LinearLayout) findViewById(R.id.calibrator_LinearLayout01); // get pointer to layout
+//			if (showSensor) {
+//				// hide svHistory
+//				linLayout.removeView(svHistory);
+//				scheduledTask.cancel(false);
+//				scheduledTask=null;
+//			} else {
+//				// show svHistory
+//				linLayout.addView(svHistory, svHistory.getLayoutParams());
+//				scheduledTask = scheduler.scheduleWithFixedDelay(runnable, 0, SCHEDULER_TIME, TimeUnit.MILLISECONDS);
+//			}
+//			showSensor = !showSensor;
+//			break;
 
 		}
 
@@ -514,12 +560,11 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 				List<SensorData> steps = stepQuery.query();
 
-				progressDialog
-						.setMax((int) (((PEAK_MAX - PEAK_MIN) / PEAK_INTERVAL) * ((FILTER_MAX - FILTER_MIN) / FILTER_INTERVAL) ));
+				progressDialog.setMax((int) (((PEAK_MAX - PEAK_MIN) / PEAK_INTERVAL) * ((FILTER_MAX - FILTER_MIN) / FILTER_INTERVAL)));
 				progressDialog.setProgress(0);
 
 				float bestFilter = 0f, bestPeak = 0f;
-				int bestScore = Integer.MIN_VALUE, bestStepFound = 0, bestStepNotFound = 0, bestStepFalseFound = 0, bestTimeout=0;
+				int bestScore = Integer.MIN_VALUE, bestStepFound = 0, bestStepNotFound = 0, bestStepFalseFound = 0, bestTimeout = 0;
 
 				// long halfWindow = StepDetection.INTERVAL_MS * StepDetector.WINDOW / 2;
 
@@ -536,123 +581,121 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 				if (accelerometerValues.size() > 0)
 
-//					for (int t = TIMEOUT_MIN; running && t <= TIMEOUT_MAX; t += TIMEOUT_INTERVAL) 
+					// for (int t = TIMEOUT_MIN; running && t <= TIMEOUT_MAX; t += TIMEOUT_INTERVAL)
 
-						// cycle over peak values
-						for (float p = PEAK_MIN; running && p <= PEAK_MAX; p += PEAK_INTERVAL) {
+					// cycle over peak values
+					for (float p = PEAK_MIN; running && p <= PEAK_MAX; p += PEAK_INTERVAL) {
 
-							// cycle over filter values
-							for (float l = FILTER_MIN; running && l <= FILTER_MAX; l += FILTER_INTERVAL) {
+						// cycle over filter values
+						for (float l = FILTER_MIN; running && l <= FILTER_MAX; l += FILTER_INTERVAL) {
 
-								// Logger.d("searching for steps with peak p=" + p + " and filter l=" + l);
+							// Logger.d("searching for steps with peak p=" + p + " and filter l=" + l);
 
-								int score = 0;
-								StepDetector detector = new StepDetector(l, p, step_timeout_ms);
-								detector.setLogSteps(false);
-								Iterator<SensorData> stepIterator = steps.iterator();
-								long stepTime = 0;
+							int score = 0;
+							StepDetector detector = new StepDetector(l, p, step_timeout_ms);
+							detector.setLogSteps(false);
+							Iterator<SensorData> stepIterator = steps.iterator();
+							long stepTime = 0;
 
-								if (stepIterator.hasNext())
-									stepTime = stepIterator.next().getTimestamp();
+							if (stepIterator.hasNext())
+								stepTime = stepIterator.next().getTimestamp();
 
-								long lastTimer = 0;
+							long lastTimer = 0;
 
-								int stepFound = 0, stepNotFound = 0, stepFalseFound = 0;
+							int stepFound = 0, stepNotFound = 0, stepFalseFound = 0;
 
-								// cycle through accelerometerValues
-								for (SensorData acc : accelerometerValues) {
+							// cycle through accelerometerValues
+							for (SensorData acc : accelerometerValues) {
 
-									// add sensor values
-									detector.addSensorValues(acc.getTimestamp(), new float[] { acc.getValue0(), acc.getValue1(), acc.getValue2() });
+								// add sensor values
+								detector.addSensorValues(acc.getTimestamp(), new float[] { acc.getValue0(), acc.getValue1(), acc.getValue2() });
 
-									// only all INTERVAL_MS
-									if (acc.getTimestamp() > lastTimer + StepDetection.INTERVAL_MS) {
-										lastTimer = acc.getTimestamp();
+								// only all INTERVAL_MS
+								if (acc.getTimestamp() > lastTimer + StepDetection.INTERVAL_MS) {
+									lastTimer = acc.getTimestamp();
 
-										// check if a step has been detected
-										if (detector.checkForStep()) {
+									// check if a step has been detected
+									if (detector.checkForStep()) {
 
-											// check if we have missed some steps:
-											// are more steps saved?
-											// is the current StepTime before the sensor value timesteamp minus half the window size
-											while (stepIterator.hasNext() && stepTime < acc.getTimestamp() - halfWindow) {
-												// Logger.d("step "+ stepTime +" has not been found, getting next one");
-												stepTime = stepIterator.next().getTimestamp();
-												stepNotFound++;
-												score+=STEP_NOT_DETECTED_PUNISH;
+										// check if we have missed some steps:
+										// are more steps saved?
+										// is the current StepTime before the sensor value timesteamp minus half the window size
+										while (stepIterator.hasNext() && stepTime < acc.getTimestamp() - halfWindow) {
+											// Logger.d("step "+ stepTime +" has not been found, getting next one");
+											stepTime = stepIterator.next().getTimestamp();
+											stepNotFound++;
+											score += STEP_NOT_DETECTED_PUNISH;
 
-											}
-
-											// is there a step in the current database
-											// is the step timer in the interval sensor timestamp - halfwindow and sensortime + halfwindow
-
-											// Logger.d("stepTime="+stepTime+" acc="+acc.getTimestamp()+" diff="+(stepTime-acc.getTimestamp())+" matched: "+(Math.abs(stepTime - acc.getTimestamp()) <
-											// halfWindow?"true":"false"));
-
-											if (Math.abs(stepTime - acc.getTimestamp()) < halfWindow) {
-												// that's fine, we found one
-
-												// Logger.d("matched step");
-												score+=STEP_DETECTED_REWARD;
-												stepFound++;
-												if (stepIterator.hasNext()) {
-													stepTime = stepIterator.next().getTimestamp();
-												} else {
-													stepTime = 0;
-												}
-											} else {
-												// no, there is none
-												score+=STEP_FALSE_DETECTED_PUNISH;
-												stepFalseFound++;
-												// Logger.d("step not matched");
-											}
 										}
 
+										// is there a step in the current database
+										// is the step timer in the interval sensor timestamp - halfwindow and sensortime + halfwindow
+
+										// Logger.d("stepTime="+stepTime+" acc="+acc.getTimestamp()+" diff="+(stepTime-acc.getTimestamp())+" matched: "+(Math.abs(stepTime - acc.getTimestamp()) <
+										// halfWindow?"true":"false"));
+
+										if (Math.abs(stepTime - acc.getTimestamp()) < halfWindow) {
+											// that's fine, we found one
+
+											// Logger.d("matched step");
+											score += STEP_DETECTED_REWARD;
+											stepFound++;
+											if (stepIterator.hasNext()) {
+												stepTime = stepIterator.next().getTimestamp();
+											} else {
+												stepTime = 0;
+											}
+										} else {
+											// no, there is none
+											score += STEP_FALSE_DETECTED_PUNISH;
+											stepFalseFound++;
+											// Logger.d("step not matched");
+										}
 									}
-								}
-								// finished analyzing all sensor values
-
-								// are there some steps missing?
-
-								while (stepTime!=0) {
-									// Logger.d("missed a step="+stepTime);
-									// step missing, bad for the score
-									if(stepIterator.hasNext())
-										stepTime = stepIterator.next().getTimestamp();
-									else
-										stepTime=0;
-									score+=STEP_NOT_DETECTED_PUNISH;
-									stepNotFound++;
 
 								}
-
-								
-								if (Logger.isVerboseEnabled())
-									Logger.v((score > bestScore ? "better" : "worse") + " score found: " + score + (score > bestScore ? ">" : "<")
-											+ bestScore + " : p=" + p + " l=" + l + " found=" + stepFound + " notFound=" + stepNotFound
-											+ " falseFound=" + stepFalseFound);
-
-								if (score == bestScore) {
-									allDetected++;
-								}
-
-								// have we found a better score?
-								if (score > bestScore || (score == bestScore && stepFound > bestStepFound)) {
-									bestFilter = l;
-									bestPeak = p;
-									bestTimeout=step_timeout_ms;
-									bestScore = score;
-									bestStepFound = stepFound;
-									bestStepNotFound = stepNotFound;
-									bestStepFalseFound = stepFalseFound;
-									allDetected = 1;
-								}
-
-								// progressDialog.setProgress((int)progressCur);
-								this.publishProgress(++progress);
 							}
+							// finished analyzing all sensor values
+
+							// are there some steps missing?
+
+							while (stepTime != 0) {
+								// Logger.d("missed a step="+stepTime);
+								// step missing, bad for the score
+								if (stepIterator.hasNext())
+									stepTime = stepIterator.next().getTimestamp();
+								else
+									stepTime = 0;
+								score += STEP_NOT_DETECTED_PUNISH;
+								stepNotFound++;
+
+							}
+
+							if (Logger.isVerboseEnabled())
+								Logger.v((score > bestScore ? "better" : "worse") + " score found: " + score + (score > bestScore ? ">" : "<")
+										+ bestScore + " : p=" + p + " l=" + l + " found=" + stepFound + " notFound=" + stepNotFound + " falseFound="
+										+ stepFalseFound);
+
+							if (score == bestScore) {
+								allDetected++;
+							}
+
+							// have we found a better score?
+							if (score > bestScore || (score == bestScore && stepFound > bestStepFound)) {
+								bestFilter = l;
+								bestPeak = p;
+								bestTimeout = step_timeout_ms;
+								bestScore = score;
+								bestStepFound = stepFound;
+								bestStepNotFound = stepNotFound;
+								bestStepFalseFound = stepFalseFound;
+								allDetected = 1;
+							}
+
+							// progressDialog.setProgress((int)progressCur);
+							this.publishProgress(++progress);
 						}
-					
+					}
 
 				Logger.i("Best score is: " + bestScore + " " + (((float) bestScore) / steps.size() * 100) + "% filter l=" + bestFilter + " peak p="
 						+ bestPeak);
@@ -725,7 +768,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		builder.setMessage(getString(R.string.calibrator_auto_config_message, result.getInt(BUNDLE_SCORE, 0), result.getFloat(BUNDLE_PCT, 0) * 100,
 				result.getFloat(BUNDLE_FILTER, StepDetectionProvider.FILTER_DEFAULT),
 				result.getFloat(BUNDLE_PEAK, StepDetectionProvider.PEAK_DEFAULT), result.getInt(BUNDLE_FOUND, 0), result.getInt(BUNDLE_NOTFOUND, 0),
-				result.getInt(BUNDLE_FALSEFOUND, 0), result.getInt(BUNDLE_ALLFOUND, 0),result.getInt(BUNDLE_TIMEOUT,0)));
+				result.getInt(BUNDLE_FALSEFOUND, 0), result.getInt(BUNDLE_ALLFOUND, 0), result.getInt(BUNDLE_TIMEOUT, 0)));
 		builder.setCancelable(false);
 		builder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 

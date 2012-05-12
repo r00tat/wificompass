@@ -300,7 +300,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 
 			if (newName == project.getName() && newDescription == project.getDescription()) {
 				log.debug("no save required, values have not been changed");
-			} else if (newName.isEmpty()) {
+			} else if (newName.trim().length()==0) {
 
 				log.debug("empty project name, so no save required");
 			} else {

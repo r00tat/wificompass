@@ -7,7 +7,8 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:padding="3dp">
+        android:layout_height="wrap_content"
+        android:padding="3dp" >
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -18,15 +19,17 @@
                 android:id="@+id/calibrator_tvPeak"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/calibrator_tv_peak" android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:text="@string/calibrator_tv_peak" >
             </TextView>
 
             <SeekBar
                 android:id="@+id/calibrator_sbPeak"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:max="40"
-                android:progress="5" android:layout_weight="1">
+                android:progress="5" >
             </SeekBar>
         </TableRow>
 
@@ -39,15 +42,17 @@
                 android:id="@+id/calibrator_tvFilter"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/calibrator_tv_filter" android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:text="@string/calibrator_tv_filter" >
             </TextView>
 
             <SeekBar
                 android:id="@+id/calibrator_sbFilter"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:max="75"
-                android:progress="60" android:layout_weight="1">
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="60" >
             </SeekBar>
         </TableRow>
 
@@ -60,15 +65,17 @@
                 android:id="@+id/calibrator_tvTimeout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/calibrator_tv_step_timeout" android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:text="@string/calibrator_tv_step_timeout" >
             </TextView>
 
             <SeekBar
                 android:id="@+id/calibrator_sbTimeout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:max="600"
-                android:progress="333" android:layout_weight="1">
+                android:progress="333" >
             </SeekBar>
         </TableRow>
 
@@ -81,15 +88,17 @@
                 android:id="@+id/calibrator_tv_step_size"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/calibrator_tv_step_size" android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:text="@string/calibrator_tv_step_size" >
             </TextView>
 
             <SeekBar
                 android:id="@+id/calibrator_step_size"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:max="150"
-                android:progress="70" android:layout_weight="1">
+                android:progress="70" >
             </SeekBar>
         </TableRow>
     </TableLayout>
@@ -118,13 +127,32 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:text="@string/calibrator_analyze_data" />
-    </LinearLayout>
 
-    <SurfaceView
-        android:id="@+id/calibrator_svHistory"
-        android:layout_width="fill_parent"
+<!--         <ToggleButton -->
+<!--             android:id="@+id/calibrator_toggle_graph" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_gravity="center" -->
+<!--             android:layout_marginLeft="5dp" -->
+<!--             android:layout_marginTop="5dp" -->
+<!--             android:checked="true" -->
+<!--             android:text="@string/calibrator_graph_toggle_on" -->
+<!--             android:textOff="@string/calibrator_graph_toggle_off" -->
+<!--             android:textOn="@string/calibrator_graph_toggle_on" /> -->
+    </LinearLayout>
+    
+    <at.fhstp.wificompass.view.PaintBoxHistory
+        android:id="@+id/calibrator_history_paintbox"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="15dp" >
-    </SurfaceView>
+    </at.fhstp.wificompass.view.PaintBoxHistory>
+    
+<!--     <SurfaceView -->
+<!--         android:id="@+id/calibrator_svHistory" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="match_parent" -->
+<!--         android:layout_marginTop="15dp" > -->
+<!--     </SurfaceView> -->
 
 </LinearLayout>

@@ -1,18 +1,23 @@
-package de.uvwxy.footpath.gui;
+package at.fhstp.wificompass.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Message;
+import android.util.AttributeSet;
+import android.view.View;
+import at.fhstp.wificompass.Logger;
+import at.fhstp.wificompass.userlocation.StepDetection;
 import de.uvwxy.footpath.ToolBox;
-import de.uvwxy.paintbox.PaintBox;
 
 /**
  * 
- * @author Paul Smith
+ * @author Paul Smith, Paul Woelfel
  *
  */
-public class PaintBoxHistory extends PaintBox {
+public class PaintBoxHistory  extends View implements Handler.Callback {
 	//private Context context;
 
 	private int historySize;
@@ -21,7 +26,7 @@ public class PaintBoxHistory extends PaintBox {
 	private double[] z_History;
 	private long[] time_History;
 	private int historyPtr = 0;
-	private double valueRange = Double.NEGATIVE_INFINITY;
+	private double valueRange = VALUE_RANGE_DEFAULT;
 	private int drawWidth = 0;
 	private int drawHeight = 0;
 	//private double scale_x = 1;
@@ -29,33 +34,51 @@ public class PaintBoxHistory extends PaintBox {
 	private int offset_y = 0;
 	boolean once = true;
 	
+	
+	protected Handler messageHandler;
+	
+	
 	private int seconds = 1; // # of seconds to show on screen
 	private int num_steps = 0;
+	
+	protected static final int HISTORY_SECONDS=4;
+	protected static final double VALUE_RANGE_DEFAULT=48.0d;
+	
+	public static final int MESSAGE_REFRESH_HISTORY = 1;
 
+
+	
+	public PaintBoxHistory(Context context){
+		this(context,null,0);
+	}
+	
+	public PaintBoxHistory(Context context, AttributeSet attrs){
+		this(context,attrs,0);
+	}
+	
+	
 	/**
 	 * 
 	 * @param context
 	 *            the context under which is painted
-	 * @param valueRange
-	 *            range of values to be display around zero
-	 * @param seconds
-	 * @param tvSteps 
-	 * @param drawWidth
-	 *            the width of the paintable area
-	 * @param drawHeight
-	 *            the height of the paintable area
 	 */
-	public PaintBoxHistory(Context context, double valueRange, int historySize, int seconds) {
-		super(context);
+	public PaintBoxHistory(Context context, AttributeSet attrs,int defStyle) {
+		super(context,attrs,defStyle);
+		
 		// save to have e.g. access to asserts
 //		this.context = context;
-		this.valueRange = valueRange;
-		this.historySize = historySize;
+		this.valueRange = VALUE_RANGE_DEFAULT;
+		this.historySize = (int) (HISTORY_SECONDS*1000 / StepDetection.INTERVAL_MS);
 		x_History = new double[historySize];
 		y_History = new double[historySize];
 		z_History = new double[historySize];
 		time_History = new long[historySize];
-		this.seconds = seconds;
+		this.seconds = HISTORY_SECONDS;
+		
+		messageHandler=new Handler(this);
+		// set surface callback
+		
+//		getHolder().addCallback(this);
 	}
 
 	private int getPosOnScreen(long x_ms, long current_ms) {
@@ -71,6 +94,9 @@ public class PaintBoxHistory extends PaintBox {
 		if (once) {
 			setDimensions();
 		}
+		
+		Logger.d("drawing paintboxhistory");
+		
 		canvas.drawColor(Color.WHITE);
 		canvas.drawLine(0, offset_y, drawWidth, offset_y, ToolBox.myPaint(1, Color.BLACK));
 		Paint paint = ToolBox.myPaint(2, Color.RED);
@@ -171,5 +197,28 @@ public class PaintBoxHistory extends PaintBox {
 		tenLastSteps[shPointer % stepHistorySize] = ts;								// add value to values_history
 		shPointer++;
 		shPointer = shPointer % stepHistorySize;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see android.os.Handler.Callback#handleMessage(android.os.Message)
+	 */
+	@Override
+	public boolean handleMessage(Message msg) {
+		switch (msg.what) {
+		case MESSAGE_REFRESH_HISTORY:
+			/* Refresh UI */
+			invalidate();
+			break;
+		}
+		return true;
+	}
+
+	/**
+	 * @return the messageHandler
+	 */
+	public Handler getMessageHandler() {
+		return messageHandler;
 	}
 }
