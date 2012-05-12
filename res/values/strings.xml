@@ -18,7 +18,7 @@
     <string name="newProjectText">Create a new project</string>
     <string name="loadProject">Load project</string>
     <string name="main_info_text">Welcome to Wi-Fi Compass! \nCreate a project or use Quick Scan.</string>
-    <string name="aboutText">About this app…</string>
+    <string name="aboutText">WiFi Compass was developed by Paul Woelfel and Thomas Konrad as a part of their master thesis at University of Applied Sciences St. Poelten, Austria. \nIt is published as open source software as <a href="http://code.google.com/p/wificompass">project wificompass on google code</a>.\n\nInformation about the License could be found at the <a href="http://code.google.com/p/wificompass/">project site</a> and about the contributions from other projects at the <a href="http://code.google.com/p/wificompass/wiki/Contributions">Contributions Wiki page</a>.</string>
     <string name="untitled">Untitled</string>
     <string name="filebrowser_parent_dir">Parent directory</string>
     <string name="filebrowser_dir">Directory</string>
@@ -121,6 +121,8 @@
     <string name="project_site_dialog_title_message">Please enter a title for the project site:</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_no">No</string>
     <string name="project_site_menu_change_name">Change title</string>
     <string name="project_site_saved">project site saved!</string>
     <string name="project_site_save_failed">project site could not be saved!</string>
@@ -207,10 +209,10 @@
     <string name="project_site_mapscale_changed">Scale of map changed: 1m is now %1$.2f pixels.</string>
     <string name="not_a_number">The value you entered (%1$s) is not a valid number!</string>
     <string name="calibrator_tv_step_size">Step Size (m)</string>
-    <string name="calibrator_step_size_text">Step Size: %1$.2fm</string>
-    <string name="calibrator_peak_text">Peak: %1$.2fm/s^2</string>
-    <string name="calibrator_filter_text">Filter: %1$.2f</string>
-    <string name="calibrator_step_timeout_text">Step Timeout: %1$dms</string>
+    <string name="calibrator_step_size_text">Step Size (%2$.2f): %1$.2fm</string>
+    <string name="calibrator_peak_text">Peak (%2$.2f): %1$.2fm/s^2</string>
+    <string name="calibrator_filter_text">Filter (%2$.2f): %1$.2f</string>
+    <string name="calibrator_step_timeout_text">Step Timeout (%2$d): %1$dms</string>
     <string name="project_site_wifiscan_started">WiFi Scan started!</string>
     <string name="main_quickscan_button">Quick Scan!</string>
     <string name="quickscan_project_name">Quick Scan %s</string>
@@ -228,4 +230,6 @@
 		<string name="calibrator_analyze_data">Analyze Data</string>
 		<string name="calibrator_auto_config_setting_title">Auto Calibration Settings</string>
 		<string name="calibrator_auto_config_setting_message">How much tolerance (ms) is allowed between a detcted step and the ones you told the application. \nIf you do not know, what value should be used, leave the default value.\n\nWindow Size: %1$dms</string>
+		<string name="main_start_auto_calibration_title">Sensor Auto Calibration</string>
+		<string name="main_start_auto_calibration_message">This Application uses the Accelerometer to track your movement. To improve step detection, this should be calibrated to you and your device.\nIf you want to calibrate this later user Menu -> Utils -> Sensor Calibration.\n\nDo you want to start Sensor Calibration?</string>
 </resources>

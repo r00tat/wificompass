@@ -5,6 +5,9 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -38,6 +41,8 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	protected boolean running;
 
 	protected static final String logTag = "MainActivity";
+	
+	protected static final String AUTO_CALIBRATION_DONE="SensorAutoCalibration";
 	
 	/**
 	 * @uml.property  name="log"
@@ -109,6 +114,31 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 			
 		} catch (SQLException e) {
 			log.error("could not load project list", e);
+		}
+		
+		
+		if(!this.getPreferences(Activity.MODE_PRIVATE).contains(AUTO_CALIBRATION_DONE)){
+			// first start, ask the user for auto calibration
+			this.getPreferences(MODE_PRIVATE).edit().putBoolean(AUTO_CALIBRATION_DONE, true).commit();
+			AlertDialog.Builder builder=new AlertDialog.Builder(this);
+			builder.setTitle(R.string.main_start_auto_calibration_title);
+			builder.setMessage(R.string.main_start_auto_calibration_message);
+			final Context ctx=this;
+			builder.setPositiveButton(R.string.button_yes, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent i=new Intent(ctx,CalibratorActivity.class);
+					startActivity(i);
+				}
+			});
+			
+			builder.setNegativeButton(R.string.button_no, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+			builder.create().show();
 		}
 		
 		

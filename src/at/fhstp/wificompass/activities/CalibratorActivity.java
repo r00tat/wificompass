@@ -169,23 +169,23 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			peak = value;
 			stepDetection.setPeak(peak);
 			sbPeak.setProgress((int) (value * 10));
-			tvPeak.setText(getString(R.string.calibrator_peak_text, value));
+			tvPeak.setText(getString(R.string.calibrator_peak_text, value,StepDetectionProvider.PEAK_DEFAULT));
 			break;
 		case R.id.calibrator_sbFilter:
 			filter = value;
 			stepDetection.setA(filter);
 			sbFilter.setProgress((int) (value * 100));
-			tvFilter.setText(getString(R.string.calibrator_filter_text, value));
+			tvFilter.setText(getString(R.string.calibrator_filter_text, value,StepDetectionProvider.FILTER_DEFAULT));
 			break;
 		case R.id.calibrator_sbTimeout:
 			step_timeout_ms = (int) value;
 			stepDetection.setStep_timeout_ms(step_timeout_ms);
-			tvTimeout.setText(getString(R.string.calibrator_step_timeout_text, (int) value));
+			tvTimeout.setText(getString(R.string.calibrator_step_timeout_text, (int) value,StepDetectionProvider.TIMEOUT_DEFAULT));
 			break;
 		case R.id.calibrator_step_size:
 			stepSize = value;
 
-			((TextView) (findViewById(R.id.calibrator_tv_step_size))).setText(getString(R.string.calibrator_step_size_text, value));
+			((TextView) (findViewById(R.id.calibrator_tv_step_size))).setText(getString(R.string.calibrator_step_size_text, value,StepDetectionProvider.STEP_DEFAULT));
 			break;
 		default:
 			ret = false;

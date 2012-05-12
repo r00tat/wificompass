@@ -191,7 +191,8 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 			lastLocation = null;
 		width=copy.width;
 		height=copy.height;
-		unselectedBssids=(ArrayList<String>) copy.unselectedBssids.clone();
+		if(copy.unselectedBssids!=null)
+			unselectedBssids=(ArrayList<String>) copy.unselectedBssids.clone();
 		triangulationAlgorithm=copy.triangulationAlgorithm;
 				
 	}

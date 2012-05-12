@@ -20,7 +20,7 @@ public class ScaleSliderDrawable extends MultiTouchDrawable {
 	
 	protected void init() {
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.slider_arrow_up);
-		this.setPivot(0.5f, 0.0222f);
+		this.setPivot(0.48f, 0.1f);
 
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();

@@ -17,7 +17,7 @@
         android:layout_gravity="center"
         android:linksClickable="true"
         android:text="@string/aboutText" 
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp" android:bufferType="spannable" android:id="@+id/about_description"/>
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
                 android:id="@+id/about_url"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/unknown" android:layout_marginBottom="5dp"/>
+                android:text="@string/unknown" android:layout_marginBottom="5dp" android:bufferType="spannable"/>
 
         </TableRow>
     </TableLayout>

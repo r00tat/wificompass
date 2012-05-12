@@ -439,7 +439,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		// delete all old messurements
 		for (int i = 0; i < map.getSubDrawables().size(); i++) {
 			MultiTouchDrawable d = map.getSubDrawables().get(i);
-			if (d instanceof AccessPointDrawable) {
+			if (d instanceof AccessPointDrawable && ((AccessPointDrawable)d).isCalculated()) {
 				map.removeSubDrawable(d);
 				i--;
 			}
@@ -475,8 +475,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		for (AccessPointDrawable ap : aps) {
 			map.addSubDrawable(ap);
 			map.recalculatePositions();
-			multiTouchView.invalidate();
+			
 		}
+		multiTouchView.invalidate();
 	}
 
 	protected void setScaleOfMap(float scale) {

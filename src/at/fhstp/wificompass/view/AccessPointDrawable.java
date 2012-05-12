@@ -202,5 +202,9 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 		accessPoint.setLocation(new Location(relX, relY));
 		popup.setText(getPopupText());
 	}
+	
+	public boolean isCalculated(){
+		return accessPoint.isCalculated();
+	}
 
 }
