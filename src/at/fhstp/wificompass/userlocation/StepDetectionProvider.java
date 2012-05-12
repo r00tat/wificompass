@@ -8,7 +8,6 @@ package at.fhstp.wificompass.userlocation;
 import android.content.Context;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.model.Location;
-import de.uvwxy.footpath.core.StepTrigger;
 
 
 /**
@@ -63,7 +62,7 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 
 	
 	@Override
-	public void trigger(long now_ms, double compDir) {
+	public void onStepDetected(long now_ms, double compDir) {
 		// a step has been triggered
 	
 		float curX=locationService.getLocation().getX(),curY=locationService.getLocation().getY();
@@ -85,17 +84,17 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 
 
 	@Override
-	public void dataHookAcc(long now_ms, double x, double y, double z) {
+	public void onAccelerometerDataReceived(long now_ms, double x, double y, double z) {
 	}
 
 
 	@Override
-	public void dataHookComp(long now_ms, double x, double y, double z) {
+	public void onCompassDataReceived(long now_ms, double x, double y, double z) {
 	}
 
 
 	@Override
-	public void timedDataHook(long now_ms, double[] acc, double[] comp) {
+	public void onTimerElapsed(long now_ms, double[] acc, double[] comp) {
 	}
 
 

@@ -57,7 +57,7 @@
         <activity android:label="@string/sensors_label" android:name=".activities.SensorsActivity" android:configChanges="orientation"></activity>
         <activity android:label="@string/export_db_label" android:name=".activities.DBActivity" android:configChanges="orientation"></activity>
         <activity android:name=".activities.PreferencesActivity" android:configChanges="orientation" android:theme="@android:style/Theme.Dialog" android:label="@string/preferences_activity"></activity>
-        <activity android:name=".CalibratorActivity" android:label="@string/calibrator_label" android:configChanges="orientation"></activity>
+        <activity android:name=".activities.CalibratorActivity" android:label="@string/calibrator_label" android:configChanges="orientation"></activity>
     </application>
 
 </manifest>

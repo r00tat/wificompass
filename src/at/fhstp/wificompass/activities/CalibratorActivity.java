@@ -1,4 +1,4 @@
-package at.fhstp.wificompass;
+package at.fhstp.wificompass.activities;
 
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -26,17 +26,19 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import at.fhstp.wificompass.Logger;
+import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.SensorData;
 import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.userlocation.StepDetection;
 import at.fhstp.wificompass.userlocation.StepDetectionProvider;
 import at.fhstp.wificompass.userlocation.StepDetector;
+import at.fhstp.wificompass.userlocation.StepTrigger;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
 
-import de.uvwxy.footpath.core.StepTrigger;
 import de.uvwxy.footpath.gui.PaintBoxHistory;
 
 /**
@@ -106,6 +108,8 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	// step timeout from 100ms to 500ms in 25ms steps
 	public static final int TIMEOUT_MIN = 200, TIMEOUT_MAX = 500, TIMEOUT_INTERVAL = 50;
+	
+	public static final int STEP_DETECTED_REWARD=1,STEP_FALSE_DETECTED_PUNISH=-2,STEP_NOT_DETECTED_PUNISH=-1;
 
 	protected int windowSize = 500;
 
@@ -207,7 +211,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	}
 
 	@Override
-	public void dataHookAcc(long nowMs, double x, double y, double z) {
+	public void onAccelerometerDataReceived(long nowMs, double x, double y, double z) {
 		if (calibrating && sensorDao != null) {
 			// save data for calculations.
 			try {
@@ -219,16 +223,16 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	}
 
 	@Override
-	public void dataHookComp(long nowMs, double x, double y, double z) {
+	public void onCompassDataReceived(long nowMs, double x, double y, double z) {
 	}
 
 	@Override
-	public void timedDataHook(long nowMs, double[] acc, double[] comp) {
+	public void onTimerElapsed(long nowMs, double[] acc, double[] comp) {
 		svHistory.addTriple(nowMs, acc);
 	}
 
 	@Override
-	public void trigger(long nowMs, double compDir) {
+	public void onStepDetected(long nowMs, double compDir) {
 		if (!calibrating)
 			svHistory.addStepTS(nowMs);
 	}
@@ -575,7 +579,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 												// Logger.d("step "+ stepTime +" has not been found, getting next one");
 												stepTime = stepIterator.next().getTimestamp();
 												stepNotFound++;
-												score--;
+												score+=STEP_NOT_DETECTED_PUNISH;
 
 											}
 
@@ -589,7 +593,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 												// that's fine, we found one
 
 												// Logger.d("matched step");
-												score++;
+												score+=STEP_DETECTED_REWARD;
 												stepFound++;
 												if (stepIterator.hasNext()) {
 													stepTime = stepIterator.next().getTimestamp();
@@ -598,7 +602,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 												}
 											} else {
 												// no, there is none
-												score--;
+												score+=STEP_FALSE_DETECTED_PUNISH;
 												stepFalseFound++;
 												// Logger.d("step not matched");
 											}
@@ -610,11 +614,14 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 								// are there some steps missing?
 
-								while (stepIterator.hasNext()) {
+								while (stepTime!=0) {
 									// Logger.d("missed a step="+stepTime);
 									// step missing, bad for the score
-									stepTime = stepIterator.next().getTimestamp();
-									score--;
+									if(stepIterator.hasNext())
+										stepTime = stepIterator.next().getTimestamp();
+									else
+										stepTime=0;
+									score+=STEP_NOT_DETECTED_PUNISH;
 									stepNotFound++;
 
 								}

@@ -9,7 +9,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import de.uvwxy.footpath.core.StepTrigger;
 
 /**
  * This class is fed with data from the Accelerometer and Compass sensors. If a step is detected on the acc data it calls the trigger function on its interface StepTrigger, with the given direction.
@@ -54,12 +53,12 @@ public class StepDetection {
 		public void onSensorChanged(SensorEvent event) {
 			switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
-				st.dataHookAcc(System.currentTimeMillis(), event.values[0], event.values[1], event.values[2]);
+				st.onAccelerometerDataReceived(System.currentTimeMillis(), event.values[0], event.values[1], event.values[2]);
 				// just update the oldest z value
 				detector.addSensorValues(System.currentTimeMillis(),event.values);
 				break;
 			case Sensor.TYPE_ORIENTATION:
-				st.dataHookComp(System.currentTimeMillis(), event.values[0], event.values[1], event.values[2]);
+				st.onCompassDataReceived(System.currentTimeMillis(), event.values[0], event.values[1], event.values[2]);
 				lastComp[0] = event.values[0];
 				lastComp[1] = event.values[1];
 				lastComp[2] = event.values[2];
@@ -131,12 +130,12 @@ public class StepDetection {
 		// Get current time for time stamps
 		long now_ms = System.currentTimeMillis();
 
-		st.timedDataHook(now_ms, detector.getLastAcc(), lastComp);
+		st.onTimerElapsed(now_ms, detector.getLastAcc(), lastComp);
 
 		// Check if a step is detected upon data
 		if (detector.checkForStep()) {
 			// Call algorithm for navigation/updating position
-			st.trigger(now_ms, lastComp[0]);
+			st.onStepDetected(now_ms, lastComp[0]);
 
 		}
 	}

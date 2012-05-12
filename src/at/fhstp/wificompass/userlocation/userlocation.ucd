@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="userlocation" size="1415,1087" id="at.fhstp.wificompass.userlocation" metadata="uml2-1.0" initialized="true" zoom="0.75" tag="1000" key="32303037303533312D313030302077696669636F6D706173732F66726967">
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="userlocation" size="1415,1591" id="at.fhstp.wificompass.userlocation" metadata="uml2-1.0" initialized="true" zoom="0.75" scrolledY="55" tag="1000" key="32303037303533312D313030302077696669636F6D706173732F66726967">
   <children xsi:type="editmodel:InterfaceEditModel" name="LocationChangeListener" location="345,59" size="173,79" id="at.fhstp.wificompass.userlocation/LocationChangeListener" runTimeClassModel="onLocationChange(Lat.fhstp.wificompass.model.Location;)">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="117,18">
@@ -16,7 +16,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.0" name="LocationProvider" location="525,15" size="179,241" id="at.fhstp.wificompass.userlocation/LocationProvider" runTimeClassModel="stop(),getProviderName(),getLocationY(),start(),getLocationZ(),getLocation(),getLocationX(),setLocationChangeListener(Lat.fhstp.wificompass.userlocation.LocationChangeListener;),setLocationService(Lat.fhstp.wificompass.userlocation.LocationService;),unsetLocationService(Lat.fhstp.wificompass.userlocation.LocationService;)">
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.0" name="LocationProvider" location="525,15" size="179,241" id="at.fhstp.wificompass.userlocation/LocationProvider" runTimeClassModel="stop(),getLocationY(),getProviderName(),getLocationZ(),start(),getLocation(),getLocationX(),setLocationChangeListener(Lat.fhstp.wificompass.userlocation.LocationChangeListener;),setLocationService(Lat.fhstp.wificompass.userlocation.LocationService;),unsetLocationService(Lat.fhstp.wificompass.userlocation.LocationService;)">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="156,180">
       <children xsi:type="editmodel:MethodEditModel" name="getLocation" id="at.fhstp.wificompass.userlocation/LocationProvider#getLocation()"/>
@@ -33,7 +33,7 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.0 //@children.7/@sourceConnections.0" name="LocationProviderImpl" location="382,315" size="179,265" id="at.fhstp.wificompass.userlocation/LocationProviderImpl" runTimeClassModel="LocationProviderImpl(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.LocationService;),stop(),getLocationY(),getProviderName(),LocationProviderImpl(Landroid.content.Context;),start(),getLocationZ(),getLocation(),getLocationX(),setLocationChangeListener(Lat.fhstp.wificompass.userlocation.LocationChangeListener;),running,unsetLocationService(Lat.fhstp.wificompass.userlocation.LocationService;)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.0 //@children.7/@sourceConnections.0" name="LocationProviderImpl" location="382,315" size="179,265" id="at.fhstp.wificompass.userlocation/LocationProviderImpl" runTimeClassModel="LocationProviderImpl(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.LocationService;),stop(),getProviderName(),getLocationY(),LocationProviderImpl(Landroid.content.Context;),getLocationZ(),start(),getLocation(),getLocationX(),setLocationChangeListener(Lat.fhstp.wificompass.userlocation.LocationChangeListener;),running,unsetLocationService(Lat.fhstp.wificompass.userlocation.LocationService;)">
     <children xsi:type="editmodel:CompartmentEditModel" size="98,18">
       <children xsi:type="editmodel:AttributeEditModel" name="running" id="at.fhstp.wificompass.userlocation/LocationProviderImpl#running"/>
     </children>
@@ -57,10 +57,10 @@
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.userlocation/LocationService@locationService+at.fhstp.wificompass.userlocation/LocationProviderImpl@" source="//@children.2" target="//@children.3" targetEnd="//@children.2/@sourceConnections.1/@children.2" label="//@children.2/@sourceConnections.1/@children.0" sourceEnd="//@children.2/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="169,0" id="at.fhstp.wificompass.userlocation/LocationService@locationService+at.fhstp.wificompass.userlocation/LocationProviderImpl@|at.fhstp.wificompass.userlocation/LocationProviderImpl#" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="locationService" location="0,249" id="at.fhstp.wificompass.userlocation/LocationService@locationService+at.fhstp.wificompass.userlocation/LocationProviderImpl@|at.fhstp.wificompass.userlocation/LocationService#locationService" multiplicityLabel="//@children.2/@sourceConnections.1/@children.2/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # locationService" location="645,245" size="82,12" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="709,271" size="18,12" anchorKind="LastPart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="179,10" id="at.fhstp.wificompass.userlocation/LocationService@locationService+at.fhstp.wificompass.userlocation/LocationProviderImpl@|at.fhstp.wificompass.userlocation/LocationProviderImpl#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="locationService" location="10,259" id="at.fhstp.wificompass.userlocation/LocationService@locationService+at.fhstp.wificompass.userlocation/LocationProviderImpl@|at.fhstp.wificompass.userlocation/LocationService#locationService" multiplicityLabel="//@children.2/@sourceConnections.1/@children.2/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # locationService" location="751,280" size="82,12" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="719,280" size="18,12" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
@@ -102,7 +102,7 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="LocationServiceImpl" location="633,330" size="150,283" id="at.fhstp.wificompass.userlocation/LocationServiceImpl" runTimeClassModel="gridSpacingX,setGridSpacing(FF),gridSpacingY,getLocation(),registerProvider(Lat.fhstp.wificompass.userlocation.LocationProvider;),unregisterProvider(Lat.fhstp.wificompass.userlocation.LocationProvider;),LocationServiceImpl(),getRelativeNorth(),registerProvider(Ljava.lang.String;),updateLocation(Lat.fhstp.wificompass.model.Location;Z),updateLocation(Lat.fhstp.wificompass.model.Location;),setRelativeNorth(F),getLocationProviders()">
+  <children xsi:type="editmodel:ClassEditModel" name="LocationServiceImpl" location="600,330" size="150,283" id="at.fhstp.wificompass.userlocation/LocationServiceImpl" runTimeClassModel="gridSpacingX,setGridSpacing(FF),gridSpacingY,getLocation(),registerProvider(Lat.fhstp.wificompass.userlocation.LocationProvider;),LocationServiceImpl(),unregisterProvider(Lat.fhstp.wificompass.userlocation.LocationProvider;),getRelativeNorth(),updateLocation(Lat.fhstp.wificompass.model.Location;Z),registerProvider(Ljava.lang.String;),updateLocation(Lat.fhstp.wificompass.model.Location;),setRelativeNorth(F),getLocationProviders()">
     <children xsi:type="editmodel:CompartmentEditModel" size="107,36">
       <children xsi:type="editmodel:AttributeEditModel" name="gridSpacingX" id="at.fhstp.wificompass.userlocation/LocationServiceImpl#gridSpacingX"/>
       <children xsi:type="editmodel:AttributeEditModel" name="gridSpacingY" id="at.fhstp.wificompass.userlocation/LocationServiceImpl#gridSpacingY"/>
@@ -122,8 +122,8 @@
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="at.fhstp.wificompass.userlocation/LocationService&lt;-at.fhstp.wificompass.userlocation/LocationServiceImpl" source="//@children.5" target="//@children.3" targetEnd="//@children.5/@sourceConnections.0/@children.1" sourceEnd="//@children.5/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:AssociationEndEditModel" location="125,0" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="23,259"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="142,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="7,259"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
@@ -141,7 +141,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.9/@sourceConnections.0" name="StepDetectionProvider" location="611,660" size="161,373" id="at.fhstp.wificompass.userlocation/StepDetectionProvider" runTimeClassModel="cALIB_DATA,pEAK_DEFAULT,fILTER_DEFAULT,start(),dataHookAcc(JDDD),StepDetectionProvider(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.LocationService;),trigger(JD),fILTER,stop(),pEAK,tIMEOUT_DEFAULT,sTEP_DEFAULT,StepDetectionProvider(Landroid.content.Context;),dataHookComp(JDDD),tIMEOUT,sTEP,timedDataHook(J[D[D),step">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.8/@sourceConnections.0" name="StepDetectionProvider" location="571,660" size="194,373" id="at.fhstp.wificompass.userlocation/StepDetectionProvider" runTimeClassModel="cALIB_DATA,pEAK_DEFAULT,start(),fILTER_DEFAULT,StepDetectionProvider(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.LocationService;),onStepDetected(JD),onTimerElapsed(J[D[D),fILTER,stop(),pEAK,tIMEOUT_DEFAULT,sTEP_DEFAULT,StepDetectionProvider(Landroid.content.Context;),tIMEOUT,onAccelerometerDataReceived(JDDD),sTEP,onCompassDataReceived(JDDD),step">
     <children xsi:type="editmodel:CompartmentEditModel" size="133,180">
       <children xsi:type="editmodel:AttributeEditModel" name="cALIB_DATA" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#cALIB_DATA"/>
       <children xsi:type="editmodel:AttributeEditModel" name="fILTER" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#fILTER"/>
@@ -154,41 +154,30 @@
       <children xsi:type="editmodel:AttributeEditModel" name="tIMEOUT" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#tIMEOUT"/>
       <children xsi:type="editmodel:AttributeEditModel" name="tIMEOUT_DEFAULT" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#tIMEOUT_DEFAULT"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="132,144">
+    <children xsi:type="editmodel:CompartmentEditModel" size="171,144">
       <children xsi:type="editmodel:MethodEditModel" name="StepDetectionProvider" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#StepDetectionProvider(Landroid.content.Context;)"/>
       <children xsi:type="editmodel:MethodEditModel" name="StepDetectionProvider" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#StepDetectionProvider(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.LocationService;)"/>
-      <children xsi:type="editmodel:MethodEditModel" name="dataHookAcc" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#dataHookAcc(JDDD)"/>
-      <children xsi:type="editmodel:MethodEditModel" name="dataHookComp" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#dataHookComp(JDDD)"/>
       <children xsi:type="editmodel:MethodEditModel" name="start" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#start()"/>
       <children xsi:type="editmodel:MethodEditModel" name="stop" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#stop()"/>
-      <children xsi:type="editmodel:MethodEditModel" name="timedDataHook" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#timedDataHook(J[D[D)"/>
-      <children xsi:type="editmodel:MethodEditModel" name="trigger" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#trigger(JD)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onAccelerometerDataReceived" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#onAccelerometerDataReceived(JDDD)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStepDetected" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#onStepDetected(JD)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onTimerElapsed" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#onTimerElapsed(J[D[D)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCompassDataReceived" id="at.fhstp.wificompass.userlocation/StepDetectionProvider#onCompassDataReceived(JDDD)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.6/@sourceConnections.0" autoLocated="true" id="at.fhstp.wificompass.userlocation/LocationProviderImpl&lt;-at.fhstp.wificompass.userlocation/StepDetectionProvider" source="//@children.7" target="//@children.2" targetEnd="//@children.7/@sourceConnections.0/@children.1" sourceEnd="//@children.7/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
-      <children xsi:type="editmodel:AssociationEndEditModel" location="79,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="95,0" anchorKind="FixedAtEdge" attachSource="true"/>
       <children xsi:type="editmodel:AssociationEndEditModel" location="87,265" anchorKind="FixedAtEdge"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.uvwxy.footpath.core/StepTrigger&lt;-at.fhstp.wificompass.userlocation/StepDetectionProvider" source="//@children.7" target="//@children.8" targetEnd="//@children.7/@sourceConnections.1/@children.1" sourceEnd="//@children.7/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
-      <children xsi:type="editmodel:AssociationEndEditModel" location="161,101" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="0,72"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="at.fhstp.wificompass.userlocation/StepTrigger&lt;-at.fhstp.wificompass.userlocation/StepDetectionProvider" source="//@children.7" target="//@children.10" targetEnd="//@children.7/@sourceConnections.1/@children.1" sourceEnd="//@children.7/@sourceConnections.1/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="184,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,123" anchorKind="FixedAtEdge"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.7/@sourceConnections.1 //@children.9/@sourceConnections.1" name="StepTrigger" location="783,689" size="131,145" id="de.uvwxy.footpath.core/StepTrigger" runTimeClassModel="dataHookComp(JDDD),dataHookAcc(JDDD),timedDataHook(J[D[D),trigger(JD)">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="100,72">
-      <children xsi:type="editmodel:MethodEditModel" name="dataHookAcc" id="de.uvwxy.footpath.core/StepTrigger#dataHookAcc(JDDD)"/>
-      <children xsi:type="editmodel:MethodEditModel" name="dataHookComp" id="de.uvwxy.footpath.core/StepTrigger#dataHookComp(JDDD)"/>
-      <children xsi:type="editmodel:MethodEditModel" name="timedDataHook" id="de.uvwxy.footpath.core/StepTrigger#timedDataHook(J[D[D)"/>
-      <children xsi:type="editmodel:MethodEditModel" name="trigger" id="de.uvwxy.footpath.core/StepTrigger#trigger(JD)"/>
-    </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" name="StepDetection" location="795,350" size="255,229" id="at.fhstp.wificompass.userlocation/StepDetection" runTimeClassModel="iNTERVAL_MS,load(),peak,a,StepDetection(Landroid.content.Context;Lde.uvwxy.footpath.core.StepTrigger;DDI),lSensor,mySensorEventListener,step_timeout_ms,unload(),load(I)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.10/@sourceConnections.0" name="StepDetection" location="824,464" size="255,229" id="at.fhstp.wificompass.userlocation/StepDetection" runTimeClassModel="iNTERVAL_MS,StepDetection(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.StepTrigger;DDI),load(),peak,a,lSensor,mySensorEventListener,step_timeout_ms,unload(),load(I)">
     <children xsi:type="editmodel:CompartmentEditModel" size="232,108">
-      <children xsi:type="editmodel:AttributeEditModel" name="a" id="at.fhstp.wificompass.userlocation/StepDetection#a"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="a" location="-16,39" id="at.fhstp.wificompass.userlocation/StepDetection#a"/>
       <children xsi:type="editmodel:AttributeEditModel" name="iNTERVAL_MS" id="at.fhstp.wificompass.userlocation/StepDetection#iNTERVAL_MS"/>
       <children xsi:type="editmodel:AttributeEditModel" name="lSensor" id="at.fhstp.wificompass.userlocation/StepDetection#lSensor"/>
       <children xsi:type="editmodel:AttributeEditModel" name="mySensorEventListener" id="at.fhstp.wificompass.userlocation/StepDetection#mySensorEventListener"/>
@@ -196,41 +185,31 @@
       <children xsi:type="editmodel:AttributeEditModel" name="step_timeout_ms" id="at.fhstp.wificompass.userlocation/StepDetection#step_timeout_ms"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="94,72">
-      <children xsi:type="editmodel:MethodEditModel" name="StepDetection" id="at.fhstp.wificompass.userlocation/StepDetection#StepDetection(Landroid.content.Context;Lde.uvwxy.footpath.core.StepTrigger;DDI)"/>
       <children xsi:type="editmodel:MethodEditModel" name="load" id="at.fhstp.wificompass.userlocation/StepDetection#load(I)"/>
       <children xsi:type="editmodel:MethodEditModel" name="load" id="at.fhstp.wificompass.userlocation/StepDetection#load()"/>
       <children xsi:type="editmodel:MethodEditModel" name="unload" id="at.fhstp.wificompass.userlocation/StepDetection#unload()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="StepDetection" id="at.fhstp.wificompass.userlocation/StepDetection#StepDetection(Landroid.content.Context;Lat.fhstp.wificompass.userlocation.StepTrigger;DDI)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.userlocation/StepDetection@stepDetector+at.fhstp.wificompass.userlocation/StepDetectionProvider@" source="//@children.9" target="//@children.7" targetEnd="//@children.9/@sourceConnections.0/@children.2" label="//@children.9/@sourceConnections.0/@children.0" sourceEnd="//@children.9/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.userlocation/StepDetection@stepDetector+at.fhstp.wificompass.userlocation/StepDetectionProvider@" source="//@children.8" target="//@children.7" targetEnd="//@children.8/@sourceConnections.0/@children.2" label="//@children.8/@sourceConnections.0/@children.0" sourceEnd="//@children.8/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="stepDetector" location="10,229" id="at.fhstp.wificompass.userlocation/StepDetection@stepDetector+at.fhstp.wificompass.userlocation/StepDetectionProvider@|at.fhstp.wificompass.userlocation/StepDetection#stepDetector" attachSource="true" multiplicityLabel="//@children.9/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.0/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # stepDetector" location="811,585" size="71,12" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="779,585" size="18,12" anchorKind="FirstPart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="stepDetector" location="6,212" id="at.fhstp.wificompass.userlocation/StepDetection@stepDetector+at.fhstp.wificompass.userlocation/StepDetectionProvider@|at.fhstp.wificompass.userlocation/StepDetection#stepDetector" attachSource="true" multiplicityLabel="//@children.8/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.8/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # stepDetector" location="746,657" size="71,12" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="799,683" size="18,12" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="161,10" id="at.fhstp.wificompass.userlocation/StepDetection@stepDetector+at.fhstp.wificompass.userlocation/StepDetectionProvider@|at.fhstp.wificompass.userlocation/StepDetectionProvider#" roleLabel="//@children.9/@sourceConnections.0/@children.2/@children.0">
-        <children xsi:type="editmodel:LabelEditModel" location="779,650" size="0,12" anchorKind="LastPart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="194,16" id="at.fhstp.wificompass.userlocation/StepDetection@stepDetector+at.fhstp.wificompass.userlocation/StepDetectionProvider@|at.fhstp.wificompass.userlocation/StepDetectionProvider#" roleLabel="//@children.8/@sourceConnections.0/@children.2/@children.0">
+        <children xsi:type="editmodel:LabelEditModel" location="771,657" size="0,12" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.uvwxy.footpath.core/StepTrigger@st+at.fhstp.wificompass.userlocation/StepDetection@" source="//@children.9" target="//@children.8" targetEnd="//@children.9/@sourceConnections.1/@children.2" label="//@children.9/@sourceConnections.1/@children.0" sourceEnd="//@children.9/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="59,229" id="de.uvwxy.footpath.core/StepTrigger@st+at.fhstp.wificompass.userlocation/StepDetection@|at.fhstp.wificompass.userlocation/StepDetection#" attachSource="true" roleLabel="//@children.9/@sourceConnections.1/@children.1/@children.0">
-        <children xsi:type="editmodel:LabelEditModel" location="846,585" size="0,12" anchorKind="FirstPart"/>
-      </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="st" location="71,0" id="de.uvwxy.footpath.core/StepTrigger@st+at.fhstp.wificompass.userlocation/StepDetection@|de.uvwxy.footpath.core/StepTrigger#st" multiplicityLabel="//@children.9/@sourceConnections.1/@children.2/@children.1" roleLabel="//@children.9/@sourceConnections.1/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" # st" location="860,669" size="20,12" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="828,669" size="18,12" anchorKind="LastPart"/>
-      </children>
-    </sourceConnections>
-    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.userlocation/StepDetection-Standard::Call->at.fhstp.wificompass.userlocation/StepDetector*at.fhstp.wificompass.userlocation/StepDetection-Soyatec::Import->at.fhstp.wificompass.userlocation/StepDetector*at.fhstp.wificompass.userlocation/StepDetection-Standard::Instantiate->at.fhstp.wificompass.userlocation/StepDetector" source="//@children.9" target="//@children.10" targetEnd="//@children.9/@sourceConnections.2/@children.2" label="//@children.9/@sourceConnections.2/@children.0" sourceEnd="//@children.9/@sourceConnections.2/@children.1" connectionRouterKind="Manual">
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.userlocation/StepDetection-Standard::Call->at.fhstp.wificompass.userlocation/StepDetector*at.fhstp.wificompass.userlocation/StepDetection-Soyatec::Import->at.fhstp.wificompass.userlocation/StepDetector*at.fhstp.wificompass.userlocation/StepDetection-Standard::Instantiate->at.fhstp.wificompass.userlocation/StepDetector" source="//@children.8" target="//@children.9" targetEnd="//@children.8/@sourceConnections.1/@children.2" label="//@children.8/@sourceConnections.1/@children.0" sourceEnd="//@children.8/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
       <children xsi:type="editmodel:WireLabelEditModel" name="«Instantiate, Call, Import»" size="119,12" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="191,229" attachSource="true"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" location="62,0"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="104,229" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="74,0"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.9/@sourceConnections.2" name="StepDetector" location="924,612" size="144,445" id="at.fhstp.wificompass.userlocation/StepDetector" runTimeClassModel="setPeak(D),checkForStep(),lastAcc,peak,a,lastStepTs,getLastStepTs(),round,isLogSteps(),getLastAcc(),setStepTimeoutMS(I),getRound(),setLogSteps(Z),wINDOW,getPeak(),StepDetector(DDI),getA(),logSteps,addSensorValues(J[F),stepTimeoutMS,getStepTimeoutMS(),setA(D)">
-    <children xsi:type="editmodel:CompartmentEditModel" size="121,144">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.8/@sourceConnections.1" name="StepDetector" location="854,734" size="150,481" id="at.fhstp.wificompass.userlocation/StepDetector" runTimeClassModel="setPeak(D),checkForStep(),lastAcc,peak,a,lastStepTs,isLogSteps(),getValuesPerSecond(),getLastStepTs(),round,getLastAcc(),setStepTimeoutMS(I),getRound(),getPeak(),setLogSteps(Z),valuesPerSecond,wINDOW,StepDetector(DDI),getA(),logSteps,addSensorValues(J[F),stepTimeoutMS,getStepTimeoutMS(),setA(D)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="121,162">
       <children xsi:type="editmodel:AttributeEditModel" name="a" id="at.fhstp.wificompass.userlocation/StepDetector#a"/>
       <children xsi:type="editmodel:AttributeEditModel" name="lastAcc" id="at.fhstp.wificompass.userlocation/StepDetector#lastAcc"/>
       <children xsi:type="editmodel:AttributeEditModel" name="lastStepTs" id="at.fhstp.wificompass.userlocation/StepDetector#lastStepTs"/>
@@ -238,9 +217,10 @@
       <children xsi:type="editmodel:AttributeEditModel" name="peak" id="at.fhstp.wificompass.userlocation/StepDetector#peak"/>
       <children xsi:type="editmodel:AttributeEditModel" name="round" id="at.fhstp.wificompass.userlocation/StepDetector#round"/>
       <children xsi:type="editmodel:AttributeEditModel" name="stepTimeoutMS" id="at.fhstp.wificompass.userlocation/StepDetector#stepTimeoutMS"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="valuesPerSecond" id="at.fhstp.wificompass.userlocation/StepDetector#valuesPerSecond"/>
       <children xsi:type="editmodel:AttributeEditModel" name="wINDOW" id="at.fhstp.wificompass.userlocation/StepDetector#wINDOW"/>
     </children>
-    <children xsi:type="editmodel:CompartmentEditModel" size="117,252">
+    <children xsi:type="editmodel:CompartmentEditModel" size="127,270">
       <children xsi:type="editmodel:MethodEditModel" name="StepDetector" id="at.fhstp.wificompass.userlocation/StepDetector#StepDetector(DDI)"/>
       <children xsi:type="editmodel:MethodEditModel" name="addSensorValues" id="at.fhstp.wificompass.userlocation/StepDetector#addSensorValues(J[F)"/>
       <children xsi:type="editmodel:MethodEditModel" name="checkForStep" id="at.fhstp.wificompass.userlocation/StepDetector#checkForStep()"/>
@@ -250,6 +230,7 @@
       <children xsi:type="editmodel:MethodEditModel" name="getPeak" id="at.fhstp.wificompass.userlocation/StepDetector#getPeak()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getRound" id="at.fhstp.wificompass.userlocation/StepDetector#getRound()"/>
       <children xsi:type="editmodel:MethodEditModel" name="getStepTimeoutMS" id="at.fhstp.wificompass.userlocation/StepDetector#getStepTimeoutMS()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getValuesPerSecond" id="at.fhstp.wificompass.userlocation/StepDetector#getValuesPerSecond()"/>
       <children xsi:type="editmodel:MethodEditModel" name="isLogSteps" id="at.fhstp.wificompass.userlocation/StepDetector#isLogSteps()"/>
       <children xsi:type="editmodel:MethodEditModel" name="setA" id="at.fhstp.wificompass.userlocation/StepDetector#setA(D)"/>
       <children xsi:type="editmodel:MethodEditModel" name="setLogSteps" id="at.fhstp.wificompass.userlocation/StepDetector#setLogSteps(Z)"/>
@@ -257,6 +238,25 @@
       <children xsi:type="editmodel:MethodEditModel" name="setStepTimeoutMS" id="at.fhstp.wificompass.userlocation/StepDetector#setStepTimeoutMS(I)"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.7/@sourceConnections.1" name="StepTrigger" location="794,300" size="194,133" id="at.fhstp.wificompass.userlocation/StepTrigger">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="171,72">
+      <children xsi:type="editmodel:MethodEditModel" name="onAccelerometerDataReceived" id="at.fhstp.wificompass.userlocation/StepTrigger#onAccelerometerDataReceived(JDDD)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCompassDataReceived" id="at.fhstp.wificompass.userlocation/StepTrigger#onCompassDataReceived(JDDD)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStepDetected" id="at.fhstp.wificompass.userlocation/StepTrigger#onStepDetected(JD)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onTimerElapsed" id="at.fhstp.wificompass.userlocation/StepTrigger#onTimerElapsed(J[D[D)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="at.fhstp.wificompass.userlocation/StepTrigger@st+at.fhstp.wificompass.userlocation/StepDetection@" source="//@children.10" target="//@children.8" targetEnd="//@children.10/@sourceConnections.0/@children.2" label="//@children.10/@sourceConnections.0/@children.0" sourceEnd="//@children.10/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="st" location="111,133" id="at.fhstp.wificompass.userlocation/StepTrigger@st+at.fhstp.wificompass.userlocation/StepDetection@|at.fhstp.wificompass.userlocation/StepTrigger#st" attachSource="true" multiplicityLabel="//@children.10/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.10/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # st" location="911,439" size="20,12" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="879,439" size="18,12" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="81,0" id="at.fhstp.wificompass.userlocation/StepTrigger@st+at.fhstp.wificompass.userlocation/StepDetection@|at.fhstp.wificompass.userlocation/StepDetection#"/>
+    </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
   <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=3;Product=eUML2"/>

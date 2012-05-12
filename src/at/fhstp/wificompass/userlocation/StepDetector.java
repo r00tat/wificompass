@@ -39,6 +39,10 @@ public class StepDetector {
 
 	
 	protected long lastUpdateTimestamp=0;
+	
+	
+	protected long lastSecond=0;
+	protected int valuesPerSecond=0;
 
 	public StepDetector( double a, double peak, int step_timeout_ms) {
 		this.a = a;
@@ -52,6 +56,14 @@ public class StepDetector {
 		lastAcc[1]+=a*(values[1]-lastAcc[1]);
 		lastAcc[2]+=a*(values[2]-lastAcc[2]);
 		lastUpdateTimestamp=timestamp;
+		if(timestamp<lastSecond+1000){
+			valuesPerSecond++;
+		}else {
+			if(logSteps&&Logger.isTraceEnabled())
+				Logger.t(valuesPerSecond+" sensor values received in the last second");
+			lastSecond=timestamp;
+			valuesPerSecond=0;
+		}
 	}
 
 	protected double lowpassFilter(double oldValue, double newValue) {
@@ -174,6 +186,13 @@ public class StepDetector {
 	 */
 	public void setLogSteps(boolean logSteps) {
 		this.logSteps = logSteps;
+	}
+
+	/**
+	 * @return the valuesPerSecond
+	 */
+	public int getValuesPerSecond() {
+		return valuesPerSecond;
 	}
 
 }
