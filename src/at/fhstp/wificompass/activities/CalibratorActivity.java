@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -88,7 +89,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	float stepSize;
 
-	protected boolean calibrating = false, showSensor = true;
+	protected boolean autoCalibrationRunning = false, showSensorData = true;
 
 	protected DatabaseHelper databaseHelper;
 
@@ -174,7 +175,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 			@Override
 			public void run() {
-				if(showSensor)
+				if(showSensorData)
 					svHistory.getMessageHandler().sendEmptyMessage(PaintBoxHistory.MESSAGE_REFRESH_HISTORY);
 			}
 
@@ -219,16 +220,18 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			svHistory.setOnClickListener(this);
 		}
 
-		if (!showSensor) {
+		if (!showSensorData) {
 			((ViewGroup) findViewById(R.id.calibrator_LinearLayout01)).removeView(svHistory); // remove surface view
 		}
 
 		ToggleButton autoScanning = (ToggleButton) findViewById(R.id.calibrator_auto_calibrate);
 		autoScanning.setOnClickListener(this);
-		autoScanning.setChecked(calibrating);
+		autoScanning.setChecked(autoCalibrationRunning);
 
-//		((ToggleButton) findViewById(R.id.calibrator_toggle_graph)).setOnClickListener(this);
-//		((ToggleButton) findViewById(R.id.calibrator_toggle_graph)).setChecked(showSensor);
+		((ToggleButton) findViewById(R.id.calibrator_toggle_graph)).setOnClickListener(this);
+		((ToggleButton) findViewById(R.id.calibrator_toggle_graph)).setChecked(showSensorData);
+		
+		((Button) findViewById(R.id.calibrator_step_button)).setOnClickListener(this);
 
 		((Button) findViewById(R.id.calibrator_analyze_data)).setOnClickListener(this);
 
@@ -340,7 +343,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	@Override
 	public void onAccelerometerDataReceived(long nowMs, double x, double y, double z) {
-		if (calibrating && sensorDao != null) {
+		if (autoCalibrationRunning && sensorDao != null) {
 			// save data for calculations.
 			try {
 				sensorDao.create(new SensorData(ACCELOREMETER_STRING, Sensor.TYPE_ACCELEROMETER, (float) x, (float) y, (float) z, 0));
@@ -356,13 +359,13 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	@Override
 	public void onTimerElapsed(long nowMs, double[] acc, double[] comp) {
-//		if (showSensor)
+		if (showSensorData)
 			svHistory.addTriple(nowMs, acc);
 	}
 
 	@Override
 	public void onStepDetected(long nowMs, double compDir) {
-		if (!calibrating )
+		if (!autoCalibrationRunning && showSensorData )
 			svHistory.addStepTS(nowMs);
 	}
 
@@ -375,11 +378,11 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public void onClick(View paramView) {
 		switch (paramView.getId()) {
 		case R.id.calibrator_auto_calibrate:
-			if (calibrating) {
+			if (autoCalibrationRunning) {
 				// stop calibration
 
 				showCalibrationDialog();
-				calibrating = false;
+				autoCalibrationRunning = false;
 			} else {
 				// start calibration
 				// clear saved sensor data
@@ -399,8 +402,8 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						calibrating = true;
-						((ToggleButton) activity.findViewById(R.id.calibrator_auto_calibrate)).setChecked(calibrating);
+						autoCalibrationRunning = true;
+						((ToggleButton) activity.findViewById(R.id.calibrator_auto_calibrate)).setChecked(autoCalibrationRunning);
 					}
 				});
 
@@ -414,7 +417,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 				builder.create().show();
 			}
 
-			((ToggleButton) findViewById(R.id.calibrator_auto_calibrate)).setChecked(calibrating);
+			((ToggleButton) findViewById(R.id.calibrator_auto_calibrate)).setChecked(autoCalibrationRunning);
 
 			break;
 
@@ -422,31 +425,39 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			showCalibrationDialog();
 			break;
 
-//		case R.id.calibrator_toggle_graph:
-//			LinearLayout linLayout = (LinearLayout) findViewById(R.id.calibrator_LinearLayout01); // get pointer to layout
-//			if (showSensor) {
-//				// hide svHistory
-//				linLayout.removeView(svHistory);
-//				scheduledTask.cancel(false);
-//				scheduledTask=null;
-//			} else {
-//				// show svHistory
-//				linLayout.addView(svHistory, svHistory.getLayoutParams());
-//				scheduledTask = scheduler.scheduleWithFixedDelay(runnable, 0, SCHEDULER_TIME, TimeUnit.MILLISECONDS);
-//			}
-//			showSensor = !showSensor;
-//			break;
-
-		}
-
-		if (paramView == svHistory && calibrating) {
-			try {
-				sensorDao.create(new SensorData(STEP_STRING, STEP_TYPE));
-			} catch (SQLException e) {
-				Logger.e("could not save step", e);
+		case R.id.calibrator_step_button:
+		case R.id.calibrator_history_paintbox:
+			if (autoCalibrationRunning) {
+				try {
+					sensorDao.create(new SensorData(STEP_STRING, STEP_TYPE));
+				} catch (SQLException e) {
+					Logger.e("could not save step", e);
+				}
+				if(showSensorData)
+				svHistory.addStepTS(System.currentTimeMillis());
 			}
-			svHistory.addStepTS(System.currentTimeMillis());
+			break;
+			
+		case R.id.calibrator_toggle_graph:
+			
+			Logger.d("disableing graph");
+			LinearLayout linLayout = (LinearLayout) findViewById(R.id.calibrator_LinearLayout01); 
+			if (showSensorData) {
+				// hide svHistory
+				linLayout.removeView(svHistory);
+				scheduledTask.cancel(false);
+				scheduledTask=null;
+			} else {
+				// show svHistory
+				linLayout.addView(svHistory, linLayout.getChildCount()-1, svHistory.getLayoutParams());
+				scheduledTask = scheduler.scheduleWithFixedDelay(runnable, 0, SCHEDULER_TIME, TimeUnit.MILLISECONDS);
+			}
+			showSensorData = !showSensorData;
+			break;
+
 		}
+
+
 
 	}
 

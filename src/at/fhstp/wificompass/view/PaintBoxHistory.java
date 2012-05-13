@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
-import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.userlocation.StepDetection;
 import de.uvwxy.footpath.ToolBox;
 
@@ -95,7 +94,7 @@ public class PaintBoxHistory  extends View implements Handler.Callback {
 			setDimensions();
 		}
 		
-		Logger.d("drawing paintboxhistory");
+//		Logger.d("drawing paintboxhistory");
 		
 		canvas.drawColor(Color.WHITE);
 		canvas.drawLine(0, offset_y, drawWidth, offset_y, ToolBox.myPaint(1, Color.BLACK));

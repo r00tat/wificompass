@@ -2,13 +2,13 @@
 <resources>
 
     <string name="hello">Hello World, APLocalizationActivity!</string>
-    <string name="app_name">Wi-Fi Compass</string>
+    <string name="app_name">WiFi Compass</string>
     <string name="sample_scan_start_button_text">Start Scan</string>
-    <string name="sample_scan_stop_button_text">Stop Wi-Fi Scan</string>
+    <string name="sample_scan_stop_button_text">Stop WiFi Scan</string>
     <string name="sample_scan_scanning_text">Scanning…</string>
     <string name="sample_scan_start_scan_failed">Starting the Scan failed!</string>
-    <string name="sample_scan_enableing_wifi">Wi-Fi is currently disabled, trying to enable it.</string>
-    <string name="sample_scan_enableing_wifi_failed">Could not enable Wi-Fi!</string>
+    <string name="sample_scan_enableing_wifi">WiFi is currently disabled, trying to enable it.</string>
+    <string name="sample_scan_enableing_wifi_failed">Could not enable WiFi!</string>
     <string name="about">About</string>
     <string name="quit">Quit</string>
     <string name="test1">Test 1</string>
@@ -17,7 +17,7 @@
     <string name="wifi_scan">Quick scan</string>
     <string name="newProjectText">Create a new project</string>
     <string name="loadProject">Load project</string>
-    <string name="main_info_text">Welcome to Wi-Fi Compass! \nCreate a project or use Quick Scan.</string>
+    <string name="main_info_text">Welcome to WiFi Compass! \nCreate a project or use Quick Scan.</string>
     <string name="aboutText">WiFi Compass was developed by Paul Woelfel and Thomas Konrad as a part of their master thesis at University of Applied Sciences St. Poelten, Austria. \nIt is published as open source software as <a href="http://code.google.com/p/wificompass">project wificompass on google code</a>.\n\nInformation about the License could be found at the <a href="http://code.google.com/p/wificompass/">project site</a> and about the contributions from other projects at the <a href="http://code.google.com/p/wificompass/wiki/Contributions">Contributions Wiki page</a>.</string>
     <string name="untitled">Untitled</string>
     <string name="filebrowser_parent_dir">Parent directory</string>
@@ -39,16 +39,16 @@
     <string name="filebrowser_new_dir">New directory</string>
     <string name="filebrowser_dircreate_failed">Could not create directory!</string>
     <string name="project_new_location_button">add new survey site</string>
-    <string name="sample_scan_text_start">To start a Wi-Fi scan, press the start button!\nThese are the last scan results:</string>
-    <string name="sample_scan_stopped">\nWi-Fi scan stopped.</string>
-    <string name="enableingWiFiSucceed">Wi-Fi successfully enabled</string>
+    <string name="sample_scan_text_start">To start a WiFi scan, press the start button!\nThese are the last scan results:</string>
+    <string name="sample_scan_stopped">\nWiFi scan stopped.</string>
+    <string name="enableingWiFiSucceed">WiFi successfully enabled</string>
 
     <string-array name="wifi_states">
-        <item>Wi-Fi is being disabled</item>
-        <item>Wi-Fi disabled</item>
-        <item>Wi-Fi is being enabled</item>
-        <item>Wi-Fi is enabled</item>
-        <item>Wi-Fi state is unknown</item>
+        <item>WiFi is being disabled</item>
+        <item>WiFi disabled</item>
+        <item>WiFi is being enabled</item>
+        <item>WiFi is enabled</item>
+        <item>WiFi state is unknown</item>
     </string-array>
 
     <string name="sample_scan_wifi_capabilities">Capabilities</string>
@@ -56,9 +56,9 @@
     <string name="sample_scan_wifi_bssid">BSSID</string>
     <string name="sample_scan_wifi_rssi">RSSI</string>
     <string name="sample_scan_wifi_frequency">Frequency</string>
-    <string name="sample_scan_scan_finished">\nWi-Fi scan finished!</string>
-    <string name="sample_scan_wifi_state">Wi-Fi state: </string>
-    <string name="sample_scan_supplicant_state">Wi-Fi supplicant state: </string>
+    <string name="sample_scan_scan_finished">\nWiFi scan finished!</string>
+    <string name="sample_scan_wifi_state">WiFi state: </string>
+    <string name="sample_scan_supplicant_state">WiFi supplicant state: </string>
     <string name="project_not_found">Project could not be found!</string>
     <string name="project_save_button">save project</string>
     <string name="project_delete_button">delete project</string>
@@ -234,4 +234,5 @@
 		<string name="main_start_auto_calibration_message">This Application uses the Accelerometer to track your movement. To improve step detection, this should be calibrated to you and your device.\nIf you want to calibrate this later user Menu -> Utils -> Sensor Calibration.\n\nDo you want to start Sensor Calibration?</string>
 		<string name="calibrator_graph_toggle_on">Hide Graph</string>
 		<string name="calibrator_graph_toggle_off">Show Graph</string>
+		<string name="calibrator_step_button">Step!</string>
 </resources>

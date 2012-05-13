@@ -128,17 +128,17 @@
             android:layout_marginTop="5dp"
             android:text="@string/calibrator_analyze_data" />
 
-<!--         <ToggleButton -->
-<!--             android:id="@+id/calibrator_toggle_graph" -->
-<!--             android:layout_width="wrap_content" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:layout_gravity="center" -->
-<!--             android:layout_marginLeft="5dp" -->
-<!--             android:layout_marginTop="5dp" -->
-<!--             android:checked="true" -->
-<!--             android:text="@string/calibrator_graph_toggle_on" -->
-<!--             android:textOff="@string/calibrator_graph_toggle_off" -->
-<!--             android:textOn="@string/calibrator_graph_toggle_on" /> -->
+        <ToggleButton
+            android:id="@+id/calibrator_toggle_graph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:checked="true"
+            android:text="@string/calibrator_graph_toggle_on"
+            android:textOff="@string/calibrator_graph_toggle_off"
+            android:textOn="@string/calibrator_graph_toggle_on" />
     </LinearLayout>
     
     <at.fhstp.wificompass.view.PaintBoxHistory
@@ -148,11 +148,12 @@
         android:layout_marginTop="15dp" >
     </at.fhstp.wificompass.view.PaintBoxHistory>
     
-<!--     <SurfaceView -->
-<!--         android:id="@+id/calibrator_svHistory" -->
-<!--         android:layout_width="fill_parent" -->
-<!--         android:layout_height="match_parent" -->
-<!--         android:layout_marginTop="15dp" > -->
-<!--     </SurfaceView> -->
+    <Button
+        android:id="@+id/calibrator_step_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/calibrator_step_button" 
+        android:layout_marginTop="15dp" 
+        />
 
 </LinearLayout>
