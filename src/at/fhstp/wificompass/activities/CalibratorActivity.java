@@ -1,6 +1,7 @@
 package at.fhstp.wificompass.activities;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -40,7 +41,6 @@ import at.fhstp.wificompass.view.PaintBoxHistory;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.QueryBuilder;
 
 /**
  * <p>
@@ -125,6 +125,10 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public static final String BUNDLE_SCORE = "score", BUNDLE_PCT = "percantage", BUNDLE_FILTER = "filter", BUNDLE_PEAK = "peak",
 			BUNDLE_FOUND = "found", BUNDLE_NOTFOUND = "notfound", BUNDLE_FALSEFOUND = "falsefound", BUNDLE_ALLFOUND = "allfound",
 			BUNDLE_TIMEOUT = "timeout";
+	
+	
+	protected ArrayList<SensorData> accelerometerSensorValues,stepValues;
+	
 
 	
 
@@ -193,6 +197,9 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		} catch (SQLException e) {
 			Logger.e("could not initialize dao for sensorData", e);
 		}
+		
+		accelerometerSensorValues=new ArrayList<SensorData>();
+		stepValues=new ArrayList<SensorData>();
 	}
 
 	protected void initUI() {
@@ -345,11 +352,12 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public void onAccelerometerDataReceived(long nowMs, double x, double y, double z) {
 		if (autoCalibrationRunning && sensorDao != null) {
 			// save data for calculations.
-			try {
-				sensorDao.create(new SensorData(ACCELOREMETER_STRING, Sensor.TYPE_ACCELEROMETER, (float) x, (float) y, (float) z, 0));
-			} catch (SQLException e) {
-				Logger.e("could not save sensor data", e);
-			}
+//			try {
+//				sensorDao.create(new SensorData(ACCELOREMETER_STRING, Sensor.TYPE_ACCELEROMETER, (float) x, (float) y, (float) z, 0));
+//			} catch (SQLException e) {
+//				Logger.e("could not save sensor data", e);
+//			}
+			accelerometerSensorValues.add(new SensorData(ACCELOREMETER_STRING, Sensor.TYPE_ACCELEROMETER, (float) x, (float) y, (float) z, 0));
 		}
 	}
 
@@ -402,6 +410,8 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
+						accelerometerSensorValues=new ArrayList<SensorData>();
+						stepValues=new ArrayList<SensorData>();
 						autoCalibrationRunning = true;
 						((ToggleButton) activity.findViewById(R.id.calibrator_auto_calibrate)).setChecked(autoCalibrationRunning);
 					}
@@ -428,11 +438,15 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		case R.id.calibrator_step_button:
 		case R.id.calibrator_history_paintbox:
 			if (autoCalibrationRunning) {
-				try {
-					sensorDao.create(new SensorData(STEP_STRING, STEP_TYPE));
-				} catch (SQLException e) {
-					Logger.e("could not save step", e);
-				}
+				
+				// persistent sensor values
+//				try {
+//					sensorDao.create(new SensorData(STEP_STRING, STEP_TYPE));
+//				} catch (SQLException e) {
+//					Logger.e("could not save step", e);
+//				}
+				// not persistent
+				stepValues.add(new SensorData(STEP_STRING, STEP_TYPE));
 				if(showSensorData)
 				svHistory.addStepTS(System.currentTimeMillis());
 			}
@@ -559,17 +573,18 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		protected Bundle doInBackground(Void... paramArrayOfParams) {
 			Bundle result = new Bundle();
 
-			try {
-				QueryBuilder<SensorData, Integer> accQuery = sensorDao.queryBuilder();
-				accQuery.where().eq(SensorData.FIELD_TYPE, Sensor.TYPE_ACCELEROMETER);
-				accQuery.orderBy(SensorData.FIELD_TIMESTAMP, true);
-				List<SensorData> accelerometerValues = accQuery.query();
+//			try {
+//				QueryBuilder<SensorData, Integer> accQuery = sensorDao.queryBuilder();
+//				accQuery.where().eq(SensorData.FIELD_TYPE, Sensor.TYPE_ACCELEROMETER);
+//				accQuery.orderBy(SensorData.FIELD_TIMESTAMP, true);
+//				List<SensorData> accelerometerValues = accQuery.query();
+				List<SensorData> accelerometerValues= accelerometerSensorValues;
 
-				QueryBuilder<SensorData, Integer> stepQuery = sensorDao.queryBuilder();
-				stepQuery.where().eq(SensorData.FIELD_TYPE, STEP_TYPE);
-				stepQuery.orderBy(SensorData.FIELD_TIMESTAMP, true);
-
-				List<SensorData> steps = stepQuery.query();
+//				QueryBuilder<SensorData, Integer> stepQuery = sensorDao.queryBuilder();
+//				stepQuery.where().eq(SensorData.FIELD_TYPE, STEP_TYPE);
+//				stepQuery.orderBy(SensorData.FIELD_TIMESTAMP, true);
+//				List<SensorData> steps = stepQuery.query();
+				List<SensorData> steps = stepValues;
 
 				progressDialog.setMax((int) (((PEAK_MAX - PEAK_MIN) / PEAK_INTERVAL) * ((FILTER_MAX - FILTER_MIN) / FILTER_INTERVAL)));
 				progressDialog.setProgress(0);
@@ -720,9 +735,9 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 				result.putInt(BUNDLE_ALLFOUND, allDetected);
 				result.putInt(BUNDLE_TIMEOUT, bestTimeout);
 
-			} catch (SQLException e) {
-				Logger.e("could not access saved data", e);
-			}
+//			} catch (SQLException e) {
+//				Logger.e("could not access saved data", e);
+//			}
 
 			return result;
 		}
