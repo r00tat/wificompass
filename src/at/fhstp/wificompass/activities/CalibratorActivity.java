@@ -103,8 +103,6 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	protected ScheduledFuture<?> scheduledTask = null;
 
-	
-
 	public static final String ACCELOREMETER_STRING = "acc", STEP_STRING = "step";
 
 	public static final int STEP_TYPE = 42;
@@ -125,12 +123,8 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public static final String BUNDLE_SCORE = "score", BUNDLE_PCT = "percantage", BUNDLE_FILTER = "filter", BUNDLE_PEAK = "peak",
 			BUNDLE_FOUND = "found", BUNDLE_NOTFOUND = "notfound", BUNDLE_FALSEFOUND = "falsefound", BUNDLE_ALLFOUND = "allfound",
 			BUNDLE_TIMEOUT = "timeout";
-	
-	
-	protected ArrayList<SensorData> accelerometerSensorValues,stepValues;
-	
 
-	
+	protected ArrayList<SensorData> accelerometerSensorValues, stepValues;
 
 	protected static final int SCHEDULER_TIME = 25;
 
@@ -174,12 +168,11 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		initLogic();
 		initUI();
 
-
 		runnable = new Runnable() {
 
 			@Override
 			public void run() {
-				if(showSensorData)
+				if (showSensorData)
 					svHistory.getMessageHandler().sendEmptyMessage(PaintBoxHistory.MESSAGE_REFRESH_HISTORY);
 			}
 
@@ -197,9 +190,9 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		} catch (SQLException e) {
 			Logger.e("could not initialize dao for sensorData", e);
 		}
-		
-		accelerometerSensorValues=new ArrayList<SensorData>();
-		stepValues=new ArrayList<SensorData>();
+
+		accelerometerSensorValues = new ArrayList<SensorData>();
+		stepValues = new ArrayList<SensorData>();
 	}
 
 	protected void initUI() {
@@ -237,7 +230,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 		((ToggleButton) findViewById(R.id.calibrator_toggle_graph)).setOnClickListener(this);
 		((ToggleButton) findViewById(R.id.calibrator_toggle_graph)).setChecked(showSensorData);
-		
+
 		((Button) findViewById(R.id.calibrator_step_button)).setOnClickListener(this);
 
 		((Button) findViewById(R.id.calibrator_analyze_data)).setOnClickListener(this);
@@ -249,7 +242,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public void onPause() {
 		super.onPause();
 		saveSettings();
-		if(scheduledTask!=null){
+		if (scheduledTask != null) {
 			scheduledTask.cancel(false);
 			scheduledTask = null;
 		}
@@ -266,9 +259,9 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public void onResume() {
 		super.onResume();
 		loadSettings();
-//		if(showSensor)
-			scheduledTask = scheduler.scheduleWithFixedDelay(runnable, 0, SCHEDULER_TIME, TimeUnit.MILLISECONDS);
-		
+		// if(showSensor)
+		scheduledTask = scheduler.scheduleWithFixedDelay(runnable, 0, SCHEDULER_TIME, TimeUnit.MILLISECONDS);
+
 		stepDetection.load(SensorManager.SENSOR_DELAY_FASTEST);
 
 	}
@@ -352,11 +345,11 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public void onAccelerometerDataReceived(long nowMs, double x, double y, double z) {
 		if (autoCalibrationRunning && sensorDao != null) {
 			// save data for calculations.
-//			try {
-//				sensorDao.create(new SensorData(ACCELOREMETER_STRING, Sensor.TYPE_ACCELEROMETER, (float) x, (float) y, (float) z, 0));
-//			} catch (SQLException e) {
-//				Logger.e("could not save sensor data", e);
-//			}
+			// try {
+			// sensorDao.create(new SensorData(ACCELOREMETER_STRING, Sensor.TYPE_ACCELEROMETER, (float) x, (float) y, (float) z, 0));
+			// } catch (SQLException e) {
+			// Logger.e("could not save sensor data", e);
+			// }
 			accelerometerSensorValues.add(new SensorData(ACCELOREMETER_STRING, Sensor.TYPE_ACCELEROMETER, (float) x, (float) y, (float) z, 0));
 		}
 	}
@@ -373,7 +366,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	@Override
 	public void onStepDetected(long nowMs, double compDir) {
-		if (!autoCalibrationRunning && showSensorData )
+		if (!autoCalibrationRunning && showSensorData)
 			svHistory.addStepTS(nowMs);
 	}
 
@@ -388,9 +381,9 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		case R.id.calibrator_auto_calibrate:
 			if (autoCalibrationRunning) {
 				// stop calibration
-
-				showCalibrationDialog();
 				autoCalibrationRunning = false;
+				showCalibrationDialog();
+				
 			} else {
 				// start calibration
 				// clear saved sensor data
@@ -410,8 +403,8 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						accelerometerSensorValues=new ArrayList<SensorData>();
-						stepValues=new ArrayList<SensorData>();
+						accelerometerSensorValues = new ArrayList<SensorData>();
+						stepValues = new ArrayList<SensorData>();
 						autoCalibrationRunning = true;
 						((ToggleButton) activity.findViewById(R.id.calibrator_auto_calibrate)).setChecked(autoCalibrationRunning);
 					}
@@ -438,40 +431,38 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		case R.id.calibrator_step_button:
 		case R.id.calibrator_history_paintbox:
 			if (autoCalibrationRunning) {
-				
+
 				// persistent sensor values
-//				try {
-//					sensorDao.create(new SensorData(STEP_STRING, STEP_TYPE));
-//				} catch (SQLException e) {
-//					Logger.e("could not save step", e);
-//				}
+				// try {
+				// sensorDao.create(new SensorData(STEP_STRING, STEP_TYPE));
+				// } catch (SQLException e) {
+				// Logger.e("could not save step", e);
+				// }
 				// not persistent
 				stepValues.add(new SensorData(STEP_STRING, STEP_TYPE));
-				if(showSensorData)
-				svHistory.addStepTS(System.currentTimeMillis());
+				if (showSensorData)
+					svHistory.addStepTS(System.currentTimeMillis());
 			}
 			break;
-			
+
 		case R.id.calibrator_toggle_graph:
-			
+
 			Logger.d("disableing graph");
-			LinearLayout linLayout = (LinearLayout) findViewById(R.id.calibrator_LinearLayout01); 
+			LinearLayout linLayout = (LinearLayout) findViewById(R.id.calibrator_LinearLayout01);
 			if (showSensorData) {
 				// hide svHistory
 				linLayout.removeView(svHistory);
 				scheduledTask.cancel(false);
-				scheduledTask=null;
+				scheduledTask = null;
 			} else {
 				// show svHistory
-				linLayout.addView(svHistory, linLayout.getChildCount()-1, svHistory.getLayoutParams());
+				linLayout.addView(svHistory, linLayout.getChildCount() - 1, svHistory.getLayoutParams());
 				scheduledTask = scheduler.scheduleWithFixedDelay(runnable, 0, SCHEDULER_TIME, TimeUnit.MILLISECONDS);
 			}
 			showSensorData = !showSensorData;
 			break;
 
 		}
-
-
 
 	}
 
@@ -573,171 +564,183 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		protected Bundle doInBackground(Void... paramArrayOfParams) {
 			Bundle result = new Bundle();
 
-//			try {
-//				QueryBuilder<SensorData, Integer> accQuery = sensorDao.queryBuilder();
-//				accQuery.where().eq(SensorData.FIELD_TYPE, Sensor.TYPE_ACCELEROMETER);
-//				accQuery.orderBy(SensorData.FIELD_TIMESTAMP, true);
-//				List<SensorData> accelerometerValues = accQuery.query();
-				List<SensorData> accelerometerValues= accelerometerSensorValues;
+			// try {
+			// QueryBuilder<SensorData, Integer> accQuery = sensorDao.queryBuilder();
+			// accQuery.where().eq(SensorData.FIELD_TYPE, Sensor.TYPE_ACCELEROMETER);
+			// accQuery.orderBy(SensorData.FIELD_TIMESTAMP, true);
+			// List<SensorData> accelerometerValues = accQuery.query();
+			List<SensorData> accelerometerValues = accelerometerSensorValues;
 
-//				QueryBuilder<SensorData, Integer> stepQuery = sensorDao.queryBuilder();
-//				stepQuery.where().eq(SensorData.FIELD_TYPE, STEP_TYPE);
-//				stepQuery.orderBy(SensorData.FIELD_TIMESTAMP, true);
-//				List<SensorData> steps = stepQuery.query();
-				List<SensorData> steps = stepValues;
+			// QueryBuilder<SensorData, Integer> stepQuery = sensorDao.queryBuilder();
+			// stepQuery.where().eq(SensorData.FIELD_TYPE, STEP_TYPE);
+			// stepQuery.orderBy(SensorData.FIELD_TIMESTAMP, true);
+			// List<SensorData> steps = stepQuery.query();
+			List<SensorData> steps = stepValues;
 
-				progressDialog.setMax((int) (((PEAK_MAX - PEAK_MIN) / PEAK_INTERVAL) * ((FILTER_MAX - FILTER_MIN) / FILTER_INTERVAL)));
-				progressDialog.setProgress(0);
+			progressDialog.setMax((int) (((PEAK_MAX - PEAK_MIN) / PEAK_INTERVAL) * ((FILTER_MAX - FILTER_MIN) / FILTER_INTERVAL)));
+			progressDialog.setProgress(0);
 
-				float bestFilter = 0f, bestPeak = 0f;
-				int bestScore = Integer.MIN_VALUE, bestStepFound = 0, bestStepNotFound = 0, bestStepFalseFound = 0, bestTimeout = 0;
+			float bestFilter = 0f, bestPeak = 0f;
+			int bestScore = Integer.MIN_VALUE, bestStepFound = 0, bestStepNotFound = 0, bestStepFalseFound = 0, bestTimeout = 0;
 
-				// long halfWindow = StepDetection.INTERVAL_MS * StepDetector.WINDOW / 2;
+			// long halfWindow = StepDetection.INTERVAL_MS * StepDetector.WINDOW / 2;
 
-				// the user must tap on the screen in less than a half second
-				long halfWindow = windowSize / 2;
+			// the user must tap on the screen in less than a half second
+			long halfWindow = windowSize / 2;
 
-				int allDetected = 1;
+			int allDetected = 1;
 
-				int progress = 0;
+			int progress = 0;
 
-				// calculate the best values for lowpass filter l and peak p
-				// filter range 0.05 to 0.80 in 0.05 steps
-				// peak range 0.2 to 3 in 0.05 steps
+			// calculate the best values for lowpass filter l and peak p
+			// filter range 0.05 to 0.80 in 0.05 steps
+			// peak range 0.2 to 3 in 0.05 steps
 
-				if (accelerometerValues.size() > 0)
+			
+			// synchronize the list arrays, we don't want the arrays to be modified, while we cycle through them.
+			// happened two times on a Galaxy S2, even if the values shouldn't be saved any more...
+			this.parent.autoCalibrationRunning=false;
+			
+			synchronized (accelerometerValues) {
+				synchronized (steps) {
 
-					// for (int t = TIMEOUT_MIN; running && t <= TIMEOUT_MAX; t += TIMEOUT_INTERVAL)
+					if (accelerometerValues.size() > 0) {
 
-					// cycle over peak values
-					for (float p = PEAK_MIN; running && p <= PEAK_MAX; p += PEAK_INTERVAL) {
+						// for (int t = TIMEOUT_MIN; running && t <= TIMEOUT_MAX; t += TIMEOUT_INTERVAL)
 
-						// cycle over filter values
-						for (float l = FILTER_MIN; running && l <= FILTER_MAX; l += FILTER_INTERVAL) {
+						// cycle over peak values
+						for (float p = PEAK_MIN; running && p <= PEAK_MAX; p += PEAK_INTERVAL) {
 
-							// Logger.d("searching for steps with peak p=" + p + " and filter l=" + l);
+							// cycle over filter values
+							for (float l = FILTER_MIN; running && l <= FILTER_MAX; l += FILTER_INTERVAL) {
 
-							int score = 0;
-							StepDetector detector = new StepDetector(l, p, step_timeout_ms);
-							detector.setLogSteps(false);
-							Iterator<SensorData> stepIterator = steps.iterator();
-							long stepTime = 0;
+								// Logger.d("searching for steps with peak p=" + p + " and filter l=" + l);
 
-							if (stepIterator.hasNext())
-								stepTime = stepIterator.next().getTimestamp();
+								int score = 0;
+								StepDetector detector = new StepDetector(l, p, step_timeout_ms);
+								detector.setLogSteps(false);
+								Iterator<SensorData> stepIterator = steps.iterator();
+								long stepTime = 0;
 
-							long lastTimer = 0;
-
-							int stepFound = 0, stepNotFound = 0, stepFalseFound = 0;
-
-							// cycle through accelerometerValues
-							for (SensorData acc : accelerometerValues) {
-
-								// add sensor values
-								detector.addSensorValues(acc.getTimestamp(), new float[] { acc.getValue0(), acc.getValue1(), acc.getValue2() });
-
-								// only all INTERVAL_MS
-								if (acc.getTimestamp() > lastTimer + StepDetection.INTERVAL_MS) {
-									lastTimer = acc.getTimestamp();
-
-									// check if a step has been detected
-									if (detector.checkForStep()) {
-
-										// check if we have missed some steps:
-										// are more steps saved?
-										// is the current StepTime before the sensor value timesteamp minus half the window size
-										while (stepIterator.hasNext() && stepTime < acc.getTimestamp() - halfWindow) {
-											// Logger.d("step "+ stepTime +" has not been found, getting next one");
-											stepTime = stepIterator.next().getTimestamp();
-											stepNotFound++;
-											score += STEP_NOT_DETECTED_PUNISH;
-
-										}
-
-										// is there a step in the current database
-										// is the step timer in the interval sensor timestamp - halfwindow and sensortime + halfwindow
-
-										// Logger.d("stepTime="+stepTime+" acc="+acc.getTimestamp()+" diff="+(stepTime-acc.getTimestamp())+" matched: "+(Math.abs(stepTime - acc.getTimestamp()) <
-										// halfWindow?"true":"false"));
-
-										if (Math.abs(stepTime - acc.getTimestamp()) < halfWindow) {
-											// that's fine, we found one
-
-											// Logger.d("matched step");
-											score += STEP_DETECTED_REWARD;
-											stepFound++;
-											if (stepIterator.hasNext()) {
-												stepTime = stepIterator.next().getTimestamp();
-											} else {
-												stepTime = 0;
-											}
-										} else {
-											// no, there is none
-											score += STEP_FALSE_DETECTED_PUNISH;
-											stepFalseFound++;
-											// Logger.d("step not matched");
-										}
-									}
-
-								}
-							}
-							// finished analyzing all sensor values
-
-							// are there some steps missing?
-
-							while (stepTime != 0) {
-								// Logger.d("missed a step="+stepTime);
-								// step missing, bad for the score
 								if (stepIterator.hasNext())
 									stepTime = stepIterator.next().getTimestamp();
-								else
-									stepTime = 0;
-								score += STEP_NOT_DETECTED_PUNISH;
-								stepNotFound++;
 
+								long lastTimer = 0;
+
+								int stepFound = 0, stepNotFound = 0, stepFalseFound = 0;
+
+								// cycle through accelerometerValues
+								for (SensorData acc : accelerometerValues) {
+
+									// add sensor values
+									detector.addSensorValues(acc.getTimestamp(), new float[] { acc.getValue0(), acc.getValue1(), acc.getValue2() });
+
+									// only all INTERVAL_MS
+									if (acc.getTimestamp() > lastTimer + StepDetection.INTERVAL_MS) {
+										lastTimer = acc.getTimestamp();
+
+										// check if a step has been detected
+										if (detector.checkForStep()) {
+
+											// check if we have missed some steps:
+											// are more steps saved?
+											// is the current StepTime before the sensor value timesteamp minus half the window size
+											while (stepIterator.hasNext() && stepTime < acc.getTimestamp() - halfWindow) {
+												// Logger.d("step "+ stepTime +" has not been found, getting next one");
+												stepTime = stepIterator.next().getTimestamp();
+												stepNotFound++;
+												score += STEP_NOT_DETECTED_PUNISH;
+
+											}
+
+											// is there a step in the current database
+											// is the step timer in the interval sensor timestamp - halfwindow and sensortime + halfwindow
+
+											// Logger.d("stepTime="+stepTime+" acc="+acc.getTimestamp()+" diff="+(stepTime-acc.getTimestamp())+" matched: "+(Math.abs(stepTime - acc.getTimestamp()) <
+											// halfWindow?"true":"false"));
+
+											if (Math.abs(stepTime - acc.getTimestamp()) < halfWindow) {
+												// that's fine, we found one
+
+												// Logger.d("matched step");
+												score += STEP_DETECTED_REWARD;
+												stepFound++;
+												if (stepIterator.hasNext()) {
+													stepTime = stepIterator.next().getTimestamp();
+												} else {
+													stepTime = 0;
+												}
+											} else {
+												// no, there is none
+												score += STEP_FALSE_DETECTED_PUNISH;
+												stepFalseFound++;
+												// Logger.d("step not matched");
+											}
+										}
+
+									}
+								}
+								// finished analyzing all sensor values
+
+								// are there some steps missing?
+
+								while (stepTime != 0) {
+									// Logger.d("missed a step="+stepTime);
+									// step missing, bad for the score
+									if (stepIterator.hasNext())
+										stepTime = stepIterator.next().getTimestamp();
+									else
+										stepTime = 0;
+									score += STEP_NOT_DETECTED_PUNISH;
+									stepNotFound++;
+
+								}
+
+								if (Logger.isVerboseEnabled())
+									Logger.v((score > bestScore ? "better" : "worse") + " score found: " + score + (score > bestScore ? ">" : "<")
+											+ bestScore + " : p=" + p + " l=" + l + " found=" + stepFound + " notFound=" + stepNotFound
+											+ " falseFound=" + stepFalseFound);
+
+								if (score == bestScore) {
+									allDetected++;
+								}
+
+								// have we found a better score?
+								if (score > bestScore || (score == bestScore && stepFound > bestStepFound)) {
+									bestFilter = l;
+									bestPeak = p;
+									bestTimeout = step_timeout_ms;
+									bestScore = score;
+									bestStepFound = stepFound;
+									bestStepNotFound = stepNotFound;
+									bestStepFalseFound = stepFalseFound;
+									allDetected = 1;
+								}
+
+								// progressDialog.setProgress((int)progressCur);
+								this.publishProgress(++progress);
 							}
-
-							if (Logger.isVerboseEnabled())
-								Logger.v((score > bestScore ? "better" : "worse") + " score found: " + score + (score > bestScore ? ">" : "<")
-										+ bestScore + " : p=" + p + " l=" + l + " found=" + stepFound + " notFound=" + stepNotFound + " falseFound="
-										+ stepFalseFound);
-
-							if (score == bestScore) {
-								allDetected++;
-							}
-
-							// have we found a better score?
-							if (score > bestScore || (score == bestScore && stepFound > bestStepFound)) {
-								bestFilter = l;
-								bestPeak = p;
-								bestTimeout = step_timeout_ms;
-								bestScore = score;
-								bestStepFound = stepFound;
-								bestStepNotFound = stepNotFound;
-								bestStepFalseFound = stepFalseFound;
-								allDetected = 1;
-							}
-
-							// progressDialog.setProgress((int)progressCur);
-							this.publishProgress(++progress);
 						}
+
+						Logger.i("Best score is: " + bestScore + " " + (((float) bestScore) / steps.size() * 100) + "% filter l=" + bestFilter
+								+ " peak p=" + bestPeak);
+						result.putInt(BUNDLE_SCORE, bestScore);
+						result.putFloat(BUNDLE_PCT, ((float) bestScore) / steps.size());
+						result.putFloat(BUNDLE_FILTER, bestFilter);
+						result.putFloat(BUNDLE_PEAK, bestPeak);
+						result.putInt(BUNDLE_FOUND, bestStepFound);
+						result.putInt(BUNDLE_NOTFOUND, bestStepNotFound);
+						result.putInt(BUNDLE_FALSEFOUND, bestStepFalseFound);
+						result.putInt(BUNDLE_ALLFOUND, allDetected);
+						result.putInt(BUNDLE_TIMEOUT, bestTimeout);
+
+						// } catch (SQLException e) {
+						// Logger.e("could not access saved data", e);
+						// }
+
 					}
-
-				Logger.i("Best score is: " + bestScore + " " + (((float) bestScore) / steps.size() * 100) + "% filter l=" + bestFilter + " peak p="
-						+ bestPeak);
-				result.putInt(BUNDLE_SCORE, bestScore);
-				result.putFloat(BUNDLE_PCT, ((float) bestScore) / steps.size());
-				result.putFloat(BUNDLE_FILTER, bestFilter);
-				result.putFloat(BUNDLE_PEAK, bestPeak);
-				result.putInt(BUNDLE_FOUND, bestStepFound);
-				result.putInt(BUNDLE_NOTFOUND, bestStepNotFound);
-				result.putInt(BUNDLE_FALSEFOUND, bestStepFalseFound);
-				result.putInt(BUNDLE_ALLFOUND, allDetected);
-				result.putInt(BUNDLE_TIMEOUT, bestTimeout);
-
-//			} catch (SQLException e) {
-//				Logger.e("could not access saved data", e);
-//			}
+				}
+			}
 
 			return result;
 		}
