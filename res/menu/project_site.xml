@@ -6,40 +6,17 @@
         android:title="@string/project_site_calculate_ap_positions">
     </item>
     <item
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="@string/project_site_menu_project_site">
-        <menu>
-            <item
-                android:id="@+id/project_site_menu_save"
-                android:icon="@android:drawable/ic_menu_save"
-                android:title="@string/project_site_menu_save">
-            </item>
-            <item
-                android:id="@+id/project_site_menu_delete"
-                android:icon="@android:drawable/ic_menu_delete"
-                android:title="@string/project_site_menu_delete">
-            </item>
-        </menu>
+        android:id="@+id/project_site_snap_user_button"
+        android:title="@string/project_site_snap_user">
     </item>
     <item
-        android:id="@+id/project_site_menu_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="@string/project_site_menu_settings">
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/project_site_menu_view">
         <menu>
-            <item
-                android:id="@+id/project_site_menu_change_name"
-                android:icon="@android:drawable/ic_menu_edit"
-                android:title="@string/project_site_menu_change_name">
-            </item>
             <item
                 android:id="@+id/project_site_menu_set_background"
                 android:icon="@drawable/map"
                 android:title="@string/project_site_menu_set_background">
-            </item>
-            <item
-                android:id="@+id/project_site_menu_change_size"
-                android:icon="@drawable/resize"
-                android:title="@string/project_site_menu_change_size">
             </item>
             <item
                 android:id="@+id/project_site_menu_set_scale_of_map"
@@ -51,30 +28,46 @@
                 android:icon="@android:drawable/ic_menu_compass"
                 android:title="@string/project_site_menu_set_north">
             </item>
-        </menu>
-    </item>
-    <item
-        android:icon="@android:drawable/ic_menu_view"
-        android:title="@string/project_site_menu_view">
-        <menu>
+            <item
+                android:id="@+id/project_site_menu_change_size"
+                android:icon="@drawable/resize"
+                android:title="@string/project_site_menu_change_size">
+            </item>
             <item
                 android:id="@+id/project_site_reset_zoom_button"
                 android:title="@string/project_site_reset_zoom">
             </item>
-            <item
-                android:id="@+id/project_site_snap_user_button"
-                android:title="@string/project_site_snap_user">
-            </item>
         </menu>
     </item>
     <item
-        android:id="@+id/project_site_add_known_ap"
-        android:icon="@drawable/wifi_blue"
-        android:title="@string/project_site_add_known_ap">
-    </item>
-    <item
-        android:id="@+id/project_site_menu_select_bssids"
-        android:title="@string/project_site_menu_select_bssids">
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/project_site_menu_project_site">
+        <menu>
+            <item
+                android:id="@+id/project_site_menu_change_name"
+                android:icon="@android:drawable/ic_menu_edit"
+                android:title="@string/project_site_menu_change_name">
+            </item>
+            <item
+                android:id="@+id/project_site_menu_select_bssids"
+                android:title="@string/project_site_menu_select_bssids">
+            </item>
+            <item
+                android:id="@+id/project_site_add_known_ap"
+                android:icon="@drawable/wifi_blue"
+                android:title="@string/project_site_add_known_ap">
+            </item>
+            <item
+                android:id="@+id/project_site_menu_save"
+                android:icon="@android:drawable/ic_menu_save"
+                android:title="@string/project_site_menu_save">
+            </item>
+            <item
+                android:id="@+id/project_site_menu_delete"
+                android:icon="@android:drawable/ic_menu_delete"
+                android:title="@string/project_site_menu_delete">
+            </item>
+        </menu>
     </item>
 
 </menu>

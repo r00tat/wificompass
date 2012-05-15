@@ -251,16 +251,16 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 
 			return true;
 
-		case R.id.project_new_location_option:
-
-			try {
-				this.addNewLocation();
-			} catch (SQLException e) {
-				Logger.e("could not create new site", e);
-				Toast.makeText(this, R.string.project_site_create_failed, Toast.LENGTH_LONG).show();
-			}
-
-			return false;
+//		case R.id.project_new_location_option:
+//
+//			try {
+//				this.addNewLocation();
+//			} catch (SQLException e) {
+//				Logger.e("could not create new site", e);
+//				Toast.makeText(this, R.string.project_site_create_failed, Toast.LENGTH_LONG).show();
+//			}
+//
+//			return false;
 
 		default:
 			return super.onOptionsItemSelected(item);

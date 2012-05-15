@@ -235,12 +235,12 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 //
 //			return true;
 //			
-		case R.id.main_new_project_option:
-			log.debug( "new project");
-			Intent npi = new Intent(this, ProjectActivity.class);
-			npi.putExtra(ProjectActivity.START_MODE, ProjectActivity.START_NEW);
-			startActivity(npi);
-			break;
+//		case R.id.main_new_project_option:
+//			log.debug( "new project");
+//			Intent npi = new Intent(this, ProjectActivity.class);
+//			npi.putExtra(ProjectActivity.START_MODE, ProjectActivity.START_NEW);
+//			startActivity(npi);
+//			break;
 			
 		case R.id.main_wifi_scan:
 			log.debug( "starting sample scan activity");

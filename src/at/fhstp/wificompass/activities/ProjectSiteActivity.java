@@ -122,7 +122,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	/**
 	 * how often should we start a wifi scan
 	 */
-	protected static final int SCHEDULER_TIME = 3;
+	protected static final int SCHEDULER_TIME = 10;
 
 	/**
 	 * @uml.property  name="multiTouchView"

@@ -7,7 +7,6 @@ package at.fhstp.wificompass.wifi;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -113,8 +112,8 @@ public class WifiScanner {
 						
 						Dao<BssidResult, Integer> bssidDao=databaseHelper.getDao(BssidResult.class);
 						
-						for (Iterator<ScanResult> it = l.iterator(); it.hasNext();) {
-							ScanResult sr = it.next();
+						for (ScanResult sr : l) {
+							
 							BssidResult bssid=new BssidResult(sr,wifiScanResult);
 							bssidDao.create(bssid);
 							
@@ -168,10 +167,15 @@ public class WifiScanner {
 
 	
 	public static void stopScanner(Context ctx,BroadcastReceiver receiver){
-		ctx.unregisterReceiver(receiver);
+		try{
+			ctx.unregisterReceiver(receiver);
+		}catch(Exception ex){
+			Logger.e("could not unregister receiver",ex);
+		}
 		if(receivers.contains(receiver)){
 			receivers.remove(receiver);
 		}
+	
 	}
 	
 	
