@@ -7,7 +7,6 @@ package at.fhstp.wificompass.activities;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Vector;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -1063,19 +1062,20 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 				new MeasuringPointDrawable(this, map, wr);
 
-				StringBuffer sb = new StringBuffer();
-				for (Iterator<BssidResult> it = wr.getBssids().iterator(); it.hasNext();) {
-					BssidResult result = it.next();
-					Logger.d("ScanResult: " + result.toString());
-					sb.append(result.toString());
-					sb.append("\n");
-				}
+//				StringBuffer sb = new StringBuffer();
+//				for (Iterator<BssidResult> it = wr.getBssids().iterator(); it.hasNext();) {
+//					BssidResult result = it.next();
+//					Logger.d("ScanResult: " + result.toString());
+//					sb.append(result.toString());
+//					sb.append("\n");
+//				}
 
 				user.bringToFront();
 
 				multiTouchView.invalidate();
 
-				Toast.makeText(this, this.getString(R.string.project_site_wifiscan_finished, sb.toString()), Toast.LENGTH_SHORT).show();
+				// it's not necessary to show the result as Toast
+//				Toast.makeText(this, this.getString(R.string.project_site_wifiscan_finished, sb.toString()), Toast.LENGTH_SHORT).show();
 				
 //				if(stepDetectionProvider.isRunning()){
 //					// we are walking and finished a scan, why don't we start a new one
@@ -1114,8 +1114,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			startWifiScan();
 //			Toast.makeText(this, R.string.project_site_wifiscan_started, Toast.LENGTH_SHORT).show();
 		} catch (WifiException e) {
-			Logger.e("could not start wifi scan!", e);
-			Toast.makeText(this, R.string.project_site_wifiscan_start_failed, Toast.LENGTH_LONG).show();
+			Logger.e("could not start wifi scan", e);
+			Toast.makeText(this, getString(R.string.project_site_wifiscan_start_failed,e.getMessage()), Toast.LENGTH_LONG).show();
 		}
 	}
 

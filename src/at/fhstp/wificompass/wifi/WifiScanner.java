@@ -51,7 +51,7 @@ public class WifiScanner {
 			Logger.d( "WiFi is disabled, trying to enable it");
 			wm.setWifiEnabled(true);
 			try {
-				Thread.sleep(500);
+				Thread.sleep(2500);
 			} catch (InterruptedException e) {
 
 			}
@@ -67,7 +67,7 @@ public class WifiScanner {
 
 		if (!wm.isWifiEnabled()) {
 			
-			throw new WifiException("WIFI not enabled!");
+			throw new WifiException("WiFi could not be enabled, please enable it!");
 		}
 		
 //			Logger.d( "WiFi is enabled");

@@ -128,7 +128,7 @@
     <string name="project_site_save_failed">project site could not be saved!</string>
     <string name="project_site_menu_save">save</string>
     <string name="project_site_start_scan">Scan here!</string>
-    <string name="project_site_wifiscan_start_failed">Failed to start a wifi scan!</string>
+    <string name="project_site_wifiscan_start_failed">Failed to start a wifi scan:\n%1$s</string>
     <string name="project_site_dialog_scanning_title">WiFi Scan</string>
     <string name="project_site_dialog_scanning_message">scanning for WiFi networks…</string>
     <string name="project_site_wifiscan_failed">The Wifi Scan encountered an error: %1$s</string>
