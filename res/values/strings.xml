@@ -150,6 +150,10 @@
     <string name="project_site_calculate_ap_positions">Calculate AP positions</string>
     <string name="project_site_delete_drawable_title">Delete Element</string>
     <string name="project_site_delete_drawable_message">Do you really want to delete %1$s?</string>
+    <string name="project_site_scanresults_persisting_title">Persisting WiFi Scan Results</string>
+    <string name="project_site_scanresults_persisting_message">The WiFi scan results are beining processed and saved to the database. \nPlease be patient.</string>
+    <string name="project_site_scanresults_persisted">WiFi scan results saved!</string>
+    <string name="project_site_scanresults_not_persisted">WiFi scan results could not be saved:\n%1$s</string>
     <string name="export_db_import_failed">Database import failed:\n%1$s</string>
     <string name="export_db_importing">importing %1$s</string>
     <string name="export_db_importing_done"> done.</string>

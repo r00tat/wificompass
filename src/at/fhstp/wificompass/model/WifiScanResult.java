@@ -6,6 +6,8 @@
 package at.fhstp.wificompass.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
@@ -52,6 +54,8 @@ public class WifiScanResult extends BaseDaoEnabled<WifiScanResult, Integer>{
 	@DatabaseField(foreign=true,foreignAutoRefresh=true)
 	protected ProjectSite projectLocation;
 	
+	
+	protected ArrayList<BssidResult> tempBssids;
 	
 	public WifiScanResult(){
 		
@@ -144,8 +148,32 @@ public class WifiScanResult extends BaseDaoEnabled<WifiScanResult, Integer>{
 	 * @return  the bssids
 	 * @uml.property  name="bssids"
 	 */
-	public ForeignCollection<BssidResult> getBssids() {
-		return bssids;
+	public Collection<BssidResult> getBssids() {
+		if(tempBssids!=null&&tempBssids.size()>0){
+			return tempBssids;
+		}else {
+			return bssids;
+		}
+	}
+	
+	/**
+	 * 
+	 * add a BssidResult to the temporary Collection
+	 * @param bssidResult
+	 */
+	public void addTempBssid(BssidResult bssidResult){
+		if(tempBssids==null){
+			tempBssids=new ArrayList<BssidResult>();
+		}
+		tempBssids.add(bssidResult);
+	}
+	
+	/**
+	 * get the temporary Bssid Results, which are not persisted.
+	 * @return tempBssids
+	 */
+	public ArrayList<BssidResult> getTempBssids(){
+		return tempBssids;
 	}
 
 	/* (non-Javadoc)
@@ -166,5 +194,7 @@ public class WifiScanResult extends BaseDaoEnabled<WifiScanResult, Integer>{
 		}
 		return super.delete();
 	}
+	
+	
 
 }

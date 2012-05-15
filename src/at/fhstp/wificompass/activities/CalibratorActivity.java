@@ -233,7 +233,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 		((Button) findViewById(R.id.calibrator_step_button)).setOnClickListener(this);
 
-		((Button) findViewById(R.id.calibrator_analyze_data)).setOnClickListener(this);
+//		((Button) findViewById(R.id.calibrator_analyze_data)).setOnClickListener(this);
 
 		loadSettings();
 	}
@@ -424,9 +424,9 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 			break;
 
-		case R.id.calibrator_analyze_data:
-			showCalibrationDialog();
-			break;
+//		case R.id.calibrator_analyze_data:
+//			showCalibrationDialog();
+//			break;
 
 		case R.id.calibrator_step_button:
 		case R.id.calibrator_history_paintbox:

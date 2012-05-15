@@ -111,14 +111,14 @@
             android:textOff="@string/calibrator_start_auto_calibration"
             android:textOn="@string/calibrator_stop_auto_calibration" />
 
-        <Button
-            android:id="@+id/calibrator_analyze_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/calibrator_analyze_data" />
+<!--         <Button -->
+<!--             android:id="@+id/calibrator_analyze_data" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_gravity="center" -->
+<!--             android:layout_marginLeft="5dp" -->
+<!--             android:layout_marginTop="5dp" -->
+<!--             android:text="@string/calibrator_analyze_data" /> -->
 
         <ToggleButton
             android:id="@+id/calibrator_toggle_graph"

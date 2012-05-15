@@ -5,7 +5,6 @@
  */
 package at.fhstp.wificompass.wifi;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -21,11 +20,7 @@ import at.fhstp.wificompass.exceptions.WifiException;
 import at.fhstp.wificompass.model.BssidResult;
 import at.fhstp.wificompass.model.Location;
 import at.fhstp.wificompass.model.WifiScanResult;
-import at.fhstp.wificompass.model.helper.DatabaseHelper;
 import at.fhstp.wificompass.userlocation.LocationServiceFactory;
-
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
 
 public class WifiScanner {
 	
@@ -97,39 +92,40 @@ public class WifiScanner {
 					if(receivers.contains(this))
 						receivers.remove(this);
 					
-					DatabaseHelper databaseHelper = null;
-					try {
-						
-						databaseHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+//					DatabaseHelper databaseHelper = null;
+//					try {
+//						
+//						databaseHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
 						Location curLocation=LocationServiceFactory.getLocationService().getLocation();
 						
-						databaseHelper.getDao(Location.class).create(curLocation);
+//						databaseHelper.getDao(Location.class).create(curLocation);
 						
 						WifiScanResult wifiScanResult=new WifiScanResult(new Date().getTime(),curLocation,null);
 						
-						Dao<WifiScanResult,Integer> scanResultDao=databaseHelper.getDao(WifiScanResult.class);
-						scanResultDao.create(wifiScanResult);
+//						Dao<WifiScanResult,Integer> scanResultDao=databaseHelper.getDao(WifiScanResult.class);
+//						scanResultDao.create(wifiScanResult);
 						
-						Dao<BssidResult, Integer> bssidDao=databaseHelper.getDao(BssidResult.class);
+//						Dao<BssidResult, Integer> bssidDao=databaseHelper.getDao(BssidResult.class);
 						
 						for (ScanResult sr : l) {
 							
 							BssidResult bssid=new BssidResult(sr,wifiScanResult);
-							bssidDao.create(bssid);
+							wifiScanResult.addTempBssid(bssid);
+//							bssidDao.create(bssid);
 							
 						}
 						
-						scanResultDao.refresh(wifiScanResult);
+//						scanResultDao.refresh(wifiScanResult);
 						
 						resultCallback.onScanFinished(wifiScanResult);
 						
-					} catch (SQLException e) {
-						resultCallback.onScanFailed(e);
-					} finally {
-						if(databaseHelper!=null)
-							OpenHelperManager.releaseHelper();
-					}
-					
+//					} catch (SQLException e) {
+//						resultCallback.onScanFailed(e);
+//					} finally {
+//						if(databaseHelper!=null)
+//							OpenHelperManager.releaseHelper();
+//					}
+//					
 
 					// gridview.setAdapter(new WiFiScanResultAdapter(SampleScanActivity.this));
 					// gridview.setEnabled(false);
@@ -158,7 +154,9 @@ public class WifiScanner {
 		
 		if(receivers!=null)
 		for(BroadcastReceiver rcvr: receivers){
+			try{
 			ctx.unregisterReceiver(rcvr);
+			}catch(Exception e){}
 		}
 		receivers=new Vector<BroadcastReceiver>();
 		
@@ -168,9 +166,10 @@ public class WifiScanner {
 	
 	public static void stopScanner(Context ctx,BroadcastReceiver receiver){
 		try{
+			
 			ctx.unregisterReceiver(receiver);
 		}catch(Exception ex){
-			Logger.e("could not unregister receiver",ex);
+//			Logger.e("could not unregister receiver",ex);
 		}
 		if(receivers.contains(receiver)){
 			receivers.remove(receiver);
