@@ -35,7 +35,7 @@ public class UserDrawable extends MultiTouchDrawable {
 
 	protected void init() {
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.user_icon);
-		this.setPivot(0.5f,65f/69f);
+		this.setPivot(0.5f,66f/69f);
 		
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();

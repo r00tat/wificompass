@@ -132,7 +132,7 @@
     <string name="project_site_dialog_scanning_title">WiFi Scan</string>
     <string name="project_site_dialog_scanning_message">scanning for WiFi networks…</string>
     <string name="project_site_wifiscan_failed">The Wifi Scan encountered an error: %1$s</string>
-    <string name="project_site_wifiscan_finished">WiFi scan finished!\n%1$s</string>
+    <string name="project_site_wifiscan_finished">%1$d SSIDs and %2$d BSSIDs found!</string>
     <string name="project_site_snap_user">Snap user to grid</string>
     <string name="project_site_menu_change_size">change map size</string>
     <string name="project_site_dialog_size_middle_text">x</string>

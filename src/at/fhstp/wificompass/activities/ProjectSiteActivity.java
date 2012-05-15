@@ -7,6 +7,7 @@ package at.fhstp.wificompass.activities;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -1063,19 +1064,24 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				new MeasuringPointDrawable(this, map, wr);
 
 //				StringBuffer sb = new StringBuffer();
-//				for (Iterator<BssidResult> it = wr.getBssids().iterator(); it.hasNext();) {
+				HashMap<String,Integer> ssids=new HashMap<String,Integer>();
+				for (BssidResult result : wr.getBssids()) {
+					ssids.put(result.getSsid(), (ssids.get(result.getSsid())==null?1:ssids.get(result.getSsid())+1));
 //					BssidResult result = it.next();
 //					Logger.d("ScanResult: " + result.toString());
 //					sb.append(result.toString());
 //					sb.append("\n");
-//				}
+				}
 
 				user.bringToFront();
 
 				multiTouchView.invalidate();
 
-				// it's not necessary to show the result as Toast
+				// it's not necessary to show the result as Toast, but we can show a summary
 //				Toast.makeText(this, this.getString(R.string.project_site_wifiscan_finished, sb.toString()), Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, this.getString(R.string.project_site_wifiscan_finished, ssids.size(), wr.getBssids().size()), Toast.LENGTH_SHORT).show();
+				
+				
 				
 //				if(stepDetectionProvider.isRunning()){
 //					// we are walking and finished a scan, why don't we start a new one
