@@ -233,6 +233,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			MultiTouchDrawable.setGridSpacing(site.getGridSpacingX(), site.getGridSpacingY());
 
 			map = new SiteMapDrawable(this, this);
+			map.setAngleAdjustment(site.getNorth());
 
 			if (site.getWidth() == 0 || site.getHeight() == 0) {
 				// the site has never been loaded
@@ -1143,6 +1144,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	 */
 	protected void setMapNorth() {
 		if (northDrawable == null) {
+			// Stop auto-rotate when map north is set
+			((ToggleButton) findViewById(R.id.project_site_toggle_autorotate)).setChecked(false);
+			map.stopAutoRotate();
+			
 			// create the icon the set the north
 			northDrawable = new NorthDrawable(this, map, site) {
 

@@ -14,7 +14,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/main_info_text"
-        android:textSize="16sp" android:drawableLeft="@drawable/icon"/>
+        android:textSize="16sp" android:drawableTop="@drawable/icon_small" android:gravity="center"/>
 
         <Button
         android:id="@+id/main_quickscan_button"

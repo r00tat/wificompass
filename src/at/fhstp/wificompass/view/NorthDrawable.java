@@ -165,22 +165,16 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback, Ang
 
 	@Override
 	public void onOk() {
-		// save north to site
-//		float mapAngle = angle;
-//		if (superDrawable != null) {
-//			mapAngle -= superDrawable.getAngle();
-//		}
-//		site.setNorth(mapAngle);
-		
 		if (this.getSuperDrawable() != null && this.getSuperDrawable() instanceof SiteMapDrawable) {
 			((SiteMapDrawable)this.getSuperDrawable()).setAngleAdjustment(adjustmentAngle);
+			site.setNorth(adjustmentAngle);
 		}
 		
 		this.deleteDrawable();
 	}
 
 	@Override
-	public void angleChanged(float angle, Object caller) {		
+	public void angleChanged(float angle, Object caller) {
 		
 		if (caller instanceof UserCompassDrawable) {
 			compassAngle = ToolBox.normalizeAngle(angle);

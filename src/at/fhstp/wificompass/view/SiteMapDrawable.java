@@ -15,35 +15,24 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import at.fhstp.wificompass.CompassListener;
+import at.fhstp.wificompass.CompassMonitor;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.ToolBox;
 
 /**
  * @author  Paul Woelfel (paul@woelfel.at)
  */
-public class SiteMapDrawable extends MultiTouchDrawable implements SensorEventListener {
+public class SiteMapDrawable extends MultiTouchDrawable implements CompassListener {
 
 	/**
 	 * @uml.property  name="backgroundImage"
 	 */
 	protected Bitmap backgroundImage;
 
-	protected SensorManager sensorManager;
-	protected Sensor compass;
-	protected Sensor accelerometer;
-	float[] geomag = new float[3];
-	float[] gravity = new float[3];
 	float angleAdjustment = 0.0f;
-	//int angleUpdateTreshold = 100;
-	//long lastAngleUpdate = 0;
 	
-	float oldSensorAngle = 0.0f; 
-	
-	public SiteMapDrawable(Context ctx,RefreshableView refresher) {
+	public SiteMapDrawable(Context ctx, RefreshableView refresher) {
 		super(ctx,refresher);
 		init();
 	}
@@ -58,28 +47,15 @@ public class SiteMapDrawable extends MultiTouchDrawable implements SensorEventLi
 		height = displayHeight;
 		backgroundImage = null;
 		this.resetXY();
-		
-		sensorManager = (SensorManager) ctx.getSystemService(Context.SENSOR_SERVICE);
-		compass = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-		accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		
 	}
 
 	public void startAutoRotate() {
-		try {
-			sensorManager.registerListener(this, compass, SensorManager.SENSOR_DELAY_UI);
-			sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
-		} catch (Exception e) {
-			Logger.w("could not register listener", e);
-		}
+		CompassMonitor.registerListener(ctx, this);
+		Logger.d("Auto rotate started. North value: " + angleAdjustment);
 	}
 
 	public void stopAutoRotate() {
-		try {
-			sensorManager.unregisterListener(this);
-		} catch (Exception e) {
-			Logger.w("could not unregister listener", e);
-		}
+		CompassMonitor.unregisterListener(this);
 	}
 	
 	public Drawable getDrawable() {
@@ -258,52 +234,17 @@ public class SiteMapDrawable extends MultiTouchDrawable implements SensorEventLi
 		return true;
 	}
 
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-		// we use TYPE_MAGNETIC_FIELD to get changes in the direction, but use SensorManager to get directions
-		if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE)
-			return;
-		
-		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
-			gravity = event.values.clone();
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			geomag = event.values.clone();
-			break;
-		}
-		
-		//long now = new Date().getTime();
-		
-		//Logger.d("Angle update time. Now: " + now + ", last: " + lastAngleUpdate + ", difference: " + (now - lastAngleUpdate));
-		
-		//if ((now - lastAngleUpdate) > angleUpdateTreshold) {
-		float angle = ToolBox.getSmoothAngleFromSensorData(oldSensorAngle, gravity, geomag);
-		
-		Logger.d("New angle: " + angle);
-		
-		oldSensorAngle = angle;
-				
-		float adjusted = ToolBox.normalizeAngle((angle - angleAdjustment) * -1.0f);
-				
-		//Logger.d("Angle goodness: angle " + Math.toDegrees(angle) + ", adjustment " + Math.toDegrees(angleAdjustment) + " adjusted: " + Math.toDegrees(adjusted));
-				
-		this.setAngle(adjusted);
-		this.recalculatePositions();
-			
-			//lastAngleUpdate = new Date().getTime();
-		//}
-	}
-
-	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void setAngleAdjustment(float adjustment) {
 		this.angleAdjustment = adjustment;
 		this.angleChangeCallback = null;
+	}
+
+	@Override
+	public void onCompassChanged(float azimuth, String direction) {
+		//azimuth = (float) Math.toRadians(azimuth);
+		float adjusted = ToolBox.normalizeAngle((azimuth - angleAdjustment) * -1.0f);
+		this.setAngle(adjusted);
+		this.recalculatePositions();
 	}
 	
 }

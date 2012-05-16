@@ -185,7 +185,7 @@ public class StepDetection implements CompassListener {
 	 */
 	@Override
 	public void onCompassChanged(float azimuth, String direction) {
-		st.onCompassDataReceived(System.currentTimeMillis(), azimuth, 0, 0);
+		st.onCompassDataReceived(System.currentTimeMillis(), Math.toDegrees(azimuth), 0, 0);
 		this.lastComp=azimuth;
 	}
 }

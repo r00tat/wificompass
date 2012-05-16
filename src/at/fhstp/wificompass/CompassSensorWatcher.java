@@ -35,26 +35,19 @@ public class CompassSensorWatcher implements SensorEventListener {
 
 	float[] orientVals = new float[3];
 
-	float azimuth = 0;
-
 	float angle = 0;
 
-//	String azimuthText = "";
-
-	int minX = 0, minY = 0, maxX = 0, maxY = 0, centerX = 0, centerY = 0, width = 0, height = 0;
-
-	float l = 0.3f;
+	protected float minimumAngleChange = (float) Math.toRadians(2.0f);
+	protected float smoothFactor = 0.4f;
 	
 	protected CompassListener listener;
 
-	protected float lastAzimuth = 0f;
-	
-	
+	protected float lastAngle = 0f;
 
-	public CompassSensorWatcher(Context context,CompassListener cl,float lowpassFilter) {
+	public CompassSensorWatcher(Context context,CompassListener cl,float smoothFactor) {
 		this.context = context;
 		this.listener=cl;
-		this.l=lowpassFilter;
+		this.smoothFactor = smoothFactor;
 		
 		sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 		compass = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -110,14 +103,15 @@ public class CompassSensorWatcher implements SensorEventListener {
 				SensorManager.getOrientation(inR, orientVals);
 
 				angle = (float) ToolBox.normalizeAngle(orientVals[0]);
-				azimuth = (float) Math.toDegrees(angle);
 
 				lowPassFilter();
+				
+				lastAngle = angle;
 
 //				azimuthText = getAzimuthLetter(azimuth) + " " + Integer.toString((int) azimuth) + "°";
 
 				if(listener!=null){
-					listener.onCompassChanged(azimuth,getAzimuthLetter(azimuth));
+					listener.onCompassChanged(angle,getAzimuthLetter(angle));
 				}
 			}
 		}
@@ -133,7 +127,7 @@ public class CompassSensorWatcher implements SensorEventListener {
 
 	public String getAzimuthLetter(float angle) {
 		String letter = "";
-		int a = (int) angle;
+		int a = (int) Math.toDegrees(angle);
 
 		if (a < 23 || a >= 315) {
 			letter = "N";
@@ -157,32 +151,27 @@ public class CompassSensorWatcher implements SensorEventListener {
 	}
 
 	protected void lowPassFilter() {
-		// lowpass filter
-		float dazimuth = azimuth -lastAzimuth;
-
-//		// if the angle changes more than 180°, we want to change direction and follow the shorter angle
-		if (dazimuth > 180) {
-			// change to range -180 to 0
-			dazimuth = (float) (dazimuth - 360);
-		} else if (dazimuth < -180) {
-			// change to range 0 to 180
-			dazimuth = (float) (360 + dazimuth);
+		angle = ToolBox.normalizeAngle(angle);
+		
+		float difference = Math.abs(angle - lastAngle);
+		
+		
+		float halfCirle = (float) Math.PI;
+		float wholeCircle = (float) (2 * Math.PI);
+						
+		if (difference < minimumAngleChange) {
+			angle = lastAngle;
+		} else  if (difference < halfCirle) {
+			angle = lastAngle + smoothFactor * (angle - lastAngle);
 		}
-		// lowpass filter
-		azimuth = lastAzimuth+ dazimuth*l;
-		
-		azimuth%=360;
-		
-		if(azimuth<0){
-			azimuth+=360;
+		else {
+	        if (lastAngle > angle) {
+	        	angle = (lastAngle + smoothFactor * ((wholeCircle + angle - lastAngle) % wholeCircle) + wholeCircle) % wholeCircle;
+	        } 
+	        else {
+	        	angle = (lastAngle - smoothFactor * ((wholeCircle - angle + lastAngle) % wholeCircle) + wholeCircle) % wholeCircle;
+	        }
 		}
-		
-		lastAzimuth=azimuth;
-		
-//		lastAzimuth=azimuth=ToolBox.lowpassFilter(lastAzimuth, azimuth, l);
-		
-//		oldValue + filter * (newValue - oldValue);
-
 	}
 
 }

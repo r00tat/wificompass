@@ -434,9 +434,7 @@ public class ProjectSite extends BaseDaoEnabled<ProjectSite, Integer> implements
 	 * @uml.property  name="north"
 	 */
 	public void setNorth(float north) {
-		this.north = (float) (north%(2*Math.PI));
-		if(this.north<0)
-			this.north+=2*Math.PI;
+		this.north = north;
 	}
 
 	

@@ -192,7 +192,7 @@ public class UserCompassDrawable extends MultiTouchDrawable implements CompassLi
 	 */
 	@Override
 	public void onCompassChanged(float azimuth, String direction) {
-		float newAngle = ToolBox.normalizeAngle((float) -Math.toRadians(azimuth));
+		float newAngle = azimuth * -1;
 		this.azimuth=azimuth;
 //		if ((int)azimuth!=popupAngle) {
 //			popupAngle=(int)azimuth;
@@ -206,7 +206,7 @@ public class UserCompassDrawable extends MultiTouchDrawable implements CompassLi
 			// we do not have to set the angle, the angle of the popup is always 0.
 //			popup.setAngle(-newAngle);
 
-			popupAngle=(int)this.azimuth;
+			popupAngle=(int)Math.toDegrees(this.azimuth);
 			
 			if (withPopup) {
 				popup.setText(ctx.getString(R.string.user_compass_degrees, popupAngle));
