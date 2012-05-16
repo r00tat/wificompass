@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -100,23 +101,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	// public static final int START_NEW = 1, START_LOAD = 2;
 
-	protected static final int DIALOG_TITLE = 1;
+	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4, DIALOG_SET_SCALE_OF_MAP = 5,
+			DIALOG_ADD_KNOWN_AP = 6, DIALOG_SELECT_BSSIDS = 7, DIALOG_FRESH_SITE = 8, DIALOG_ASK_CHANGE_SCALE=9,DIALOG_ASK_FOR_NORTH=10;
 
-	protected static final int DIALOG_SCANNING = 2;
-
-	protected static final int DIALOG_CHANGE_SIZE = 3;
-
-	protected static final int DIALOG_SET_BACKGROUND = 4;
-
-	protected static final int DIALOG_SET_SCALE_OF_MAP = 5;
-
-	protected static final int DIALOG_ADD_KNOWN_AP = 6;
-
-	protected static final int DIALOG_SELECT_BSSIDS = 7;
-
-	protected static final int MESSAGE_REFRESH = 1,MESSAGE_START_WIFISCAN = 2, MESSAGE_PERSIST_RESULT=3;
-	
-	
+	protected static final int MESSAGE_REFRESH = 1, MESSAGE_START_WIFISCAN = 2, MESSAGE_PERSIST_RESULT = 3;
 
 	protected static final int FILEBROWSER_REQUEST = 1;
 
@@ -206,8 +194,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected ArrayList<WifiScanResult> unsavedScanResults;
 
 	protected boolean walkingAndScanning = false;
-	
+
 	protected boolean waitingForWiFiResult = false;
+
+	protected boolean freshSite = false;
 
 	/*
 	 * (non-Javadoc)
@@ -239,6 +229,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			map = new SiteMapDrawable(this, this);
 
 			if (site.getWidth() == 0 || site.getHeight() == 0) {
+				// the site has never been loaded
+				freshSite = true;
 				site.setSize(map.getWidth(), map.getHeight());
 			} else {
 				map.setSize(site.getWidth(), site.getHeight());
@@ -281,17 +273,19 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 						// start a wifiscan
 						startWifiBackgroundScan();
 						break;
-						
+
 					case MESSAGE_PERSIST_RESULT:
-						
-						if(msg.arg1==RESULT_OK){
-							if(msg.getData().getInt(WifiScanResultPersistTask.RESULT_COUNT)>0)
+
+						if (msg.arg1 == RESULT_OK) {
+							if (msg.getData().getInt(WifiScanResultPersistTask.RESULT_COUNT) > 0)
 								Toast.makeText(context, R.string.project_site_scanresults_persisted, Toast.LENGTH_SHORT).show();
-						}else {
-							Toast.makeText(context, context.getString(R.string.project_site_scanresults_not_persisted,msg.getData().getString(WifiScanResultPersistTask.RESULT_MESSAGE)), Toast.LENGTH_LONG).show();
+						} else {
+							Toast.makeText(
+									context,
+									context.getString(R.string.project_site_scanresults_not_persisted,
+											msg.getData().getString(WifiScanResultPersistTask.RESULT_MESSAGE)), Toast.LENGTH_LONG).show();
 						}
-						
-						
+
 						break;
 					}
 				}
@@ -338,6 +332,11 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		if (site.getTitle().equals(ProjectSite.UNTITLED)) {
 			showDialog(DIALOG_TITLE);
+		} else {
+			if (freshSite) {
+				// start configuration dialog
+				showDialog(DIALOG_FRESH_SITE);
+			}
 		}
 
 	}
@@ -365,6 +364,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		multiTouchView.loadImages(this);
 		map.load();
 		// stepDetectionProvider.start();
+		
+		if(walkingAndScanning){
+			setWalkingAndScanning(true);
+		}
 	}
 
 	@Override
@@ -411,32 +414,44 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_step_detect:
 
-			if (walkingAndScanning) {
-				// stop!
-				walkingAndScanning=false;
-				stepDetectionProvider.stop();
-				if (scheduledTask != null) {
-					scheduledTask.cancel(false);
-					scheduledTask = null;
-				}
-				stopWifiScan();
-
-				((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_start_step_detect);
-
-				persistScanResults();
-
-			} else {
-				// start
-				unsavedScanResults = new ArrayList<WifiScanResult>();
-				walkingAndScanning=true;
-
-				stepDetectionProvider.start();
-				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, SCHEDULER_TIME, TimeUnit.SECONDS);
-				((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
-
-			}
+			setWalkingAndScanning(!walkingAndScanning);
+			walkingAndScanning = !walkingAndScanning;
 
 			break;
+		}
+	}
+	
+	
+	protected void setWalkingAndScanning(boolean shouldRun){
+		if (!shouldRun) {
+			// stop!
+			
+			if(stepDetectionProvider.isRunning())
+				stepDetectionProvider.stop();
+			if (scheduledTask != null) {
+				scheduledTask.cancel(false);
+				scheduledTask = null;
+			}
+			stopWifiScan();
+
+			((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_start_step_detect);
+
+			persistScanResults();
+
+		} else {
+			// start
+			unsavedScanResults = new ArrayList<WifiScanResult>();
+			
+
+			if(!stepDetectionProvider.isRunning()){
+				stepDetectionProvider.start();
+			}
+			
+			if(scheduledTask==null){
+				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, SCHEDULER_TIME, TimeUnit.SECONDS);
+			}
+			((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
+
 		}
 	}
 
@@ -445,14 +460,14 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	 */
 	protected void persistScanResults() {
 		final ProgressDialog persistProgress = new ProgressDialog(this);
-		
-		final WifiScanResultPersistTask persistTask= new WifiScanResultPersistTask(this, persistProgress);
-		
+
+		final WifiScanResultPersistTask persistTask = new WifiScanResultPersistTask(this, persistProgress);
+
 		// create dialog and run asynctask
 		persistProgress.setTitle(R.string.project_site_scanresults_persisting_title);
 		persistProgress.setMessage(getString(R.string.project_site_scanresults_persisting_message));
 		persistProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		
+
 		persistProgress.setButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				// Canceled.
@@ -542,6 +557,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		MultiTouchDrawable.setGridSpacing(mapScale, mapScale);
 		multiTouchView.invalidate();
 		Toast.makeText(this, getString(R.string.project_site_mapscale_changed, mapScale), Toast.LENGTH_SHORT).show();
+		
+		if(freshSite){
+			showDialog(DIALOG_ASK_FOR_NORTH);
+		}
 	}
 
 	/*
@@ -566,7 +585,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			titleAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setSiteTitle(input.getText().toString());
-
+					if (freshSite) {
+						showDialog(DIALOG_FRESH_SITE);
+					}
 				}
 			});
 
@@ -696,12 +717,16 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			bckgAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setBackgroundImage(pathTextView.getText().toString());
+					if(freshSite){
+						showDialog(DIALOG_ASK_CHANGE_SCALE);
+					}
 				}
 			});
 
 			bckgAlert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					// Canceled.
+					freshSite=false;
 				}
 			});
 
@@ -854,6 +879,74 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			return dialog;
 
+		case DIALOG_FRESH_SITE:
+
+			AlertDialog.Builder freshBuilder = new Builder(context);
+			freshBuilder.setTitle(R.string.project_site_dialog_fresh_site_title);
+			freshBuilder.setMessage(R.string.project_site_dialog_fresh_site_message);
+
+			freshBuilder.setPositiveButton(getString(R.string.button_yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					showDialog(DIALOG_SET_BACKGROUND);
+				}
+
+			});
+
+			freshBuilder.setNegativeButton(getString(R.string.button_no), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+					freshSite = false;
+				}
+			});
+
+			return freshBuilder.create();
+
+		case DIALOG_ASK_CHANGE_SCALE:
+			
+			AlertDialog.Builder askScaleBuilder = new Builder(context);
+			askScaleBuilder.setTitle(R.string.project_site_dialog_ask_change_scale_title);
+			askScaleBuilder.setMessage(R.string.project_site_dialog_ask_change_scale_message);
+
+			askScaleBuilder.setPositiveButton(getString(R.string.button_yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					scaleOfMap();
+				}
+
+			});
+
+			askScaleBuilder.setNegativeButton(getString(R.string.button_no), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+					freshSite = false;
+				}
+			});
+
+			return askScaleBuilder.create();
+			
+		case DIALOG_ASK_FOR_NORTH:
+			
+			AlertDialog.Builder askNorthBuilder = new Builder(context);
+			askNorthBuilder.setTitle(R.string.project_site_dialog_ask_north_title);
+			askNorthBuilder.setMessage(R.string.project_site_dialog_ask_north_message);
+
+			askNorthBuilder.setPositiveButton(getString(R.string.button_yes), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					setMapNorth();
+					freshSite=false;
+				}
+
+			});
+
+			askNorthBuilder.setNegativeButton(getString(R.string.button_no), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+					freshSite = false;
+				}
+			});
+
+			return askNorthBuilder.create();
+
+			
 		default:
 			return super.onCreateDialog(id);
 		}
@@ -896,55 +989,21 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_menu_set_scale_of_map:
 
-			if (scaler == null) {
-				scaler = new ScaleLineDrawable(context, map, new OkCallback() {
-
-					@Override
-					public void onOk() {
-						onMapScaleSelected();
-					}
-				});
-				scaler.getSlider(1).setRelativePosition(user.getRelativeX() - 80, user.getRelativeY());
-				scaler.getSlider(2).setRelativePosition(user.getRelativeX() + 80, user.getRelativeY());
-				multiTouchView.invalidate();
-			} else {
-				onMapScaleSelected();
+			if(scaler==null){
+			scaleOfMap();
+			}else {
+				// just hide the scalers, don't change the scaleing
+				scaler.removeScaleSliders();
+				map.removeSubDrawable(scaler);
+				scaler = null;
+				invalidate();
 			}
 
 			return false;
 
 		case R.id.project_site_menu_set_north:
 
-			if (northDrawable == null) {
-				// create the icon the set the north
-				northDrawable = new NorthDrawable(this, map, site) {
-
-					/*
-					 * (non-Javadoc)
-					 * 
-					 * @see at.fhstp.wificompass.view.NorthDrawable#onOk()
-					 */
-					@Override
-					public void onOk() {
-						super.onOk();
-						northDrawable = null;
-						Toast.makeText(ctx, R.string.project_site_nort_set, Toast.LENGTH_SHORT).show();
-						saveProjectSite();
-					}
-
-				};
-				northDrawable.setRelativePosition(site.getWidth() / 2, site.getHeight() / 2);
-				northDrawable.setAngle(map.getAngle() + site.getNorth());
-
-			} else {
-				map.removeSubDrawable(northDrawable);
-				site.setNorth(northDrawable.getAngle());
-				LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
-				northDrawable = null;
-			}
-
-			multiTouchView.invalidate();
-
+			setMapNorth();
 			return false;
 
 		case R.id.project_site_menu_select_bssids:
@@ -1000,13 +1059,69 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		return false;
 	}
 
+	/**
+	 * 
+	 */
+	protected void setMapNorth() {
+		if (northDrawable == null) {
+			// create the icon the set the north
+			northDrawable = new NorthDrawable(this, map, site) {
+
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see at.fhstp.wificompass.view.NorthDrawable#onOk()
+				 */
+				@Override
+				public void onOk() {
+					super.onOk();
+					northDrawable = null;
+					Toast.makeText(ctx, R.string.project_site_nort_set, Toast.LENGTH_SHORT).show();
+					saveProjectSite();
+				}
+
+			};
+			northDrawable.setRelativePosition(site.getWidth() / 2, site.getHeight() / 2);
+			northDrawable.setAngle(map.getAngle() + site.getNorth());
+
+		} else {
+			map.removeSubDrawable(northDrawable);
+			site.setNorth(northDrawable.getAngle());
+			LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
+			northDrawable = null;
+		}
+
+		multiTouchView.invalidate();
+
+	}
+
+	/**
+	 * 
+	 */
+	protected void scaleOfMap() {
+		if (scaler == null) {
+			scaler = new ScaleLineDrawable(context, map, new OkCallback() {
+
+				@Override
+				public void onOk() {
+					onMapScaleSelected();
+				}
+			});
+			scaler.getSlider(1).setRelativePosition(user.getRelativeX() - 80, user.getRelativeY());
+			scaler.getSlider(2).setRelativePosition(user.getRelativeX() + 80, user.getRelativeY());
+			multiTouchView.invalidate();
+		} else {
+			onMapScaleSelected();
+		}
+	}
+
 	protected void onMapScaleSelected() {
 		scalerDistance = scaler.getSliderDistance();
 		scaler.removeScaleSliders();
 		map.removeSubDrawable(scaler);
 		scaler = null;
 		invalidate();
-		showDialog(DIALOG_SET_SCALE_OF_MAP);
+		showDialog(DIALOG_ASK_FOR_NORTH);
 	}
 
 	/*
@@ -1019,7 +1134,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		super.onPause();
 		multiTouchView.unloadImages();
 		map.unload();
-		stepDetectionProvider.stop();
+		
+		setWalkingAndScanning(false);
+		
 		saveProjectSite();
 	}
 
@@ -1105,7 +1222,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			try {
 
 				Logger.d("received a wifi scan result!");
-				waitingForWiFiResult=false;
+				waitingForWiFiResult = false;
 
 				wr.setProjectLocation(site);
 
@@ -1174,18 +1291,18 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	@Override
 	public void onScanFailed(Exception ex) {
 		hideWifiScanDialog();
-		if (!ignoreWifiResults&&waitingForWiFiResult) {
+		if (!ignoreWifiResults && waitingForWiFiResult) {
 
 			Logger.e("Wifi scan failed!", ex);
 			Toast.makeText(this, this.getString(R.string.project_site_wifiscan_failed, ex.getMessage()), Toast.LENGTH_LONG).show();
-			waitingForWiFiResult=false;
+			waitingForWiFiResult = false;
 		}
 
 	}
 
 	protected void startWifiScan() throws WifiException {
 		log.debug("starting WiFi Scan");
-		waitingForWiFiResult=true;
+		waitingForWiFiResult = true;
 		wifiBroadcastReceiver = WifiScanner.startScan(this, this);
 		ignoreWifiResults = false;
 	}
@@ -1287,6 +1404,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			map.setBackgroundImage(bmp);
 			site.setSize(bmp.getWidth(), bmp.getHeight());
 			map.setSize(bmp.getWidth(), bmp.getHeight());
+			user.setRelativePosition(bmp.getWidth()/2, bmp.getHeight()/2);
 			multiTouchView.invalidate();
 			Toast.makeText(context, "set " + path + " as new background image!", Toast.LENGTH_LONG).show();
 			saveProjectSite();
@@ -1362,10 +1480,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		protected ProgressDialog progressDialog;
 
 		protected boolean running = true;
-		
-		
-		
-		static final String RESULT_CODE="result",RESULT_MESSAGE="message",RESULT_COUNT="count";
+
+		static final String RESULT_CODE = "result", RESULT_MESSAGE = "message", RESULT_COUNT = "count";
 
 		public WifiScanResultPersistTask(ProjectSiteActivity parent, ProgressDialog progress) {
 			this.parent = parent;
@@ -1379,9 +1495,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		 */
 		@Override
 		protected Bundle doInBackground(Void... params) {
-			Bundle result=new Bundle();
+			Bundle result = new Bundle();
 			result.putInt(RESULT_CODE, RESULT_CANCELED);
-			
+
 			int progress = 0;
 
 			synchronized (unsavedScanResults) {
@@ -1392,22 +1508,22 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				try {
 
 					for (WifiScanResult sr : unsavedScanResults) {
-						if(!running){
+						if (!running) {
 							break;
 						}
 						saveWifiScanResult(sr);
 						this.publishProgress(++progress);
 					}
-					
+
 					result.putInt(RESULT_COUNT, progress);
-					if(running){
-						Logger.d("saved "+unsavedScanResults.size()+" WiFi scan results");
-						unsavedScanResults=new ArrayList<WifiScanResult>();
-					result.putInt(RESULT_CODE, RESULT_OK);
-					}else {
-						//remove the saved results
-						
-						while(progress>0){
+					if (running) {
+						Logger.d("saved " + unsavedScanResults.size() + " WiFi scan results");
+						unsavedScanResults = new ArrayList<WifiScanResult>();
+						result.putInt(RESULT_CODE, RESULT_OK);
+					} else {
+						// remove the saved results
+
+						while (progress > 0) {
 							unsavedScanResults.remove(0);
 							progress--;
 						}
@@ -1431,9 +1547,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		protected void onPostExecute(Bundle result) {
 			progressDialog.dismiss();
 			if (running) {
-				Message msg=new Message();
-				msg.what=MESSAGE_PERSIST_RESULT;
-				msg.arg1=result.getInt(RESULT_CODE);
+				Message msg = new Message();
+				msg.what = MESSAGE_PERSIST_RESULT;
+				msg.arg1 = result.getInt(RESULT_CODE);
 				msg.setData(result);
 				messageHandler.sendMessage(msg);
 			}

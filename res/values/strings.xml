@@ -154,6 +154,8 @@
     <string name="project_site_scanresults_persisting_message">The WiFi scan results are beining processed and saved to the database. \nPlease be patient.</string>
     <string name="project_site_scanresults_persisted">WiFi scan results saved!</string>
     <string name="project_site_scanresults_not_persisted">WiFi scan results could not be saved:\n%1$s</string>
+    <string name="project_site_dialog_fresh_site_title">Project Site Initial Setup</string>
+    <string name="project_site_dialog_fresh_site_message">This fresh created project site does not have a map loaded, which would ease navigation. \nThis could also be done later unter Options -> Map Settings. \n\nDo you want to do that now?</string>
     <string name="export_db_import_failed">Database import failed:\n%1$s</string>
     <string name="export_db_importing">importing %1$s</string>
     <string name="export_db_importing_done"> done.</string>
@@ -164,6 +166,10 @@
     <string name="project_site_set_scale_of_map">Set Map Scale</string>
     <string name="project_site_dialog_scale_of_map_title">Scale of map</string>
     <string name="project_site_dialog_scale_of_map_message">How many meters have you just marked on the map?</string>
+    <string name="project_site_dialog_ask_change_scale_title">Change Scale of Map</string>
+    <string name="project_site_dialog_ask_change_scale_message">We need to know how much pixels is one meter to calculate the correct positions of APs and track your movement.\n\nWould you like to define this now?</string>
+    <string name="project_site_dialog_ask_north_title">Set North</string>
+    <string name="project_site_dialog_ask_north_message">We need to know where the magnetic north is on the map to calculate the correct direction of your movement.\n\nWould you like to define this now?</string>
     <string name="export_db_wrong_file">%1$s is not a correct WiFi Compass DB!\nThe file must end with .wcdb!</string>
     <string name="unknown">unknown</string>
     <string name="about_app_revision">Revision</string>
