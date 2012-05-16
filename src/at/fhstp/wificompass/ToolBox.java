@@ -20,6 +20,18 @@ public class ToolBox {
 		angle=(float) (angle%(2*Math.PI));
 		return (float) (angle<0?angle+2*Math.PI:angle);
 	}
+	
+	public static float normalizeAngleBetweenPI(float angle) {
+		return (float) (angle % (2 * Math.PI));
+	}
+
+	public static double lowpassFilter(double oldValue, double newValue, double filter) {
+		return oldValue + filter * (newValue - oldValue);
+	}
+
+	public static float lowpassFilter(float oldValue, float newValue, float filter) {
+		return oldValue + filter * (newValue - oldValue);
+	}
 
 	public static float calculateAngleDifference(float angle1, float angle2) {
 		float difference = 0.0f;
@@ -34,6 +46,8 @@ public class ToolBox {
 		
 		return difference;
 	}
+	
+	
 	
 	public static float getSmoothAngleFromSensorData(float oldAngle, float[] gravity, float[] geomag) {
 		
