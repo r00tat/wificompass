@@ -152,62 +152,7 @@ public class UserCompassDrawable extends MultiTouchDrawable implements CompassLi
 	}
 
 	
-//
-//	
-//	public void onSensorChanged(SensorEvent event) {
-//		// we use TYPE_MAGNETIC_FIELD to get changes in the direction, but use SensorManager to get directions
-//		if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE)
-//			return;
-//
-//		// Gets the value of the sensor that has been changed
-//		switch (event.sensor.getType()) {
-//		case Sensor.TYPE_ACCELEROMETER:
-//			gravity = event.values.clone();
-//			break;
-//		case Sensor.TYPE_MAGNETIC_FIELD:
-//			geomag = event.values.clone();
-//			Logger.d("current azimuth: "+ToolBox.normalizeAngle(event.values[0])+" "+Math.toDegrees(ToolBox.normalizeAngle(event.values[0]))+"°");
-//			break;
-//		}
-//
-//		// If gravity and geomag have values then find rotation matrix
-//		if (gravity != null && geomag != null) {
-//
-//			// checks that the rotation matrix is found
-//			boolean success = SensorManager.getRotationMatrix(inR, I, gravity, geomag);
-//			if (success) {
-//				SensorManager.getOrientation(inR, orientVals);
-//				 azimuth =Math.toDegrees(ToolBox.normalizeAngle(orientVals[0]));
-//				// pitch = Math.toDegrees(orientVals[1]);
-//				// roll = Math.toDegrees(orientVals[2]);
-//				// Logger.d("azimuth: "+azimuth+" pitch: "+pitch+" roll: "+roll);
-//				float newAngle = (float) (Math.PI * 2 - ToolBox.normalizeAngle(orientVals[0])) ;
-////				if ((int)azimuth!=popupAngle) {
-////					popupAngle=(int)azimuth;
-////					popup.setText(ctx.getString(R.string.user_compass_degrees, popupAngle));
-////					refresher.invalidate();
-////				}
-//				
-//				if (Math.abs(angle - newAngle) > minAngleChange) {
-//					this.setAngle(newAngle);
-//					// we do not have to set the angle, the angle of the popup is always 0.
-////					popup.setAngle(-newAngle);
-//
-//					popupAngle=(int)azimuth;
-//					
-//					if (withPopup) {
-//						popup.setText(ctx.getString(R.string.user_compass_degrees, popupAngle));
-//						refresher.invalidate();
-//					}
-//					
-//					if (compassAngleCallback != null) {
-//						compassAngleCallback.angleChanged(orientVals[0], this);
-//					}
-//					
-//				}
-//			}
-//		}
-//	}
+
 
 	/*
 	 * (non-Javadoc)

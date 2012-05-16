@@ -1,6 +1,5 @@
 package at.fhstp.wificompass.userlocation;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -9,6 +8,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import at.fhstp.wificompass.CompassListener;
+import at.fhstp.wificompass.CompassMonitor;
 
 /**
  * This class is fed with data from the Accelerometer and Compass sensors. If a step is detected on the acc data it calls the trigger function on its interface StepTrigger, with the given direction.
@@ -16,7 +17,7 @@ import android.hardware.SensorManager;
  * 
  * @author Paul Smith
  */
-public class StepDetection {
+public class StepDetection implements CompassListener {
 	public static final long INTERVAL_MS = 1000 / 30;
 
 	// Hold an interface to notify the outside world of detected steps
@@ -31,14 +32,15 @@ public class StepDetection {
 
 	protected static SensorManager sm; // Holds references to the SensorManager
 
-	List<Sensor> lSensor; // List of all sensors
+	// List<Sensor> lSensor; // List of all sensors
 
-	// last comp is untouched
-	protected double[] lastComp = new double[] { 0.0, 0.0, 0.0 };
+	protected float lastComp;
 
 	protected Timer timer;
 
 	protected StepDetector detector;
+
+	protected Sensor accelerometer;
 
 	/**
 	 * Handles sensor events. Updates the sensor
@@ -55,30 +57,24 @@ public class StepDetection {
 			case Sensor.TYPE_ACCELEROMETER:
 				st.onAccelerometerDataReceived(System.currentTimeMillis(), event.values[0], event.values[1], event.values[2]);
 				// just update the oldest z value
-				detector.addSensorValues(System.currentTimeMillis(),event.values);
+				detector.addSensorValues(System.currentTimeMillis(), event.values);
 				break;
-			case Sensor.TYPE_ORIENTATION:
-				st.onCompassDataReceived(System.currentTimeMillis(), event.values[0], event.values[1], event.values[2]);
-				lastComp[0] = event.values[0];
-				lastComp[1] = event.values[1];
-				lastComp[2] = event.values[2];
-				break;
+
 			default:
 			}// switch (event.sensor.getType())
 		}
 	};
 
-	
-
 	public StepDetection(Context context, StepTrigger st, double a, double peak, int step_timeout_ms) {
 		this.context = context;
 		this.st = st;
-		
-		this.detector = new StepDetector( a, peak, step_timeout_ms);
+
+		this.detector = new StepDetector(a, peak, step_timeout_ms);
 	}
 
 	public void load() {
 		load(SensorManager.SENSOR_DELAY_FASTEST);
+		CompassMonitor.registerListener(context, this);
 	}
 
 	/**
@@ -89,14 +85,10 @@ public class StepDetection {
 		if (timer == null) {
 			// Sensors
 			sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-			lSensor = sm.getSensorList(Sensor.TYPE_ALL);
 
-			for (int i = 0; i < lSensor.size(); i++) {
-				// Register only compass and accelerometer
-				if (lSensor.get(i).getType() == Sensor.TYPE_ACCELEROMETER || lSensor.get(i).getType() == Sensor.TYPE_ORIENTATION) {
-					sm.registerListener(mySensorEventListener, lSensor.get(i), sensorDelay);
-				}
-			}
+			accelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+			sm.registerListener(mySensorEventListener, accelerometer, sensorDelay);
 
 			// Register timer
 			timer = new Timer("UpdateData", false);
@@ -130,18 +122,16 @@ public class StepDetection {
 		// Get current time for time stamps
 		long now_ms = System.currentTimeMillis();
 
-		st.onTimerElapsed(now_ms, detector.getLastAcc(), lastComp);
+		st.onTimerElapsed(now_ms, detector.getLastAcc(), new double[] {lastComp});
 
 		// Check if a step is detected upon data
 		if (detector.checkForStep()) {
 			// Call algorithm for navigation/updating position
-			st.onStepDetected(now_ms, lastComp[0]);
+			st.onStepDetected(now_ms, lastComp);
 
 		}
 	}
 
-	
-	
 	/**
 	 * @return
 	 * @uml.property name="a"
@@ -171,7 +161,7 @@ public class StepDetection {
 	 * @uml.property name="a"
 	 */
 	public void setA(double a) {
-		detector.setA( a);
+		detector.setA(a);
 	}
 
 	/**
@@ -188,5 +178,14 @@ public class StepDetection {
 	 */
 	public void setStep_timeout_ms(int stepTimeoutMs) {
 		detector.setStepTimeoutMS(stepTimeoutMs);
+	}
+
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.CompassListener#onCompassChanged(float, java.lang.String)
+	 */
+	@Override
+	public void onCompassChanged(float azimuth, String direction) {
+		st.onCompassDataReceived(System.currentTimeMillis(), azimuth, 0, 0);
+		this.lastComp=azimuth;
 	}
 }
