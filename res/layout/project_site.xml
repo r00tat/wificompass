@@ -34,4 +34,19 @@
             android:text="@string/project_site_start_step_detect" android:layout_marginLeft="5dp"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" android:layout_marginLeft="20dp" android:layout_marginBottom="20dp">
+
+        <ToggleButton
+            android:id="@+id/project_site_toggle_autorotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="Auto-rotate"
+            android:textOn="Auto-rotate" />
+
+    </LinearLayout>
+
 </RelativeLayout>
