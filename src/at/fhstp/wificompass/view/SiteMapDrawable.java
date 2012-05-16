@@ -36,14 +36,12 @@ public class SiteMapDrawable extends MultiTouchDrawable implements SensorEventLi
 	protected Sensor compass;
 	protected Sensor accelerometer;
 	float[] geomag = new float[3];
-	protected static final float minAngleChange = (float) Math.toRadians(3d);
-	float[] inR = new float[16];
-	float[] I = new float[16];
 	float[] gravity = new float[3];
-	float[] orientVals = new float[3];
-	int popupAngle=0;
-	double azimuth = 0;
 	float angleAdjustment = 0.0f;
+	//int angleUpdateTreshold = 100;
+	//long lastAngleUpdate = 0;
+	
+	float oldSensorAngle = 0.0f; 
 	
 	public SiteMapDrawable(Context ctx,RefreshableView refresher) {
 		super(ctx,refresher);
@@ -274,28 +272,27 @@ public class SiteMapDrawable extends MultiTouchDrawable implements SensorEventLi
 			geomag = event.values.clone();
 			break;
 		}
-
+		
+		//long now = new Date().getTime();
+		
+		//Logger.d("Angle update time. Now: " + now + ", last: " + lastAngleUpdate + ", difference: " + (now - lastAngleUpdate));
+		
+		//if ((now - lastAngleUpdate) > angleUpdateTreshold) {
+		float angle = ToolBox.getSmoothAngleFromSensorData(oldSensorAngle, gravity, geomag);
+		
+		Logger.d("New angle: " + angle);
+		
+		oldSensorAngle = angle;
+				
+		float adjusted = ToolBox.normalizeAngle((angle - angleAdjustment) * -1.0f);
+				
+		//Logger.d("Angle goodness: angle " + Math.toDegrees(angle) + ", adjustment " + Math.toDegrees(angleAdjustment) + " adjusted: " + Math.toDegrees(adjusted));
+				
+		this.setAngle(adjusted);
+		this.recalculatePositions();
 			
-			// If gravity and geomag have values then find rotation matrix
-		if (gravity != null && geomag != null) {
-
-			// checks that the rotation matrix is found
-			boolean success = SensorManager.getRotationMatrix(inR, I, gravity, geomag);
-			
-			if (success) {				
-				SensorManager.getOrientation(inR, orientVals);
-				float angle = ToolBox.normalizeAngle(orientVals[0]);
-				
-				Logger.d("Orientation: " + (int)Math.toDegrees(angle));
-				
-				float adjusted = ToolBox.normalizeAngle((angle - angleAdjustment) * -1.0f);
-				
-				//Logger.d("Angle goodness: angle " + Math.toDegrees(angle) + ", adjustment " + Math.toDegrees(angleAdjustment) + " adjusted: " + Math.toDegrees(adjusted));
-				
-				this.setAngle(adjusted);
-				this.recalculatePositions();
-			}
-		}
+			//lastAngleUpdate = new Date().getTime();
+		//}
 	}
 
 	@Override
