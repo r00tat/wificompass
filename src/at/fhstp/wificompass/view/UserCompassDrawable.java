@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.CompassListener;
 import at.fhstp.wificompass.CompassMonitor;
 import at.fhstp.wificompass.R;
+import at.fhstp.wificompass.ToolBox;
 
 /**
  * @author  Paul Woelfel (paul@woelfel.at)
@@ -255,7 +256,7 @@ public class UserCompassDrawable extends MultiTouchDrawable implements CompassLi
 //		}
 		
 		if (Math.abs(angle - newAngle) > minAngleChange) {
-			this.setAngle(newAngle);
+			this.angle=ToolBox.normalizeAngle(newAngle);
 			// we do not have to set the angle, the angle of the popup is always 0.
 //			popup.setAngle(-newAngle);
 
@@ -263,14 +264,25 @@ public class UserCompassDrawable extends MultiTouchDrawable implements CompassLi
 			
 			if (withPopup) {
 				popup.setText(ctx.getString(R.string.user_compass_degrees, popupAngle));
-				refresher.invalidate();
+				
 			}
 			
 			if (compassAngleCallback != null) {
 				compassAngleCallback.angleChanged(azimuth, this);
 			}
+			refresher.invalidate();
 			
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#setAngle(float)
+	 */
+	@Override
+	public void setAngle(float angle) {
+//		super.setAngle(angle);
+		// we do not want the angle to be changed from somewhere else, we change the angle ourself
+		
 	}
 
 }

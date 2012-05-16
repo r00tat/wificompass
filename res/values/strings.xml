@@ -83,7 +83,7 @@
     <string name="export_db_button_text">export projects to SD card</string>
     <string name="export_db_message_text">nothing to do…</string>
     <string name="export_db_save_start_message">Saving database backup under %1$s.\ncopying…</string>
-    <string name="app_package">at.fhstp.WiFicompass</string>
+    <string name="app_package">at.fhstp.wificompass</string>
     <string name="export_db_save_finished_message"> done!</string>
     <string name="export_db_save_failed_message">backup failed! %1$s</string>
     <string name="export_db_label">Export DB</string>

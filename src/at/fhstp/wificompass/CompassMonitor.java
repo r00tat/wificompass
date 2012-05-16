@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 
+
 /**
  * @author Paul Woelfel (paul@woelfel.at)
  */
@@ -35,11 +36,17 @@ public class CompassMonitor {
 	}
 	
 	static synchronized public void unregisterListener(CompassListener listener){
+		if (listeners != null && listener != null)
+			listeners.remove(listener);
 		
-		listeners.remove(listener);
-		if(listeners.size()==0){
-			monitor.stop();
-			monitor=null;
+		
+		if (listeners != null && listeners.size() == 0 && monitor != null) {
+			try {
+				monitor.stop();
+			} catch (Exception e) {
+				Logger.w("could not stop Compass Monitor", e);
+			}
+			monitor = null;
 		}
 	}
 	
