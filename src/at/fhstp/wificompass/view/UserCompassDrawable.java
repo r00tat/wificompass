@@ -52,6 +52,10 @@ public class UserCompassDrawable extends MultiTouchDrawable implements SensorEve
 	// double pitch = 0;
 	//
 	// double roll = 0;
+	 
+	protected AngleChangeCallback compassAngleCallback = null;
+	
+	protected boolean withPopup = true;
 
 	/**
 	 * <p>
@@ -73,6 +77,23 @@ public class UserCompassDrawable extends MultiTouchDrawable implements SensorEve
 	 */
 	public UserCompassDrawable(Context context, MultiTouchDrawable superDrawable) {
 		super(context, superDrawable);
+		init();
+	}
+	
+	public UserCompassDrawable(Context context, MultiTouchDrawable superDrawable, AngleChangeCallback compassAngleCallback) {
+		super(context, superDrawable);
+		this.compassAngleCallback = compassAngleCallback;
+		init();
+	}
+	
+	public UserCompassDrawable(Context context, MultiTouchDrawable superDrawable, AngleChangeCallback compassAngleCallback, boolean withPopup) {
+		super(context, superDrawable);
+		this.compassAngleCallback = compassAngleCallback;
+		this.withPopup = withPopup;
+		init();
+	}
+
+	protected void init() {
 		icon = (BitmapDrawable) ctx.getResources().getDrawable(R.drawable.north_small);
 		this.width = icon.getBitmap().getWidth();
 		this.height = icon.getBitmap().getHeight();
@@ -81,15 +102,16 @@ public class UserCompassDrawable extends MultiTouchDrawable implements SensorEve
 		compass = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 		accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-		popup = new TextPopupDrawable(ctx, this.superDrawable);
-		popup.setText("0Â°");
-		popup.setActive(true);
-		popup.setPersistent(true);
-		popup.setWidth(40);
-		popup.setRelativePosition(60,0);
-
+		if (withPopup) {
+			popup = new TextPopupDrawable(ctx, this.superDrawable);
+			popup.setText("0¡");
+			popup.setActive(true);
+			popup.setPersistent(true);
+			popup.setWidth(40);
+			popup.setRelativePosition(60,0);
+		}
 	}
-
+	
 	public void start() {
 		try {
 			sensorManager.registerListener(this, compass, SensorManager.SENSOR_DELAY_UI);
@@ -209,9 +231,18 @@ public class UserCompassDrawable extends MultiTouchDrawable implements SensorEve
 					this.setAngle(newAngle);
 					// we do not have to set the angle, the angle of the popup is always 0.
 //					popup.setAngle(-newAngle);
+
 					popupAngle=(int)azimuth;
-					popup.setText(ctx.getString(R.string.user_compass_degrees, popupAngle));
-					refresher.invalidate();
+					
+					if (withPopup) {
+						popup.setText(ctx.getString(R.string.user_compass_degrees, popupAngle));
+						refresher.invalidate();
+					}
+					
+					if (compassAngleCallback != null) {
+						compassAngleCallback.angleChanged(orientVals[0], this);
+					}
+					
 				}
 			}
 		}

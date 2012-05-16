@@ -175,6 +175,8 @@ public abstract class MultiTouchDrawable {
 	 */
 	protected RefreshableView refresher;
 
+	protected AngleChangeCallback angleChangeCallback = null;
+	
 	/**
 	 * default constructor
 	 * 
@@ -319,6 +321,9 @@ public abstract class MultiTouchDrawable {
 		if (this.angle < 0)
 			this.angle += Math.PI * 2;
 
+		if (this.angleChangeCallback != null) {
+			angleChangeCallback.angleChanged(angle, this);
+		}
 	}
 
 	/**
@@ -541,7 +546,7 @@ public abstract class MultiTouchDrawable {
 	}
 
 	public void resetAngle() {
-		angle = 0.0f;
+		this.setAngle(0.0f);
 	}
 
 	/**
@@ -585,7 +590,7 @@ public abstract class MultiTouchDrawable {
 		// Reset the angle if the drawable is not rotatable (for the same reason
 		// as above)
 		if (!isRotateable()) {
-			angle = 0.0f;
+			this.setAngle(0.0f);
 		}
 
 		float ws = (width / 2) * scaleX, hs = (height / 2) * scaleY;
@@ -1045,4 +1050,8 @@ public abstract class MultiTouchDrawable {
 		return gridSpacingY;
 	}
 
+	public void setAngleChangeCallback(AngleChangeCallback callback) {
+		this.angleChangeCallback = callback;
+	}
+	
 }

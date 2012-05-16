@@ -50,6 +50,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.exceptions.SiteNotFoundException;
@@ -324,6 +325,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		// ((Button) findViewById(R.id.project_site_add_known_ap)).setOnClickListener(this);
 
 		((Button) findViewById(R.id.project_site_step_detect)).setOnClickListener(this);
+		
+		((ToggleButton) findViewById(R.id.project_site_toggle_autorotate)).setOnClickListener(this);
 
 		multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
 		multiTouchView.setRearrangable(false);
@@ -418,6 +421,22 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			walkingAndScanning = !walkingAndScanning;
 
 			break;
+			
+		case R.id.project_site_toggle_autorotate:
+			
+			ToggleButton button = (ToggleButton) findViewById(R.id.project_site_toggle_autorotate);
+			
+			if (button.isChecked()) {
+				map.startAutoRotate();
+				Logger.d("Started autorotate.");
+			}
+			else {
+				map.stopAutoRotate();
+				Logger.d("Stopped autorotate.");
+			}
+				
+			
+			break;
 		}
 	}
 	
@@ -451,7 +470,6 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, SCHEDULER_TIME, TimeUnit.SECONDS);
 			}
 			((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
-
 		}
 	}
 

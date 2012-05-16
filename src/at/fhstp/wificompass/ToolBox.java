@@ -19,4 +19,17 @@ public class ToolBox {
 		return (float) (angle<0?angle+2*Math.PI:angle);
 	}
 
+	public static float calculateAngleDifference(float angle1, float angle2) {
+		float difference = 0.0f;
+		
+		difference = angle1 - angle2;
+		
+		difference = normalizeAngle(difference);
+		
+		if (difference > Math.PI) {
+			difference = (float) (difference - Math.PI * 2);
+		}
+		
+		return difference;
+	}
 }

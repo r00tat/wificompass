@@ -7,6 +7,7 @@ import Jama.Matrix;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.PointF;
+import at.fhstp.wificompass.ToolBox;
 import at.fhstp.wificompass.model.AccessPoint;
 import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.view.MultiTouchDrawable;
@@ -124,9 +125,9 @@ public class LocalSignalStrengthGradientTriangulation extends
 			for (float x = areaMinX; x <= areaMaxX; x += step) {
 				for (float y = areaMinY; y <= areaMaxY; y += step) {
 					for (GradientArrow arrow : arrows) {
-						float arrowAngle = this.wrapAngleTo2Pi((float) Math
+						float arrowAngle = ToolBox.normalizeAngle((float) Math
 								.atan2(arrow.directionY, arrow.directionX));
-						float pointAngle = this.wrapAngleTo2Pi((float) Math
+						float pointAngle = ToolBox.normalizeAngle((float) Math
 								.atan2(y - arrow.y, x - arrow.x));
 
 						float angleDifference = Math.abs(arrowAngle
@@ -259,23 +260,6 @@ public class LocalSignalStrengthGradientTriangulation extends
 						* (p1.y - p2.y)) / 2.0f);
 
 		return (area <= threshold) ? true : false;
-	}
-
-	/**
-	 * Wraps the angle to a value between 0 and 2 * PI
-	 * 
-	 * @param angle
-	 *            The angle
-	 * @return The wrapped angle
-	 */
-	protected float wrapAngleTo2Pi(float angle) {
-		while (angle < 0)
-			angle += 2 * Math.PI;
-
-		while (angle > (2 * Math.PI))
-			angle -= 2 * Math.PI;
-
-		return angle;
 	}
 
 	protected float roundToGridSpacing(float value) {
