@@ -14,7 +14,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/main_info_text"
-        android:textSize="16sp" />
+        android:textSize="16sp" android:drawableLeft="@drawable/icon"/>
 
         <Button
         android:id="@+id/main_quickscan_button"
@@ -36,7 +36,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/main_project_text" />
+        android:text="@string/main_project_text" 
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
 
     <ListView
         android:id="@+id/main_project_list"

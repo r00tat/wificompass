@@ -38,5 +38,24 @@
     <style name="application" parent="android:Theme">
         <item name="android:buttonStyle">@style/button</item>
     </style>
+    
+    <style name="list_item">
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:background">@drawable/list_background</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:text">@string/unknown</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="list_item_equal" parent="@style/list_item">
+        <item name="android:background">@drawable/list_background_equal</item>
+        
+    </style>
+    
+    <style name="list_item_unequal" parent="@style/list_item">
+        <item name="android:background">@drawable/list_background_unequal</item>
+        
+    </style>
 
 </resources>

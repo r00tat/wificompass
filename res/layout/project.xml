@@ -30,7 +30,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:text="@string/project_sites_text" />
+        android:text="@string/project_sites_text" 
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <ListView
         android:id="@+id/project_sites_listview"

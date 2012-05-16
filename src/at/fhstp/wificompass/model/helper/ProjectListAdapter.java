@@ -9,11 +9,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.model.Project;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -28,6 +29,8 @@ public class ProjectListAdapter extends BaseAdapter {
 	
 	protected List<Project> projects;
 	
+	protected LayoutInflater inflater;
+	
 	/**
 	 * @uml.property  name="databaseHelper"
 	 * @uml.associationEnd  
@@ -40,7 +43,8 @@ public class ProjectListAdapter extends BaseAdapter {
 		Dao<Project,Integer> projectDao=databaseHelper.getDao(Project.class);
 		projects=projectDao.queryForAll();
 		
-		
+		inflater = (LayoutInflater)context.getSystemService
+			      (Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
@@ -60,18 +64,22 @@ public class ProjectListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LinearLayout layout = new LinearLayout(context);
-		layout.setOrientation(LinearLayout.HORIZONTAL);
-		//layout.setGravity(Gravity.CENTER);
-		layout.setPadding(3,3,3,3);
-
-		TextView tv = new TextView(context);
-		tv.setText(((Project)getItem(position)).getName());
+		ViewGroup v=(ViewGroup) inflater.inflate((position%2==0?R.layout.list_item_eq:R.layout.list_item_uneq), parent, false);
 		
+//		LinearLayout layout = new LinearLayout(context);
+//		layout.setOrientation(LinearLayout.HORIZONTAL);
+//		//layout.setGravity(Gravity.CENTER);
+//		layout.setPadding(3,3,3,3);
+//
+//		TextView tv = new TextView(context);
+//		tv.setText(((Project)getItem(position)).getName());
+//		
+//		
+//		layout.addView(tv);
 		
-		layout.addView(tv);
+		((TextView)v.findViewById(R.id.list_view_item)).setText(projects.get(position).getName());
 		
-		return layout;
+		return v;
 	}
 	
 	@Override
