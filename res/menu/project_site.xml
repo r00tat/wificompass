@@ -58,6 +58,10 @@
                 android:title="@string/project_site_add_known_ap">
             </item>
             <item
+                android:id="@+id/project_site_menu_change_scan_interval"
+                android:title="@string/project_site_menu_change_scan_interval">
+            </item>
+            <item
                 android:id="@+id/project_site_menu_save"
                 android:icon="@android:drawable/ic_menu_save"
                 android:title="@string/project_site_menu_save">

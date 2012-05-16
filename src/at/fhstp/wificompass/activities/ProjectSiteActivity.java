@@ -48,9 +48,11 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.exceptions.SiteNotFoundException;
@@ -99,11 +101,14 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	public static final String SITE_KEY = "SITE";
 
 	public static final String PROJECT_KEY = "PROJECT";
+	
+	public static final String SCAN_INTERVAL="scan_interval";
 
 	// public static final int START_NEW = 1, START_LOAD = 2;
 
 	protected static final int DIALOG_TITLE = 1, DIALOG_SCANNING = 2, DIALOG_CHANGE_SIZE = 3, DIALOG_SET_BACKGROUND = 4, DIALOG_SET_SCALE_OF_MAP = 5,
-			DIALOG_ADD_KNOWN_AP = 6, DIALOG_SELECT_BSSIDS = 7, DIALOG_FRESH_SITE = 8, DIALOG_ASK_CHANGE_SCALE=9,DIALOG_ASK_FOR_NORTH=10;
+			DIALOG_ADD_KNOWN_AP = 6, DIALOG_SELECT_BSSIDS = 7, DIALOG_FRESH_SITE = 8, DIALOG_ASK_CHANGE_SCALE = 9, DIALOG_ASK_FOR_NORTH = 10,
+			DIALOG_CHANGE_SCAN_INTERVAL = 11;
 
 	protected static final int MESSAGE_REFRESH = 1, MESSAGE_START_WIFISCAN = 2, MESSAGE_PERSIST_RESULT = 3;
 
@@ -112,7 +117,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	/**
 	 * how often should we start a wifi scan
 	 */
-	protected static final int SCHEDULER_TIME = 10;
+	protected int schedulerTime = 10;
 
 	/**
 	 * @uml.property name="multiTouchView"
@@ -302,6 +307,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			};
 
 			unsavedScanResults = new ArrayList<WifiScanResult>();
+			
+			
+			schedulerTime=this.getPreferences(Activity.MODE_PRIVATE).getInt(SCAN_INTERVAL, schedulerTime);
 
 			initUI();
 
@@ -325,7 +333,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		// ((Button) findViewById(R.id.project_site_add_known_ap)).setOnClickListener(this);
 
 		((Button) findViewById(R.id.project_site_step_detect)).setOnClickListener(this);
-		
+
 		((ToggleButton) findViewById(R.id.project_site_toggle_autorotate)).setOnClickListener(this);
 
 		multiTouchView = ((MultiTouchView) findViewById(R.id.project_site_resultview));
@@ -367,8 +375,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		multiTouchView.loadImages(this);
 		map.load();
 		// stepDetectionProvider.start();
-		
-		if(walkingAndScanning){
+
+		if (walkingAndScanning) {
 			setWalkingAndScanning(true);
 		}
 	}
@@ -421,31 +429,28 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			walkingAndScanning = !walkingAndScanning;
 
 			break;
-			
+
 		case R.id.project_site_toggle_autorotate:
-			
+
 			ToggleButton button = (ToggleButton) findViewById(R.id.project_site_toggle_autorotate);
-			
+
 			if (button.isChecked()) {
 				map.startAutoRotate();
 				Logger.d("Started autorotate.");
-			}
-			else {
+			} else {
 				map.stopAutoRotate();
 				Logger.d("Stopped autorotate.");
 			}
-				
-			
+
 			break;
 		}
 	}
-	
-	
-	protected void setWalkingAndScanning(boolean shouldRun){
+
+	protected void setWalkingAndScanning(boolean shouldRun) {
 		if (!shouldRun) {
 			// stop!
-			
-			if(stepDetectionProvider.isRunning())
+
+			if (stepDetectionProvider.isRunning())
 				stepDetectionProvider.stop();
 			if (scheduledTask != null) {
 				scheduledTask.cancel(false);
@@ -460,14 +465,13 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		} else {
 			// start
 			unsavedScanResults = new ArrayList<WifiScanResult>();
-			
 
-			if(!stepDetectionProvider.isRunning()){
+			if (!stepDetectionProvider.isRunning()) {
 				stepDetectionProvider.start();
 			}
-			
-			if(scheduledTask==null){
-				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, SCHEDULER_TIME, TimeUnit.SECONDS);
+
+			if (scheduledTask == null) {
+				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, schedulerTime, TimeUnit.SECONDS);
 			}
 			((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
 		}
@@ -575,8 +579,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		MultiTouchDrawable.setGridSpacing(mapScale, mapScale);
 		multiTouchView.invalidate();
 		Toast.makeText(this, getString(R.string.project_site_mapscale_changed, mapScale), Toast.LENGTH_SHORT).show();
-		
-		if(freshSite){
+
+		if (freshSite) {
 			showDialog(DIALOG_ASK_FOR_NORTH);
 		}
 	}
@@ -735,7 +739,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			bckgAlert.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setBackgroundImage(pathTextView.getText().toString());
-					if(freshSite){
+					if (freshSite) {
 						showDialog(DIALOG_ASK_CHANGE_SCALE);
 					}
 				}
@@ -744,7 +748,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			bckgAlert.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					// Canceled.
-					freshSite=false;
+					freshSite = false;
 				}
 			});
 
@@ -920,7 +924,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			return freshBuilder.create();
 
 		case DIALOG_ASK_CHANGE_SCALE:
-			
+
 			AlertDialog.Builder askScaleBuilder = new Builder(context);
 			askScaleBuilder.setTitle(R.string.project_site_dialog_ask_change_scale_title);
 			askScaleBuilder.setMessage(R.string.project_site_dialog_ask_change_scale_message);
@@ -940,9 +944,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			});
 
 			return askScaleBuilder.create();
-			
+
 		case DIALOG_ASK_FOR_NORTH:
-			
+
 			AlertDialog.Builder askNorthBuilder = new Builder(context);
 			askNorthBuilder.setTitle(R.string.project_site_dialog_ask_north_title);
 			askNorthBuilder.setMessage(R.string.project_site_dialog_ask_north_message);
@@ -950,7 +954,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			askNorthBuilder.setPositiveButton(getString(R.string.button_yes), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					setMapNorth();
-					freshSite=false;
+					freshSite = false;
 				}
 
 			});
@@ -961,10 +965,63 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 					freshSite = false;
 				}
 			});
+			
+			
+		case DIALOG_CHANGE_SCAN_INTERVAL:
+			AlertDialog.Builder changeScanIntervalBuilder = new Builder(context);
+			changeScanIntervalBuilder.setTitle(R.string.project_site_dialog_change_scan_interval_title);
+			changeScanIntervalBuilder.setMessage(getString(R.string.project_site_dialog_change_scan_interval_message,schedulerTime));
+			
+			final SeekBar sb = new SeekBar(this);
+			sb.setMax(60);
+			sb.setProgress(schedulerTime);
 
-			return askNorthBuilder.create();
+			changeScanIntervalBuilder.setView(sb);
+
+			changeScanIntervalBuilder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					schedulerTime=sb.getProgress();
+					getPreferences(MODE_PRIVATE).edit().putInt(SCAN_INTERVAL, schedulerTime).commit();
+					if(walkingAndScanning){
+						// timer must be updated
+						setWalkingAndScanning(false);
+						setWalkingAndScanning(true);
+					}
+				}
+
+			});
+
+			changeScanIntervalBuilder.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+					
+				}
+			});
+			
+			final AlertDialog changeScanIntervalDialog = changeScanIntervalBuilder.create();
 
 			
+			sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+				@Override
+				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+					changeScanIntervalDialog.setMessage(context.getString(R.string.project_site_dialog_change_scan_interval_message, progress));
+				}
+
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar) {
+				}
+
+				@Override
+				public void onStopTrackingTouch(SeekBar seekBar) {
+				}
+
+			});
+
+			
+
+			return changeScanIntervalDialog;
+
 		default:
 			return super.onCreateDialog(id);
 		}
@@ -1007,9 +1064,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_menu_set_scale_of_map:
 
-			if(scaler==null){
-			scaleOfMap();
-			}else {
+			if (scaler == null) {
+				scaleOfMap();
+			} else {
 				// just hide the scalers, don't change the scaleing
 				scaler.removeScaleSliders();
 				map.removeSubDrawable(scaler);
@@ -1068,6 +1125,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_add_known_ap:
 			showDialog(DIALOG_ADD_KNOWN_AP);
+			break;
+			
+		case R.id.project_site_menu_change_scan_interval:
+			showDialog(DIALOG_CHANGE_SCAN_INTERVAL);
 			break;
 
 		default:
@@ -1152,9 +1213,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		super.onPause();
 		multiTouchView.unloadImages();
 		map.unload();
-		
+
 		setWalkingAndScanning(false);
-		
+
 		saveProjectSite();
 	}
 
@@ -1422,7 +1483,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			map.setBackgroundImage(bmp);
 			site.setSize(bmp.getWidth(), bmp.getHeight());
 			map.setSize(bmp.getWidth(), bmp.getHeight());
-			user.setRelativePosition(bmp.getWidth()/2, bmp.getHeight()/2);
+			user.setRelativePosition(bmp.getWidth() / 2, bmp.getHeight() / 2);
 			multiTouchView.invalidate();
 			Toast.makeText(context, "set " + path + " as new background image!", Toast.LENGTH_LONG).show();
 			saveProjectSite();

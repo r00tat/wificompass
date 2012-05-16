@@ -226,7 +226,7 @@
 	</string>
 	<string name="project_site_dialog_change_scan_interval_title">Change WiFi Scan Interval</string>
 	<string name="project_site_dialog_change_scan_interval_message">Define how often a WiFi scan should be done, if
-		walking &amp; and scanning is enabled.</string>
+		walking &amp; and scanning is enabled.\n\nScan Interval: %1$ds</string>
 	<string name="project_site_dialog_change_size_width">width</string>
 	<string name="project_site_dialog_change_size_height">height</string>
 	<string name="project_site_triangulation_progress_title">Calculating Access Point positions</string>
@@ -257,6 +257,7 @@
 	<string name="project_site_mapscale_changed">Scale of map changed: 1m is now %1$.2f pixels.
 	</string>
 	<string name="project_site_wifiscan_started">WiFi Scan started!</string>
+	<string name="project_site_menu_change_scan_interval">Change WiFi Scan Interval</string>
 
 
 	<!-- drawables -->
