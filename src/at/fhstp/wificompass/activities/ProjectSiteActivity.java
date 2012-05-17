@@ -728,6 +728,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				public void onClick(View v) {
 					Intent i = new Intent(context, FileBrowser.class);
 					i.putExtra(FileBrowser.EXTRA_MODE, FileBrowser.MODE_LOAD);
+					i.putExtra(FileBrowser.EXTRA_ALLOWED_EXTENSIONS, "jpg,png,gif,jpeg,bmp");
 					startActivityForResult(i, FILEBROWSER_REQUEST);
 				}
 
