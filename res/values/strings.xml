@@ -265,6 +265,9 @@
 	<string name="access_point_format">%1$s [%2$s]\n%3$dMHz %4$s\nPosition: %5$.2f/%6$.2fm
 	</string>
 	<string name="user_compass_degrees">%1$d°</string>
+	<string name="north_adjustment_degrees">%1$d°</string>
+	<string name="north_current_adjustment">Current adjustment:</string>
+	<string name="north_adjustment_description">Turn your device until the map rotation equals the real orientation. Once you\'re done, click the green tick below.</string>
 
 
 

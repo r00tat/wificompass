@@ -45,7 +45,7 @@ public class UserCompassDrawable extends MultiTouchDrawable implements CompassLi
 	 * Only change the angle, if the compass changes more than minAngleChange degrees. Per default 3°.
 	 * </p>
 	 */
-	protected static final float minAngleChange = (float) Math.toRadians(3d);
+	protected static final float minAngleChange = (float) Math.toRadians(3);
 
 	/**
 	 * <p>
@@ -191,8 +191,8 @@ public class UserCompassDrawable extends MultiTouchDrawable implements CompassLi
 	 * @see at.fhstp.wificompass.CompassListener#onCompassChanged(float, java.lang.String)
 	 */
 	@Override
-	public void onCompassChanged(float azimuth, String direction) {
-		float newAngle = azimuth * -1;
+	public void onCompassChanged(float azimuth,float angle, String direction) {
+		float newAngle = ToolBox.normalizeAngle((float) -Math.toRadians(azimuth));
 		this.azimuth=azimuth;
 //		if ((int)azimuth!=popupAngle) {
 //			popupAngle=(int)azimuth;
@@ -200,22 +200,23 @@ public class UserCompassDrawable extends MultiTouchDrawable implements CompassLi
 //			refresher.invalidate();
 //		}
 		
+		if (compassAngleCallback != null) {
+			compassAngleCallback.angleChanged((float) Math.toRadians(azimuth), this);
+		}
 		
-		if (Math.abs(angle - newAngle) > minAngleChange) {
+		if (Math.abs(this.angle - newAngle) > minAngleChange) {
 			this.angle=ToolBox.normalizeAngle(newAngle);
 			// we do not have to set the angle, the angle of the popup is always 0.
 //			popup.setAngle(-newAngle);
 
-			popupAngle=(int)Math.toDegrees(this.azimuth);
+			popupAngle=(int)this.azimuth;
 			
 			if (withPopup) {
 				popup.setText(ctx.getString(R.string.user_compass_degrees, popupAngle));
 				
 			}
 			
-			if (compassAngleCallback != null) {
-				compassAngleCallback.angleChanged(azimuth, this);
-			}
+			
 			refresher.invalidate();
 			
 		}

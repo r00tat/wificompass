@@ -184,8 +184,8 @@ public class StepDetection implements CompassListener {
 	 * @see at.fhstp.wificompass.CompassListener#onCompassChanged(float, java.lang.String)
 	 */
 	@Override
-	public void onCompassChanged(float azimuth, String direction) {
-		st.onCompassDataReceived(System.currentTimeMillis(), Math.toDegrees(azimuth), 0, 0);
+	public void onCompassChanged(float azimuth, float angle, String direction) {
+		st.onCompassDataReceived(System.currentTimeMillis(), azimuth, 0, 0);
 		this.lastComp=azimuth;
 	}
 }

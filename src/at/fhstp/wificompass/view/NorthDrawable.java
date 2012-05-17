@@ -14,6 +14,7 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.ToolBox;
 import at.fhstp.wificompass.model.ProjectSite;
 
@@ -32,14 +33,14 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback, Ang
 	
 
 	protected TextDrawable tdCurrent;
-	protected String textCurrent;
+//	protected String textCurrent;
 	
 
 	protected TextDrawable tdCurrentAdjustment;
-	protected String textCurrentAdjustment = "0 ¡";
+//	protected String textCurrentAdjustment = "0 Â°";
 	
 	protected TextDrawable tdDescription;
-	protected String textDescription;
+//	protected String textDescription;
 
 
 	/**
@@ -55,6 +56,9 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback, Ang
 	protected float mapAngle = 0.0f;
 	protected float compassAngle = 0.0f;
 	protected float adjustmentAngle = 0.0f;
+	
+	protected float lastAngle=0f;
+	protected static final double MIN_ANGLE_CHANGE=Math.toRadians(2); 
 
 	/**
 	 * @param context
@@ -71,15 +75,15 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback, Ang
 		compassIcon.setRelativePosition(width / 2, compassIcon.getHeight() / 2 + padding);
 		compassIcon.start();
 		
-		textCurrent = "Current adjustment:";
-		tdCurrent = new TextDrawable(context, this, textCurrent, this.width - 2 * padding);
+//		textCurrent = ctx.getString(R.string.north_current_adjustment);
+		tdCurrent = new TextDrawable(context, this, ctx.getString(R.string.north_current_adjustment), this.width - 2 * padding);
 		tdCurrent.setRelativePosition(new PointF(padding, padding + compassIcon.height + padding));
 
-		tdCurrentAdjustment = new TextDrawable(context, this, textDescription, this.width - 2 * padding, 20);
+		tdCurrentAdjustment = new TextDrawable(context, this, ctx.getString(R.string.north_adjustment_degrees,0), this.width - 2 * padding, 20);
 		tdCurrentAdjustment.setRelativePosition(new PointF(padding, padding + compassIcon.height + padding + tdCurrent.getHeight() + padding));
 
-		textDescription = "Turn your device until the map rotation equals the real orientation. Once you're done, click the green tick below.";
-		tdDescription = new TextDrawable(context, this, textDescription, this.width - 2 * padding);
+//		textDescription = ctx.getString(R.string.north_adjustment_description);
+		tdDescription = new TextDrawable(context, this, ctx.getString(R.string.north_adjustment_description), this.width - 2 * padding);
 		tdDescription.setRelativePosition(new PointF(padding, padding + compassIcon.height + padding + tdCurrent.getHeight() + padding + tdCurrentAdjustment.getHeight() + padding));
 		
 		okPopup = new OkDrawable(ctx, this);
@@ -182,9 +186,14 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback, Ang
 			mapAngle = ToolBox.normalizeAngle(angle);
 		}
 		
-		adjustmentAngle = ToolBox.calculateAngleDifference(compassAngle, mapAngle);
+//		adjustmentAngle = ToolBox.calculateAngleDifference(compassAngle, mapAngle);
 		
-		tdCurrentAdjustment.setText((int) Math.toDegrees(adjustmentAngle) + " ¡");
+		adjustmentAngle=mapAngle-compassAngle;
+		
+		if(Math.abs(lastAngle-adjustmentAngle)>MIN_ANGLE_CHANGE){
+			tdCurrentAdjustment.setText(ctx.getString(R.string.north_adjustment_degrees,(int) Math.toDegrees(ToolBox.normalizeAngle(adjustmentAngle))));
+			lastAngle=adjustmentAngle;
+		}
 	}
 
 }

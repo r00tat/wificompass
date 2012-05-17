@@ -21,19 +21,23 @@ import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.ToolBox;
 
 /**
- * @author  Paul Woelfel (paul@woelfel.at)
+ * @author Paul Woelfel (paul@woelfel.at)
  */
 public class SiteMapDrawable extends MultiTouchDrawable implements CompassListener {
 
 	/**
-	 * @uml.property  name="backgroundImage"
+	 * @uml.property name="backgroundImage"
 	 */
 	protected Bitmap backgroundImage;
 
 	float angleAdjustment = 0.0f;
-	
+
+	protected float lastAngle;
+
+	protected static final double MIN_ANGLE_CHANGE = Math.toRadians(5);
+
 	public SiteMapDrawable(Context ctx, RefreshableView refresher) {
-		super(ctx,refresher);
+		super(ctx, refresher);
 		init();
 	}
 
@@ -57,7 +61,7 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	public void stopAutoRotate() {
 		CompassMonitor.unregisterListener(this);
 	}
-	
+
 	public Drawable getDrawable() {
 		Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 
@@ -125,7 +129,6 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 		this.drawSubdrawables(canvas);
 	}
 
-
 	@Override
 	public void setAngle(float angle) {
 		super.setAngle(angle);
@@ -187,16 +190,17 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	}
 
 	/**
-	 * @return  the backgroundImage
-	 * @uml.property  name="backgroundImage"
+	 * @return the backgroundImage
+	 * @uml.property name="backgroundImage"
 	 */
 	public Bitmap getBackgroundImage() {
 		return backgroundImage;
 	}
 
 	/**
-	 * @param backgroundImage  the backgroundImage to set
-	 * @uml.property  name="backgroundImage"
+	 * @param backgroundImage
+	 *            the backgroundImage to set
+	 * @uml.property name="backgroundImage"
 	 */
 	public void setBackgroundImage(Bitmap backgroundImage) {
 		this.backgroundImage = backgroundImage;
@@ -240,11 +244,16 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	}
 
 	@Override
-	public void onCompassChanged(float azimuth, String direction) {
-		//azimuth = (float) Math.toRadians(azimuth);
-		float adjusted = ToolBox.normalizeAngle((azimuth - angleAdjustment) * -1.0f);
-		this.setAngle(adjusted);
-		this.recalculatePositions();
+	public void onCompassChanged(float azimuth, float angle, String direction) {
+		// azimuth = (float) Math.toRadians(azimuth);
+		float adjusted = ToolBox.normalizeAngle((angle - angleAdjustment) * -1.0f);
+		
+		// filter small movements
+		if (Math.abs(lastAngle - adjusted) > MIN_ANGLE_CHANGE) {
+			this.setAngle(adjusted);
+			this.recalculatePositions();
+			this.lastAngle = adjusted;
+		}
 	}
-	
+
 }

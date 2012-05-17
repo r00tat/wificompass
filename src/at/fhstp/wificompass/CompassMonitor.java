@@ -26,8 +26,8 @@ public class CompassMonitor {
 			monitor=new CompassSensorWatcher(context,new CompassListener(){
 
 				@Override
-				public void onCompassChanged(float azimuth, String direction) {
-					notifyListeners(azimuth,direction);
+				public void onCompassChanged(float azimuth, float angle,String direction) {
+					notifyListeners(azimuth,angle,direction);
 				}
 				
 			},0.3f);
@@ -50,11 +50,11 @@ public class CompassMonitor {
 		}
 	}
 	
-	static synchronized protected void notifyListeners(float azimuth, String direction){
+	static synchronized protected void notifyListeners(float azimuth,float angle, String direction){
 //		Logger.d("notifying listeners");
 		for(CompassListener l:listeners){
 			try{
-				l.onCompassChanged(azimuth,direction);
+				l.onCompassChanged(azimuth,angle,direction);
 			}catch(Exception ex){}
 		}
 	}
