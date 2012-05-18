@@ -969,6 +969,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			});
 			
 			
+			return askNorthBuilder.create();
+			
 		case DIALOG_CHANGE_SCAN_INTERVAL:
 			AlertDialog.Builder changeScanIntervalBuilder = new Builder(context);
 			changeScanIntervalBuilder.setTitle(R.string.project_site_dialog_change_scan_interval_title);
@@ -1206,7 +1208,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		map.removeSubDrawable(scaler);
 		scaler = null;
 		invalidate();
-		showDialog(DIALOG_ASK_FOR_NORTH);
+		showDialog(DIALOG_SET_SCALE_OF_MAP);
 	}
 
 	/*
