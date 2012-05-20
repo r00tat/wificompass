@@ -117,7 +117,8 @@ public class WifiScanner {
 						
 //						scanResultDao.refresh(wifiScanResult);
 						
-						resultCallback.onScanFinished(wifiScanResult);
+						if(resultCallback!=null)
+							resultCallback.onScanFinished(wifiScanResult);
 						
 //					} catch (SQLException e) {
 //						resultCallback.onScanFailed(e);

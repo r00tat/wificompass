@@ -67,7 +67,7 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 	
 		float curX=locationService.getLocation().getX(),curY=locationService.getLocation().getY();
 		
-		float angle=(float) (Math.toRadians(compDir)-locationService.getRelativeNorth());
+		float angle=(float) (Math.toRadians(compDir)+locationService.getRelativeNorth());
 		
 		float dx=(float) (Math.sin(angle)*step)*locationService.getGridSpacingX();
 		float dy=(float) (Math.cos(angle)*step)*locationService.getGridSpacingY();

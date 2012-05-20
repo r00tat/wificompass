@@ -101,8 +101,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	public static final String SITE_KEY = "SITE";
 
 	public static final String PROJECT_KEY = "PROJECT";
-	
-	public static final String SCAN_INTERVAL="scan_interval";
+
+	public static final String SCAN_INTERVAL = "scan_interval";
 
 	// public static final int START_NEW = 1, START_LOAD = 2;
 
@@ -200,8 +200,6 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected ArrayList<WifiScanResult> unsavedScanResults;
 
 	protected boolean walkingAndScanning = false;
-
-	protected boolean waitingForWiFiResult = false;
 
 	protected boolean freshSite = false;
 
@@ -308,9 +306,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			};
 
 			unsavedScanResults = new ArrayList<WifiScanResult>();
-			
-			
-			schedulerTime=this.getPreferences(Activity.MODE_PRIVATE).getInt(SCAN_INTERVAL, schedulerTime);
+
+			schedulerTime = this.getPreferences(Activity.MODE_PRIVATE).getInt(SCAN_INTERVAL, schedulerTime);
 
 			initUI();
 
@@ -378,7 +375,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		// stepDetectionProvider.start();
 
 		if (walkingAndScanning) {
-			setWalkingAndScanning(true);
+			setWalkingAndScanning(true,true);
 		}
 	}
 
@@ -426,7 +423,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_step_detect:
 
-			setWalkingAndScanning(!walkingAndScanning);
+			setWalkingAndScanning(!walkingAndScanning,true);
 			walkingAndScanning = !walkingAndScanning;
 
 			break;
@@ -447,7 +444,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		}
 	}
 
-	protected void setWalkingAndScanning(boolean shouldRun) {
+	protected void setWalkingAndScanning(boolean shouldRun,boolean ui) {
 		if (!shouldRun) {
 			// stop!
 
@@ -459,9 +456,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			}
 			stopWifiScan();
 
+			if(ui)
 			((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_start_step_detect);
 
-			persistScanResults();
+			persistScanResults(ui);
 
 		} else {
 			// start
@@ -474,6 +472,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			if (scheduledTask == null) {
 				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, schedulerTime, TimeUnit.SECONDS);
 			}
+			if(ui)
 			((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
 		}
 	}
@@ -481,27 +480,32 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	/**
 	 * 
 	 */
-	protected void persistScanResults() {
-		final ProgressDialog persistProgress = new ProgressDialog(this);
+	protected void persistScanResults(boolean dialog) {
+		if (dialog) {
+			final ProgressDialog persistProgress = new ProgressDialog(this);
 
-		final WifiScanResultPersistTask persistTask = new WifiScanResultPersistTask(this, persistProgress);
+			final WifiScanResultPersistTask persistTask = new WifiScanResultPersistTask(this, persistProgress);
 
-		// create dialog and run asynctask
-		persistProgress.setTitle(R.string.project_site_scanresults_persisting_title);
-		persistProgress.setMessage(getString(R.string.project_site_scanresults_persisting_message));
-		persistProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			// create dialog and run asynctask
+			persistProgress.setTitle(R.string.project_site_scanresults_persisting_title);
+			persistProgress.setMessage(getString(R.string.project_site_scanresults_persisting_message));
+			persistProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 
-		persistProgress.setButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				// Canceled.
-				if (persistTask != null) {
-					persistTask.cancel(true);
+			persistProgress.setButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					// Canceled.
+					if (persistTask != null) {
+						persistTask.cancel(true);
+					}
 				}
-			}
-		});
+			});
 
-		persistProgress.show();
-		persistTask.execute();
+			persistProgress.show();
+			persistTask.execute();
+		} else {
+			WifiScanResultPersistTask persistTask = new WifiScanResultPersistTask(this, null);
+			persistTask.execute();
+		}
 	}
 
 	protected void addKnownAP(String bssid, String ssid) {
@@ -967,15 +971,14 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 					freshSite = false;
 				}
 			});
-			
-			
+
 			return askNorthBuilder.create();
-			
+
 		case DIALOG_CHANGE_SCAN_INTERVAL:
 			AlertDialog.Builder changeScanIntervalBuilder = new Builder(context);
 			changeScanIntervalBuilder.setTitle(R.string.project_site_dialog_change_scan_interval_title);
-			changeScanIntervalBuilder.setMessage(getString(R.string.project_site_dialog_change_scan_interval_message,schedulerTime));
-			
+			changeScanIntervalBuilder.setMessage(getString(R.string.project_site_dialog_change_scan_interval_message, schedulerTime));
+
 			final SeekBar sb = new SeekBar(this);
 			sb.setMax(60);
 			sb.setProgress(schedulerTime);
@@ -984,12 +987,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			changeScanIntervalBuilder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-					schedulerTime=sb.getProgress();
+					schedulerTime = sb.getProgress();
 					getPreferences(MODE_PRIVATE).edit().putInt(SCAN_INTERVAL, schedulerTime).commit();
-					if(walkingAndScanning){
+					if (walkingAndScanning) {
 						// timer must be updated
-						setWalkingAndScanning(false);
-						setWalkingAndScanning(true);
+						setWalkingAndScanning(false,true);
+						setWalkingAndScanning(true,true);
 					}
 				}
 
@@ -998,13 +1001,12 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			changeScanIntervalBuilder.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					// Canceled.
-					
+
 				}
 			});
-			
+
 			final AlertDialog changeScanIntervalDialog = changeScanIntervalBuilder.create();
 
-			
 			sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
 				@Override
@@ -1021,8 +1023,6 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				}
 
 			});
-
-			
 
 			return changeScanIntervalDialog;
 
@@ -1130,7 +1130,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		case R.id.project_site_add_known_ap:
 			showDialog(DIALOG_ADD_KNOWN_AP);
 			break;
-			
+
 		case R.id.project_site_menu_change_scan_interval:
 			showDialog(DIALOG_CHANGE_SCAN_INTERVAL);
 			break;
@@ -1150,7 +1150,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			// Stop auto-rotate when map north is set
 			((ToggleButton) findViewById(R.id.project_site_toggle_autorotate)).setChecked(false);
 			map.stopAutoRotate();
-			
+
 			// create the icon the set the north
 			northDrawable = new NorthDrawable(this, map, site) {
 
@@ -1163,6 +1163,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				public void onOk() {
 					super.onOk();
 					northDrawable = null;
+					map.setAngleAdjustment(adjustmentAngle);
+					site.setNorth(adjustmentAngle);
+					LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
+					// Logger.d("set adjustment angle of map to "+adjustmentAngle);
 					Toast.makeText(ctx, R.string.project_site_nort_set, Toast.LENGTH_SHORT).show();
 					saveProjectSite();
 				}
@@ -1173,8 +1177,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		} else {
 			map.removeSubDrawable(northDrawable);
-			site.setNorth(northDrawable.getAngle());
-			LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
+			// do not set the angle, if the menu option is clicked
+			// site.setNorth(northDrawable.getAngle());
+			// LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
 			northDrawable = null;
 		}
 
@@ -1222,7 +1227,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		multiTouchView.unloadImages();
 		map.unload();
 
-		setWalkingAndScanning(false);
+		setWalkingAndScanning(false,false);
 
 		saveProjectSite();
 	}
@@ -1303,20 +1308,20 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	}
 
 	@Override
-	public void onScanFinished(WifiScanResult wr) {
+	public synchronized void onScanFinished(WifiScanResult wr) {
 		hideWifiScanDialog();
 		if (!ignoreWifiResults) {
 			try {
 
 				Logger.d("received a wifi scan result!");
-				waitingForWiFiResult = false;
+				ignoreWifiResults = true;
 
 				wr.setProjectLocation(site);
 
 				if (walkingAndScanning) {
 					unsavedScanResults.add(wr);
 				} else {
-					saveWifiScanResult(wr);
+					wr.save(databaseHelper);
 					site.getScanResults().refreshCollection();
 				}
 
@@ -1360,48 +1365,42 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		}
 	}
 
-	protected void saveWifiScanResult(WifiScanResult wr) throws SQLException {
-		Dao<Location, Integer> locationDao = databaseHelper.getDao(Location.class);
-		locationDao.createIfNotExists(wr.getLocation());
-
-		Dao<WifiScanResult, Integer> scanResultDao = databaseHelper.getDao(WifiScanResult.class);
-		scanResultDao.createIfNotExists(wr);
-
-		Dao<BssidResult, Integer> bssidResultDao = databaseHelper.getDao(BssidResult.class);
-
-		for (BssidResult br : wr.getTempBssids()) {
-			bssidResultDao.create(br);
-		}
-
-	}
-
 	@Override
 	public void onScanFailed(Exception ex) {
 		hideWifiScanDialog();
-		if (!ignoreWifiResults && waitingForWiFiResult) {
+		if (!ignoreWifiResults) {
 
 			Logger.e("Wifi scan failed!", ex);
 			Toast.makeText(this, this.getString(R.string.project_site_wifiscan_failed, ex.getMessage()), Toast.LENGTH_LONG).show();
-			waitingForWiFiResult = false;
+
 		}
 
 	}
 
 	protected void startWifiScan() throws WifiException {
 		log.debug("starting WiFi Scan");
-		waitingForWiFiResult = true;
+
 		wifiBroadcastReceiver = WifiScanner.startScan(this, this);
 		ignoreWifiResults = false;
 	}
 
 	protected void startWifiBackgroundScan() {
-		try {
-			startWifiScan();
-			// Toast.makeText(this, R.string.project_site_wifiscan_started, Toast.LENGTH_SHORT).show();
-		} catch (WifiException e) {
-			Logger.e("could not start wifi scan", e);
-			Toast.makeText(this, getString(R.string.project_site_wifiscan_start_failed, e.getMessage()), Toast.LENGTH_LONG).show();
-		}
+		
+			try {
+				// we first stop the old receiver, so we wont receive duplicate results
+//				stopWifiScan();
+				
+				if(wifiBroadcastReceiver!=null){
+//					wifiBroadcastReceiver.
+				}
+				
+				startWifiScan();
+				// Toast.makeText(this, R.string.project_site_wifiscan_started, Toast.LENGTH_SHORT).show();
+			} catch (WifiException e) {
+				Logger.e("could not start wifi scan", e);
+				Toast.makeText(this, getString(R.string.project_site_wifiscan_start_failed, e.getMessage()), Toast.LENGTH_LONG).show();
+			}
+		
 	}
 
 	/**
@@ -1568,11 +1567,14 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		protected boolean running = true;
 
+		protected DatabaseHelper databaseHelper;
+
 		static final String RESULT_CODE = "result", RESULT_MESSAGE = "message", RESULT_COUNT = "count";
 
 		public WifiScanResultPersistTask(ProjectSiteActivity parent, ProgressDialog progress) {
 			this.parent = parent;
 			this.progressDialog = progress;
+			databaseHelper = OpenHelperManager.getHelper(parent, DatabaseHelper.class);
 		}
 
 		/*
@@ -1589,7 +1591,9 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 			synchronized (unsavedScanResults) {
 
+				try{
 				this.progressDialog.setMax(unsavedScanResults.size());
+				}catch (Exception ex){}
 
 				// save all wifiscan results
 				try {
@@ -1598,7 +1602,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 						if (!running) {
 							break;
 						}
-						saveWifiScanResult(sr);
+						sr.save(databaseHelper);
 						this.publishProgress(++progress);
 					}
 
@@ -1632,8 +1636,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		 */
 		@Override
 		protected void onPostExecute(Bundle result) {
-			progressDialog.dismiss();
-			if (running) {
+			if (progressDialog != null)
+				progressDialog.dismiss();
+			OpenHelperManager.releaseHelper();
+			if (running && messageHandler != null) {
 				Message msg = new Message();
 				msg.what = MESSAGE_PERSIST_RESULT;
 				msg.arg1 = result.getInt(RESULT_CODE);
@@ -1649,7 +1655,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 		 */
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			progressDialog.setProgress(values[0]);
+			if (progressDialog != null)
+				progressDialog.setProgress(values[0]);
 		}
 
 		/*

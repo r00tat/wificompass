@@ -281,7 +281,7 @@ public class ProjectActivity extends Activity implements OnClickListener, OnItem
 				Toast.makeText(this, R.string.project_delete_failed, Toast.LENGTH_LONG).show();
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			log.error("could not delete project", e);
 			Toast.makeText(this, R.string.project_delete_failed, Toast.LENGTH_LONG).show();
 		}

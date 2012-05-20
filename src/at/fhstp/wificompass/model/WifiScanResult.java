@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import at.fhstp.wificompass.model.helper.DatabaseHelper;
+
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
@@ -193,6 +196,21 @@ public class WifiScanResult extends BaseDaoEnabled<WifiScanResult, Integer>{
 			br.delete();
 		}
 		return super.delete();
+	}
+	
+	public void save(DatabaseHelper databaseHelper) throws SQLException{
+		Dao<Location, Integer> locationDao = databaseHelper.getDao(Location.class);
+		locationDao.createIfNotExists(this.getLocation());
+
+		Dao<WifiScanResult, Integer> scanResultDao = databaseHelper.getDao(WifiScanResult.class);
+		scanResultDao.createIfNotExists(this);
+
+		Dao<BssidResult, Integer> bssidResultDao = databaseHelper.getDao(BssidResult.class);
+
+		for (BssidResult br : this.getTempBssids()) {
+			bssidResultDao.create(br);
+		}
+
 	}
 	
 	

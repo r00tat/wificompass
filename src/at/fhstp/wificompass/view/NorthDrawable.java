@@ -169,11 +169,6 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback, Ang
 
 	@Override
 	public void onOk() {
-		if (this.getSuperDrawable() != null && this.getSuperDrawable() instanceof SiteMapDrawable) {
-			((SiteMapDrawable)this.getSuperDrawable()).setAngleAdjustment(adjustmentAngle);
-			site.setNorth(adjustmentAngle);
-		}
-		
 		this.deleteDrawable();
 	}
 

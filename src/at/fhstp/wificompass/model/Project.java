@@ -194,9 +194,10 @@ public class Project extends BaseDaoEnabled<Project, Integer>implements XMLSeria
 	 */
 	@Override
 	public int delete() throws SQLException {
-		for(ProjectSite site: sites){
-			site.delete();
-		}
+		if(sites!=null)
+			for(ProjectSite site: sites){
+				site.delete();
+			}
 		return super.delete();
 	}
 

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Vector;
 
 import at.fhstp.wificompass.Logger;
+import at.fhstp.wificompass.ToolBox;
 import at.fhstp.wificompass.model.Location;
 
 /**
@@ -132,9 +133,7 @@ public class LocationServiceImpl implements LocationService {
 	 */
 	@Override
 	public void setRelativeNorth(float angle) {
-		this.angle = (float) (angle%(2*Math.PI));
-		if(this.angle<0)
-			this.angle+=2*Math.PI;
+		this.angle =ToolBox.normalizeAngle(angle);
 	}
 
 	@Override
