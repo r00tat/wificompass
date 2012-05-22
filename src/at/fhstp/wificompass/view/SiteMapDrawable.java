@@ -5,6 +5,8 @@
  */
 package at.fhstp.wificompass.view;
 
+import java.util.ArrayList;
+
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 
 import android.content.Context;
@@ -12,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -33,6 +36,10 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	float angleAdjustment = 0.0f;
 
 	protected float lastAngle;
+	
+	protected ArrayList<PointF> steps;
+
+	
 
 	protected static final double MIN_ANGLE_CHANGE = Math.toRadians(5);
 
@@ -90,6 +97,8 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 			canvas.drawBitmap(backgroundImage, new Rect(0, 0, backgroundImage.getWidth(), backgroundImage.getHeight()), new Rect((int) minX,
 					(int) minY, (int) maxX, (int) maxY), null);
 
+		
+		// draw grid
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setColor(Color.rgb(230, 230, 230));
@@ -206,6 +215,26 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 		this.backgroundImage = backgroundImage;
 	}
 
+	
+	/**
+	 * @return the steps
+	 */
+	public ArrayList<PointF> getSteps() {
+		return steps;
+	}
+
+	/**
+	 * @param steps the steps to set
+	 */
+	public void setSteps(ArrayList<PointF> steps) {
+		this.steps = steps;
+	}
+	
+	public void addStep(PointF step){
+		steps.add(step);
+	}
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 

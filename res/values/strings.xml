@@ -258,6 +258,7 @@
 	</string>
 	<string name="project_site_wifiscan_started">WiFi Scan started!</string>
 	<string name="project_site_menu_change_scan_interval">Change WiFi Scan Interval</string>
+	<string name="project_site_menu_track_steps">Track Steps</string>
 
 
 	<!-- drawables -->
@@ -354,7 +355,7 @@
 	</string>
 	<string name="calibrator_auto_config_progress_title">Auto Configuration of Sensor Parameters</string>
 	<string name="calibrator_auto_config_progress_message">Searching for the best peak and filter values. This
-		may take a while...
+		may take a while…
 	</string>
 	<string name="calibrator_analyze_data">Analyze Data</string>
 	<string name="calibrator_auto_config_setting_title">Auto Calibration Settings</string>

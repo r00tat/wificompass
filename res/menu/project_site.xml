@@ -29,6 +29,10 @@
                 android:title="@string/project_site_menu_set_north">
             </item>
             <item
+                android:id="@+id/project_site_menu_track_steps"
+                android:title="@string/project_site_menu_track_steps">
+            </item>
+            <item
                 android:id="@+id/project_site_menu_change_size"
                 android:icon="@drawable/resize"
                 android:title="@string/project_site_menu_change_size">

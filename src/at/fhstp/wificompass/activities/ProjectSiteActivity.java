@@ -203,6 +203,8 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	protected boolean walkingAndScanning = false;
 
 	protected boolean freshSite = false;
+	
+	protected boolean trackSteps= false; 
 
 	/*
 	 * (non-Javadoc)
@@ -1134,6 +1136,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 		case R.id.project_site_menu_change_scan_interval:
 			showDialog(DIALOG_CHANGE_SCAN_INTERVAL);
+			break;
+			
+		case R.id.project_site_menu_track_steps:
+			trackSteps=!trackSteps;
 			break;
 
 		default:
