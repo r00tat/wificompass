@@ -30,7 +30,7 @@ public class CompassMonitor {
 					notifyListeners(azimuth,angle,direction);
 				}
 				
-			},0.3f);
+			},0.5f);
 		}
 		listeners.add(listener);
 	}
