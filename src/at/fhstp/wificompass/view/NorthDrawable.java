@@ -178,7 +178,7 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback, Ang
 		if (caller instanceof UserCompassDrawable) {
 			compassAngle = ToolBox.normalizeAngle(angle);
 		} else if (caller instanceof SiteMapDrawable) {
-			mapAngle = ToolBox.normalizeAngle(angle);
+			mapAngle = ToolBox.normalizeAngle(-angle);
 		}
 		
 //		adjustmentAngle = ToolBox.calculateAngleDifference(compassAngle, mapAngle);
