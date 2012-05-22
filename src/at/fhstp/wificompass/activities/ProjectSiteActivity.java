@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PointF;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,10 +50,10 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
 import at.fhstp.wificompass.ToolBox;
@@ -204,7 +205,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 	protected boolean freshSite = false;
 	
-	protected boolean trackSteps= false; 
+	protected boolean trackSteps= true; 
 
 	/*
 	 * (non-Javadoc)
@@ -1140,6 +1141,10 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			
 		case R.id.project_site_menu_track_steps:
 			trackSteps=!trackSteps;
+			if(trackSteps==false){
+				// tracking disabled
+				map.deleteAllSteps();
+			}
 			break;
 
 		default:
@@ -1564,6 +1569,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	public void onLocationChange(Location loc) {
 		// info from StepDetectionProvider, that the location changed.
 		user.setRelativePosition(loc.getX(), loc.getY());
+		map.addStep(new PointF(loc.getX(),loc.getY()));
 		messageHandler.sendEmptyMessage(MESSAGE_REFRESH);
 	}
 

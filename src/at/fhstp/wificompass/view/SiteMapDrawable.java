@@ -36,10 +36,8 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	float angleAdjustment = 0.0f;
 
 	protected float lastAngle;
-	
-	protected ArrayList<PointF> steps;
 
-	
+	protected ArrayList<PointF> steps;
 
 	protected static final double MIN_ANGLE_CHANGE = Math.toRadians(5);
 
@@ -57,6 +55,7 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 		width = displayWidth;
 		height = displayHeight;
 		backgroundImage = null;
+		steps=new ArrayList<PointF>();
 		this.resetXY();
 	}
 
@@ -97,7 +96,6 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 			canvas.drawBitmap(backgroundImage, new Rect(0, 0, backgroundImage.getWidth(), backgroundImage.getHeight()), new Rect((int) minX,
 					(int) minY, (int) maxX, (int) maxY), null);
 
-		
 		// draw grid
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.STROKE);
@@ -131,6 +129,23 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 			paint.setStrokeWidth(0);
 			paint.setColor(Color.rgb(230, 230, 230));
 			counterY++;
+		}
+
+		if (steps != null) {
+
+			Paint pointPaint = new Paint();
+			pointPaint.setStyle(Paint.Style.FILL);
+			pointPaint.setColor(Color.RED);
+
+			int i=-1;
+			for(PointF step: steps){
+				canvas.drawCircle(step.x*scaleX, step.y*scaleY, 3, pointPaint);
+				if(i>=0){
+					canvas.drawLine(steps.get(i).x*scaleX, steps.get(i).y*scaleY, step.x*scaleX, step.y*scaleY, pointPaint);
+				}
+				i++;
+			}
+			
 		}
 
 		canvas.restore();
@@ -215,7 +230,6 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 		this.backgroundImage = backgroundImage;
 	}
 
-	
 	/**
 	 * @return the steps
 	 */
@@ -224,17 +238,20 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	}
 
 	/**
-	 * @param steps the steps to set
+	 * @param steps
+	 *            the steps to set
 	 */
 	public void setSteps(ArrayList<PointF> steps) {
 		this.steps = steps;
 	}
-	
-	public void addStep(PointF step){
+
+	public void addStep(PointF step) {
+		if (steps == null) {
+			steps = new ArrayList<PointF>();
+		}
 		steps.add(step);
 	}
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -276,13 +293,20 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	public void onCompassChanged(float azimuth, float angle, String direction) {
 		// azimuth = (float) Math.toRadians(azimuth);
 		float adjusted = ToolBox.normalizeAngle((angle - angleAdjustment) * -1.0f);
-		
+
 		// filter small movements
 		if (Math.abs(lastAngle - adjusted) > MIN_ANGLE_CHANGE) {
 			this.setAngle(adjusted);
 			this.recalculatePositions();
 			this.lastAngle = adjusted;
 		}
+	}
+
+	/**
+	 * 
+	 */
+	public void deleteAllSteps() {
+		steps=new ArrayList<PointF>();
 	}
 
 }
