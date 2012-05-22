@@ -344,7 +344,9 @@
 		%8$d combinations have the best results.\nThe best result was:\nScore:
 		%1$d %2$.0f%%\nSteps correct detected: %5$d\nSteps not detected:
 		%6$d\nSteps false detected: %7$d\nFilter: %3$.2f\nPeak:
-		%4$.2fm/s^2\nTimeout: %9$dms</string>
+		%4$.2fm/s^2\n\nThe default values performed that good:\nScore:
+		%11$d %12$.0f%%\nSteps correct detected: %13$d\nSteps not detected:
+		%14$d\nSteps false detected: %15$d\n\n\nSteps done:%10$d\nTimeout: %9$dms</string>
 	<string name="calibrator_auto_config_info_title">Sensor Auto Calibration</string>
 	<string name="calibrator_auto_config_info_message">Sensor Auto Calibration will be started. All sensor
 		data will be log for analysis.\nTouch the Sensor Data area, where the

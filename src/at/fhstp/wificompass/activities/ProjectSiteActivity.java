@@ -55,6 +55,7 @@ import android.widget.ToggleButton;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import at.fhstp.wificompass.Logger;
 import at.fhstp.wificompass.R;
+import at.fhstp.wificompass.ToolBox;
 import at.fhstp.wificompass.exceptions.SiteNotFoundException;
 import at.fhstp.wificompass.exceptions.WifiException;
 import at.fhstp.wificompass.model.AccessPoint;
@@ -1163,10 +1164,11 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 				public void onOk() {
 					super.onOk();
 					northDrawable = null;
-					map.setAngleAdjustment(adjustmentAngle);
-					site.setNorth(adjustmentAngle);
+					site.setNorth(ToolBox.normalizeAngle(adjustmentAngle));
+					map.setAngleAdjustment(site.getNorth());
+					
 					LocationServiceFactory.getLocationService().setRelativeNorth(site.getNorth());
-					// Logger.d("set adjustment angle of map to "+adjustmentAngle);
+					Logger.d("set adjustment angle of map to "+site.getNorth());
 					Toast.makeText(ctx, R.string.project_site_nort_set, Toast.LENGTH_SHORT).show();
 					saveProjectSite();
 				}

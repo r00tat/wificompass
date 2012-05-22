@@ -122,7 +122,8 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 	public static final String BUNDLE_SCORE = "score", BUNDLE_PCT = "percantage", BUNDLE_FILTER = "filter", BUNDLE_PEAK = "peak",
 			BUNDLE_FOUND = "found", BUNDLE_NOTFOUND = "notfound", BUNDLE_FALSEFOUND = "falsefound", BUNDLE_ALLFOUND = "allfound",
-			BUNDLE_TIMEOUT = "timeout";
+			BUNDLE_TIMEOUT = "timeout", BUNDLE_DEF_SCORE = "defScore", BUNDLE_DEF_SCORE_PCT = "defScorePct", BUNDLE_DEF_DETECTED = "defDetected",
+			BUNDLE_DEF_NOT_DETECTED = "defNotDetected", BUNDLE_DEF_FALSE_DETECTED = "defFalseDetected", BUNDLE_REAL_STEP_COUNT = "stepCount";
 
 	protected ArrayList<SensorData> accelerometerSensorValues, stepValues;
 
@@ -233,7 +234,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 		((Button) findViewById(R.id.calibrator_step_button)).setOnClickListener(this);
 
-//		((Button) findViewById(R.id.calibrator_analyze_data)).setOnClickListener(this);
+		// ((Button) findViewById(R.id.calibrator_analyze_data)).setOnClickListener(this);
 
 		loadSettings();
 	}
@@ -383,7 +384,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 				// stop calibration
 				autoCalibrationRunning = false;
 				showCalibrationDialog();
-				
+
 			} else {
 				// start calibration
 				// clear saved sensor data
@@ -424,9 +425,9 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 			break;
 
-//		case R.id.calibrator_analyze_data:
-//			showCalibrationDialog();
-//			break;
+		// case R.id.calibrator_analyze_data:
+		// showCalibrationDialog();
+		// break;
 
 		case R.id.calibrator_step_button:
 		case R.id.calibrator_history_paintbox:
@@ -583,6 +584,8 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			float bestFilter = 0f, bestPeak = 0f;
 			int bestScore = Integer.MIN_VALUE, bestStepFound = 0, bestStepNotFound = 0, bestStepFalseFound = 0, bestTimeout = 0;
 
+			int defScore = 0, defStepFound = 0, defStepNotFound = 0, defStepFalseFound = 0;
+
 			// long halfWindow = StepDetection.INTERVAL_MS * StepDetector.WINDOW / 2;
 
 			// the user must tap on the screen in less than a half second
@@ -596,11 +599,10 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			// filter range 0.05 to 0.80 in 0.05 steps
 			// peak range 0.2 to 3 in 0.05 steps
 
-			
 			// synchronize the list arrays, we don't want the arrays to be modified, while we cycle through them.
 			// happened two times on a Galaxy S2, even if the values shouldn't be saved any more...
-			this.parent.autoCalibrationRunning=false;
-			
+			this.parent.autoCalibrationRunning = false;
+
 			synchronized (accelerometerValues) {
 				synchronized (steps) {
 
@@ -717,6 +719,16 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 									allDetected = 1;
 								}
 
+								if (l > StepDetectionProvider.FILTER_DEFAULT-FILTER_INTERVAL/2 && l<StepDetectionProvider.FILTER_DEFAULT+FILTER_INTERVAL/2
+										&& p > StepDetectionProvider.PEAK_DEFAULT-PEAK_INTERVAL/2&& p < StepDetectionProvider.PEAK_DEFAULT+PEAK_INTERVAL/2) {
+									// how good do the default values perform?
+									defScore = score;
+									defStepFound = stepFound;
+									defStepNotFound = stepNotFound;
+									defStepFalseFound = stepFalseFound;
+
+								}
+
 								// progressDialog.setProgress((int)progressCur);
 								this.publishProgress(++progress);
 							}
@@ -733,6 +745,12 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 						result.putInt(BUNDLE_FALSEFOUND, bestStepFalseFound);
 						result.putInt(BUNDLE_ALLFOUND, allDetected);
 						result.putInt(BUNDLE_TIMEOUT, bestTimeout);
+						result.putInt(BUNDLE_REAL_STEP_COUNT, steps.size());
+						result.putInt(BUNDLE_DEF_SCORE, defScore);
+						result.putFloat(BUNDLE_DEF_SCORE_PCT, ((float) defScore) / steps.size());
+						result.putInt(BUNDLE_DEF_DETECTED, defStepFound);
+						result.putInt(BUNDLE_DEF_NOT_DETECTED, defStepNotFound);
+						result.putInt(BUNDLE_DEF_FALSE_DETECTED, defStepFalseFound);
 
 						// } catch (SQLException e) {
 						// Logger.e("could not access saved data", e);
@@ -794,10 +812,15 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.calibrator_auto_config_title);
+
 		builder.setMessage(getString(R.string.calibrator_auto_config_message, result.getInt(BUNDLE_SCORE, 0), result.getFloat(BUNDLE_PCT, 0) * 100,
 				result.getFloat(BUNDLE_FILTER, StepDetectionProvider.FILTER_DEFAULT),
 				result.getFloat(BUNDLE_PEAK, StepDetectionProvider.PEAK_DEFAULT), result.getInt(BUNDLE_FOUND, 0), result.getInt(BUNDLE_NOTFOUND, 0),
-				result.getInt(BUNDLE_FALSEFOUND, 0), result.getInt(BUNDLE_ALLFOUND, 0), result.getInt(BUNDLE_TIMEOUT, 0)));
+				result.getInt(BUNDLE_FALSEFOUND, 0), result.getInt(BUNDLE_ALLFOUND, 0), result.getInt(BUNDLE_TIMEOUT, 0),
+				result.getInt(BUNDLE_REAL_STEP_COUNT), result.getInt(BUNDLE_DEF_SCORE), result.getFloat(BUNDLE_DEF_SCORE_PCT)*100,
+				result.getInt(BUNDLE_DEF_DETECTED), result.getInt(BUNDLE_DEF_NOT_DETECTED), result.getInt(BUNDLE_DEF_FALSE_DETECTED)));
+
+
 		builder.setCancelable(false);
 		builder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 
