@@ -307,7 +307,7 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	@Override
 	public void onCompassChanged(float azimuth, float angle, String direction) {
 		// azimuth = (float) Math.toRadians(azimuth);
-		float adjusted = ToolBox.normalizeAngle((angle - angleAdjustment) * -1.0f);
+		float adjusted = ToolBox.normalizeAngle((angle + angleAdjustment) * -1.0f);
 
 		// filter small movements
 		if (Math.abs(lastAngle - adjusted) > MIN_ANGLE_CHANGE) {
