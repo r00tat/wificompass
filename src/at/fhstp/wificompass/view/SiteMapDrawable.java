@@ -131,11 +131,24 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 			counterY++;
 		}
 
+		canvas.restore();
+		
 		if (steps != null) {
 
+			
+			
 			Paint pointPaint = new Paint();
 			pointPaint.setStyle(Paint.Style.FILL);
 			pointPaint.setColor(Color.RED);
+			
+			
+			canvas.save();
+			
+			canvas.translate(dx, dy);
+			canvas.rotate((float) Math.toDegrees(angle));
+			canvas.translate(-dx, -dy);
+			
+			canvas.translate(minX, minY);
 
 			int i=-1;
 			for(PointF step: steps){
@@ -146,9 +159,11 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 				i++;
 			}
 			
+			canvas.restore();
+			
 		}
 
-		canvas.restore();
+		
 
 		this.drawSubdrawables(canvas);
 	}
