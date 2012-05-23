@@ -5,7 +5,7 @@
  */
 package at.fhstp.wificompass.view;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 
@@ -37,7 +37,7 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 
 	protected float lastAngle;
 
-	protected ArrayList<PointF> steps;
+	protected Vector<PointF> steps;
 
 	protected static final double MIN_ANGLE_CHANGE = Math.toRadians(5);
 
@@ -55,7 +55,7 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 		width = displayWidth;
 		height = displayHeight;
 		backgroundImage = null;
-		steps=new ArrayList<PointF>();
+		steps = new Vector<PointF>();
 		this.resetXY();
 	}
 
@@ -132,38 +132,37 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 		}
 
 		canvas.restore();
-		
-		if (steps != null) {
 
-			
-			
-			Paint pointPaint = new Paint();
-			pointPaint.setStyle(Paint.Style.FILL);
-			pointPaint.setColor(Color.RED);
-			
-			
-			canvas.save();
-			
-			canvas.translate(dx, dy);
-			canvas.rotate((float) Math.toDegrees(angle));
-			canvas.translate(-dx, -dy);
-			
-			canvas.translate(minX, minY);
+		synchronized (steps) {
 
-			int i=-1;
-			for(PointF step: steps){
-				canvas.drawCircle(step.x*scaleX, step.y*scaleY, 3, pointPaint);
-				if(i>=0){
-					canvas.drawLine(steps.get(i).x*scaleX, steps.get(i).y*scaleY, step.x*scaleX, step.y*scaleY, pointPaint);
+			if (steps != null) {
+
+				Paint pointPaint = new Paint();
+				pointPaint.setStyle(Paint.Style.FILL);
+				pointPaint.setColor(Color.RED);
+
+				canvas.save();
+
+				canvas.translate(dx, dy);
+				canvas.rotate((float) Math.toDegrees(angle));
+				canvas.translate(-dx, -dy);
+
+				canvas.translate(minX, minY);
+
+				int i = -1;
+				for (PointF step : steps) {
+					canvas.drawCircle(step.x * scaleX, step.y * scaleY, 3, pointPaint);
+					if (i >= 0) {
+						canvas.drawLine(steps.get(i).x * scaleX, steps.get(i).y * scaleY, step.x * scaleX, step.y * scaleY, pointPaint);
+					}
+					i++;
 				}
-				i++;
-			}
-			
-			canvas.restore();
-			
-		}
 
-		
+				canvas.restore();
+
+			}
+
+		}
 
 		this.drawSubdrawables(canvas);
 	}
@@ -248,7 +247,7 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	/**
 	 * @return the steps
 	 */
-	public ArrayList<PointF> getSteps() {
+	public Vector<PointF> getSteps() {
 		return steps;
 	}
 
@@ -256,13 +255,13 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	 * @param steps
 	 *            the steps to set
 	 */
-	public void setSteps(ArrayList<PointF> steps) {
+	public void setSteps(Vector<PointF> steps) {
 		this.steps = steps;
 	}
 
 	public void addStep(PointF step) {
 		if (steps == null) {
-			steps = new ArrayList<PointF>();
+			steps = new Vector<PointF>();
 		}
 		steps.add(step);
 	}
@@ -321,7 +320,7 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	 * 
 	 */
 	public void deleteAllSteps() {
-		steps=new ArrayList<PointF>();
+		steps = new Vector<PointF>();
 	}
 
 }
