@@ -1,81 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/about_scroll_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:gravity="center"
+        android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:linksClickable="true"
-        android:text="@string/aboutText" 
-        android:layout_margin="20dp" android:bufferType="spannable" android:id="@+id/about_description"/>
-
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:padding="5dp">
-
-        <TableRow
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_app_revision"
-                android:textAppearance="?android:attr/textAppearanceMedium" android:layout_marginRight="5dp"/>
-
-            <TextView
-                android:id="@+id/about_revision"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/unknown" android:layout_marginBottom="5dp"/>
-
-        </TableRow>
-
-        <TableRow
+        <TextView
+            android:id="@+id/about_description"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:bufferType="spannable"
+            android:linksClickable="true"
+            android:text="@string/aboutText" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_app_commit_date"
-                android:textAppearance="?android:attr/textAppearanceMedium" android:layout_marginRight="5dp"/>
-
-            <TextView
-                android:id="@+id/about_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/unknown" android:layout_marginBottom="5dp"/>
-
-        </TableRow>
-
-        <TableRow
+        <TableLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:padding="5dp" >
 
-            <TextView
+            <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/about_app_repository_url"
-                android:textAppearance="?android:attr/textAppearanceMedium" android:layout_marginRight="5dp"/>
+                android:padding="5dp" >
 
-            <TextView
-                android:id="@+id/about_url"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/about_app_revision"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/about_revision"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/unknown" />
+            </TableRow>
+
+            <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/unknown" android:layout_marginBottom="5dp" android:bufferType="spannable"/>
+                android:padding="5dp" >
 
-        </TableRow>
-    </TableLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/about_app_commit_date"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/about_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/unknown" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/about_app_repository_url"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/about_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:bufferType="spannable"
+                    android:text="@string/unknown" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/about_license_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/about_license_title"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:bufferType="spannable"
+            android:linksClickable="true"
+            android:text="@string/about_license_text" />
+    </LinearLayout>
+
+</ScrollView>
