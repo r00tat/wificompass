@@ -103,7 +103,7 @@ public class AccessPointDrawable extends MultiTouchDrawable {
 	}
 
 	@Override
-	public boolean isRotateable() {
+	public boolean isRotatable() {
 		return false;
 	}
 

@@ -62,7 +62,7 @@ public class DeleteDrawable extends MultiTouchDrawable implements Popup{
 	}
 
 	@Override
-	public boolean isRotateable() {
+	public boolean isRotatable() {
 		return false;
 	}
 

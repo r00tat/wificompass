@@ -188,7 +188,7 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	}
 
 	@Override
-	public boolean isRotateable() {
+	public boolean isRotatable() {
 		return true;
 	}
 

@@ -453,7 +453,7 @@ public abstract class MultiTouchDrawable {
 	 * 
 	 * @return true if rotateable
 	 */
-	public abstract boolean isRotateable();
+	public abstract boolean isRotatable();
 
 	/**
 	 * does this object support dragging, or should it stay where it is
@@ -588,7 +588,7 @@ public abstract class MultiTouchDrawable {
 
 		// Reset the angle if the drawable is not rotatable (for the same reason
 		// as above)
-		if (!isRotateable()) {
+		if (!isRotatable()) {
 			this.setAngle(0.0f);
 		}
 
@@ -617,7 +617,7 @@ public abstract class MultiTouchDrawable {
 			this.setScale(scaleX, scaleY);
 		}
 
-		if ((flags & FLAG_FORCEROTATE) != 0 || this.isRotateable()) {
+		if ((flags & FLAG_FORCEROTATE) != 0 || this.isRotatable()) {
 			angleChange = angle - this.angle;
 			// this.angle = angle;
 			this.setAngle(angle);

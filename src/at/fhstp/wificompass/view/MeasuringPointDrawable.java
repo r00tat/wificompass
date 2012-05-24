@@ -100,7 +100,7 @@ public class MeasuringPointDrawable extends MultiTouchDrawable {
 	}
 
 	@Override
-	public boolean isRotateable() {
+	public boolean isRotatable() {
 		return false;
 	}
 

@@ -74,7 +74,7 @@ public class TextDrawable extends MultiTouchDrawable {
 	}
 
 	@Override
-	public boolean isRotateable() {
+	public boolean isRotatable() {
 		return false;
 	}
 

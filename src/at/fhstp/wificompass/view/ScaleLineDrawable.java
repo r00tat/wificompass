@@ -106,7 +106,7 @@ public class ScaleLineDrawable extends MultiTouchDrawable {
 	}
 
 	@Override
-	public boolean isRotateable() {
+	public boolean isRotatable() {
 		return true;
 	}
 

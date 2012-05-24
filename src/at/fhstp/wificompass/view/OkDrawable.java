@@ -85,7 +85,7 @@ public class OkDrawable extends MultiTouchDrawable {
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#isRotateable()
 	 */
 	@Override
-	public boolean isRotateable() {
+	public boolean isRotatable() {
 		return false;
 	}
 

@@ -143,7 +143,7 @@ public class NorthDrawable extends MultiTouchDrawable implements OkCallback, Ang
 	 * @see at.fhstp.wificompass.view.MultiTouchDrawable#isRotateable()
 	 */
 	@Override
-	public boolean isRotateable() {
+	public boolean isRotatable() {
 		return false;
 	}
 
