@@ -1,4 +1,4 @@
-package at.fhstp.wificompass.triangulation;
+package at.fhstp.wificompass.trilateration;
 
 import java.util.Iterator;
 import java.util.Vector;
@@ -12,8 +12,8 @@ import at.fhstp.wificompass.model.AccessPoint;
 import at.fhstp.wificompass.model.ProjectSite;
 import at.fhstp.wificompass.view.MultiTouchDrawable;
 
-public class LocalSignalStrengthGradientTriangulation extends
-		AccessPointTriangulation {
+public class LocalSignalStrengthGradientTrilateration extends
+		AccessPointTrilateration {
 
 	/**
 	 * Half the size of the square (in meters) in which measurement points are
@@ -22,12 +22,12 @@ public class LocalSignalStrengthGradientTriangulation extends
 	protected static float windowSize = 2;
 	protected static float g = -0.4f;
 
-	public LocalSignalStrengthGradientTriangulation(Context context,
+	public LocalSignalStrengthGradientTrilateration(Context context,
 			ProjectSite projectSite) {
 		super(context, projectSite);
 	}
 	
-	public LocalSignalStrengthGradientTriangulation(Context context,
+	public LocalSignalStrengthGradientTrilateration(Context context,
 			ProjectSite projectSite, ProgressDialog progressDialog) {
 		super(context, projectSite, progressDialog);
 	}

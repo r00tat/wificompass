@@ -1,4 +1,4 @@
-package at.fhstp.wificompass.triangulation;
+package at.fhstp.wificompass.trilateration;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,7 +18,7 @@ import at.fhstp.wificompass.view.AccessPointDrawable;
 /**
  * @author  Paul Woelfel (paul@woelfel.at)
  */
-public abstract class AccessPointTriangulation {
+public abstract class AccessPointTrilateration {
 
 	/** The current context. Is required for creating AccessPointDrawables */
 	protected Context context;
@@ -45,13 +45,13 @@ public abstract class AccessPointTriangulation {
 	 * @param context
 	 * @param projectSite
 	 */
-	public AccessPointTriangulation(Context context, ProjectSite projectSite) {
+	public AccessPointTrilateration(Context context, ProjectSite projectSite) {
 		this.context = context;
 		this.projectSite = projectSite;
 		this.parseMeasurementData();
 	}
 	
-	public AccessPointTriangulation(Context context, ProjectSite projectSite, ProgressDialog progressDialog) {
+	public AccessPointTrilateration(Context context, ProjectSite projectSite, ProgressDialog progressDialog) {
 		this.context = context;
 		this.projectSite = projectSite;
 		this.progressDialog = progressDialog;

@@ -1,4 +1,4 @@
-package at.fhstp.wificompass.triangulation;
+package at.fhstp.wificompass.trilateration;
 
 import java.util.Vector;
 
