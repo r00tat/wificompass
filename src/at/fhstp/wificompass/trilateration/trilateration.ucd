@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="trilateration" size="1079,820" id="at.fhstp.wificompass.trilateration" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D313030302077696669636F6D706173732F66726967">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.0" name="MeasurementDataSet" location="585,45" size="154,265" id="at.fhstp.wificompass.trilateration/MeasurementDataSet" runTimeClassModel="MeasurementDataSet(),getMaximumValue(Ljava.util.Vector;I),getMinimumValue(Ljava.util.Vector;I),getPointF(),vALUE_X,vALUE_Y,rssi,MeasurementDataSet(FFF),getSum(Ljava.util.Vector;I),y,vALUE_RSSI,x">
+    <children xsi:type="editmodel:CompartmentEditModel" size="100,108">
+      <children xsi:type="editmodel:AttributeEditModel" name="rssi" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#rssi"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="vALUE_RSSI" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#vALUE_RSSI"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="vALUE_X" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#vALUE_X"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="vALUE_Y" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#vALUE_Y"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="x" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#x"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="y" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#y"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="129,108">
+      <children xsi:type="editmodel:MethodEditModel" name="MeasurementDataSet" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#MeasurementDataSet()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="MeasurementDataSet" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#MeasurementDataSet(FFF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMaximumValue" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#getMaximumValue(Ljava.util.Vector;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMinimumValue" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#getMinimumValue(Ljava.util.Vector;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPointF" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#getPointF()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSum" id="at.fhstp.wificompass.trilateration/MeasurementDataSet#getSum(Ljava.util.Vector;I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="LocalSignalStrengthGradientTrilateration" location="285,300" size="260,398" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration" runTimeClassModel="areAllMeasurementsCollinear(Ljava.util.Vector;),g,arePointsCollinear(Landroid.graphics.PointF;Landroid.graphics.PointF;Landroid.graphics.PointF;),calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;),LocalSignalStrengthGradientTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;),roundToGridSpacing(F),LocalSignalStrengthGradientTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;),getMeasurementDataWithinWindow(Ljava.util.Vector;Lat.fhstp.wificompass.trilateration.MeasurementDataSet;F),windowSize,at.fhstp.wificompass.trilateration.LocalSignalStrengthGradientTrilateration.GradientArrow">
+    <children xsi:type="editmodel:CompartmentEditModel" size="99,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="g" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration#g"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="windowSize" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration#windowSize"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="216,126">
+      <children xsi:type="editmodel:MethodEditModel" name="LocalSignalStrengthGradientTrilateration" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration#LocalSignalStrengthGradientTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="LocalSignalStrengthGradientTrilateration" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration#LocalSignalStrengthGradientTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="areAllMeasurementsCollinear" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration#areAllMeasurementsCollinear(Ljava.util.Vector;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="arePointsCollinear" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration#arePointsCollinear(Landroid.graphics.PointF;Landroid.graphics.PointF;Landroid.graphics.PointF;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calculateAccessPointPosition" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration#calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMeasurementDataWithinWindow" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration#getMeasurementDataWithinWindow(Ljava.util.Vector;Lat.fhstp.wificompass.trilateration.MeasurementDataSet;F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="roundToGridSpacing" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration#roundToGridSpacing(F)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="120,177">
+      <children xsi:type="editmodel:ClassEditModel" name="GradientArrow" size="120,175" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration$GradientArrow" runTimeClassModel="GradientArrow(),weight,GradientArrow(FFFFF),directionY,directionX,y,x">
+        <children xsi:type="editmodel:CompartmentEditModel" size="91,90">
+          <children xsi:type="editmodel:AttributeEditModel" name="directionX" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration$GradientArrow#directionX"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="directionY" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration$GradientArrow#directionY"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="weight" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration$GradientArrow#weight"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="x" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration$GradientArrow#x"/>
+          <children xsi:type="editmodel:AttributeEditModel" name="y" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration$GradientArrow#y"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="94,36">
+          <children xsi:type="editmodel:MethodEditModel" name="GradientArrow" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration$GradientArrow#GradientArrow(FFFFF)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="GradientArrow" id="at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration$GradientArrow#GradientArrow()"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+      </children>
+    </children>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration&lt;-at.fhstp.wificompass.trilateration/LocalSignalStrengthGradientTrilateration" source="//@children.1" target="//@children.3/@sourceConnections.0" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="130,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.0" name="AccessPointTrilateration" location="75,15" size="392,211" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration" runTimeClassModel="calculateAllAndGetDrawables(),calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;),AccessPointTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;),context,accessPoints,AccessPointTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;),measurementData,parseMeasurementData(),progressDialog">
+    <children xsi:type="editmodel:CompartmentEditModel" size="369,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="accessPoints" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration#accessPoints"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="context" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration#context"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="measurementData" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration#measurementData"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="progressDialog" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration#progressDialog"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="164,90">
+      <children xsi:type="editmodel:MethodEditModel" name="AccessPointTrilateration" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration#AccessPointTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="AccessPointTrilateration" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration#AccessPointTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calculateAccessPointPosition" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration#calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calculateAllAndGetDrawables" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration#calculateAllAndGetDrawables()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="parseMeasurementData" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration#parseMeasurementData()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration-Soyatec::Import->at.fhstp.wificompass.trilateration/MeasurementDataSet*at.fhstp.wificompass.trilateration/AccessPointTrilateration-Standard::Instantiate->at.fhstp.wificompass.trilateration/MeasurementDataSet" source="//@children.2" target="//@children.0" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«Import, Instantiate»" size="96,12" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="392,120" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,90"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="WeightedCentroidTrilateration" location="45,309" size="202,121" id="at.fhstp.wificompass.trilateration/WeightedCentroidTrilateration" runTimeClassModel="WeightedCentroidTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;),g,calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;),WeightedCentroidTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="51,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="g" id="at.fhstp.wificompass.trilateration/WeightedCentroidTrilateration#g"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="165,54">
+      <children xsi:type="editmodel:MethodEditModel" name="WeightedCentroidTrilateration" id="at.fhstp.wificompass.trilateration/WeightedCentroidTrilateration#WeightedCentroidTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="WeightedCentroidTrilateration" id="at.fhstp.wificompass.trilateration/WeightedCentroidTrilateration#WeightedCentroidTrilateration(Landroid.content.Context;Lat.fhstp.wificompass.model.ProjectSite;Landroid.app.ProgressDialog;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calculateAccessPointPosition" id="at.fhstp.wificompass.trilateration/WeightedCentroidTrilateration#calculateAccessPointPosition(Lat.fhstp.wificompass.model.AccessPoint;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.1/@sourceConnections.0" autoLocated="true" id="at.fhstp.wificompass.trilateration/AccessPointTrilateration&lt;-at.fhstp.wificompass.trilateration/WeightedCentroidTrilateration" source="//@children.3" target="//@children.2" targetEnd="//@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.3/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="101,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="194,210" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=1;Product=eUML2"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" showProtectedInnerClasses="true" showPublicInnerClasses="true" showPrivateInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

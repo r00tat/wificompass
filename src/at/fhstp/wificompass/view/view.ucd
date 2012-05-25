@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="view" size="1106,1222" id="at.fhstp.wificompass.view" metadata="uml2-1.0" initialized="true" scrolledY="-7" tag="1000" key="32303037303533312D313030302077696669636F6D706173732F66726967">
+  <children xsi:type="editmodel:ClassEditModel" name="MultiTouchView" location="435,-1" size="186,409" id="at.fhstp.wificompass.view/MultiTouchView" runTimeClassModel="MultiTouchView(Landroid.content.Context;),onTouchEvent(Landroid.view.MotionEvent;),getDraggableObjectAtPoint(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),resetAllScale(),isRearrangable(),setRearrangable(Z),loadImages(Landroid.content.Context;),MultiTouchView(Landroid.content.Context;Landroid.util.AttributeSet;),MultiTouchView(Landroid.content.Context;Landroid.util.AttributeSet;I),trackballClicked(),setPositionAndScale(Lat.fhstp.wificompass.view.MultiTouchDrawable;Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),resetAllXY(),rearrangable,getPositionAndScale(Lat.fhstp.wificompass.view.MultiTouchDrawable;Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;),unloadImages(),resetAllAngle(),removeDrawable(Lat.fhstp.wificompass.view.MultiTouchDrawable;),selectObject(Lat.fhstp.wificompass.view.MultiTouchDrawable;Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),addDrawable(Lat.fhstp.wificompass.view.MultiTouchDrawable;),recalculateDrawablePositions()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="rearrangable" id="at.fhstp.wificompass.view/MultiTouchView#rearrangable"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="163,342">
+      <children xsi:type="editmodel:MethodEditModel" name="MultiTouchView" id="at.fhstp.wificompass.view/MultiTouchView#MultiTouchView(Landroid.content.Context;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="MultiTouchView" id="at.fhstp.wificompass.view/MultiTouchView#MultiTouchView(Landroid.content.Context;Landroid.util.AttributeSet;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="MultiTouchView" id="at.fhstp.wificompass.view/MultiTouchView#MultiTouchView(Landroid.content.Context;Landroid.util.AttributeSet;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addDrawable" id="at.fhstp.wificompass.view/MultiTouchView#addDrawable(Lat.fhstp.wificompass.view.MultiTouchDrawable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDraggableObjectAtPoint" id="at.fhstp.wificompass.view/MultiTouchView#getDraggableObjectAtPoint(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPositionAndScale" id="at.fhstp.wificompass.view/MultiTouchView#getPositionAndScale(Lat.fhstp.wificompass.view.MultiTouchDrawable;Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isRearrangable" id="at.fhstp.wificompass.view/MultiTouchView#isRearrangable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="loadImages" id="at.fhstp.wificompass.view/MultiTouchView#loadImages(Landroid.content.Context;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onTouchEvent" id="at.fhstp.wificompass.view/MultiTouchView#onTouchEvent(Landroid.view.MotionEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="recalculateDrawablePositions" id="at.fhstp.wificompass.view/MultiTouchView#recalculateDrawablePositions()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeDrawable" id="at.fhstp.wificompass.view/MultiTouchView#removeDrawable(Lat.fhstp.wificompass.view.MultiTouchDrawable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="resetAllAngle" id="at.fhstp.wificompass.view/MultiTouchView#resetAllAngle()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="resetAllScale" id="at.fhstp.wificompass.view/MultiTouchView#resetAllScale()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="resetAllXY" id="at.fhstp.wificompass.view/MultiTouchView#resetAllXY()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="selectObject" id="at.fhstp.wificompass.view/MultiTouchView#selectObject(Lat.fhstp.wificompass.view.MultiTouchDrawable;Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setPositionAndScale" id="at.fhstp.wificompass.view/MultiTouchView#setPositionAndScale(Lat.fhstp.wificompass.view.MultiTouchDrawable;Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setRearrangable" id="at.fhstp.wificompass.view/MultiTouchView#setRearrangable(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="trackballClicked" id="at.fhstp.wificompass.view/MultiTouchView#trackballClicked()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unloadImages" id="at.fhstp.wificompass.view/MultiTouchView#unloadImages()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="org.metalev.multitouch.controller/MultiTouchController$MultiTouchObjectCanvas&lt;-at.fhstp.wificompass.view/MultiTouchView" source="//@children.0" target="//@children.6/@children.2/@children.0" targetEnd="//@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="186,86" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,71"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="SiteMapDrawable" location="590,687" size="151,499" id="at.fhstp.wificompass.view/SiteMapDrawable" runTimeClassModel="isRotatable(),hasSuperDrawable(),getSteps(),setAngle(F),SiteMapDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;),deleteAllSteps(),startAutoRotate(),setRelativePosition(FF),isDragable(),setScale(FF),stopAutoRotate(),draw(Landroid.graphics.Canvas;),onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),SiteMapDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.RefreshableView;),addStep(Landroid.graphics.PointF;),setBackgroundImage(Landroid.graphics.Bitmap;),onCompassChanged(FFLjava.lang.String;),getDrawable(),setSize(II),getSuperDrawable(),setSteps(Ljava.util.Vector;),getBackgroundImage(),isScalable(),isOnlyInSuper(),setAngleAdjustment(F)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="128,450">
+      <children xsi:type="editmodel:MethodEditModel" name="SiteMapDrawable" id="at.fhstp.wificompass.view/SiteMapDrawable#SiteMapDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="SiteMapDrawable" id="at.fhstp.wificompass.view/SiteMapDrawable#SiteMapDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.RefreshableView;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addStep" id="at.fhstp.wificompass.view/SiteMapDrawable#addStep(Landroid.graphics.PointF;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deleteAllSteps" id="at.fhstp.wificompass.view/SiteMapDrawable#deleteAllSteps()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="draw" id="at.fhstp.wificompass.view/SiteMapDrawable#draw(Landroid.graphics.Canvas;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getBackgroundImage" id="at.fhstp.wificompass.view/SiteMapDrawable#getBackgroundImage()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDrawable" id="at.fhstp.wificompass.view/SiteMapDrawable#getDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSteps" id="at.fhstp.wificompass.view/SiteMapDrawable#getSteps()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSuperDrawable" id="at.fhstp.wificompass.view/SiteMapDrawable#getSuperDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasSuperDrawable" id="at.fhstp.wificompass.view/SiteMapDrawable#hasSuperDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isDragable" id="at.fhstp.wificompass.view/SiteMapDrawable#isDragable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isOnlyInSuper" id="at.fhstp.wificompass.view/SiteMapDrawable#isOnlyInSuper()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isRotatable" id="at.fhstp.wificompass.view/SiteMapDrawable#isRotatable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isScalable" id="at.fhstp.wificompass.view/SiteMapDrawable#isScalable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCompassChanged" id="at.fhstp.wificompass.view/SiteMapDrawable#onCompassChanged(FFLjava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSingleTouch" id="at.fhstp.wificompass.view/SiteMapDrawable#onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setAngle" id="at.fhstp.wificompass.view/SiteMapDrawable#setAngle(F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setAngleAdjustment" id="at.fhstp.wificompass.view/SiteMapDrawable#setAngleAdjustment(F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setBackgroundImage" id="at.fhstp.wificompass.view/SiteMapDrawable#setBackgroundImage(Landroid.graphics.Bitmap;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setRelativePosition" id="at.fhstp.wificompass.view/SiteMapDrawable#setRelativePosition(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setScale" id="at.fhstp.wificompass.view/SiteMapDrawable#setScale(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSize" id="at.fhstp.wificompass.view/SiteMapDrawable#setSize(II)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSteps" id="at.fhstp.wificompass.view/SiteMapDrawable#setSteps(Ljava.util.Vector;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="startAutoRotate" id="at.fhstp.wificompass.view/SiteMapDrawable#startAutoRotate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="stopAutoRotate" id="at.fhstp.wificompass.view/SiteMapDrawable#stopAutoRotate()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="at.fhstp.wificompass.view/MultiTouchDrawable&lt;-at.fhstp.wificompass.view/SiteMapDrawable" source="//@children.1" target="//@children.5" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="72,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="285,422"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="MeasuringPointDrawable" location="379,975" size="174,211" id="at.fhstp.wificompass.view/MeasuringPointDrawable" runTimeClassModel="onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),isRotatable(),getDrawable(),isScalable(),isDragable(),isOnlyInSuper(),onDelete(),MeasuringPointDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;Lat.fhstp.wificompass.model.WifiScanResult;),draw(Landroid.graphics.Canvas;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="143,162">
+      <children xsi:type="editmodel:MethodEditModel" name="MeasuringPointDrawable" id="at.fhstp.wificompass.view/MeasuringPointDrawable#MeasuringPointDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;Lat.fhstp.wificompass.model.WifiScanResult;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="draw" id="at.fhstp.wificompass.view/MeasuringPointDrawable#draw(Landroid.graphics.Canvas;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDrawable" id="at.fhstp.wificompass.view/MeasuringPointDrawable#getDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isDragable" id="at.fhstp.wificompass.view/MeasuringPointDrawable#isDragable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isOnlyInSuper" id="at.fhstp.wificompass.view/MeasuringPointDrawable#isOnlyInSuper()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isRotatable" id="at.fhstp.wificompass.view/MeasuringPointDrawable#isRotatable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isScalable" id="at.fhstp.wificompass.view/MeasuringPointDrawable#isScalable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDelete" id="at.fhstp.wificompass.view/MeasuringPointDrawable#onDelete()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSingleTouch" id="at.fhstp.wificompass.view/MeasuringPointDrawable#onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="at.fhstp.wificompass.view/MultiTouchDrawable&lt;-at.fhstp.wificompass.view/MeasuringPointDrawable" source="//@children.2" target="//@children.5" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="80,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="285,965" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="AccessPointDrawable" location="390,675" size="157,283" id="at.fhstp.wificompass.view/AccessPointDrawable" runTimeClassModel="onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),isRotatable(),getAccessPoint(),getDrawable(),setAccessPoint(Lat.fhstp.wificompass.model.AccessPoint;),AccessPointDrawable(Landroid.content.Context;Lat.fhstp.wificompass.model.AccessPoint;),AccessPointDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;Lat.fhstp.wificompass.model.AccessPoint;),setRelativePosition(FF),isCalculated(),isScalable(),isDragable(),onDelete(),isOnlyInSuper()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="128,234">
+      <children xsi:type="editmodel:MethodEditModel" name="AccessPointDrawable" id="at.fhstp.wificompass.view/AccessPointDrawable#AccessPointDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;Lat.fhstp.wificompass.model.AccessPoint;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="AccessPointDrawable" id="at.fhstp.wificompass.view/AccessPointDrawable#AccessPointDrawable(Landroid.content.Context;Lat.fhstp.wificompass.model.AccessPoint;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getAccessPoint" id="at.fhstp.wificompass.view/AccessPointDrawable#getAccessPoint()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDrawable" id="at.fhstp.wificompass.view/AccessPointDrawable#getDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isCalculated" id="at.fhstp.wificompass.view/AccessPointDrawable#isCalculated()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isDragable" id="at.fhstp.wificompass.view/AccessPointDrawable#isDragable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isOnlyInSuper" id="at.fhstp.wificompass.view/AccessPointDrawable#isOnlyInSuper()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isRotatable" id="at.fhstp.wificompass.view/AccessPointDrawable#isRotatable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isScalable" id="at.fhstp.wificompass.view/AccessPointDrawable#isScalable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDelete" id="at.fhstp.wificompass.view/AccessPointDrawable#onDelete()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSingleTouch" id="at.fhstp.wificompass.view/AccessPointDrawable#onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setAccessPoint" id="at.fhstp.wificompass.view/AccessPointDrawable#setAccessPoint(Lat.fhstp.wificompass.model.AccessPoint;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setRelativePosition" id="at.fhstp.wificompass.view/AccessPointDrawable#setRelativePosition(FF)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="at.fhstp.wificompass.view/MultiTouchDrawable&lt;-at.fhstp.wificompass.view/AccessPointDrawable" source="//@children.3" target="//@children.5" targetEnd="//@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.3/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="82,-1" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="285,657" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="UserDrawable" location="405,465" size="121,175" id="at.fhstp.wificompass.view/UserDrawable" runTimeClassModel="UserDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;),onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),isRotatable(),getDrawable(),isScalable(),isDragable(),isOnlyInSuper()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="98,126">
+      <children xsi:type="editmodel:MethodEditModel" name="UserDrawable" id="at.fhstp.wificompass.view/UserDrawable#UserDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDrawable" id="at.fhstp.wificompass.view/UserDrawable#getDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isDragable" id="at.fhstp.wificompass.view/UserDrawable#isDragable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isOnlyInSuper" id="at.fhstp.wificompass.view/UserDrawable#isOnlyInSuper()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isRotatable" id="at.fhstp.wificompass.view/UserDrawable#isRotatable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isScalable" id="at.fhstp.wificompass.view/UserDrawable#isScalable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSingleTouch" id="at.fhstp.wificompass.view/UserDrawable#onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="at.fhstp.wificompass.view/MultiTouchDrawable&lt;-at.fhstp.wificompass.view/UserDrawable" source="//@children.4" target="//@children.5" targetEnd="//@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.4/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="60,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="285,450" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.0 //@children.3/@sourceConnections.0 //@children.1/@sourceConnections.0 //@children.4/@sourceConnections.0" name="MultiTouchDrawable" location="75,-1" size="285,1201" id="at.fhstp.wificompass.view/MultiTouchDrawable" runTimeClassModel="getDraggableObjectAtPoint(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),getRelativeX(),resetXY(),getCenterY(),hasSuperDrawable(),getGridSpacingX(),MultiTouchDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.RefreshableView;),recalculatePositions(),getPivotPointPositionConsideringScalingAndAngle(),getGridSpacingY(),getRelativeY(),containsPoint(FF),getHeight(),onTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),setCenterY(F),deleteDrawable(),resetScale(),MultiTouchDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;),unload(),setPivot(FF),getSubDrawables(),draw(Landroid.graphics.Canvas;),setRelativePosition(Landroid.graphics.PointF;),setPos(Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;Z),getDrawable(),setCenterX(F),addSubDrawable(Lat.fhstp.wificompass.view.MultiTouchDrawable;),setScaleY(F),getMaxX(),getId(),setScaleX(F),getMaxY(),removeSubDrawable(Lat.fhstp.wificompass.view.MultiTouchDrawable;),isScalable(),isOnlyInSuper(),setAngleChangeCallback(Lat.fhstp.wificompass.view.AngleChangeCallback;),setGridSpacing(FF),isCustomPivotUsed(),isRotatable(),drawSubdrawables(Landroid.graphics.Canvas;),snapPositionToGrid(),getPivotYRelativeToCenter(),getPivotXRelativeToCenter(),toString(),getMinY(),getAngle(),setAngle(F),getMinX(),setRelativePosition(FF),isDragable(),onDelete(),getWidth(),setScale(FF),onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),hidePopups(),load(),getScaleX(),getSuperDrawable(),getPivotX(),getScaleY(),getPivotY(),resetAngle(),bringToFront(),getCenterX()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="262,1152">
+      <children xsi:type="editmodel:MethodEditModel" name="MultiTouchDrawable" id="at.fhstp.wificompass.view/MultiTouchDrawable#MultiTouchDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.RefreshableView;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="MultiTouchDrawable" id="at.fhstp.wificompass.view/MultiTouchDrawable#MultiTouchDrawable(Landroid.content.Context;Lat.fhstp.wificompass.view.MultiTouchDrawable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addSubDrawable" id="at.fhstp.wificompass.view/MultiTouchDrawable#addSubDrawable(Lat.fhstp.wificompass.view.MultiTouchDrawable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="bringToFront" id="at.fhstp.wificompass.view/MultiTouchDrawable#bringToFront()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="containsPoint" id="at.fhstp.wificompass.view/MultiTouchDrawable#containsPoint(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="deleteDrawable" id="at.fhstp.wificompass.view/MultiTouchDrawable#deleteDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="draw" id="at.fhstp.wificompass.view/MultiTouchDrawable#draw(Landroid.graphics.Canvas;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="drawSubdrawables" id="at.fhstp.wificompass.view/MultiTouchDrawable#drawSubdrawables(Landroid.graphics.Canvas;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getAngle" id="at.fhstp.wificompass.view/MultiTouchDrawable#getAngle()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCenterX" id="at.fhstp.wificompass.view/MultiTouchDrawable#getCenterX()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCenterY" id="at.fhstp.wificompass.view/MultiTouchDrawable#getCenterY()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDraggableObjectAtPoint" id="at.fhstp.wificompass.view/MultiTouchDrawable#getDraggableObjectAtPoint(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDrawable" id="at.fhstp.wificompass.view/MultiTouchDrawable#getDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getGridSpacingX" id="at.fhstp.wificompass.view/MultiTouchDrawable#getGridSpacingX()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getGridSpacingY" id="at.fhstp.wificompass.view/MultiTouchDrawable#getGridSpacingY()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getHeight" id="at.fhstp.wificompass.view/MultiTouchDrawable#getHeight()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getId" id="at.fhstp.wificompass.view/MultiTouchDrawable#getId()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMaxX" id="at.fhstp.wificompass.view/MultiTouchDrawable#getMaxX()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMaxY" id="at.fhstp.wificompass.view/MultiTouchDrawable#getMaxY()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMinX" id="at.fhstp.wificompass.view/MultiTouchDrawable#getMinX()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getMinY" id="at.fhstp.wificompass.view/MultiTouchDrawable#getMinY()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPivotPointPositionConsideringScalingAndAngle" id="at.fhstp.wificompass.view/MultiTouchDrawable#getPivotPointPositionConsideringScalingAndAngle()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPivotX" id="at.fhstp.wificompass.view/MultiTouchDrawable#getPivotX()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPivotXRelativeToCenter" id="at.fhstp.wificompass.view/MultiTouchDrawable#getPivotXRelativeToCenter()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPivotY" id="at.fhstp.wificompass.view/MultiTouchDrawable#getPivotY()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPivotYRelativeToCenter" id="at.fhstp.wificompass.view/MultiTouchDrawable#getPivotYRelativeToCenter()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRelativeX" id="at.fhstp.wificompass.view/MultiTouchDrawable#getRelativeX()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRelativeY" id="at.fhstp.wificompass.view/MultiTouchDrawable#getRelativeY()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getScaleX" id="at.fhstp.wificompass.view/MultiTouchDrawable#getScaleX()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getScaleY" id="at.fhstp.wificompass.view/MultiTouchDrawable#getScaleY()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSubDrawables" id="at.fhstp.wificompass.view/MultiTouchDrawable#getSubDrawables()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSuperDrawable" id="at.fhstp.wificompass.view/MultiTouchDrawable#getSuperDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getWidth" id="at.fhstp.wificompass.view/MultiTouchDrawable#getWidth()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasSuperDrawable" id="at.fhstp.wificompass.view/MultiTouchDrawable#hasSuperDrawable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hidePopups" id="at.fhstp.wificompass.view/MultiTouchDrawable#hidePopups()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isCustomPivotUsed" id="at.fhstp.wificompass.view/MultiTouchDrawable#isCustomPivotUsed()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isDragable" id="at.fhstp.wificompass.view/MultiTouchDrawable#isDragable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isOnlyInSuper" id="at.fhstp.wificompass.view/MultiTouchDrawable#isOnlyInSuper()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isRotatable" id="at.fhstp.wificompass.view/MultiTouchDrawable#isRotatable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isScalable" id="at.fhstp.wificompass.view/MultiTouchDrawable#isScalable()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="load" id="at.fhstp.wificompass.view/MultiTouchDrawable#load()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDelete" id="at.fhstp.wificompass.view/MultiTouchDrawable#onDelete()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSingleTouch" id="at.fhstp.wificompass.view/MultiTouchDrawable#onSingleTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onTouch" id="at.fhstp.wificompass.view/MultiTouchDrawable#onTouch(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="recalculatePositions" id="at.fhstp.wificompass.view/MultiTouchDrawable#recalculatePositions()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeSubDrawable" id="at.fhstp.wificompass.view/MultiTouchDrawable#removeSubDrawable(Lat.fhstp.wificompass.view.MultiTouchDrawable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="resetAngle" id="at.fhstp.wificompass.view/MultiTouchDrawable#resetAngle()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="resetScale" id="at.fhstp.wificompass.view/MultiTouchDrawable#resetScale()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="resetXY" id="at.fhstp.wificompass.view/MultiTouchDrawable#resetXY()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setAngle" id="at.fhstp.wificompass.view/MultiTouchDrawable#setAngle(F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setAngleChangeCallback" id="at.fhstp.wificompass.view/MultiTouchDrawable#setAngleChangeCallback(Lat.fhstp.wificompass.view.AngleChangeCallback;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setCenterX" id="at.fhstp.wificompass.view/MultiTouchDrawable#setCenterX(F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setCenterY" id="at.fhstp.wificompass.view/MultiTouchDrawable#setCenterY(F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setGridSpacing" id="at.fhstp.wificompass.view/MultiTouchDrawable#setGridSpacing(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setPivot" id="at.fhstp.wificompass.view/MultiTouchDrawable#setPivot(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setPos" id="at.fhstp.wificompass.view/MultiTouchDrawable#setPos(Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setRelativePosition" id="at.fhstp.wificompass.view/MultiTouchDrawable#setRelativePosition(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setRelativePosition" id="at.fhstp.wificompass.view/MultiTouchDrawable#setRelativePosition(Landroid.graphics.PointF;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setScale" id="at.fhstp.wificompass.view/MultiTouchDrawable#setScale(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setScaleX" id="at.fhstp.wificompass.view/MultiTouchDrawable#setScaleX(F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setScaleY" id="at.fhstp.wificompass.view/MultiTouchDrawable#setScaleY(F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="snapPositionToGrid" id="at.fhstp.wificompass.view/MultiTouchDrawable#snapPositionToGrid()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="toString" id="at.fhstp.wificompass.view/MultiTouchDrawable#toString()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="unload" id="at.fhstp.wificompass.view/MultiTouchDrawable#unload()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="MultiTouchController" location="764,-2" size="221,848" id="org.metalev.multitouch.controller/MultiTouchController" runTimeClassModel="org.metalev.multitouch.controller.MultiTouchController.MultiTouchObjectCanvas,onTouchEvent(Landroid.view.MotionEvent;),mAX_TOUCH_POINTS,multiTouchSupported,org.metalev.multitouch.controller.MultiTouchController.PointInfo,MultiTouchController,dEBUG,org.metalev.multitouch.controller.MultiTouchController.PositionAndScale">
+    <children xsi:type="editmodel:CompartmentEditModel" size="162,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="dEBUG" id="org.metalev.multitouch.controller/MultiTouchController#dEBUG"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mAX_TOUCH_POINTS" id="org.metalev.multitouch.controller/MultiTouchController#mAX_TOUCH_POINTS"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="multiTouchSupported" id="org.metalev.multitouch.controller/MultiTouchController#multiTouchSupported"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,36">
+      <children xsi:type="editmodel:MethodEditModel" name="onTouchEvent" id="org.metalev.multitouch.controller/MultiTouchController#onTouchEvent(Landroid.view.MotionEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="MultiTouchController" id="org.metalev.multitouch.controller/MultiTouchController#MultiTouchController"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="198,687">
+      <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.0/@sourceConnections.0" name="MultiTouchObjectCanvas" size="198,133" id="org.metalev.multitouch.controller/MultiTouchController$MultiTouchObjectCanvas" runTimeClassModel="getDraggableObjectAtPoint(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),selectObject(LT;Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),getPositionAndScale(LT;Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;),setPositionAndScale(LT;Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)">
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="155,72">
+          <children xsi:type="editmodel:MethodEditModel" name="getDraggableObjectAtPoint" id="org.metalev.multitouch.controller/MultiTouchController$MultiTouchObjectCanvas#getDraggableObjectAtPoint(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getPositionAndScale" id="org.metalev.multitouch.controller/MultiTouchController$MultiTouchObjectCanvas#getPositionAndScale(LT;Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="selectObject" id="org.metalev.multitouch.controller/MultiTouchController$MultiTouchObjectCanvas#selectObject(LT;Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="setPositionAndScale" id="org.metalev.multitouch.controller/MultiTouchController$MultiTouchObjectCanvas#setPositionAndScale(LT;Lorg.metalev.multitouch.controller.MultiTouchController.PositionAndScale;Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="org.metalev.multitouch.controller/MultiTouchController$MultiTouchObjectCanvas-Soyatec::Import->org.metalev.multitouch.controller/MultiTouchController$PositionAndScale" source="//@children.6/@children.2/@children.0" target="//@children.6/@children.2/@children.2" targetEnd="//@children.6/@children.2/@children.0/@sourceConnections.0/@children.2" label="//@children.6/@children.2/@children.0/@sourceConnections.0/@children.0" sourceEnd="//@children.6/@children.2/@children.0/@sourceConnections.0/@children.1" connectionRouterKind="Manual">
+          <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="41,12" anchorKind="MiddlePart"/>
+          <children xsi:type="editmodel:AssociationEndEditModel" location="1,0" attachSource="true"/>
+          <children xsi:type="editmodel:AssociationEndEditModel" location="1,0"/>
+        </sourceConnections>
+        <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="org.metalev.multitouch.controller/MultiTouchController$MultiTouchObjectCanvas-Soyatec::Import->org.metalev.multitouch.controller/MultiTouchController$PointInfo" source="//@children.6/@children.2/@children.0" target="//@children.6/@children.2/@children.1" targetEnd="//@children.6/@children.2/@children.0/@sourceConnections.1/@children.2" label="//@children.6/@children.2/@children.0/@sourceConnections.1/@children.0" sourceEnd="//@children.6/@children.2/@children.0/@sourceConnections.1/@children.1" connectionRouterKind="Manual">
+          <children xsi:type="editmodel:WireLabelEditModel" name="«Import»" size="41,12" anchorKind="MiddlePart"/>
+          <children xsi:type="editmodel:AssociationEndEditModel" location="1,0" attachSource="true"/>
+          <children xsi:type="editmodel:AssociationEndEditModel" location="1,0"/>
+        </sourceConnections>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+      </children>
+      <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.6/@children.2/@children.0/@sourceConnections.1" name="PointInfo" size="170,373" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo" runTimeClassModel="getNumTouchPoints(),getMultiTouchDiameter(),set(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;),getEventTime(),getYs(),getXs(),getPressure(),isDown(),getX(),getPressures(),getAction(),isMultiTouch(),getMultiTouchDiameterSq(),getY(),getMultiTouchAngle(),getMultiTouchHeight(),getPointerIds(),getMultiTouchWidth()">
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="147,324">
+          <children xsi:type="editmodel:MethodEditModel" name="getAction" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getAction()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getEventTime" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getEventTime()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getMultiTouchAngle" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getMultiTouchAngle()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getMultiTouchDiameter" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getMultiTouchDiameter()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getMultiTouchDiameterSq" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getMultiTouchDiameterSq()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getMultiTouchHeight" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getMultiTouchHeight()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getMultiTouchWidth" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getMultiTouchWidth()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getNumTouchPoints" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getNumTouchPoints()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getPointerIds" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getPointerIds()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getPressure" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getPressure()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getPressures" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getPressures()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getX" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getX()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getXs" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getXs()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getY" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getY()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getYs" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#getYs()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="isDown" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#isDown()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="isMultiTouch" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#isMultiTouch()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="set" id="org.metalev.multitouch.controller/MultiTouchController$PointInfo#set(Lorg.metalev.multitouch.controller.MultiTouchController.PointInfo;)"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+      </children>
+      <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.6/@children.2/@children.0/@sourceConnections.0" name="PositionAndScale" size="136,175" id="org.metalev.multitouch.controller/MultiTouchController$PositionAndScale" runTimeClassModel="set(FFZFZFFZF),getAngle(),getScaleX(),getScale(),getScaleY(),getYOff(),getXOff()">
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="76,126">
+          <children xsi:type="editmodel:MethodEditModel" name="getAngle" id="org.metalev.multitouch.controller/MultiTouchController$PositionAndScale#getAngle()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getScale" id="org.metalev.multitouch.controller/MultiTouchController$PositionAndScale#getScale()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getScaleX" id="org.metalev.multitouch.controller/MultiTouchController$PositionAndScale#getScaleX()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getScaleY" id="org.metalev.multitouch.controller/MultiTouchController$PositionAndScale#getScaleY()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getXOff" id="org.metalev.multitouch.controller/MultiTouchController$PositionAndScale#getXOff()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="getYOff" id="org.metalev.multitouch.controller/MultiTouchController$PositionAndScale#getYOff()"/>
+          <children xsi:type="editmodel:MethodEditModel" name="set" id="org.metalev.multitouch.controller/MultiTouchController$PositionAndScale#set(FFZFZFFZF)"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+      </children>
+    </children>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" level="-1" showScope="InPackage" properties="wireOptions=1;Product=eUML2"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3"/>
+</editmodel:ClassDiagramEditModel>
