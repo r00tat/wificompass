@@ -66,10 +66,97 @@
 
 	<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" classpath="lib/ant-googlecode-0.0.3.jar" name="gcupload" />
 
-	<import file="build-custom.xml" />
+	
 
 	<property name="file.credentials" value="credentials.xml" />
 
+	
+	<target name="git-or-svn">
+		<exec executable="git" resultproperty="git.rc" outputproperty="git.output">
+			<arg line="status" />
+		</exec>
+		
+		<if>
+	<condition>
+			<equals arg1="${git.rc}" arg2="0" />
+</condition>
+
+			<then>
+				<echo>Hey, you're running git!</echo>
+				<property name="vcs.name" value="git" />
+			</then>
+			<else>
+				<property name="vcs.name" value="svn" />
+			</else>
+		</if>
+	</target>
+
+
+	<target name="get-version" depends="git-or-svn">
+		<if>
+<condition>
+			<equals arg1="${vcs.name}" arg2="svn" />
+</condition>
+			<then>
+				<exec executable="svn" output="svninfo.xml">
+					<arg line="info --xml ${project.base.dir}" />
+				</exec>
+				<xmlproperty file="svninfo.xml" prefix="svn" collapseattributes="true" />
+				<delete file="svninfo.xml" />
+
+
+				<!--<echoproperties/>-->
+				<property name="vcs.revision" value="${svn.info.entry.revision}" />
+				<property name="vcs.date" value="${svn.info.entry.commit.date}" />
+				<property name="vcs.url" value="${svn.info.entry.url}" />
+				<property name="vcs.shortrevision" value="${svn.info.entry.revision}" />
+
+			</then>
+			<else>
+				<!-- git -->
+				<exec executable="git" output="git.properties">
+					<arg line="log -1 --pretty=&quot;git.version=%H%ngit.date=%cD%ngit.commiter=%cn%ngit.shortversion=%h&quot;" />
+				</exec>
+				
+				<loadproperties srcFile="git.properties" />
+				<delete file="git.properties" />
+				
+				
+
+				<property name="vcs.revision" value="${git.version}" />
+				<property name="vcs.date" value="${git.date}" />
+				<property name="vcs.url" value="https://code.google.com/p/wificompass/" />
+				<property name="vcs.shortrevision" value="${git.shortversion}" />
+
+
+
+			</else>
+		</if>
+
+		<echo>Current Revision: ${vcs.revision}
+Short Revision: ${vcs.shortrevision}
+Last Commit Date: ${vcs.date}
+Repository Url: ${vcs.url}
+</echo>
+	</target>
+
+	<target name="generate-version" depends="get-version">
+		<echo>Generate build info class...</echo>
+
+		<!-- the source code of the java class -->
+		<echo file="${basedir}/gen/at/fhstp/wificompass/BuildInfo.java">
+package at.fhstp.wificompass;
+public class BuildInfo {
+			public static final String revision="${vcs.revision}";
+			public static final String shortRevision="${vcs.shortrevision}";
+			public static final String commitDate="${vcs.date}";
+			public static final String repositoryURL="${vcs.url}";
+}
+		</echo>
+	</target>
+
+
+	
 
 	<target name="upload-nightly" depends="release, check-credentials">
 		<!-- create a nightly build an upload it to the google project site -->
@@ -81,12 +168,12 @@
 		<echo>done.</echo>
 	</target>
 	
-	<target name="upload-with-svnversion" depends="release, get-version, check-credentials">
+	<target name="upload-with-version" depends="release, get-version, check-credentials">
 		<!-- create a nightly build an upload it to the google project site -->
 
 		<echo>uploading nightly build to google code...</echo>
 		<echo>Remember to delete the old nightly file, because overwrite is not possible!</echo>
-		<gcupload username="${credentials.google.username}" password="${credentials.google.password}" projectname="wificompass" filename="bin/wificompass-release.apk" targetfilename="wificompass-r${svn.info.entry.revision}.apk" summary="build of wificompass, svn version ${svn.info.entry.revision}" labels="Featured, Type-Package, OpSys-Android" verbose="true" />
+		<gcupload username="${credentials.google.username}" password="${credentials.google.password}" projectname="wificompass" filename="bin/wificompass-release.apk" targetfilename="wificompass-r${vcs.shortrevision}.apk" summary="build of wificompass, version ${vcs.revision}" labels="Featured, Type-Package, OpSys-Android" verbose="true" />
 
 		<echo>done.</echo>
 	</target>
