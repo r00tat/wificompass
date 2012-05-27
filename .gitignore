@@ -6,8 +6,11 @@
 /credentials.xml
 /.settings
 /svninfo.xml
+/proguard-project.txt
+
 
 # /gen/at/fhstp/wificompass/
 /gen/at/fhstp/wificompass/R.java
 /gen/at/fhstp/wificompass/BuildInfo.java
 /gen/at/fhstp/wificompass/BuildConfig.java
+/gen/R.java.d
