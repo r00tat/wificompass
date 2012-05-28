@@ -474,7 +474,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			}
 
 			if (scheduledTask == null) {
-				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, (schedulerTime<=0?10:schedulerTime), TimeUnit.SECONDS);
+				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, (schedulerTime<=0?1:schedulerTime), TimeUnit.SECONDS);
 			}
 			if(ui)
 			((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
@@ -992,6 +992,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			changeScanIntervalBuilder.setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					schedulerTime = sb.getProgress();
+					if(schedulerTime==0) schedulerTime=1; // schedulerTime must not be 0
 					getPreferences(MODE_PRIVATE).edit().putInt(SCAN_INTERVAL, schedulerTime).commit();
 					if (walkingAndScanning) {
 						// timer must be updated
