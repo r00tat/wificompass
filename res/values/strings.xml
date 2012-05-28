@@ -384,7 +384,8 @@ Icons by <a href="http://mapicons.nicolasmollet.com/">Maps Icons Collection (Nic
 	<string name="calibrator_auto_config_info_title">Sensor Auto Calibration</string>
 	<string name="calibrator_auto_config_info_message">Sensor Auto Calibration will be started. All sensor
 		data will be log for analysis.\nTouch the Sensor Data area, where the
-		red, green and blue graphs are, every time you make a step.
+		red, green and blue graphs are, every time you make a step.\n
+		To get good results please make approximately 50 steps.
 	</string>
 	<string name="calibrator_auto_config_progress_title">Auto Configuration of Sensor Parameters</string>
 	<string name="calibrator_auto_config_progress_message">Searching for the best peak and filter values. This
