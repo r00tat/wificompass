@@ -12,18 +12,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:drawableLeft="@drawable/icon_small"
+        android:drawableLeft="@drawable/icon_smaller"
         android:gravity="center"
         android:text="@string/main_info_text"
         android:textSize="16sp" />
 
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
     <Button
         android:id="@+id/main_quickscan_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/main_quickscan_button" />
+        android:text="@string/main_quickscan_button"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/new_project_button"
@@ -31,8 +40,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/newProjectText" />
-
+        android:layout_marginLeft="10dp"
+        android:text="@string/newProjectText" 
+        android:layout_weight="1"/>
+		</LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
