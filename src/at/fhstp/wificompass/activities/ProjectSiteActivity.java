@@ -474,7 +474,7 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 			}
 
 			if (scheduledTask == null) {
-				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, schedulerTime, TimeUnit.SECONDS);
+				scheduledTask = scheduler.scheduleWithFixedDelay(wifiRunnable, 0, (schedulerTime<=0?10:schedulerTime), TimeUnit.SECONDS);
 			}
 			if(ui)
 			((Button) findViewById(R.id.project_site_step_detect)).setText(R.string.project_site_stop_step_detect);
