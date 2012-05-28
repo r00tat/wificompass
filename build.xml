@@ -173,7 +173,7 @@ public class BuildInfo {
 
 		<echo>uploading nightly build to google code...</echo>
 		<echo>Remember to delete the old nightly file, because overwrite is not possible!</echo>
-		<gcupload username="${credentials.google.username}" password="${credentials.google.password}" projectname="wificompass" filename="bin/wificompass-release.apk" targetfilename="wificompass-r${vcs.shortrevision}.apk" summary="build of wificompass, version ${vcs.revision}" labels="Featured, Type-Package, OpSys-Android" verbose="true" />
+		<gcupload username="${credentials.google.username}" password="${credentials.google.password}" projectname="wificompass" filename="bin/wificompass-release.apk" targetfilename="wificompass-${vcs.shortrevision}.apk" summary="build of wificompass, version ${vcs.revision}" labels="Featured, Type-Package, OpSys-Android" verbose="true" />
 
 		<echo>done.</echo>
 	</target>
