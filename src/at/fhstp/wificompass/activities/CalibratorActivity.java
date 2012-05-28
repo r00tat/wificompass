@@ -123,11 +123,15 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public static final String BUNDLE_SCORE = "score", BUNDLE_PCT = "percantage", BUNDLE_FILTER = "filter", BUNDLE_PEAK = "peak",
 			BUNDLE_FOUND = "found", BUNDLE_NOTFOUND = "notfound", BUNDLE_FALSEFOUND = "falsefound", BUNDLE_ALLFOUND = "allfound",
 			BUNDLE_TIMEOUT = "timeout", BUNDLE_DEF_SCORE = "defScore", BUNDLE_DEF_SCORE_PCT = "defScorePct", BUNDLE_DEF_DETECTED = "defDetected",
-			BUNDLE_DEF_NOT_DETECTED = "defNotDetected", BUNDLE_DEF_FALSE_DETECTED = "defFalseDetected", BUNDLE_REAL_STEP_COUNT = "stepCount";
+			BUNDLE_DEF_NOT_DETECTED = "defNotDetected", BUNDLE_DEF_FALSE_DETECTED = "defFalseDetected", BUNDLE_REAL_STEP_COUNT = "stepCount",EXTRA_START_MODE="startMode";
+	
+	public static final int START_MODE_NORMAL=1,START_MODE_AUTO_CONFIG=2;
 
 	protected ArrayList<SensorData> accelerometerSensorValues, stepValues;
 
 	protected static final int SCHEDULER_TIME = 25;
+	
+	protected boolean autoConfig=false;
 
 	OnSeekBarChangeListener sbListener = new OnSeekBarChangeListener() {
 
@@ -165,6 +169,15 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Bundle extras=this.getIntent().getExtras();
+		
+		if(extras!=null&&extras.containsKey(EXTRA_START_MODE)&&extras.getInt(EXTRA_START_MODE)==START_MODE_AUTO_CONFIG){
+			autoConfig=true;
+			Logger.i("started for auto config");
+		}
+		
+		Logger.i(extras.toString());
+		
 		// Load settings after creation of GUI-elements, to set their values
 		initLogic();
 		initUI();
@@ -178,6 +191,8 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			}
 
 		};
+		
+		
 	}
 
 	protected void initLogic() {
@@ -237,6 +252,10 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 		// ((Button) findViewById(R.id.calibrator_analyze_data)).setOnClickListener(this);
 
 		loadSettings();
+		
+		if(autoConfig){
+			toggleAutoCalibration();
+		}
 	}
 
 	@Override
@@ -380,49 +399,7 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 	public void onClick(View paramView) {
 		switch (paramView.getId()) {
 		case R.id.calibrator_auto_calibrate:
-			if (autoCalibrationRunning) {
-				// stop calibration
-				autoCalibrationRunning = false;
-				showCalibrationDialog();
-
-			} else {
-				// start calibration
-				// clear saved sensor data
-				try {
-					sensorDao.delete(sensorDao.deleteBuilder().prepare());
-				} catch (SQLException e) {
-					Logger.e("could not delete all sensordata entries", e);
-				}
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(R.string.calibrator_auto_config_info_title);
-				builder.setMessage(R.string.calibrator_auto_config_info_message);
-
-				final Activity activity = this;
-
-				builder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						accelerometerSensorValues = new ArrayList<SensorData>();
-						stepValues = new ArrayList<SensorData>();
-						autoCalibrationRunning = true;
-						((ToggleButton) activity.findViewById(R.id.calibrator_auto_calibrate)).setChecked(autoCalibrationRunning);
-					}
-				});
-
-				builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				});
-
-				builder.create().show();
-			}
-
-			((ToggleButton) findViewById(R.id.calibrator_auto_calibrate)).setChecked(autoCalibrationRunning);
-
+			toggleAutoCalibration();
 			break;
 
 		// case R.id.calibrator_analyze_data:
@@ -464,6 +441,55 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			break;
 
 		}
+
+	}
+
+	/**
+	 * 
+	 */
+	protected void toggleAutoCalibration() {
+		if (autoCalibrationRunning) {
+			// stop calibration
+			autoCalibrationRunning = false;
+			showCalibrationDialog();
+
+		} else {
+			// start calibration
+			// clear saved sensor data
+			try {
+				sensorDao.delete(sensorDao.deleteBuilder().prepare());
+			} catch (SQLException e) {
+				Logger.e("could not delete all sensordata entries", e);
+			}
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(R.string.calibrator_auto_config_info_title);
+			builder.setMessage(R.string.calibrator_auto_config_info_message);
+
+			final Activity activity = this;
+
+			builder.setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					accelerometerSensorValues = new ArrayList<SensorData>();
+					stepValues = new ArrayList<SensorData>();
+					autoCalibrationRunning = true;
+					((ToggleButton) activity.findViewById(R.id.calibrator_auto_calibrate)).setChecked(autoCalibrationRunning);
+				}
+			});
+
+			builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+
+			builder.create().show();
+		}
+
+		((ToggleButton) findViewById(R.id.calibrator_auto_calibrate)).setChecked(autoCalibrationRunning);
 
 	}
 
@@ -827,6 +853,9 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			@Override
 			public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 				paramDialogInterface.dismiss();
+				if(autoConfig){
+					finish();
+				}
 			}
 
 		});

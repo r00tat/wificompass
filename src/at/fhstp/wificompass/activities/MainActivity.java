@@ -129,6 +129,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Intent i=new Intent(ctx,CalibratorActivity.class);
+					i.putExtra(CalibratorActivity.EXTRA_START_MODE, CalibratorActivity.START_MODE_AUTO_CONFIG);
 					startActivity(i);
 				}
 			});
