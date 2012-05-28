@@ -21,7 +21,7 @@ public class StepDetectionProvider extends LocationProviderImpl implements StepT
 
 	public static final float PEAK_DEFAULT=0.75f;
 
-	public static final float STEP_DEFAULT=0.75f;
+	public static final float STEP_DEFAULT=0.50f;
 	public static final int TIMEOUT_DEFAULT=400;
 
 	public final static String CALIB_DATA="SensorCalibration";
