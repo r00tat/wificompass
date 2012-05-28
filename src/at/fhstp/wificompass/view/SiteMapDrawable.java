@@ -81,8 +81,14 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	public void draw(Canvas canvas) {
 		// Logger.d("Drawing " + this.toString());
 		canvas.save();
+//		float dx = minX+this.getPivotXRelativeToCenter() * this.scaleX;
+//		float dy = minY+this.getPivotYRelativeToCenter() * this.scaleY;
+//		float dx = minX+getWidth()/2; // center of the image
+//		float dy = minY+getHeight()/2; // center of the image
 		float dx = (maxX + minX) / 2;
 		float dy = (maxY + minY) / 2;
+		
+		Logger.d("minX:"+minX+" maxX:"+maxX+" width:"+width+" max+min/2:"+(maxX+minX)/2+" min+pivot*((min+max)/2-min):"+(minX+pivotX*((minX+maxX)/2-minX))+" min+width*scale/2:"+minX+getWidth()*scaleX/2+" min+pivot*scale: "+(minX+this.getPivotXRelativeToCenter() * this.scaleX));
 
 		canvas.translate(dx, dy);
 		canvas.rotate(angle * 180.0f / (float) Math.PI);
