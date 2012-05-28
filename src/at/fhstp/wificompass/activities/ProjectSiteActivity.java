@@ -1050,8 +1050,6 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		Logger.d("id: " + item.getItemId() + " != " + R.id.project_site_calculate_ap_positions_option);
-
 		switch (item.getItemId()) {
 		case R.id.project_site_menu_change_name:
 			showDialog(DIALOG_TITLE);
