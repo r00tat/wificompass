@@ -654,14 +654,17 @@ public abstract class MultiTouchDrawable {
 		float xBeforeRotate = this.minX + subobject.getRelativeX() * scaleX;
 		float yBeforeRotate = this.minY + subobject.getRelativeY() * scaleY;
 
-		float radius = (float) Math.sqrt(Math.pow(Math.abs(centerX - xBeforeRotate), 2) + Math.pow(Math.abs(centerY - yBeforeRotate), 2));
+		float dx = minX + (maxX - minX) * pivotX;
+		float dy = minY + (maxY - minY) * pivotY;
+		
+		float radius = (float) Math.sqrt(Math.pow(Math.abs(dx - xBeforeRotate), 2) + Math.pow(Math.abs(dy - yBeforeRotate), 2));
 
-		float angleBeforeRotate = (float) Math.atan2(yBeforeRotate - centerY, xBeforeRotate - centerX);
+		float angleBeforeRotate = (float) Math.atan2(yBeforeRotate - dy, xBeforeRotate - dx);
 
 		float newAngle = angle + angleBeforeRotate;
 
-		float newY = (float) (centerY + radius * Math.sin(newAngle));
-		float newX = (float) (centerX + radius * Math.cos(newAngle));
+		float newY = (float) (dy + radius * Math.sin(newAngle));
+		float newX = (float) (dx + radius * Math.cos(newAngle));
 
 		// Move the drawable according to it's pivot point if one is set
 		if (subobject.isCustomPivotUsed()) {
@@ -684,6 +687,9 @@ public abstract class MultiTouchDrawable {
 		float x = centerX;
 		float y = centerY;
 
+		float dx = superDrawable.minX + (superDrawable.maxX - superDrawable.minX) * superDrawable.pivotX;
+		float dy = superDrawable.minY + (superDrawable.maxY - superDrawable.minY) * superDrawable.pivotY;
+		
 		if (this.isCustomPivotUsed()) {
 			if (this.angle == 0.0f) {
 				x += this.getPivotXRelativeToCenter() * this.scaleX;
@@ -697,11 +703,11 @@ public abstract class MultiTouchDrawable {
 		}
 
 		float superAngle = superDrawable.angle;
-		float angleToCenter = (float) Math.atan2(y - superDrawable.centerY, x - superDrawable.centerX);
+		float angleToCenter = (float) Math.atan2(y - dy, x - dx);
 
 		float angle = superAngle - angleToCenter;
 
-		float radius = (float) Math.sqrt(Math.pow(Math.abs(x - superDrawable.centerX), 2) + Math.pow(Math.abs(y - superDrawable.centerY), 2))
+		float radius = (float) Math.sqrt(Math.pow(Math.abs(x - dx), 2) + Math.pow(Math.abs(y - dy), 2))
 				/ superDrawable.scaleX;
 
 		float newX = (float) (radius * Math.cos(angle) + superDrawable.getWidth() / 2);
