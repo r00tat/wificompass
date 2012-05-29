@@ -359,7 +359,7 @@ public abstract class MultiTouchDrawable {
 		this.relX = relX;
 		this.relY = relY;
 		if (superDrawable != null) {
-			superDrawable.recalculatePositions();
+			//superDrawable.recalculatePositions();
 		}
 		onRelativePositionUpdate();
 	}
@@ -710,8 +710,8 @@ public abstract class MultiTouchDrawable {
 		float radius = (float) Math.sqrt(Math.pow(Math.abs(x - dx), 2) + Math.pow(Math.abs(y - dy), 2))
 				/ superDrawable.scaleX;
 
-		float newX = (float) (radius * Math.cos(angle) + superDrawable.getWidth() / 2);
-		float newY = (float) (radius * Math.sin(angle * -1) + superDrawable.getHeight() / 2);
+		float newX = (float) (radius * Math.cos(angle) + superDrawable.getWidth() * superDrawable.pivotX);
+		float newY = (float) (radius * Math.sin(angle * -1) + superDrawable.getHeight() * superDrawable.pivotY);
 
 		return new PointF(newX, newY);
 	}

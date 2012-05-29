@@ -3,6 +3,7 @@ package at.fhstp.wificompass.view;
 import org.metalev.multitouch.controller.MultiTouchController.PointInfo;
 
 import android.content.Context;
+import android.graphics.PointF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import at.fhstp.wificompass.Logger;
@@ -100,8 +101,11 @@ public class UserDrawable extends MultiTouchDrawable {
 //		super.onRelativePositionUpdate();
 		locProvider.updateCurrentPosition(relX, relY);
 		if(superDrawable instanceof SiteMapDrawable){
-			superDrawable.setPivot((relX<0?0:relX/superDrawable.width),(relY<0?0: relY/superDrawable.height));
-			Logger.d("updated pivot of sitemap to "+(relX<0?0:relX/superDrawable.width)+","+(relY<0?0: relY/superDrawable.height));
+			PointF relPos = this.getRelativePositionToSuperobject();
+			Logger.d("Relative position: " + relPos.x + " / " + relPos.y);
+			
+			((SiteMapDrawable)superDrawable).setNewPivot(relPos.x/superDrawable.width, relPos.y/superDrawable.height);
+			//Logger.d("updated pivot of sitemap to "+(relPos.x/superDrawable.width)+","+(relPos.y/superDrawable.height));
 		}
 	}
 

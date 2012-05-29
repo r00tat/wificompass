@@ -40,6 +40,9 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	protected Vector<PointF> steps;
 
 	protected static final double MIN_ANGLE_CHANGE = Math.toRadians(5);
+	
+	protected float newPivotX;
+	protected float newPivotY;
 
 	public SiteMapDrawable(Context ctx, RefreshableView refresher) {
 		super(ctx, refresher);
@@ -83,7 +86,6 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 
 		float dx = minX + (maxX - minX) * pivotX;
 		float dy = minY + (maxY - minY) * pivotY;
-
 		
 		canvas.translate(dx, dy);
 		canvas.rotate(angle * 180.0f / (float) Math.PI);
@@ -323,5 +325,40 @@ public class SiteMapDrawable extends MultiTouchDrawable implements CompassListen
 	public void deleteAllSteps() {
 		steps = new Vector<PointF>();
 	}
+	
+	@Override
+	protected boolean setPos(float centerX, float centerY, float scaleX, float scaleY, float angle, int flags, boolean isDraggedOrPinched) {
+		if (pivotX != newPivotX || pivotY != newPivotY) {
+			float dxOld = (maxX - minX) * pivotX;
+			float dyOld = (maxY - minY) * pivotY;
+			
+			float dxNew = (maxX - minX) * newPivotX;
+			float dyNew = (maxY - minY) * newPivotY;
+			
+			float radiusOldNew = (float) Math.sqrt(Math.pow(Math.abs(dxNew - dxOld), 2) + Math.pow(Math.abs(dyNew - dyOld), 2))
+					* scaleX;
+			float angleOldNew = (float) Math.atan2(dyNew - dyOld, dxNew - dxOld);
+			
+			float xNew = (float) (radiusOldNew * Math.cos(ToolBox.normalizeAngle(angleOldNew + this.angle)));
+			float yNew = (float) (radiusOldNew * Math.sin(ToolBox.normalizeAngle(angleOldNew + this.angle)));
+			
+			float moveX = dxOld + xNew - dxNew;
+			float moveY = dyOld + yNew - dyNew;
+			
+			Logger.d("dxOld(" + dxOld + ") dyOld(" + dyOld + ") dxNew(" + dxNew + ") dyNew(" + dyNew + ") rad(" + radiusOldNew + ") angle(" + ToolBox.normalizeAngle(this.angle)  * 180.0 / Math.PI + ") angleON("+ ToolBox.normalizeAngle(angleOldNew) * 180.0 / Math.PI +") xNew(" + xNew + ") yNew(" + yNew + ") moveX(" + moveX + ") moveY(" + moveY + ")");
+			
+			pivotX = newPivotX;
+			pivotY = newPivotY;
+			
+			centerX += moveX;
+			centerY += moveY;
+		}
 
+		return super.setPos(centerX, centerY, scaleX, scaleY, angle, flags, isDraggedOrPinched);
+	}
+	 
+	public void setNewPivot(float newPivotX, float newPivotY) {
+		this.newPivotX = newPivotX;
+		this.newPivotY = newPivotY;
+	}
 }
