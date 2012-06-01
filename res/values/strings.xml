@@ -302,6 +302,7 @@ Icons by <a href="http://mapicons.nicolasmollet.com/">Maps Icons Collection (Nic
 	<string name="north_adjustment_degrees">%1$d°</string>
 	<string name="north_current_adjustment">Current adjustment:</string>
 	<string name="north_adjustment_description">Turn your device until the map rotation equals the real orientation. Once you\'re done, click the green tick below.</string>
+	<string name="measuringpoint_no_bssids">No Bssids found!</string>
 
 
 
