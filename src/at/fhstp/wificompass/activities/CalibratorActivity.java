@@ -176,8 +176,6 @@ public class CalibratorActivity extends Activity implements StepTrigger, OnClick
 			Logger.i("started for auto config");
 		}
 		
-		Logger.i(extras.toString());
-		
 		// Load settings after creation of GUI-elements, to set their values
 		initLogic();
 		initUI();
