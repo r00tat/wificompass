@@ -1346,13 +1346,14 @@ public class ProjectSiteActivity extends Activity implements OnClickListener, Wi
 
 				// StringBuffer sb = new StringBuffer();
 				HashMap<String, Integer> ssids = new HashMap<String, Integer>();
-				for (BssidResult result : wr.getBssids()) {
-					ssids.put(result.getSsid(), (ssids.get(result.getSsid()) == null ? 1 : ssids.get(result.getSsid()) + 1));
-					// BssidResult result = it.next();
-					// Logger.d("ScanResult: " + result.toString());
-					// sb.append(result.toString());
-					// sb.append("\n");
-				}
+				if(wr.getBssids()!=null)
+					for (BssidResult result : wr.getBssids()) {
+						ssids.put(result.getSsid(), (ssids.get(result.getSsid()) == null ? 1 : ssids.get(result.getSsid()) + 1));
+						// BssidResult result = it.next();
+						// Logger.d("ScanResult: " + result.toString());
+						// sb.append(result.toString());
+						// sb.append("\n");
+					}
 
 				user.bringToFront();
 
