@@ -10,11 +10,7 @@
         android:gravity="center"
         android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+       
 
         <TextView
             android:id="@+id/about_description"
@@ -22,9 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="20dp"
-            android:bufferType="spannable"
-            android:linksClickable="true"
-            android:text="@string/aboutText" />
+           
+            android:text="@string/aboutText" android:bufferType="spannable" android:linksClickable="true"/>
 
         <TableLayout
             android:layout_width="wrap_content"
@@ -89,26 +84,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:bufferType="spannable"
-                    android:text="@string/unknown" />
+                    android:text="@string/unknown"  android:linksClickable="true"/>
             </TableRow>
         </TableLayout>
 
-        <TextView
-            android:id="@+id/about_license_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/about_license_title"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:bufferType="spannable"
-            android:linksClickable="true"
-            android:text="@string/about_license_text" />
-    </LinearLayout>
-
+     
+	</LinearLayout>
 </ScrollView>

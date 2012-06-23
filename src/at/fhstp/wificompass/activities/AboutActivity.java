@@ -22,8 +22,11 @@ public class AboutActivity extends Activity {
 		((TextView)findViewById(R.id.about_revision)).setText(BuildInfo.revision);
 		((TextView)findViewById(R.id.about_date)).setText(BuildInfo.commitDate);
 		((TextView)findViewById(R.id.about_url)).setText(Html.fromHtml("<a href=\""+BuildInfo.repositoryURL+"\">"+BuildInfo.repositoryURL+"</a>"));
+		((TextView)findViewById(R.id.about_description)).setText(Html.fromHtml(this.getString(R.string.aboutText)));
+		
 		((TextView)findViewById(R.id.about_description)).setMovementMethod(LinkMovementMethod.getInstance());
 		((TextView)findViewById(R.id.about_url)).setMovementMethod(LinkMovementMethod.getInstance());
+		
 	}
 	
 	@Override
