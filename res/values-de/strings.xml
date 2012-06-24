@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- common strings -->
+
+	<string name="hello">Hello World, APLocalizationActivity!</string>
+	<string name="app_name">WiFi Compass</string>
+	<string name="app_package">at.fhstp.wificompass</string>
+	<string name="about">Über WiFi Compass</string>
+	<string name="quit">Beenden</string>
+	<string name="test1">Test 1</string>
+	<string name="test2">Test 2</string>
+	<string name="project">Projekt</string>
+	<string name="wifi_scan">Quick Scan</string>
+	<string name="newProjectText">Ein neues Projekt erstellen.</string>
+	<string name="loadProject">Ein Projekt laden.</string>
+	<string name="main_info_text">Willkommen zur WiFi Compass! \nErstell ein neues Projekt oder nutze den Quick Scan.
+	</string>
+	<string name="aboutText">
+	&lt;h1&gt;WiFi Compass&lt;/h1&gt;
+&lt;h2&gt;Über WiFi Compass&lt;/h2&gt;
+&lt;p&gt;WiFi Compass wurde von Paul Wölfel und Thomas Konrad als Teil der Diplomarbeit der Fachhochschule St. Pölten, Österreich. 
+&lt;br /&gt;
+Die Software wurde als 
+&lt;a href="http://code.google.com/p/wificompass"&gt;Open Source Projekt WiFi Compass auf Google Code&lt;/a&gt; veröffentlich.
+&lt;/p&gt;
+&lt;p&gt;Informationen zur Lizenzierung kann auf der &lt;a href="http://code.google.com/p/wificompass/"&gt;Projekt Seite&lt;/a&gt; und 
+über Beiträge anderer Projekte auf der &lt;a href="http://code.google.com/p/wificompass/wiki/Contributions"&gt;Contributions Wiki Seite&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Lizenz&lt;/h2&gt;
+&lt;p&gt;WiFi Compass ist unter &lt;a href="http://www.gnu.org/licenses/gpl-3.0.html"&gt;GPLv3&lt;/a&gt; lizenziert, 
+da Teile von WiFi Compass auf &lt;a href="https://github.com/COMSYS/FootPath"&gt;Footpath&lt;/a&gt; basieren.&lt;/p&gt;
+
+&lt;h4&gt;GPLv3&lt;/h4&gt;
+
+
+&lt;p&gt;This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;br /&gt;
+&lt;br /&gt;
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.&lt;br /&gt;
+&lt;br /&gt;
+You should have received a copy of the GNU General Public License along with this program.  If not, see &lt;a href="http://www.gnu.org/licenses/"&gt;http://www.gnu.org/licenses/&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;h4&gt;&lt;a href="http://ormlite.com/"&gt;ORMLite&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that this permission notice appear in all copies.&lt;br /&gt;
+&lt;br /&gt;
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a href="https://github.com/COMSYS/FootPath"&gt;Footpath&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Lizenziert unter &lt;a href="http://www.gnu.org/licenses/gpl-3.0.html"&gt;GPLv3&lt;/a&gt;.&lt;/p
+
+&lt;h4&gt;&lt;a href="http://findicons.com/icon/184603/arrow_up"&gt;Pfeil icon für die Skalierung der Karte&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;a href="http://creativecommons.org/licenses/by/3.0/"&gt;Creative Commons Attribution (by)&lt;/a&gt; &lt;br /&gt;
+Icons by &lt;a href="http://zen-nikki.deviantart.com/"&gt;Dang Nguyen&lt;/a&gt; &lt;/p&gt;
+
+&lt;h4&gt;&lt;a href="http://p.yusukekamiyamane.com/"&gt;Fuge icons&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;a href="http://creativecommons.org/licenses/by/3.0/"&gt;Creative Commons Attribution 3.0 License&lt;/a&gt;
+&lt;br /&gt;Icons by &lt;a href="http://p.yusukekamiyamane.com/"&gt;Yusuke Kamiyamane&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4&gt;&lt;a href="http://www.iconspedia.com/icon/gyro-compass-15061.html"&gt;Compass Icon&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;a href="http://creativecommons.org/licenses/by-nc-sa/3.0"&gt;CC Attribution Non-Commercial Share Alike&lt;/a&gt;&lt;br /&gt;
+Icons by &lt;a href="http://wilkolak3dh.deviantart.com/"&gt;Marysia Tomaszewska&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4&gt;&lt;a href="http://mapicons.nicolasmollet.com/markers/restaurants-bars/wi-fi/"&gt;WiFi Icons&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;a href="http://creativecommons.org/licenses/by-sa/3.0/"&gt;Creative Commons Attribution-Share Alike 3.0 Unported License&lt;/a&gt;&lt;br /&gt;
+Icons by &lt;a href="http://mapicons.nicolasmollet.com/"&gt;Maps Icons Collection (Nicolas Mollet)&lt;/a&gt;&lt;/p&gt;
+
+	</string>
+	<string name="untitled">Ohne Bezeichnung</string>
+	<string name="enableingWiFiSucceed">WLAN erfolgreich aktiviert</string>
+	<string name="database_failure">Ein Datenbankfehler ist aufgetreten!</string>
+	<string name="database_create_failed">Konnte Datenbank nicht erstellen! Diese Applikation kann nicht ohne eine korrekte SQLite Datenbank funktionieren!</string>
+	<string name="not_implemented">Funktion noch nicht implementiert!</string>
+	<string name="button_ok">OK</string>
+	<string name="button_cancel">Abbrechen</string>
+	<string name="button_yes">Ja</string>
+	<string name="button_no">Nein</string>
+	<string name="unknown">unbekannt</string>
+	<string name="empty" />
+	<string name="blank"></string>
+	<string name="select_all">Alle Auswählen</string>
+	<string name="deselect_all">Alle Abwählen</string>
+	<string name="not_a_number">Der eingegebene Wert (%1$s) ist keine Nummer!</string>
+	<string name="general_all">Alle</string>
+
+
+
+	<string name="about_app_revision">Version</string>
+	<string name="about_app_commit_date">Letzte Änderung</string>
+	<string name="about_app_repository_url">Repository URL</string>
+	
+
+
+	<string-array name="wifi_states">
+		<item>WLAN wird deaktiviert</item>
+		<item>WLAN deaktiviert</item>
+		<item>WLAN wird aktviert</item>
+		<item>WLAN aktiv</item>
+		<item>WLAN Status unbekannt</item>
+	</string-array>
+
+
+
+	<!-- main -->
+	<string name="main_wifi_scan">WiFi Scan</string>
+	<string name="main_export_db_label">Backup &amp; Restore</string>
+	<string name="main_project_text">Projects</string>
+	<string name="main_settings_option">Settings</string>
+	<string name="main_loglevel_option">Log Level</string>
+	<string name="main_menu_calibrate">Calibrate Sensors</string>
+	<string name="main_utils">Utils</string>
+	<string name="main_quickscan_button">Quick Scan!</string>
+	<string name="quickscan_project_name">Quick Scan %s</string>
+	<string name="quickscan_project_site_name">Quick Scan Site %s</string>
+	<string name="main_quickscan_failed">Failed to start the Quick Scan: \n%s</string>
+	<string name="main_start_auto_calibration_title">Sensor Auto Calibration</string>
+	<string name="main_start_auto_calibration_message">This Application uses the Accelerometer to track
+		your movement. To improve step detection, this should be calibrated to
+		you and your device.\nIf you want to calibrate this later user Menu ->
+		Utils -> Sensor Calibration.\n\nDo you want to start Sensor
+		Calibration?
+	</string>
+
+
+
+	<!-- preferences -->
+	<string name="preferences_activity">Preferences</string>
+	<string name="preferences_loglevel_text">Log Level</string>
+
+	<string-array name="preferences_loglevels">
+		<item>VERBOSE</item>
+		<item>DEBUG</item>
+		<item>INFO</item>
+		<item>WARN</item>
+		<item>ERROR</item>
+		<item>ASSERT</item>
+	</string-array>
+
+	<!-- sample scan -->
+
+	<string name="sample_scan_start_button_text">Start Scan</string>
+	<string name="sample_scan_stop_button_text">Stop WiFi Scan</string>
+	<string name="sample_scan_scanning_text">Scanning…</string>
+	<string name="sample_scan_start_scan_failed">Starting the Scan failed!</string>
+	<string name="sample_scan_enableing_wifi">WiFi is currently disabled, trying to enable it.
+	</string>
+	<string name="sample_scan_enableing_wifi_failed">Could not enable WiFi!</string>
+	<string name="sample_scan_text_start">To start a WiFi scan, press the start
+		button!\nThese are the last scan results:
+	</string>
+	<string name="sample_scan_stopped">\nWiFi scan stopped.</string>
+	<string name="sample_scan_wifi_capabilities">Capabilities</string>
+	<string name="sample_scan_wifi_ssid">SSID</string>
+	<string name="sample_scan_wifi_bssid">BSSID</string>
+	<string name="sample_scan_wifi_rssi">RSSI</string>
+	<string name="sample_scan_wifi_frequency">Frequency</string>
+	<string name="sample_scan_scan_finished">\nWiFi scan finished!</string>
+	<string name="sample_scan_wifi_state">WiFi state: </string>
+	<string name="sample_scan_supplicant_state">WiFi supplicant state: </string>
+
+
+	<!-- filebrowser -->
+
+	<string name="filebrowser_parent_dir">Parent directory</string>
+	<string name="filebrowser_dir">Directory</string>
+	<string name="filebrowser_error_save">Couldn\'t save the file!</string>
+	<string name="filebrowser_save">Save here</string>
+	<string name="filebrowser_saved">Saved!</string>
+	<string name="filebrowser_dialog_filename_title">Enter file name!</string>
+	<string name="filebrowser_dialog_filename_message">Enter the file name for the file to save!</string>
+	<string name="filebrowser_dialog_directory_title">Create directory!</string>
+	<string name="filebrowser_dialog_directory_message">Enter the name for the directory to save!</string>
+	<string name="file_ending">wcdb</string>
+	<string name="filebrowser_label">File browser</string>
+	<string name="filebrowser_new_dir">New directory</string>
+	<string name="filebrowser_dircreate_failed">Could not create directory!</string>
+
+	<!-- project -->
+
+	<string name="project_title">Project title</string>
+	<string name="project_path">Project path</string>
+	<string name="project_description">Project description</string>
+	<string name="project_path_button">Open</string>
+	<string name="project_path_default">.</string>
+	<string name="project_new_location_button">add new survey site</string>
+	<string name="project_not_found">Project could not be found!</string>
+	<string name="project_save_button">save project</string>
+	<string name="project_delete_button">delete project</string>
+	<string name="project_saved">project saved!</string>
+	<string name="project_save_failed">project could not be saved!</string>
+	<string name="project_list">project list</string>
+	<string name="project_delete_failed">could not delete project!</string>
+	<string name="project_delete_success">project successfully deleted!</string>
+	<string name="project_location">Project Site</string>
+	<string name="project_addsite_button">add survey site</string>
+
+
+	<!-- project site -->
+
+	<string name="project_site_reset_zoom">Reset zoom/rotation</string>
+	<string name="project_site_reset_position">reset position</string>
+	<string name="project_site_load_failed">failed to load Project Site!</string>
+	<string name="project_site_dialog_title_title">Project Site title</string>
+	<string name="project_site_dialog_title_message">Please enter a title for the Project Site:</string>
+	<string name="project_sites_text">Project Sites</string>
+	<string name="project_site_menu_change_name">Change Title</string>
+	<string name="project_site_saved">Project Site saved!</string>
+	<string name="project_site_save_failed">Project Site could not be saved!</string>
+	<string name="project_site_menu_save">Save Project Site</string>
+	<string name="project_site_start_scan">Scan here!</string>
+	<string name="project_site_wifiscan_start_failed">Failed to start a WiFi scan:\n%1$s</string>
+	<string name="project_site_dialog_scanning_title">WiFi Scan</string>
+	<string name="project_site_dialog_scanning_message">scanning for WiFi networks…</string>
+	<string name="project_site_wifiscan_failed">The WiFi Scan encountered an error: %1$s</string>
+	<string name="project_site_wifiscan_finished">%1$d SSIDs and %2$d BSSIDs found!</string>
+	<string name="project_site_snap_user">Snap User to Grid</string>
+	<string name="project_site_menu_change_size">Change Map Size</string>
+	<string name="project_site_dialog_size_middle_text">x</string>
+	<string name="project_site_dialog_size_title">Change map size</string>
+	<string name="project_site_dialog_size_message">How large (in pixels) should the map be?</string>
+	<string name="project_site_dialog_size_nan">Width and height must be numeric values!</string>
+	<string name="project_site_dialog_size_finished">Map size set to %1$dx%2$d!</string>
+	<string name="project_site_menu_set_background">Set Map Image</string>
+	<string name="project_site_dialog_background_title">Map Image</string>
+	<string name="project_site_dialog_background_message">Choose an image of a map, which should be used as
+		the background:
+	</string>
+	<string name="project_site_dialog_background_path_button">choose image</string>
+	<string name="project_site_dialog_background_default_path">/mnt/sdcard/</string>
+	<string name="project_site_set_background_failed">Could not set background image: %1$s</string>
+	<string name="project_site_calculate_ap_positions">Calculate AP positions</string>
+	<string name="project_site_delete_drawable_title">Delete Element</string>
+	<string name="project_site_delete_drawable_message">Do you really want to delete %1$s?</string>
+	<string name="project_site_scanresults_persisting_title">Persisting WiFi Scan Results</string>
+	<string name="project_site_scanresults_persisting_message">The WiFi scan results are beining processed and
+		saved to the database. \nPlease be patient.
+	</string>
+	<string name="project_site_scanresults_persisted">WiFi scan results saved!</string>
+	<string name="project_site_scanresults_not_persisted">WiFi scan results could not be saved:\n%1$s
+	</string>
+	<string name="project_site_dialog_fresh_site_title">Project Site Initial Setup</string>
+	<string name="project_site_dialog_fresh_site_message">This fresh created project site does not have a map
+		loaded, which would ease navigation. \nThis could also be done later
+		unter Options -> Map Settings. \n\nDo you want to do that now?
+	</string>
+	<string name="project_site_create_failed">could not create Project Site!</string>
+	<string name="project_site_set_scale_of_map">Set Map Scale</string>
+	<string name="project_site_dialog_scale_of_map_title">Scale of map</string>
+	<string name="project_site_dialog_scale_of_map_message">How many meters have you just marked on the map?
+	</string>
+	<string name="project_site_dialog_ask_change_scale_title">Change Scale of Map</string>
+	<string name="project_site_dialog_ask_change_scale_message">We need to know how much pixels is one meter to
+		calculate the correct positions of APs and track your
+		movement.\n\nWould you like to define this now?
+	</string>
+	<string name="project_site_dialog_ask_north_title">Set North</string>
+	<string name="project_site_dialog_ask_north_message">We need to know where the magnetic north is on the
+		map to calculate the correct direction of your movement.\n\nWould you
+		like to define this now?
+	</string>
+	<string name="project_site_dialog_change_scan_interval_title">Change WiFi Scan Interval</string>
+	<string name="project_site_dialog_change_scan_interval_message">Define how often a WiFi scan should be done, if
+		walking &amp; and scanning is enabled.\n\nScan Interval: %1$ds</string>
+	<string name="project_site_dialog_change_size_width">width</string>
+	<string name="project_site_dialog_change_size_height">height</string>
+	<string name="project_site_triangulation_progress_title">Calculating Access Point positions</string>
+	<string name="project_site_triangulation_progress_message">This may take a while.</string>
+	<string name="project_site_triangulation_progress_message_ssid">This may take a while. Current SSID: </string>
+	<string name="project_site_add_known_ap">Add known AP</string>
+	<string name="project_site_dialog_add_known_ap_title">Add known AP</string>
+	<string name="project_site_dialog_add_known_ap_message">Enter the SSID and BSSID of the known Access Point:
+	</string>
+	<string name="project_site_dialog_add_known_ap_ssid">SSID</string>
+	<string name="project_site_dialog_add_known_ap_bssid">BSSID</string>
+	<string name="project_site_start_step_detect">Start Walking &amp; Scanning</string>
+	<string name="project_site_stop_step_detect">Stop Walking &amp; Scanning</string>
+	<string name="project_site_menu_set_north">Set North</string>
+	<string name="project_site_nort_set">North set!</string>
+	<string name="project_site_menu_delete">Delete Project Site</string>
+	<string name="project_site_menu_settings">Settings</string>
+	<string name="project_site_menu_view">Map Settings</string>
+	<string name="project_site_menu_calculation">AP Calculation</string>
+	<string name="project_site_menu_project_site">Project Site Settings</string>
+	<string name="project_site_delete_failed">Could not delete Project Site: %1$s</string>
+	<string name="project_site_deleted">Project Site deleted!</string>
+	<string name="project_site_menu_select_bssids">Select BSSIDs</string>
+	<string name="project_site_dialog_select_bssids_title">Select BSSIDs</string>
+	<string name="project_site_dialog_select_bssids_message">Select the BSSIDs that should be considered when
+		calculating AP positions:
+	</string>
+	<string name="project_site_mapscale_changed">Scale of map changed: 1m is now %1$.2f pixels.
+	</string>
+	<string name="project_site_wifiscan_started">WiFi Scan started!</string>
+	<string name="project_site_menu_change_scan_interval">Change WiFi Scan Interval</string>
+	<string name="project_site_menu_track_steps">Track Steps</string>
+
+
+	<!-- drawables -->
+	<string name="north_drawable_north_text">North: %1$.0f°</string>
+	<string name="access_point_format">%1$s [%2$s]\n%3$dMHz %4$s\nPosition: %5$.2f/%6$.2fm
+	</string>
+	<string name="user_compass_degrees">%1$d°</string>
+	<string name="north_adjustment_degrees">%1$d°</string>
+	<string name="north_current_adjustment">Current adjustment:</string>
+	<string name="north_adjustment_description">Turn your device until the map rotation equals the real orientation. Once you\'re done, click the green tick below.</string>
+	<string name="measuringpoint_no_bssids">No Bssids found!</string>
+
+
+
+	<!-- sensors -->
+
+	<string name="sensors_label">sensors test</string>
+	<string name="sensors_test_label">Sensors Test</string>
+	<string name="sensors_accelerometer_label">Accelerometer</string>
+	<string name="sensors_accelerometer_text">no data</string>
+	<string name="sensors_gyroscope_label">Gyroscope</string>
+	<string name="sensors_gyroscope_text">no data</string>
+	<string name="sensors_accelerometer_format">x: %1$f\ny: %2$f\nz: %3$f</string>
+	<string name="sensors_gyroscope_format">x: %1$f\ny: %2$f\nz: %3$f</string>
+	<string name="sensors_scan_label">read sensor data</string>
+	<string name="sensors_graphview_title">Sensor Data</string>
+	<string name="sensors_update_label">update interval: %1$ds</string>
+	<string name="sensors_valuecount_label">values displayed: %1$d</string>
+
+
+
+	<!-- export & import DB -->
+
+	<string name="export_db_info_text">You can export the database, import or drop the
+		database by pressing the button.
+	</string>
+	<string name="export_db_button_text">export projects to SD card</string>
+	<string name="export_db_message_text">nothing to do…</string>
+	<string name="export_db_save_start_message">Saving database backup under %1$s.\ncopying…
+	</string>
+	<string name="export_db_save_finished_message"> done!</string>
+	<string name="export_db_save_failed_message">backup failed! %1$s</string>
+	<string name="export_db_label">Export DB</string>
+	<string name="export_db_import_button_text">import database</string>
+	<string name="export_db_drop_button_text">drop database</string>
+	<string name="export_db_drop_failed">could not drop and recreate the database: %1$s
+	</string>
+	<string name="export_db_drop_finished">database droped and recreated!</string>
+	<string name="export_db_import_failed">Database import failed:\n%1$s</string>
+	<string name="export_db_importing">importing %1$s</string>
+	<string name="export_db_importing_done"> done.</string>
+	<string name="export_db_starting_import">starting import…\n</string>
+	<string name="export_db_progress_title">importing projects …</string>
+	<string name="export_db_progress_message">processing data, please wait!</string>
+	<string name="export_db_import_interrupted">import interrupted!</string>
+	<string name="export_db_wrong_file">%1$s is not a correct WiFi Compass DB!\nThe file
+		must end with .wcdb!
+	</string>
+	<string name="export_db_dialog_dropdb_title">Recreate database</string>
+	<string name="export_db_dialog_dropdb_message">The database will get dropped and recreated. This
+		will purge ALL existing data. \nAre you sure, you want that?
+	</string>
+	<string name="export_db_dialog_overwrite_file_title">Overwriting existing file</string>
+	<string name="export_db_dialog_overwrite_file_message">The file %1$s already exists.\nAre you sure you
+		want to overwrite that file?
+	</string>
+	<string name="export_db_export_canceled"> canceled.</string>
+
+
+	<!-- calibrate -->
+	<string name="calibrator_label">Sensor Calibration</string>
+	<string name="calibrator_tv_peak">Peak: </string>
+	<string name="calibrator_tv_filter">Filter: </string>
+	<string name="calibrator_tv_step_timeout">Step Timeout: </string>
+	<string name="calibrator_tv_step_size">Step Size (m)</string>
+	<string name="calibrator_step_size_text">Step Size (%2$.2f): %1$.2fm</string>
+	<string name="calibrator_peak_text">Peak (%2$.2f): %1$.2fm/s^2</string>
+	<string name="calibrator_filter_text">Filter (%2$.2f): %1$.2f</string>
+	<string name="calibrator_step_timeout_text">Step Timeout (%2$d): %1$dms</string>
+
+	<string name="calibrator_start_auto_calibration">Start Auto Calibration!</string>
+	<string name="calibrator_stop_auto_calibration">Stop Auto Calibration!</string>
+	<string name="calibrator_auto_config_title">Calibration Auto Config finished!</string>
+	<string name="calibrator_auto_config_message">Analyzation of steps and sensor values finished.
+		%8$d combinations have the best results.\nThe best result was:\nScore:
+		%1$d %2$.0f%%\nSteps correct detected: %5$d\nSteps not detected:
+		%6$d\nSteps false detected: %7$d\nFilter: %3$.2f\nPeak:
+		%4$.2fm/s^2\n\nThe default values performed that good:\nScore:
+		%11$d %12$.0f%%\nSteps correct detected: %13$d\nSteps not detected:
+		%14$d\nSteps false detected: %15$d\n\n\nSteps done:%10$d\nTimeout: %9$dms</string>
+	<string name="calibrator_auto_config_info_title">Sensor Auto Calibration</string>
+	<string name="calibrator_auto_config_info_message">Sensor Auto Calibration will be started. All sensor
+		data will be log for analysis.\nTouch the Sensor Data area, where the
+		red, green and blue graphs are, every time you make a step.\n
+		To get good results please make approximately 50 steps.
+	</string>
+	<string name="calibrator_auto_config_progress_title">Auto Configuration of Sensor Parameters</string>
+	<string name="calibrator_auto_config_progress_message">Searching for the best peak and filter values. This
+		may take a while…
+	</string>
+	<string name="calibrator_analyze_data">Analyze Data</string>
+	<string name="calibrator_auto_config_setting_title">Auto Calibration Settings</string>
+	<string name="calibrator_auto_config_setting_message">How much tolerance (ms) is allowed between a
+		detcted step and the ones you told the application. \nIf you do not
+		know, what value should be used, leave the default value.\n\nWindow
+		Size: %1$dms</string>
+
+	<string name="calibrator_graph_toggle_on">Hide Graph</string>
+	<string name="calibrator_graph_toggle_off">Show Graph</string>
+	<string name="calibrator_step_button">Step!</string>
+
+
+
+
+</resources>
